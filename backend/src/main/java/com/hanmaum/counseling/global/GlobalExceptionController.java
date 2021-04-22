@@ -11,10 +11,12 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
+import java.util.stream.Collectors;
 
 @ControllerAdvice
 @Slf4j
@@ -32,10 +34,17 @@ public class GlobalExceptionController {
     //엔티티의 제약조건이 위배되면 발생하는 예외 핸들링
     @ExceptionHandler(value = ConstraintViolationException.class) // 유효성 검사 실패 시 발생하는 예외를 처리
     public ResponseEntity<?> handleException(ConstraintViolationException e) {
-        Map<String, String> errorResponse = new ConcurrentHashMap<>();
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
-        constraintViolations.forEach(cv->errorResponse.put(cv.getPropertyPath().toString(), cv.getMessage()));
+        Set<String> errorResponse = constraintViolations.stream()
+                .map(this::mappingErrorMessage)
+                .collect(Collectors.toUnmodifiableSet());
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+
+    private String mappingErrorMessage(ConstraintViolation<?> cv){
+        final String path = cv.getPropertyPath().toString();
+        final String property = path.substring(path.lastIndexOf('.') + 1);
+        return String.format("{} is {}.{}", property, cv.getInvalidValue(), cv.getMessage());
     }
 
     //나머지 예외는 서버 에러로 처리
