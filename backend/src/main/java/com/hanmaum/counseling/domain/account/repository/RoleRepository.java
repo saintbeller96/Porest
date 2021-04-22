@@ -1,6 +1,6 @@
-package com.hanmaum.counseling.account.repository;
+package com.hanmaum.counseling.domain.account.repository;
 
-import com.hanmaum.counseling.account.Entity.Role;
+import com.hanmaum.counseling.domain.account.entity.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface RoleRepository extends JpaRepository<Role, Long> {

@@ -1,9 +1,9 @@
-package com.hanmaum.counseling.account.service;
+package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.account.Entity.Role;
-import com.hanmaum.counseling.account.Entity.User;
-import com.hanmaum.counseling.account.repository.RoleRepository;
-import com.hanmaum.counseling.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.account.entity.Role;
+import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.repository.RoleRepository;
+import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;

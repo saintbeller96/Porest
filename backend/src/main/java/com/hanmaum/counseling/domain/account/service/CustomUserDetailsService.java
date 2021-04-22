@@ -1,7 +1,7 @@
-package com.hanmaum.counseling.account.service;
+package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.account.Entity.User;
-import com.hanmaum.counseling.config.CustomUserDetails;
+import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

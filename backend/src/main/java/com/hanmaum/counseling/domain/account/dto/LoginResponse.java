@@ -1,4 +1,4 @@
-package com.hanmaum.counseling.account;
+package com.hanmaum.counseling.domain.account.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;

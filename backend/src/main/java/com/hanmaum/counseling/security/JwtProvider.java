@@ -1,4 +1,4 @@
-package com.hanmaum.counseling.config;
+package com.hanmaum.counseling.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;

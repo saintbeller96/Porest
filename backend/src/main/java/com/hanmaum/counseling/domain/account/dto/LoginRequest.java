@@ -1,4 +1,4 @@
-package com.hanmaum.counseling.account.request;
+package com.hanmaum.counseling.domain.account.dto;
 
 import lombok.Data;
 

@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.config;
 
+import com.hanmaum.counseling.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -50,29 +51,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/user/*").hasRole("USER")
                 .antMatchers("/register", "auth").permitAll()
+                .anyRequest().permitAll()
 
                 .and()
                 .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-
-//        http.csrf().disable()
-//                .cors().configurationSource(corsConfigurationSource())
-//                .and()
-//                .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-//                .and()
-//                .authorizeRequests()
-//                .anyRequest().permitAll()
-//                .and()
 //                .exceptionHandling()
 //                .authenticationEntryPoint(this::authenticationEntryPoint);
-//
-//        http.addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class);
     }
-
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-//    }
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
@@ -97,4 +83,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 //        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
 //        response.getWriter().write(mapper.writeValueAsString(new ErrorResponse(authenticationException.getMessage(), "auth.exception")));
 //    }
+    //    @Override
+    //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    //        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    //    }
+
 }

@@ -1,4 +1,4 @@
-package com.hanmaum.counseling.account.Entity;
+package com.hanmaum.counseling.domain.account.entity;
 
 import lombok.Data;
 

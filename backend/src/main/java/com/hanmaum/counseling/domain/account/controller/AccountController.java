@@ -1,10 +1,11 @@
-package com.hanmaum.counseling.account;
+package com.hanmaum.counseling.domain.account.controller;
 
-import com.hanmaum.counseling.account.Entity.User;
-import com.hanmaum.counseling.account.request.LoginRequest;
-import com.hanmaum.counseling.account.request.RegistrationRequest;
-import com.hanmaum.counseling.account.service.AccountService;
-import com.hanmaum.counseling.config.JwtProvider;
+import com.hanmaum.counseling.domain.account.dto.LoginResponse;
+import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.dto.LoginRequest;
+import com.hanmaum.counseling.domain.account.dto.RegistrationRequest;
+import com.hanmaum.counseling.domain.account.service.AccountService;
+import com.hanmaum.counseling.security.JwtProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
