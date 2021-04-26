@@ -1,40 +1,34 @@
 package com.hanmaum.counseling.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanmaum.counseling.error.ErrorResponse;
+import com.hanmaum.counseling.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.http.HttpMethod;
-import org.springframework.http.MediaType;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
+
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
-import org.springframework.web.cors.CorsUtils;
+
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
+
 import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    //private final AuthenticationFilter authenticationFilter;
-    private final ObjectMapper mapper;
-    //private final UserDetailsService userDetailsService;
+//    private final AuthenticationFilter authenticationFilter;
+//    private final ObjectMapper mapper;
+//    private final UserDetailsService userDetailsService;
+    private final JwtFilter jwtFilter;
 
     @Override
     public void configure(WebSecurity web) throws Exception {
@@ -44,23 +38,26 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception{
-        http.csrf().disable()
+        http
+                .csrf().disable()
+                .httpBasic().disable()
                 .cors().configurationSource(corsConfigurationSource())
+
                 .and()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+
                 .and()
                 .authorizeRequests()
+                .antMatchers("/admin/*").hasRole("ADMIN")
+                .antMatchers("/user/*").hasRole("USER")
+                .antMatchers("/register", "auth").permitAll()
                 .anyRequest().permitAll()
+
                 .and()
-                .exceptionHandling()
-                .authenticationEntryPoint(this::authenticationEntryPoint);
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
 
-        //http.addFilterBefore(authenticationFilter, BasicAuthenticationFilter.class);
-    }
-
-    @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-        //auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+//                .exceptionHandling()
+//                .authenticationEntryPoint(this::authenticationEntryPoint);
     }
 
     @Bean
@@ -74,21 +71,21 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return source;
     }
 
-    //패스워드를 암호화하기 위한 패스워드 인코더 빈으로 등록
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
 
-    @Bean
-    public AuthenticationManager authenticationManagerBean() throws Exception {
-        return super.authenticationManagerBean();
-    }
+//    @Bean
+//    public AuthenticationManager authenticationManagerBean() throws Exception {
+//        return super.authenticationManagerBean();
+//    }
 
-    public void authenticationEntryPoint(HttpServletRequest request, HttpServletResponse response,
-                                         AuthenticationException authenticationException) throws IOException {
-        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-        response.getWriter().write(mapper.writeValueAsString(new ErrorResponse(authenticationException.getMessage(), "auth.exception")));
-    }
+//    public void authenticationEntryPoint(HttpServletRequest request, HttpServletResponse response,
+//                                         AuthenticationException authenticationException) throws IOException {
+//        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+//        response.getWriter().write(mapper.writeValueAsString(new ErrorResponse(authenticationException.getMessage(), "auth.exception")));
+//    }
+    //    @Override
+    //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    //        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
+    //    }
+
 }
