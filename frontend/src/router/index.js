@@ -24,6 +24,31 @@ const routes = [
     name: 'Signup',
     component: () => import('@/views/auth/SignupPage.vue'),
   },
+  {
+    path: '/auth',
+    name: 'Auth',
+    component: () => import('@/views/auth/AuthPage.vue'),
+  },
+  {
+    path: '/mailbox',
+    name: 'Mailbox',
+    component: () => import('@/views/mailbox/MailboxPage.vue'),
+  },
+  {
+    path: '/mailbox/letters',
+    name: 'WriteLetter',
+    component: () => import('@/views/mailbox/WriteLetterPage.vue'),
+  },
+  {
+    path: '/mailbox/my-mailbox',
+    name: 'MyMailbox',
+    component: () => import('@/views/mailbox/MyMailboxPage.vue'),
+  },
+  {
+    path: '/mailbox/my-mailbox/letter-detail',
+    name: 'LetterDetail',
+    component: () => import('@/views/mailbox/LetterDetailPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
