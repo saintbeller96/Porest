@@ -8,4 +8,4 @@
   </div>
 </template>
 
-<style scoped></style>
+<style src="@/assets/css/common/reset.css"></style>
