@@ -19,11 +19,14 @@ export default {
   methods: {
     scrollEffect() {
       let scrollTop = 0;
+      let bar = document.querySelector('.progress-bar');
+
       window.addEventListener('scroll', () => {
         scrollTop = document.documentElement.scrollTop;
         console.log('scrollTop', scrollTop);
-        let per = Math.ceil((scrollTop / document.body.scrollHeight) * 100);
+        let per = Math.ceil((scrollTop / (document.body.scrollHeight - window.innerHeight)) * 100);
         console.log('per', per);
+        bar.style.width = per + '%';
       }),
         false;
     },
@@ -53,7 +56,7 @@ h1 {
 
 .progress-bar {
   position: absolute;
-  width: 50%;
+  width: 0%;
   height: 5px;
   top: 0;
   left: 0;
