@@ -17,13 +17,19 @@ public class Story {
     @Column(name = "story_id")
     private Long id;
 
+    @Column(name = "writer_id", nullable = false)
+    private Long writerId;
+
+    @Embedded
+    private Form form;
+
     @Column(name = "is_opened")
     @ColumnDefault("false")
     private Boolean isOpened;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private StoryStatus status;
+    @Column(name = "picked")
+    @ColumnDefault("0")
+    private int picked;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -33,15 +39,10 @@ public class Story {
 
     public Story(){};
 
-    public static Story ofNew(){
-        return Story.builder()
-                .status(StoryStatus.READY)
-                .build();
-    }
-
     @Builder
-    public Story(Boolean isOpened, StoryStatus status) {
+    public Story(Long writerId, String title, String content, Boolean isOpened) {
+        this.writerId = writerId;
+        this.form = new Form(title, content);
         this.isOpened = isOpened;
-        this.status = status;
     }
 }

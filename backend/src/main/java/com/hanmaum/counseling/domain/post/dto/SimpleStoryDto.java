@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.post.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -11,6 +12,7 @@ import java.time.LocalDateTime;
  * 작성자: 김종성
  */
 @Getter
+@ToString
 public class SimpleStoryDto {
 
     @NotNull
@@ -30,4 +32,8 @@ public class SimpleStoryDto {
         this.detail = new FormDto(title, content, date);
     }
 
+    public SimpleStoryDto(Long storyId, String title, String content, LocalDateTime date){
+        this.storyId = storyId;
+        this.detail = new FormDto(title, content, date);
+    }
 }

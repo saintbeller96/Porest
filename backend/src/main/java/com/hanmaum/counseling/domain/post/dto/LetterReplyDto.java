@@ -1,11 +1,13 @@
 package com.hanmaum.counseling.domain.post.dto;
 
 import lombok.Getter;
+import lombok.ToString;
 
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
 @Getter
+@ToString
 public class LetterReplyDto {
     @NotNull
     private FormDto letter;

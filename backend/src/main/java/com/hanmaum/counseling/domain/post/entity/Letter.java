@@ -19,15 +19,12 @@ public class Letter {
     @Column(name = "writer_id")
     private Long writerId;
 
-    @Column(name = "title")
-    private String title;
-
-    @Column(name = "content", columnDefinition="TEXT")
-    private String content;
+    @Embedded
+    private Form form;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "story_id")
-    private Story story;
+    @JoinColumn(name = "post_id")
+    private Posts post;
 
     @OneToOne(mappedBy = "letter")
     private Reply reply;
@@ -38,19 +35,17 @@ public class Letter {
     public Letter(){}
 
     @Builder
-    public Letter(Long writerId, String title, String content, Story story) {
+    public Letter(Long writerId, String title, String content, Posts post) {
         this.writerId = writerId;
-        this.title = title;
-        this.content = content;
-        this.story = story;
+        this.form = new Form(title, content);
+        this.post = post;
     }
-
-    public static Letter write(Long writerId, String title, String content, Story story){
+    public static Letter write(Long writerId, String title, String content, Posts post){
         return Letter.builder()
                 .writerId(writerId)
                 .title(title)
                 .content(content)
-                .story(story)
+                .post(post)
                 .build();
     }
 }
