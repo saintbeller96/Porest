@@ -1,15 +1,22 @@
 <template>
-  <div>
-    레터 디테일 페이지
-    <p>
-      사연 내용 보여주고
-    </p>
-    <button>답장</button>
-  </div>
+  <section>
+    <header>
+      레터 디테일 페이지
+    </header>
+    <article>
+      <button @click="goToLetterReply">답장</button>
+    </article>
+  </section>
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    goToLetterReply() {
+      this.$router.push({ name: 'LetterReply' });
+    },
+  },
+};
 </script>
 
 <style scoped></style>

@@ -96,10 +96,14 @@
   </div>
 </template>
 
-<script src="@/assets/js/auth.js"></script>
-<script src="@/assets/css/auth.css"></script>
 <script>
-export default {};
+import '@/assets/css/auth.css';
+import { init } from '@/assets/js/auth.js';
+export default {
+  mounted() {
+    init();
+  },
+};
 </script>
 
 <style scoped></style>

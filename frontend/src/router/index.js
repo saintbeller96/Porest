@@ -49,6 +49,11 @@ const routes = [
     name: 'LetterDetail',
     component: () => import('@/views/mailbox/LetterDetailPage.vue'),
   },
+  {
+    path: '/mailbox/my-mailbox/letter-detail/letter-reply',
+    name: 'LetterReply',
+    component: () => import('@/views/mailbox/LetterReplyPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
