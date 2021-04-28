@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -16,10 +17,6 @@ public class Story {
     @Column(name = "story_id")
     private Long id;
 
-    private Long from;
-
-    private Long to;
-
     @Column(name = "is_opened")
     @ColumnDefault("false")
     private Boolean isOpened;
@@ -35,4 +32,16 @@ public class Story {
     private LocalDateTime updatedAt;
 
     public Story(){};
+
+    public static Story ofNew(){
+        return Story.builder()
+                .status(StoryStatus.READY)
+                .build();
+    }
+
+    @Builder
+    public Story(Boolean isOpened, StoryStatus status) {
+        this.isOpened = isOpened;
+        this.status = status;
+    }
 }
