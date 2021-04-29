@@ -1,16 +1,20 @@
 package com.hanmaum.counseling.config;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanmaum.counseling.error.ErrorResponse;
 import com.hanmaum.counseling.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import org.springframework.web.cors.CorsConfiguration;
@@ -19,15 +23,17 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.util.Collections;
 
 @Configuration
 @EnableWebSecurity
 @RequiredArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-//    private final AuthenticationFilter authenticationFilter;
-//    private final ObjectMapper mapper;
-//    private final UserDetailsService userDetailsService;
+
+    private final ObjectMapper mapper;
     private final JwtFilter jwtFilter;
 
     @Override
@@ -50,14 +56,15 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .authorizeRequests()
                 .antMatchers("/admin/*").hasRole("ADMIN")
                 .antMatchers("/user/*").hasRole("USER")
-                .antMatchers("/register", "auth").permitAll()
+                .antMatchers("/signup", "auth").permitAll()
                 .anyRequest().permitAll()
 
                 .and()
-                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
+                .exceptionHandling()
+                .authenticationEntryPoint(this::authenticationEntryPoint)
 
-//                .exceptionHandling()
-//                .authenticationEntryPoint(this::authenticationEntryPoint);
+                .and()
+                .addFilterBefore(jwtFilter, UsernamePasswordAuthenticationFilter.class);
     }
 
     @Bean
@@ -70,22 +77,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         source.registerCorsConfiguration("/**", config);
         return source;
     }
-
-
-//    @Bean
-//    public AuthenticationManager authenticationManagerBean() throws Exception {
-//        return super.authenticationManagerBean();
-//    }
-
-//    public void authenticationEntryPoint(HttpServletRequest request, HttpServletResponse response,
-//                                         AuthenticationException authenticationException) throws IOException {
-//        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
-//        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
-//        response.getWriter().write(mapper.writeValueAsString(new ErrorResponse(authenticationException.getMessage(), "auth.exception")));
-//    }
-    //    @Override
-    //    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    //        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder());
-    //    }
-
+    public void authenticationEntryPoint(HttpServletRequest request, HttpServletResponse response,
+                                         AuthenticationException authenticationException) throws IOException {
+        response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+        response.setContentType(MediaType.APPLICATION_JSON_VALUE);
+        response.getWriter().write(mapper.writeValueAsString(new ErrorResponse(authenticationException.getMessage(), "auth.exception")));
+    }
 }

@@ -1,11 +1,18 @@
 package com.hanmaum.counseling.domain.account.entity;
 
+import lombok.Builder;
 import lombok.Data;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Data
+@Getter
+@NoArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -20,8 +27,27 @@ public class User {
     @Column
     private String nickname;
 
+    @Column
+    private Long temperature;
+
+    @Column
+    private String profileImg;
+
     @ManyToOne
     @JoinColumn(name = "role_id")
     private Role role;
 
+    @CreationTimestamp
+    private LocalDateTime createdAt;
+
+    @UpdateTimestamp
+    private LocalDateTime updatedAt;
+
+    @Builder
+    public User(String email, String password, String nickname, Role role) {
+        this.email = email;
+        this.password = password;
+        this.nickname = nickname;
+        this.role = role;
+    }
 }
