@@ -54,6 +54,26 @@ const routes = [
     name: 'LetterDetail',
     component: () => import('@/views/mailbox/LetterDetailPage.vue'),
   },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('@/views/test/Home.vue'),
+  },
+  {
+    path: '/rooms',
+    name: 'RoomsPage',
+    component: () => import('@/views/room/RoomsPage.vue'),
+  },
+  {
+    path: '/checkin/:hostID/:roomID',
+    name: 'CheckIn',
+    component: () => import('@/views/room/CheckInPage.vue'),
+  },
+  {
+    path: '/chat/:hostID/:roomID',
+    name: 'Chat',
+    component: () => import('@/views/room/ChatRoomPage.vue'),
+  },
 ];
 
 const router = new VueRouter({

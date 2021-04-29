@@ -2,6 +2,9 @@ export default {
   setUserId(state, id) {
     state.id = id;
   },
+  setUserUid(state, uid) {
+    state.uid = uid;
+  },
   setUsername(state, username) {
     state.username = username;
   },

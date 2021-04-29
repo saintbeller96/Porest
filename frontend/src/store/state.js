@@ -1,6 +1,7 @@
 import {
   getAuthFromCookie,
   getUserIdFromCookie,
+  getUserUidFromCookie,
   getUserEmailFromCookie,
   getUserNameFromCookie,
   getUserImgFromCookie,
@@ -8,6 +9,7 @@ import {
 
 export default {
   id: getUserIdFromCookie() || '',
+  uid: getUserUidFromCookie() || '',
   email: getUserEmailFromCookie() || '',
   username: getUserNameFromCookie() || '',
   token: getAuthFromCookie() ? `Token ${getAuthFromCookie()}` : '',
