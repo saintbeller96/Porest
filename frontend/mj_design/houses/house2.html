@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<style>
+.shop {
+  font-size: 15px;
+  position: relative;
+  width: 26.313em;
+  height: 30.75em;
+  box-sizing: border-box;
+  background-color: #4e2a12;
+}
+.shop__nameContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -2.375em;
+  width: 15.375em;
+  height: 7.0625em;
+  background-color: #783218;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1;
+}
+.shop__name {
+  font-family: "Pacifico", cursive;
+  font-size: 3em;
+  color: #ffd48f;
+}
+.shop__roofDecal {
+  width: 100%;
+  height: 5.125em;
+  position: relative;
+  overflow: hidden;
+  background-color: #91553d;
+  box-shadow: 0 0.9375em #37200e;
+}
+.shop__roofDecal::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 16.5em;
+  height: 5.125em;
+  background-color: #52230f;
+}
+.shop__roofDecalSquare {
+  position: absolute;
+  top: 0.9375em;
+  left: 0.9375em;
+  width: 3.1875em;
+  height: 3.1875em;
+  border: 0.1875em solid #f6b273;
+  box-sizing: border-box;
+  background-color: #783218;
+}
+.shop__roofDecalSquare:nth-of-type(2) {
+  left: unset;
+  right: 0.9375em;
+}
+.shop__roofDecalSquare::after, .shop__roofDecalSquare::before, .shop__roofDecalSquare .shop__roofDecalSquareCutOut::after, .shop__roofDecalSquare .shop__roofDecalSquareCutOut::before {
+  content: "";
+  position: absolute;
+  top: -1.125em;
+  width: 1.5em;
+  height: 1.5em;
+  border-radius: 50%;
+  border: 0.1875em solid transparent;
+  border-bottom-color: #f6b273;
+  background-color: #91553d;
+}
+.shop__roofDecalSquare::after, .shop__roofDecalSquare .shop__roofDecalSquareCutOut::after {
+  left: -1.125em;
+  transform: rotate(-45deg);
+}
+.shop__roofDecalSquare::before, .shop__roofDecalSquare .shop__roofDecalSquareCutOut::before {
+  right: -1.125em;
+  transform: rotate(45deg);
+}
+.shop__roofDecalSquare .shop__roofDecalSquareCutOut::after, .shop__roofDecalSquare .shop__roofDecalSquareCutOut::before {
+  top: unset;
+  bottom: -1.125em;
+}
+.shop__roofDecalSquare .shop__roofDecalSquareCutOut::after {
+  transform: rotate(-135deg);
+}
+.shop__roofDecalSquare .shop__roofDecalSquareCutOut::before {
+  transform: rotate(135deg);
+}
+.shop__roof {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 6.0625em;
+  width: 28.875em;
+  height: 7.5em;
+  background-color: #b27d53;
+  clip-path: polygon(0 calc(100% - 2.3125em), 1.28125em 0, calc(100% - 1.28125em) 0, 100% calc(100% - 2.3125em), 100% 100%, 0 100%);
+}
+.shop__roof::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.4375em;
+  height: calc(100% - 2em);
+  color: #ffd48f;
+  background-color: currentColor;
+  box-shadow: -4.875em 0, -9.75em 0, 4.875em 0, 9.75em 0;
+}
+.shop__roof::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.3125em;
+  background: linear-gradient(#ffebca 0.8125em, #b27d53 0.8125em);
+  z-index: 1;
+}
+.shop__roofShadow {
+  position: absolute;
+  top: 13.5625em;
+  left: 0;
+  width: 100%;
+  height: 1.4375em;
+  background-color: #302010;
+  z-index: 1;
+}
+.shop__frontContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1.625em;
+  width: 23em;
+  height: 14.1875em;
+  padding: 0.6875em;
+  box-sizing: border-box;
+  background-color: #91553d;
+  display: grid;
+  grid-template-columns: 15.9375em 1fr;
+  grid-column-gap: 0.6875em;
+}
+.shop__front {
+  position: relative;
+  background-color: #342123;
+}
+.shop__frontTop {
+  width: 100%;
+  height: calc(100% - 3.125em);
+  position: relative;
+  overflow: hidden;
+}
+.shop__frontTop::before, .shop__frontTop::after {
+  content: "";
+  position: absolute;
+  height: 150%;
+  width: 1.875em;
+  color: rgba(255, 255, 255, 0.1);
+  background-color: currentColor;
+  transform: rotate(45deg);
+  box-shadow: -1.875em 0 0 -0.625em;
+  z-index: 1;
+}
+.shop__frontTop::before {
+  left: 3.25em;
+  top: -3.0625em;
+}
+.shop__frontTop::after {
+  box-shadow: -1.875em 0 0 -0.625em, 3em 0 0 -0.375em;
+  height: 200%;
+  right: 5.0625em;
+  top: -3.4375em;
+}
+.shop__frontProductsGroup {
+  position: absolute;
+  height: 0.4375em;
+  background-color: #4e2a12;
+}
+.shop__frontProductsGroup--isFirstGroup {
+  top: 0.75em;
+  width: 100%;
+}
+.shop__chickenThigh {
+  position: absolute;
+  top: 0.8125em;
+  width: 0.25em;
+  height: 0.9375em;
+  color: #b3b5b4;
+  background-color: #a5806e;
+  box-shadow: 0 -0.3125em, 0 -0.9375em 0 -0.0625em;
+}
+.shop__chickenThigh::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.125em;
+  width: 0.625em;
+  height: 0.21875em;
+  border-radius: 0.21875em;
+  background-color: #a5806e;
+}
+.shop__chickenThigh::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -1.0625em;
+  width: 1.25em;
+  height: 1.5em;
+  background-color: #844126;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+}
+.shop__chickenThigh--isFirst {
+  left: 0.9375em;
+}
+.shop__chickenThigh--isSecond {
+  left: 2.375em;
+}
+.shop__chickenThigh--isThird {
+  right: 0.9375em;
+}
+.shop__chickenThigh--isFourth {
+  right: 2.375em;
+}
+.shop__beefThigh {
+  position: absolute;
+  top: -0.3125em;
+  left: 5.375em;
+  height: 1.125em;
+  width: 1.125em;
+  border: 0.25em solid #b3b5b4;
+  border-bottom: 0;
+  border-right: 0;
+  border-radius: 1.125em 0 0 0;
+}
+.shop__beefThigh::before {
+  content: "";
+  position: absolute;
+  bottom: -2.8125em;
+  left: -0.75em;
+  width: 1.3125em;
+  height: 2.9375em;
+  border-radius: 150% 150% 1.875em 1.875em;
+  background-color: #91553d;
+  z-index: 1;
+}
+.shop__beefThighSecondary {
+  position: absolute;
+  bottom: -2.8125em;
+  left: -0.75em;
+  width: 1.3125em;
+  height: 2.9375em;
+}
+.shop__beefThighSecondary::before, .shop__beefThighSecondary::after {
+  content: "";
+  position: absolute;
+  top: -0.125em;
+  left: -0.875em;
+  width: inherit;
+  height: inherit;
+  border-radius: 150% 150% 1.875em 1.875em;
+  transform: rotate(30deg);
+  background-color: #811b17;
+}
+.shop__beefThighSecondary::after {
+  left: unset;
+  right: -0.875em;
+  transform: rotate(-30deg);
+  background-color: #7d381b;
+}
+.shop__hotDog {
+  position: absolute;
+  top: -0.0625em;
+  height: 1.25em;
+  width: 0.125em;
+  background-color: #b3b5b4;
+}
+.shop__hotDog::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -3.375em;
+  width: 0.6875em;
+  height: 3.5625em;
+  border-radius: 0.6875em;
+  background: repeating-linear-gradient(-45deg, transparent, transparent 0.3125em, #a87a7d 0.3125em, #a87a7d 0.625em);
+  background-color: #83333e;
+}
+.shop__hotDog--isFirst {
+  right: 5.625em;
+}
+.shop__hotDog--isSecond {
+  right: 6.5625em;
+}
+.shop__hotDog--isThird {
+  right: 7.5em;
+}
+.shop__frontProductsGroup--isSecond {
+  bottom: 2.1875em;
+  top: unset;
+  width: 5.75em;
+  right: 0;
+}
+.shop__jar {
+  position: absolute;
+  bottom: 0.4375em;
+  right: 0.8125em;
+  width: 1.5em;
+  height: 2em;
+  background-color: #ae4d44;
+  border-radius: 1.5em 1.5em 1em 1em;
+}
+.shop__jar::after, .shop__jar::before {
+  content: "";
+  background-color: #e3896e;
+}
+.shop__jar::before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 0.875em;
+  height: 0.875em;
+  border-radius: 50%;
+}
+.shop__jar::after {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 100%;
+  height: 0.3125em;
+}
+.shop__jarCover {
+  position: absolute;
+  top: -0.4375em;
+  width: 100%;
+  height: 0.25em;
+  border-radius: 0.25em;
+  background-color: #fbd5cc;
+}
+.shop__jarCover::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.25em;
+  height: 0.1875em;
+  width: 90%;
+  background-color: #f78167;
+}
+.shop__jarCover::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.375em;
+  width: 1.375em;
+  color: transparent;
+  border-bottom: 0.5625em #fbd5cc;
+  border-left: 0.1875em;
+  border-right: 0.1875em;
+  border-style: solid;
+}
+.shop__steak {
+  position: absolute;
+  bottom: 2.0625em;
+  left: 1.25em;
+  width: 0.9375em;
+  height: 0.9375em;
+  border: 0.25em solid #c8a494;
+  border-bottom: 0;
+  border-right: 0;
+  border-radius: 0.9375em 0 0 0;
+}
+.shop__steak::before {
+  content: "";
+  position: absolute;
+  top: 0.5em;
+  left: -0.4375em;
+  width: 1.5em;
+  height: 2.1875em;
+  border-radius: 1.5em 0 0.625em 0.625em;
+  transform: rotate(-57deg);
+  background-color: #ae4d44;
+}
+.shop__steak--isFirst {
+  z-index: 1;
+}
+.shop__steak--isSecond {
+  transform: scaleX(-1);
+  border-color: #9e7861;
+}
+.shop__steak--isSecond::before {
+  background-color: #9b2325;
+}
+.shop__frontProductsGroup--isThird {
+  width: 12.125em;
+  height: 0.75em;
+  bottom: 0;
+  left: 1.1875em;
+}
+.shop__cowLeg {
+  position: absolute;
+  top: -3.125em;
+  left: 1.875em;
+  width: 5.625em;
+  height: 2.5em;
+  border-radius: 100% 1.875em 1.875em 100%;
+  transform: rotate(19deg);
+  background-color: #844126;
+}
+.shop__cowLeg::after, .shop__cowLeg::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.shop__cowLeg::before {
+  right: 0.1875em;
+  width: 1.25em;
+  height: calc(100% - 0.625em);
+  border-radius: 1.25em;
+  background-color: #9b2325;
+}
+.shop__cowLeg::after {
+  right: 0.4375em;
+  width: 0.625em;
+  height: 0.9375em;
+  border-radius: 0.3125em;
+  background-color: #f5b4a2;
+}
+.shop__cowLegOuter {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  left: -0.8125em;
+  width: 1.25em;
+  height: 0.5em;
+  background-color: #a77a67;
+  z-index: 1;
+}
+.shop__cowLegOuter::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  right: 0;
+  width: 0.625em;
+  height: 1.25em;
+  border-radius: 0.625em 0 0 0.625em;
+  background-color: #844126;
+}
+.shop__cowLegOuter::after {
+  content: "";
+  position: absolute;
+  top: -0.25em;
+  left: -0.3125em;
+  height: 0.625em;
+  width: 0.625em;
+  border-radius: 50%;
+  color: #a77a67;
+  background-color: currentColor;
+  box-shadow: 0 0.375em;
+}
+.shop__cowLegStand {
+  position: absolute;
+  bottom: -1.5625em;
+  width: 0.25em;
+  height: 3.0625em;
+  transform: rotate(-19deg);
+  background-color: #8f8b8a;
+}
+.shop__frontBottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 3.125em;
+  background: linear-gradient(#ffd48f 0.75em, #2c1c0f 0.75em, #2c1c0f 0.9375em, #9f7454 0.9375em, #9f7454 1.5em, #2c1c0f 1.5em, #2c1c0f 1.6875em, #4e2a12 1.6875em);
+}
+.shop__door {
+  position: relative;
+}
+.shop__doorTop {
+  width: 100%;
+  height: 7.0625em;
+  position: relative;
+  overflow: hidden;
+  background-color: #342123;
+}
+.shop__doorTop::after {
+  content: "";
+  position: absolute;
+  height: 150%;
+  width: 1.875em;
+  color: rgba(255, 255, 255, 0.1);
+  background-color: currentColor;
+  transform: rotate(45deg);
+  box-shadow: -1.875em 0 0 -0.625em;
+  z-index: 1;
+  top: -2.125em;
+  box-shadow: -1.875em 0 0 -0.625em, 2.875em 0 0 -0.625em;
+}
+.shop__doorTopShapes {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.875em;
+  height: 2.375em;
+  width: 2.375em;
+  border-radius: 50%;
+  background-color: #4f3536;
+}
+.shop__doorTopShapes::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.9375em;
+  width: 2.8125em;
+  height: 0.75em;
+  border-radius: 0.75em;
+  background-color: #4f3536;
+}
+.shop__doorBottom {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 4.5625em;
+  background-color: #4e2a12;
+  box-shadow: 0 -0.625em #352315;
+}
+.shop__doorBottom::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -1.5em;
+  width: 6.125em;
+  height: 0.9375em;
+  border-radius: 0.9375em;
+  background-color: #ffd48f;
+}
+.shop__doorBottomPattern {
+  display: block;
+  margin: auto;
+  width: 4.3125em;
+  height: 100%;
+  background-color: #a26330;
+  position: relative;
+  overflow: hidden;
+}
+.shop__doorBottomPattern::before {
+  content: "";
+  position: absolute;
+  bottom: 0.5em;
+  left: calc((100% - 2.5em) / 2);
+  width: 1.25em;
+  height: 3.125em;
+  color: #a05132;
+  background-color: #804d1e;
+  box-shadow: 1.25em 0.5em #ba865f, -1.25em -1.625em, 2.5em -0.9375em;
+}
+.shop__floor {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 100%;
+  height: 1.625em;
+  background-color: #343434;
+}
+.shop__grass {
+  position: absolute;
+  bottom: 0;
+  width: 3.75em;
+  height: 1.875em;
+  border-radius: 1.875em 1.875em 0 0;
+  background-color: #33b04a;
+  box-shadow: -2.9375em -0.5em 0 0.5em #1b7e3e;
+}
+.class__shopFlowerContainer {
+  position: absolute;
+  bottom: 0;
+  right: -5.8125em;
+}
+.class__shopFlower {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -3.5625em;
+  width: 7.5em;
+  height: 3.75em;
+  border-radius: 3.75em 3.75em 0 0;
+  background-color: #1b7e3e;
+}
+.class__shopFlower::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 3.75em;
+  height: 1.875em;
+  border-radius: 1.875em 1.875em 0 0;
+  background-color: #33b04a;
+}
+.class__shopFlowerLeaf {
+  position: absolute;
+  width: 2em;
+  height: 2em;
+  border-radius: 2em 0;
+  background-color: #2d9c42;
+}
+.class__shopFlowerLeaf:nth-child(1) {
+  top: -0.9375em;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
+}
+.class__shopFlowerLeaf:nth-child(2) {
+  transform: rotate(-90deg);
+}
+.class__shopFlowerLeaf:nth-child(3) {
+  right: 0;
+  transform: rotate(180deg);
+}
+.class__shopFlowerPot {
+  position: relative;
+  bottom: -0.26875em;
+  transform: perspective(0.625em) rotateX(-2deg);
+  width: 7.3125em;
+  height: 4.625em;
+  background-color: #811b17;
+}
+.class__shopFlowerPot::before {
+  content: "";
+  position: absolute;
+  width: 100%;
+  height: 0.5em;
+  background-color: #9c9396;
+  z-index: 1;
+}
+.class__shopFlowerPot::after {
+  content: "";
+  display: block;
+  width: 50%;
+  height: 100%;
+  background-color: #b82f27;
+}
+.shop__menuBoard {
+  position: absolute;
+  bottom: 2.0625em;
+  left: -7.3125em;
+  width: 6.625em;
+  height: 6.25em;
+  border: 0.75em solid #91553d;
+  box-sizing: border-box;
+  background-color: #282627;
+}
+.shop__menuBoard::before, .shop__menuBoard::after {
+  content: "";
+  position: absolute;
+  bottom: -2.8125em;
+  width: 1.0625em;
+  height: 2.0625em;
+  background-color: #91553d;
+}
+.shop__menuBoard::after {
+  right: 0;
+}
+.shop__menuBoardInner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: calc((100% - ((1.0625em * 3) + 0.375em)) / 2);
+  width: 3.8125em;
+  height: 1.0625em;
+  color: #feebcb;
+  background-color: currentColor;
+  box-shadow: 0 2.5em;
+}
+.shop__menuBoardInner::before {
+  content: "";
+  position: absolute;
+  bottom: -1.25em;
+  width: 2.625em;
+  height: 100%;
+  background-color: inherit;
+}
+.shop__outerProducts {
+  position: absolute;
+  bottom: 0;
+  right: -9.1875em;
+  width: 8.875em;
+  height: 15.75em;
+  border: 1.125em solid #4e2a12;
+  border-bottom-color: transparent;
+  box-sizing: border-box;
+}
+.shop__outerProducts::before {
+  content: "";
+  position: absolute;
+  top: 1.125em;
+  height: 0.5625em;
+  width: 100%;
+  background-color: #4e2a12;
+}
+.shop__outerProducts::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -1.125em;
+  width: calc(100% + 2.25em);
+  height: 1.125em;
+  background-color: #80765d;
+}
+.shop__outerProductsMeat {
+  position: absolute;
+  top: 2.1875em;
+  width: 2.0625em;
+  height: 2.75em;
+  border: 0.1875em solid #d49d98;
+  box-sizing: border-box;
+  border-radius: 2.0625em 0.625em 2.0625em 0.625em;
+  background-color: #9b2325;
+  transform: rotate(-31deg);
+}
+.shop__outerProductsMeat:nth-child(1) {
+  left: 0.9375em;
+}
+.shop__outerProductsMeat:nth-child(2) {
+  left: 2.1875em;
+}
+.shop__outerProductsMeat:nth-child(3) {
+  left: 3.4375em;
+}
+.shop__outerProductsMeat::after {
+  content: "";
+  position: absolute;
+  bottom: 0.5em;
+  left: 0.1875em;
+  width: 0.625em;
+  height: 0.625em;
+  border-radius: 50%;
+  background-color: #f4e0e2;
+}
+.shop__outerProductsMeat::before {
+  content: "";
+  position: absolute;
+  top: -1.4375em;
+  right: -0.125em;
+  width: 0.25em;
+  height: 1.875em;
+  border-radius: 0.25em;
+  transform: rotate(30deg);
+  background-color: #aaaca9;
+}
+.links {
+  font-size: 1.5em;
+  width: 8em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-height: 700px) {
+  .links {
+    display: none;
+  }
+}
+.link__item {
+  text-decoration: none;
+  position: relative;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.link__item:hover {
+  opacity: 1;
+}
+.link__item--isActive {
+  opacity: 1;
+  pointer-events: none;
+  cursor: default;
+}
+body {
+  display: grid;
+  height: 100vh;
+  margin: 0;
+  place-items: center center;
+  background-color: #fef2dc;
+}
+
+
+</style>
+
+<body>
+  <div class="shop">
+  <div class="shop__nameContainer">
+    <span class="shop__name">Meat</span>
+  </div>
+
+  <div class="shop__roofDecal">
+    <div class="shop__roofDecalSquare"><span class="shop__roofDecalSquareCutOut"></span></div>
+    <div class="shop__roofDecalSquare"><span class="shop__roofDecalSquareCutOut"></span></div>
+  </div>
+
+  <!-- clip-path is used on .shop__roof, can't put .shop__roofShadow as child :( -->
+  <div class="shop__roof"></div>
+  <span class="shop__roofShadow"></span>
+
+  <div class="shop__frontContainer">
+
+    <div class="shop__front">
+      <div class="shop__frontTop">
+        <div class="shop__frontProductsGroup shop__frontProductsGroup--isFirstGroup">
+          <span class="shop__chickenThigh shop__chickenThigh--isFirst"></span>
+          <span class="shop__chickenThigh shop__chickenThigh--isSecond"></span>
+          <span class="shop__chickenThigh shop__chickenThigh--isThird"></span>
+          <span class="shop__chickenThigh shop__chickenThigh--isFourth"></span>
+
+          <span class="shop__hotDog shop__hotDog--isFirst"></span>
+          <span class="shop__hotDog shop__hotDog--isSecond"></span>
+          <span class="shop__hotDog shop__hotDog--isThird"></span>
+
+          <div class="shop__beefThigh">
+            <span class="shop__beefThighSecondary"></span>
+          </div>
+        </div>
+
+        <div class="shop__frontProductsGroup shop__frontProductsGroup--isSecond">
+          <div class="shop__jar"><span class="shop__jarCover"></span></div>
+
+          <span class="shop__steak shop__steak--isFirst"></span>
+          <span class="shop__steak shop__steak--isSecond"></span>
+        </div>
+
+        <div class="shop__frontProductsGroup shop__frontProductsGroup--isThird">
+          <div class="shop__cowLeg">
+            <span class="shop__cowLegOuter"></span>
+            <span class="shop__cowLegStand"></span>
+          </div>
+        </div>
+      </div>
+      <div class="shop__frontBottom"></div>
+    </div>
+
+    <div class="shop__door">
+      <div class="shop__doorTop"><span class="shop__doorTopShapes"></span></div>
+      <div class="shop__doorBottom"><span class="shop__doorBottomPattern"></span></div>
+    </div>
+  </div>
+
+  <div class="shop__floor"></div>
+
+  <!-- end shops inner elements -->
+
+  <div class="shop__menuBoard">
+    <span class="shop__menuBoardInner"></span>
+  </div>
+
+  <div class="shop__outerProducts">
+    <span class="shop__outerProductsMeat"></span>
+    <span class="shop__outerProductsMeat"></span>
+    <span class="shop__outerProductsMeat"></span>
+  </div>
+
+  <div class="shop__grass"></div>
+
+  <div class="class__shopFlowerContainer">
+    <div class="class__shopFlower">
+      <span class="class__shopFlowerLeaf"></span>
+      <span class="class__shopFlowerLeaf"></span>
+      <span class="class__shopFlowerLeaf"></span>
+    </div>
+    <div class="class__shopFlowerPot"></div>
+  </div>
+</div>
+
+<div class="links">
+  <a class="link__item" href="https://codepen.io/bertdida/full/vzaOzv/" target="_blank">👨‍🌾</a>
+  <a class="link__item link__item--isActive" href="https://codepen.io/bertdida/full/jvXPVx/" target="_blank">🥩</a>
+  <a class="link__item" href="https://codepen.io/bertdida/full/RYmrOB/" target="_blank">👲</a>
+  <a class="link__item" href="https://codepen.io/bertdida/full/gdVaPV/" target="_blank">🌺</a>
+</div>
+  
+  
+</body>
+
+</html>

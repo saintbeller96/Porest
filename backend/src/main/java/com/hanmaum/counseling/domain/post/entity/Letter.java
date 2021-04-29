@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
@@ -18,16 +19,33 @@ public class Letter {
     @Column(name = "writer_id")
     private Long writerId;
 
-    @Column(name = "content", columnDefinition="TEXT")
-    private String content;
+    @Embedded
+    private Form form;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "story_id")
-    private Story story;
+    @JoinColumn(name = "post_id")
+    private Posts post;
 
     @OneToOne(mappedBy = "letter")
     private Reply reply;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public Letter(){}
+
+    @Builder
+    public Letter(Long writerId, String title, String content, Posts post) {
+        this.writerId = writerId;
+        this.form = new Form(title, content);
+        this.post = post;
+    }
+    public static Letter write(Long writerId, String title, String content, Posts post){
+        return Letter.builder()
+                .writerId(writerId)
+                .title(title)
+                .content(content)
+                .post(post)
+                .build();
+    }
 }
