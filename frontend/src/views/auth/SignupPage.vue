@@ -38,7 +38,7 @@
       </div>
     </article>
     <br />
-    <button :disabled="!checkForm">회원가입하기</button>
+    <button :disabled="!checkForm" @click="signUp">회원가입하기</button>
     <br />
     <p @click="goToLogin">로그인 페이지 이동</p>
   </section>
@@ -82,6 +82,9 @@ export default {
   methods: {
     goToLogin() {
       this.$router.push({ name: 'Login' });
+    },
+    signUp() {
+      console.log(this.email, this.password1);
     },
   },
 };
