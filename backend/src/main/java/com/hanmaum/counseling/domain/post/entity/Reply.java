@@ -17,10 +17,10 @@ public class Reply {
     @Column(name = "writer_id")
     private Long writerId;
 
-    @Column(name = "content", columnDefinition="TEXT")
-    private String content;
+    @Embedded
+    private Form form;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "letter_id")
     private Letter letter;
 
