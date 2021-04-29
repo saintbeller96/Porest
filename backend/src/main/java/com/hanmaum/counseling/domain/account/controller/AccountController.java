@@ -45,7 +45,8 @@ public class AccountController {
     @PostMapping("/login")
     public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request){
         JwtTokenDto result = accountService.findByEmailAndPassword(request);
-        return ResponseEntity.ok(result);
+        if(result != null) return ResponseEntity.ok(result);
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PostMapping("/email-check")
