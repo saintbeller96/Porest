@@ -16,7 +16,7 @@
       </button>
     </form>
     <div v-for="(room, index) in rooms" :key="index">
-      <div @click="moveToCheckIn(room.id)">{{ room }}</div>
+      <div @click="moveToCheckIn(room.id)">{{ room.name }}</div>
       <span @click="deleteRoom(room.id)">Delete</span>
     </div>
   </div>
