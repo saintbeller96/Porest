@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<style>
+  body {
+  height: 100vh;
+  display: grid;
+  place-items: center;
+  margin: 0;
+  background-color: #fef2dc;
+}
+.character {
+  font-size: 25px;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: max-content;
+}
+.character__head {
+  position: relative;
+  width: 7.1875em;
+  height: 9.375em;
+  border-radius: 7.1875em 7.1875em 0 0;
+  background-color: #d3d3d3;
+  display: flex;
+  justify-content: center;
+}
+.character__head::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 7.5em;
+  height: 0.75em;
+  background-color: #e53838;
+}
+.character__helmet {
+  position: absolute;
+  top: 1.375em;
+  width: 6.875em;
+  height: 6.875em;
+  border-radius: 50%;
+  background-color: #b75615;
+  box-shadow: inset 0.625em 0.625em 0 0.625em #c16425, 0 -0.375em #a5a5a5;
+}
+.character__helmet::before {
+  content: "";
+  position: absolute;
+  top: 1.25em;
+  left: 1.25em;
+  width: 1.875em;
+  height: 1.875em;
+  border-radius: 50%;
+  background-color: #e87d34;
+}
+.character__communications {
+  position: absolute;
+  top: 3.5625em;
+  width: 100%;
+  height: 2.5em;
+  z-index: -1;
+}
+.character__communications::before, .character__communications::after {
+  content: "";
+  position: absolute;
+  width: 0.8125em;
+  height: 2.5em;
+  border-radius: 0.3125em 0 0 0.3125em;
+  background-color: #cccccc;
+}
+.character__communications::before {
+  left: -0.625em;
+}
+.character__communications::after {
+  right: -0.625em;
+  transform: scaleX(-1);
+}
+.character__body {
+  width: 11.25em;
+  height: 5em;
+  border-radius: 2.1875em 2.1875em 0 0;
+  background-color: #d3d3d3;
+  display: flex;
+  justify-content: center;
+  z-index: 1;
+}
+.character__controls {
+  position: absolute;
+  bottom: 0;
+  width: 5.9375em;
+  height: 4.375em;
+  border-radius: 0.625em 0.625em 0 0;
+  background-color: #e2e2e2;
+}
+.character__controls:before {
+  content: "";
+  position: absolute;
+  left: -0.8125em;
+  bottom: 0.625em;
+  width: 1.875em;
+  height: 1.875em;
+  border-radius: 50%;
+  background-color: #1cb0f6;
+  box-shadow: 5.8125em 0 #e53838;
+  z-index: -1;
+}
+.character__controls::after {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4.6875em;
+  height: 1.125em;
+  border-radius: 0.3125em 0.3125em 0 0;
+  background-color: #d3d3d3;
+}
+.character__controlsInner {
+  position: absolute;
+  left: 0.625em;
+  top: 0.625em;
+  width: 2.1875em;
+  height: 2.1875em;
+  border-radius: 50%;
+  background-color: #1cb0f6;
+}
+.character__controlsInner::before {
+  content: "";
+  position: absolute;
+  top: -0.3125em;
+  right: 0.3125em;
+  width: 0.9375em;
+  height: 1.875em;
+  background-color: #e53838;
+  clip-path: polygon(50% 0, 100% 100%, 50% 1.25em, 0 100%);
+  transform: rotate(45deg);
+}
+.character__controlsInner::after {
+  content: "";
+  position: absolute;
+  right: -2.5em;
+  width: inherit;
+  height: inherit;
+  border-radius: 0.3125em;
+  background-color: #d3d3d3;
+}
+.character__lifeSupport {
+  position: absolute;
+  bottom: 0;
+  width: 10em;
+  height: 12.5em;
+  border-radius: 1.25em 1.25em 0 0;
+  color: #afafaf;
+  background-color: currentColor;
+  z-index: -1;
+}
+.character__lifeSupport::before {
+  content: "";
+  position: absolute;
+  bottom: 1.5625em;
+  left: -1.4375em;
+  width: 2.9375em;
+  height: 5.625em;
+  border: 0.9375em solid;
+  border-radius: 1.875em 0 0 1.875em;
+  box-sizing: border-box;
+}
+
+</style>
+
+<body>
+  <div class="character">
+  <div class="character__head">
+    <div class="character__helmet"></div>
+    <div class="character__communications"></div>
+  </div>
+  <div class="character__body">
+    <div class="character__controls">
+      <div class="character__controlsInner"></div>
+    </div>
+  </div>
+  <div class="character__lifeSupport"></div>
+</div>
+</body>
+</html>

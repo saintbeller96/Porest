@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<style>
+.shop {
+  font-size: 15px;
+  position: relative;
+  width: 26.313em;
+  height: 32.25em;
+  box-sizing: border-box;
+}
+.shop__roof {
+  position: relative;
+  width: 100%;
+  height: 12.625em;
+  z-index: 1;
+}
+.shop__roofPeak {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -2.5625em;
+  width: 17.5em;
+  height: 2.5625em;
+  background-color: #c73828;
+  clip-path: polygon(0 100%, 0 1.5em, 50% 0, 100% 1.5em, 100% 100%);
+}
+.shop__roofInner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.shop__roofInner::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.1875em;
+  background-color: #c73828;
+  z-index: 1;
+}
+.shop__roofTilesContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.9375em;
+  width: 15.75em;
+  height: 5.6875em;
+  z-index: 2;
+}
+.shop__roofTiles {
+  position: absolute;
+  width: 1.75em;
+  height: inherit;
+  border-radius: 1.6875em;
+  color: #585173;
+  background-color: currentColor;
+  box-shadow: 0 0, 3.5em 0, 7em 0, 10.5em 0, 14em 0;
+}
+.shop__roofTiles::after {
+  content: "";
+  width: 1.75em;
+  height: 1.75em;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: -1.75em;
+  color: #372c3c;
+  background-color: currentColor;
+  box-shadow: 0 0, 1.75em 0 #211428, 3.5em 0, 5.25em 0 #211428, 7em 0, 8.75em 0 #211428, 10.5em 0, 12.25em 0 #211428, 14em 0, 15.75em 0 #211428, 17.5em 0;
+}
+.shop__roofTiles::before {
+  content: "";
+  position: absolute;
+  top: 0.9375em;
+  left: 1.765625em;
+  width: 1.71875em;
+  height: 0.875em;
+  border-radius: 0 0 0.875em 0.875em;
+  color: #211428;
+  background-color: currentColor;
+  box-shadow: 0 0, 3.5em 0, 7em 0, 10.5em 0;
+}
+.shop__roofTented {
+  width: inherit;
+  height: inherit;
+  position: absolute;
+  overflow: hidden;
+}
+.shop__roofTented::after, .shop__roofTented::before {
+  content: "";
+  width: var(--cut-size);
+  height: var(--cut-size);
+  border-radius: 50%;
+  position: absolute;
+  bottom: 1.9375em;
+  box-shadow: 0 0 0 var(--cut-size) #372c3c;
+}
+.shop__roofTented::before {
+  left: var(--horizontal-position);
+}
+.shop__roofTented::after {
+  right: var(--horizontal-position);
+}
+.shop__roofInner--isFirstTier {
+  --cut-size: 9.375em;
+  --horizontal-position: -3.9375em;
+  width: 26.5625em;
+  height: 6.0625em;
+  z-index: 1;
+}
+.shop__roofInner--isSecondTier {
+  --cut-size: 12.5em;
+  --horizontal-position: -4.75em;
+  bottom: 0;
+  width: 36.75em;
+  height: 6.625em;
+  overflow: hidden;
+}
+.shop__nameContainer {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 2.5em;
+  width: 20em;
+  height: 5.1875em;
+  border: 0.5em solid #f49e37;
+  box-sizing: border-box;
+  background-color: #33222c;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.shop__name {
+  font-family: Tahoma, Geneva, sans-serif;
+  font-size: 3em;
+  color: #f49e37;
+  text-transform: uppercase;
+}
+.shop__body {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 19.75em;
+  background-color: #c73828;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end;
+}
+.shop__body > div:not(.shop__floor) {
+  position: relative;
+  width: 6.5em;
+  height: 14.875em;
+  margin-bottom: 3.0625em;
+}
+.shop__body::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  width: 100%;
+  height: 1.3125em;
+  background-color: #64100e;
+  box-shadow: 0 10.3125em #922520;
+}
+.shop__windowUpper, .shop__windowLower {
+  width: 100%;
+  border: 0.5625em solid #f27768;
+  box-sizing: border-box;
+}
+.shop__windowUpper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  height: 8.9375em;
+  background-color: #35212a;
+}
+.shop__windowUpper::before {
+  content: "";
+  position: absolute;
+  top: -3.6875em;
+  left: 2.1875em;
+  height: 150%;
+  width: 1.875em;
+  color: rgba(255, 255, 255, 0.1);
+  background-color: currentColor;
+  transform: rotate(45deg);
+  box-shadow: -1.875em 0 0 -0.625em;
+  z-index: 1;
+  box-shadow: -1.875em 0 0 -0.625em, 2.8125em 1.25em 0 -0.625em;
+}
+.shop__productDivider {
+  position: relative;
+  margin-top: 1.25em;
+  height: 3.5625em;
+  width: 100%;
+  border: 0.5625em solid #583948;
+  border-left: 0;
+  border-right: 0;
+  box-sizing: border-box;
+}
+.shop__productDivider::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  left: 0.5625em;
+  width: 1.6875em;
+  height: 90%;
+  border-radius: 1.6875em 1.6875em 0 0;
+  color: #5b3f2a;
+  background-color: currentColor;
+  box-shadow: 2.625em 0;
+}
+.shop__productDivider--isSecond {
+  margin-top: 0;
+  height: 2.5em;
+  border-top: 0;
+}
+.shop__productDivider--isSecond::before {
+  content: none;
+}
+.shop__cup {
+  position: absolute;
+  bottom: 0;
+  left: 0.625em;
+  width: 1.5625em;
+  height: 1.25em;
+  border-radius: 0.3125em 0.3125em 1.5625em 1.5625em;
+  background-color: #848381;
+}
+.shop__cup:nth-of-type(2) {
+  left: 3em;
+}
+.shop__cup::before {
+  content: "";
+  position: absolute;
+  top: 0.125em;
+  right: -0.4375em;
+  width: 0.8125em;
+  height: 0.8125em;
+  border: 0.1875em solid #848381;
+  border-left: 0;
+  box-sizing: border-box;
+  border-radius: 0 0.8125em 0.8125em 0;
+}
+.shop__manekiNeko {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 2.625em;
+  height: 3.875em;
+}
+.shop__manekiNekoHead {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 2.125em;
+  height: 1.5em;
+}
+.shop__manekiNekoHead::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.1875em;
+  width: 1.375em;
+  height: 0.1875em;
+  border-radius: 0.1875em;
+  background-color: #c73828;
+}
+.shop__manekiNekoFace {
+  width: inherit;
+  height: inherit;
+  border-radius: 0.75em 0.75em 0.625em 0.625em;
+  background-color: #ca872e;
+}
+.shop__manekiNekoEyes {
+  width: 100%;
+  position: absolute;
+  display: flex;
+  justify-content: space-evenly;
+}
+.shop__manekiNekoEyes::before, .shop__manekiNekoEyes::after {
+  content: "";
+  width: 0.28125em;
+  height: 0.28125em;
+  border-radius: 50%;
+  display: block;
+  margin-top: 0.375em;
+  background-color: #432f26;
+}
+.shop__manekiNekoNose {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.6875em;
+  width: 0.4375em;
+  height: 0.3125em;
+  border-radius: 0.125em 0.125em 0.1875em 0.1875em;
+  background-color: #432f26;
+}
+.shop__manekiNekoEar {
+  position: absolute;
+  top: -0.4375em;
+  width: 0.75em;
+  height: 1.125em;
+  background-color: #ca872e;
+  border-radius: 0.75em 0.75em 0 0;
+  z-index: -1;
+}
+.shop__manekiNekoEar::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.125em;
+  width: 0.5em;
+  height: 0.9375em;
+  background-color: #de4f47;
+  border-radius: 0.5em 0.5em 0 0;
+}
+.shop__manekiNekoEar--isRight {
+  right: 0;
+}
+.shop__manekiNekoBody {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: calc(100% - 1.6875em);
+  border-radius: 0.9375em 0.9375em 0 0;
+  background-color: #ca872e;
+}
+.shop__manekiNekoApron {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.25em;
+  height: 0.8125em;
+  background-color: #55b293;
+  border-radius: 0 0 0.8125em 0.8125em;
+  overflow: hidden;
+}
+.shop__manekiNekoApron::after {
+  content: "";
+  width: 0.625em;
+  height: 0.625em;
+  border-radius: 50%;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -0.3125em;
+  background-color: #f0bd54;
+}
+.shop__manekiNekoHand {
+  position: absolute;
+  width: 0.75em;
+  height: 1.5625em;
+  border-radius: 0.75em;
+  background-color: #ca872e;
+}
+.shop__manekiNekoHand:not(.shop__manekiNekoHand--isRaised) {
+  top: -0.125em;
+  left: 0.25em;
+  transform: rotate(-30deg);
+  z-index: 2;
+}
+.shop__manekiNekoHand--isRaised {
+  top: -0.9em;
+  right: -0.1875em;
+  height: 1.6875em;
+  background-color: #da9b46;
+}
+.shop__manekiNekoHand--isRaised::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.125em;
+  width: 0.5em;
+  height: 0.375em;
+  border-radius: 0.5em 0.5em 0 0;
+  background-color: #c73828;
+}
+.shop_shop__manekiNekoKobanCoin {
+  position: absolute;
+  bottom: 0;
+  left: 0.8125em;
+  width: 0.75em;
+  height: 1.5625em;
+  border-radius: 0.625em;
+  transform: rotate(-30deg);
+  background-color: #e4ca6b;
+  z-index: 1;
+}
+.shop_shop__manekiNekoKobanCoin::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 0.1875em;
+  width: 0.4375em;
+  height: 0.1875em;
+  color: #4f282d;
+  background-color: currentColor;
+  border-radius: 0.125em;
+  box-shadow: 0 0.3125em, 0 0.625em, 0 0.9375em;
+}
+.shop__manekiNekoFoot {
+  position: absolute;
+  bottom: 0;
+  width: 0.9375em;
+  height: 1.4375em;
+  border-radius: 0.9375em 0.9375em 0 0;
+  background-color: #da9b46;
+}
+.shop__manekiNekoFoot::before {
+  content: "";
+  position: absolute;
+  bottom: 0;
+  width: 0.9375em;
+  height: 0.46875em;
+  background-color: #c73828;
+  border-radius: 0.46875em 0.46875em 0 0;
+}
+.shop__manekiNekoFoot-isRight {
+  right: 0;
+}
+.shop__windowLower {
+  position: absolute;
+  bottom: 0.75em;
+  height: 4.6875em;
+  color: #922520;
+  box-shadow: inset 0.5625em 0, inset 0 0.5625em, 0 0.8125em;
+  overflow: hidden;
+}
+.shop__windowLower::after, .shop__windowLower::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 1.25em;
+  height: 0.5625em;
+  transform: translateY(-50%);
+  background-color: #f27768;
+}
+.shop__windowLower::after {
+  left: unset;
+  right: 0;
+  box-shadow: 0.1875em 0.5625em;
+}
+.shop__windowLower::before {
+  box-shadow: 0.1875em 0.375em 0 0.1875em;
+}
+.shop__windowLowerBox {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) rotate(45deg);
+  width: calc(4.6875em - 2em);
+  height: calc(4.6875em - 2em);
+  border: inherit;
+  box-sizing: border-box;
+  color: #922520;
+  box-shadow: inset 0.5625em 0, 0.5625em 0;
+}
+.shop__door {
+  border: 0.5625em solid #f49e37;
+  border-bottom: 0;
+  padding: 0.5625em;
+  box-sizing: border-box;
+  background-color: #922520;
+}
+.shop__door::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0.5625em;
+  width: 4.25em;
+  height: 4.5625em;
+  background-color: #c73828;
+  box-shadow: 0 -0.875em #64100e;
+}
+.shop__doorGlass {
+  display: block;
+  position: relative;
+  overflow: hidden;
+  width: 4.25em;
+  height: 7.1875em;
+  background-color: #35212a;
+}
+.shop__doorGlass::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 1.6875em;
+  width: 2.5625em;
+  height: 1.5em;
+  background-color: #5c3f43;
+}
+.shop__doorGlass::after {
+  content: "";
+  height: 150%;
+  width: 1.875em;
+  color: rgba(255, 255, 255, 0.1);
+  background-color: currentColor;
+  transform: rotate(45deg);
+  box-shadow: -1.875em 0 0 -0.625em;
+  z-index: 1;
+  position: absolute;
+  left: 1.5625em;
+  top: -2.4375em;
+}
+.shop__floor {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: calc(100% + 4.125em);
+  height: 1.5625em;
+  background-color: #35212a;
+  z-index: 1;
+}
+.shop__floor::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -100%;
+  width: calc(100% - 2.0625em);
+  height: inherit;
+  background-color: #584e59;
+}
+.shop__lantern {
+  position: absolute;
+  width: 0.5em;
+  height: 1.5625em;
+  background-color: #f49e37;
+}
+.shop__lantern::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.5625em;
+  background-color: #33222c;
+}
+.shop__lantern--isVertical {
+  right: -3.625em;
+}
+.shop__lantern--isVertical::before {
+  width: 1.5625em;
+  height: 4.4375em;
+}
+.shop__lantern--isVertical .shop__lanternMain {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 2.0625em;
+  width: 6.0625em;
+  height: 3.375em;
+  border-radius: 3.375em;
+  background-color: #f49e37;
+}
+.shop__lanternMainInner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1.5625em;
+  height: 2.5625em;
+  border-radius: 1.5625em;
+  color: #fec55e;
+  background-color: currentColor;
+}
+.shop__lanternMainInner::before, .shop__lanternMainInner::after {
+  content: "";
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  background-color: inherit;
+}
+.shop__lanternMainInner::before {
+  left: -1.875em;
+  border-radius: 1.5625em 0 0 1.5625em;
+}
+.shop__lanternMainInner::after {
+  right: -1.875em;
+  border-radius: 0 1.5625em 1.5625em 0;
+}
+.shop__lantern--isHorizontal {
+  left: -3.375em;
+}
+.shop__lantern--isHorizontal::before {
+  width: 1.5625em;
+  height: 6.625em;
+}
+.shop__lantern--isHorizontal .shop__lanternMain {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.875em;
+  width: 3.5625em;
+  height: 6em;
+  background-color: #f49e37;
+  border-radius: 3.5625em;
+}
+.shop__lantern--isHorizontal .shop__lanternMain::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1.5em;
+  height: 100%;
+  border-radius: 1.5em;
+  background-color: #fec460;
+}
+.shop__outerProduct {
+  position: absolute;
+  bottom: 0;
+  left: -10em;
+  width: 4.9375em;
+  height: 4.375em;
+  border-radius: 0 0 1.25em 1.25em;
+  background: linear-gradient(to right, #e6a154 50%, #e59442 50%);
+}
+.shop__outerProduct::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 115%;
+  height: 0.75em;
+  border-radius: 0.75em;
+  background-color: #ebb87f;
+}
+.shop__outerProduct--isBig {
+  left: -5.625em;
+  width: 5em;
+  height: 5.625em;
+  background: linear-gradient(to right, #ca872e 50%, #ad6729 50%);
+}
+.shop__outerProduct--isBig::before {
+  background-color: #e6a154;
+}
+.shop__outerProduct--isBig .shop__outerProductInner {
+  background-color: #84246e;
+}
+.shop__outerProductInner {
+  position: absolute;
+  top: -0.9375em;
+  left: 50%;
+  transform: translateX(-50%) rotate(-45deg);
+  width: 3.125em;
+  height: 3.125em;
+  border-radius: 0 1.25em 0 0;
+  background-color: #612d91;
+  z-index: -1;
+}
+.shop__plantContainer {
+  position: absolute;
+  bottom: 0;
+  right: -8.25em;
+  width: 6.5625em;
+  height: 4.5em;
+}
+.shop__plantContainer::before {
+  content: "";
+  width: 10.625em;
+  height: 10.625em;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0;
+  left: -6.9375em;
+  background-color: #2d6548;
+  z-index: -1;
+}
+.shop__plant {
+  width: 6.25em;
+  height: 6.25em;
+  border-radius: 50%;
+  position: absolute;
+  bottom: 0.875em;
+  color: #73bf45;
+  background-color: currentColor;
+  box-shadow: 0 -4.375em 0 -0.625em, 0 -7.9375em 0 -1.5625em;
+}
+.shop__plantPot {
+  display: block;
+  width: inherit;
+  height: inherit;
+  position: relative;
+  bottom: -0.25em;
+  background-color: #19432d;
+  transform: perspective(0.625em) rotateX(-2deg);
+}
+.shop__umbrella {
+  position: absolute;
+  bottom: -1.5em;
+  right: -5em;
+  width: 10.1875em;
+  height: 8.4375em;
+  transform: rotate(56deg);
+  z-index: 2;
+}
+.shop__umbrellaVents {
+  position: absolute;
+  width: 100%;
+  height: 1.75em;
+  background-color: #f0e7f2;
+  clip-path: polygon(0 100%, 50% 0, 100% 100%);
+  z-index: 2;
+}
+.shop__umbrellaVentsInner {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3.9375em;
+  height: 100%;
+  background-color: #fff;
+  clip-path: inherit;
+}
+.shop__umbrellaStretcher {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 1.6875em;
+  width: 4.125em;
+  height: 1.4375em;
+  background-color: #f49e37;
+  clip-path: polygon(0 0, 50% 100%, 100% 0);
+  z-index: 1;
+}
+.shop__umbrellaPole {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 0;
+  width: 0.5625em;
+  height: calc(100% - (1.75em + 0.9375em));
+  background-color: #fac561;
+}
+.shop__umbrellaPole::before {
+  content: "";
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -0.1875em;
+  width: 0.875em;
+  height: 2em;
+  border-radius: 0 0 0.875em 0.875em;
+  background-color: #f49e37;
+}
+.links {
+  font-size: 1.5em;
+  width: 8em;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 45px;
+  display: flex;
+  justify-content: space-between;
+}
+@media screen and (max-height: 700px) {
+  .links {
+    display: none;
+  }
+}
+.link__item {
+  text-decoration: none;
+  position: relative;
+  opacity: 0.3;
+  transition: opacity 0.3s;
+}
+.link__item:hover {
+  opacity: 1;
+}
+.link__item--isActive {
+  opacity: 1;
+  pointer-events: none;
+  cursor: default;
+}
+body {
+  display: grid;
+  height: 100vh;
+  margin: 0;
+  place-items: center center;
+  background-color: #fef2dc;
+}
+
+</style>
+
+
+<body>
+ <div class="shop">
+
+  <div class="shop__roof">
+    <span class="shop__roofPeak"></span>
+
+    <div class="shop__roofInner shop__roofInner--isFirstTier">
+      <span class="shop__roofTented"></span>
+      <div class="shop__roofTilesContainer"><span class="shop__roofTiles"></span></div>
+    </div>
+
+    <div class="shop__roofInner shop__roofInner--isSecondTier"><span class="shop__roofTented"></span></div>
+
+    <div class="shop__nameContainer">
+      <span class="shop__name">Chinese</span>
+    </div>
+  </div>
+
+  <div class="shop__body">
+
+    <div class="shop__window">
+      <div class="shop__windowUpper">
+        <div class="shop__productDivider"></div>
+
+        <span class="shop__cup"></span>
+        <span class="shop__cup"></span>
+      </div>
+      <div class="shop__windowLower">
+        <span class="shop__windowLowerBox"></span>
+      </div>
+    </div>
+
+    <div class="shop__door">
+      <span class="shop__doorGlass"></span>
+    </div>
+
+    <div class="shop__window">
+      <div class="shop__windowUpper">
+        <div class="shop__productDivider shop__productDivider--isSecond">
+          <span class="shop__cup"></span>
+        </div>
+
+        <div class="shop__manekiNeko">
+          <div class="shop__manekiNekoHead">
+            <span class="shop__manekiNekoEar"></span>
+            <span class="shop__manekiNekoEar shop__manekiNekoEar--isRight"></span>
+
+            <div class="shop__manekiNekoFace">
+              <span class="shop__manekiNekoEyes"></span>
+              <span class="shop__manekiNekoNose"></span>
+            </div>
+          </div>
+
+          <div class="shop__manekiNekoBody">
+            <span class="shop__manekiNekoApron"></span>
+
+            <div class="shop__manekiNekoHand"></div>
+            <div class="shop__manekiNekoHand shop__manekiNekoHand--isRaised"></div>
+
+            <span class="shop_shop__manekiNekoKobanCoin"></span>
+
+            <div class="shop__manekiNekoFoot"></div>
+            <div class="shop__manekiNekoFoot shop__manekiNekoFoot-isRight"></div>
+          </div>
+        </div>
+      </div>
+      <div class="shop__windowLower">
+        <span class="shop__windowLowerBox"></span>
+      </div>
+    </div>
+
+    <div class="shop__floor"></div>
+
+  </div>
+  <!-- end shops inner elements -->
+
+  <div class="shop__lantern shop__lantern--isHorizontal">
+    <span class="shop__lanternMain"></span>
+  </div>
+
+  <div class="shop__lantern shop__lantern--isVertical">
+    <div class="shop__lanternMain"><span class="shop__lanternMainInner"></span></div>
+  </div>
+
+  <div class="shop__outerProduct shop__outerProduct--isBig"><span class="shop__outerProductInner"></span></div>
+  <div class="shop__outerProduct"><span class="shop__outerProductInner"></span></div>
+
+  <div class="shop__plantContainer">
+    <span class="shop__plant"></span>
+    <span class="shop__plantPot"></span>
+  </div>
+
+  <div class="shop__umbrella">
+    <div class="shop__umbrellaVents">
+      <span class="shop__umbrellaVentsInner"></span>
+    </div>
+    <span class="shop__umbrellaStretcher"></span>
+    <span class="shop__umbrellaPole"></span>
+  </div>
+
+</div>
+
+<div class="links">
+  <a class="link__item" href="https://codepen.io/bertdida/full/vzaOzv/" target="_blank">👨‍🌾</a>
+  <a class="link__item" href="https://codepen.io/bertdida/full/jvXPVx/" target="_blank">🥩</a>
+  <a class="link__item link__item--isActive" href="https://codepen.io/bertdida/full/RYmrOB/" target="_blank">👲</a>
+  <a class="link__item" href="https://codepen.io/bertdida/full/gdVaPV/" target="_blank">🌺</a>
+</div>
+  
+</body>
+</html>
