@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.post.controller;
 
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.service.StoryService;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
