@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 
@@ -15,6 +16,9 @@ public class Posts {
     @Column(name = "post_id")
     private Long id;
 
+    @Column(name = "to_id")
+    private Long toId;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_id")
     private Story story;
@@ -26,4 +30,13 @@ public class Posts {
     @Column(name = "status")
     @ColumnDefault("'CONNECT'")
     private PostStatus status;
+
+    public Posts(){}
+
+    @Builder
+    public Posts(Story story, Long toId, PostStatus status) {
+        this.story = story;
+        this.toId = toId;
+        this.status = status;
+    }
 }

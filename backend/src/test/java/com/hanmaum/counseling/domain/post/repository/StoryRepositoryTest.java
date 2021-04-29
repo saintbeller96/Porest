@@ -13,6 +13,7 @@ import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;
 import java.util.List;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -24,8 +25,11 @@ class StoryRepositoryTest {
     @Autowired
     StoryRepository storyRepository;
 
+    @Autowired
+    EntityManager em;
+
     @Test
-    void story_pick_test() throws Exception{
+    void story_candidates_test() throws Exception{
         //given
         for(long i = 1; i<100; i++){
             Story story = Story.builder()
@@ -40,7 +44,6 @@ class StoryRepositoryTest {
         List<SimpleStoryDto> candidates = storyRepository.getCandidates(10L);
         //then
         Assertions.assertThat(candidates.size()).isEqualTo(6);
-        candidates.forEach(System.out::println);
     }
 
 }
