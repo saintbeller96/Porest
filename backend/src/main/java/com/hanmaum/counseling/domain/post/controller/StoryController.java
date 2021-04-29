@@ -21,7 +21,7 @@ public class StoryController {
 
     @PostMapping("")
     public ResponseEntity<?> putStory(@RequestBody @Valid SimpleStoryDto storyDto, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        Long userId = null;
         storyService.putStory(storyDto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
