@@ -29,11 +29,6 @@ const routes = [
     name: 'Test',
     component: () => import('@/views/test/Test.vue'),
   },
-  {
-    path: '/3d',
-    name: '3D',
-    component: () => import('@/views/test/3D.vue'),
-  },
 ];
 
 const router = new VueRouter({
