@@ -9,13 +9,14 @@ import java.util.Collection;
 import java.util.Collections;
 
 public class CustomUserDetails implements UserDetails {
-
+    private Long id;
     private String email;
     private String password;
     private Collection<? extends GrantedAuthority> getAuthorities;
 
     public static CustomUserDetails fromUserToCustomUserDetails(User user){
         CustomUserDetails customUserDetails = new CustomUserDetails();
+        customUserDetails.id = user.getId();
         customUserDetails.email = user.getEmail();
         customUserDetails.password = user.getPassword();
         customUserDetails.getAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().getName()));
@@ -25,6 +26,10 @@ public class CustomUserDetails implements UserDetails {
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return getAuthorities;
+    }
+
+    public Long getId() {
+        return id;
     }
 
     @Override
