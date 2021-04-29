@@ -37,27 +37,26 @@ public class AccountController {
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
-        accountService.saveUser(request);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        User user = accountService.saveUser(request);
+        if(user != null)  return ResponseEntity.status(HttpStatus.OK).build();
+        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request){
-        User user = accountService.findByEmailAndPassword(request);
-        String token = jwtProvider.generateToken(user);
-        JwtTokenDto response = JwtTokenDto.builder().token(token).build();
-        return ResponseEntity.status(HttpStatus.OK).body(response);
+        JwtTokenDto result = accountService.findByEmailAndPassword(request);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/email-check")
-    public ResponseEntity<?> emailCheck(@RequestBody EmailCheckDto email){
+    public ResponseEntity<RedundancyDto> emailCheck(@RequestBody @Valid EmailCheckDto email){
         RedundancyDto result = accountService.existEmail(email.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/nickname-check")
-    public ResponseEntity<?> nicknameCheck(@RequestBody NicknameCheckDto nickname){
+    public ResponseEntity<RedundancyDto> nicknameCheck(@RequestBody @Valid NicknameCheckDto nickname){
         RedundancyDto result = accountService.existNickName(nickname.getNickname());
-        return ResponseEntity.status(HttpStatus.OK).body(result);
+        return ResponseEntity.ok(result);
     }
 }
