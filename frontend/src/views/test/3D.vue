@@ -1,7 +1,6 @@
 <template>
   <div class="threed-wrapper">
     <div class="scene">
-      <img src="@/assets/image/34132.eps" alt="" />
     </div>
   </div>
 </template>
