@@ -23,8 +23,8 @@ public class Letter {
     private Form form;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Posts post;
+    @JoinColumn(name = "counsel_id")
+    private Counsel counsel;
 
     @OneToOne(mappedBy = "letter")
     private Reply reply;
@@ -35,17 +35,17 @@ public class Letter {
     public Letter(){}
 
     @Builder
-    public Letter(Long writerId, String title, String content, Posts post) {
+    public Letter(Long writerId, String title, String content, Counsel counsel) {
         this.writerId = writerId;
         this.form = new Form(title, content);
-        this.post = post;
+        this.counsel = counsel;
     }
-    public static Letter write(Long writerId, String title, String content, Posts post){
+    public static Letter write(Long writerId, String title, String content, Counsel counsel){
         return Letter.builder()
                 .writerId(writerId)
                 .title(title)
                 .content(content)
-                .post(post)
+                .counsel(counsel)
                 .build();
     }
 }

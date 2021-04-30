@@ -2,11 +2,8 @@ package com.hanmaum.counseling.domain.post.service.story;
 
 import com.hanmaum.counseling.domain.post.dto.DetailStoryDto;
 import com.hanmaum.counseling.domain.post.dto.FormDto;
-import com.hanmaum.counseling.domain.post.dto.SimplePostDto;
+import com.hanmaum.counseling.domain.post.dto.SimpleCounselDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
-import com.hanmaum.counseling.domain.post.entity.Reply;
-import com.hanmaum.counseling.domain.post.repository.LetterRepository;
-import com.hanmaum.counseling.domain.post.repository.ReplyRepository;
 import com.hanmaum.counseling.domain.post.service.LetterService;
 import com.hanmaum.counseling.domain.post.service.ReplyService;
 import org.assertj.core.api.Assertions;
@@ -41,7 +38,7 @@ class StoryServiceImplTest {
 
         //2. 사연 뽑기
         Long toId = 2L;
-        SimplePostDto simplePostDto = storyService.pickStory(storyId, toId);
+        SimpleCounselDto simplePostDto = storyService.pickStory(storyId, toId);
         Long letterId = simplePostDto.getLetterId();
         Long postId = simplePostDto.getPostId();
 

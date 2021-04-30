@@ -9,17 +9,17 @@ import java.time.LocalDateTime;
 
 @Getter
 @ToString
-public class SimplePostDto {
+public class SimpleCounselDto {
     @NotNull
     private Long postId;
     @NotNull
     private Long letterId;
     private FormDto detail;
 
-    public SimplePostDto(){}
+    public SimpleCounselDto(){}
 
     @Builder
-    public SimplePostDto(Long postId, Long letterId, String title, String content, LocalDateTime date){
+    public SimpleCounselDto(Long postId, Long letterId, String title, String content, LocalDateTime date){
         this.postId = postId;
         this.letterId = letterId;
         this.detail = new FormDto(title, content, date);

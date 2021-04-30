@@ -10,14 +10,14 @@ import java.util.List;
 
 @Entity
 @Getter
-public class Posts {
+public class Counsel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "post_id")
+    @Column(name = "counsel_id")
     private Long id;
 
-    @Column(name = "to_id")
-    private Long toId;
+    @Column(name = "counsellor_id")
+    private Long counsellorId;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_id")
@@ -29,14 +29,14 @@ public class Posts {
     @Enumerated(EnumType.STRING)
     @Column(name = "status")
     @ColumnDefault("'CONNECT'")
-    private PostStatus status;
+    private CounselStatus status;
 
-    public Posts(){}
+    public Counsel(){}
 
     @Builder
-    public Posts(Story story, Long toId, PostStatus status) {
+    public Counsel(Story story, Long counsellorId, CounselStatus status) {
         this.story = story;
-        this.toId = toId;
+        this.counsellorId = counsellorId;
         this.status = status;
     }
 }

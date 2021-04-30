@@ -3,7 +3,7 @@ package com.hanmaum.counseling.domain.post.repository;
 import com.hanmaum.counseling.TestConfig;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.entity.*;
-import com.hanmaum.counseling.domain.post.repository.story.PostContent;
+import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
 import com.hanmaum.counseling.domain.post.repository.story.StoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -65,7 +65,7 @@ class StoryRepositoryTest {
         em.flush();
         em.clear();
         //when
-        List<PostContent> result = storyRepository.getStory(story.getId(), userId);
+        List<CounselContent> result = storyRepository.getStory(story.getId(), userId);
         //then
         result.forEach(System.out::println);
         Assertions.assertThat(result.size()).isEqualTo(8);
@@ -73,15 +73,15 @@ class StoryRepositoryTest {
 
     void setDBCondition(Story story, Long userId){
         for(int k = 1; k<3; k++){
-            Posts post = new Posts(story, userId, PostStatus.CONNECT);
-            em.persist(post);
+            Counsel counsel = new Counsel(story, userId, CounselStatus.CONNECT);
+            em.persist(counsel);
 
             for(int i = 1; i<5; i++){
                 Letter letter = Letter.builder()
                         .writerId(story.getId())
                         .content(k + story.getForm().getContent() + i)
                         .title(k + story.getForm().getTitle() + i)
-                        .post(post)
+                        .counsel(counsel)
                         .build();
                 em.persist(letter);
 

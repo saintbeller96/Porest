@@ -19,7 +19,7 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
-public class PostController {
+public class CounselController {
     private final LetterService letterService;
     private final ReplyService replyService;
 
@@ -43,5 +43,7 @@ public class PostController {
         replyService.writeReply(form, letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
+
+    //Todo 1. 상담 취소, 2. 상담 종료
 
 }

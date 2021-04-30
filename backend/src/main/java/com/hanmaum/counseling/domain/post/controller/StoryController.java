@@ -1,7 +1,7 @@
 package com.hanmaum.counseling.domain.post.controller;
 
 import com.hanmaum.counseling.domain.post.dto.DetailStoryDto;
-import com.hanmaum.counseling.domain.post.dto.SimplePostDto;
+import com.hanmaum.counseling.domain.post.dto.SimpleCounselDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
@@ -41,9 +41,9 @@ public class StoryController {
 
     @ApiOperation("사연 선택")
     @PostMapping("/{storyId}")
-    public ResponseEntity<SimplePostDto> pickStory(@PathVariable("storyId") Long storyId, Authentication auth){
+    public ResponseEntity<SimpleCounselDto> pickStory(@PathVariable("storyId") Long storyId, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        SimplePostDto result = storyService.pickStory(storyId, userId);
+        SimpleCounselDto result = storyService.pickStory(storyId, userId);
         return ResponseEntity.ok(result);
     }
 
@@ -54,4 +54,6 @@ public class StoryController {
         List<DetailStoryDto> result = storyService.getStory(storyId, userId);
         return ResponseEntity.ok(result);
     }
+
+    //Todo 사연 삭제, 사연 공개/비공개 설정
 }

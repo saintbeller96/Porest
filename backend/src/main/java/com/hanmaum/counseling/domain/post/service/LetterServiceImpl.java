@@ -1,10 +1,10 @@
 package com.hanmaum.counseling.domain.post.service;
 
 import com.hanmaum.counseling.domain.post.dto.FormDto;
+import com.hanmaum.counseling.domain.post.entity.Counsel;
 import com.hanmaum.counseling.domain.post.entity.Letter;
-import com.hanmaum.counseling.domain.post.entity.Posts;
 import com.hanmaum.counseling.domain.post.repository.LetterRepository;
-import com.hanmaum.counseling.domain.post.repository.PostRepository;
+import com.hanmaum.counseling.domain.post.repository.post.CounselRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -12,11 +12,11 @@ import org.springframework.stereotype.Repository;
 @RequiredArgsConstructor
 public class LetterServiceImpl implements LetterService{
     private final LetterRepository letterRepository;
-    private final PostRepository postRepository;
+    private final CounselRepository counselRepository;
 
     @Override
-    public Long writeLetter(FormDto form, Long postId, Long userId) {
-        Posts post = postRepository.findById(postId).orElseThrow(
+    public Long writeLetter(FormDto form, Long counselId, Long userId) {
+        Counsel counsel = counselRepository.findById(counselId).orElseThrow(
                 ()->{throw new IllegalStateException();}
         );
 
@@ -24,7 +24,7 @@ public class LetterServiceImpl implements LetterService{
                 .writerId(userId)
                 .content(form.getContent())
                 .title(form.getTitle())
-                .post(post)
+                .counsel(counsel)
                 .build();
 
         Letter saveLetter = letterRepository.save(letter);

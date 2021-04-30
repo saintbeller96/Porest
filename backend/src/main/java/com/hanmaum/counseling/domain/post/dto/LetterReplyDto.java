@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.post.dto;
 
-import com.hanmaum.counseling.domain.post.repository.story.PostContent;
+import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,7 +24,7 @@ public class LetterReplyDto {
         this.reply = new FormDto(replyTitle, replyContent, replyDate);
     }
 
-    public static LetterReplyDto convert(PostContent pc){
+    public static LetterReplyDto convert(CounselContent pc){
         return LetterReplyDto.builder()
                 .letterTitle(pc.getLetter().getTitle())
                 .letterContent(pc.getLetter().getContent())
