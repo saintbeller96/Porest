@@ -1,11 +1,12 @@
 package com.hanmaum.counseling.domain.account.entity;
 
 import lombok.Data;
+import lombok.Getter;
 
 import javax.persistence.*;
 
 @Entity
-@Data
+@Getter
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

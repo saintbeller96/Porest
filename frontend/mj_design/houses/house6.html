@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Document</title>
+</head>
+
+<style>
+*, *:before, *:after {
+  -moz-box-sizing: border-box;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+}
+body {
+  background: #9D8189;
+}
+.canvas {
+  position: relative;
+  background: #B1DBF6;
+  height: 750px;
+  width: 600px;
+  margin: auto;
+  top: 35px;
+}
+.building-container, .building, .trim, .vent, .sign, .shadow, .doors, .door-left, .door-center, .door-right, .patio, .stilt, .flower-pot, .foilage, .stem, .pot, .branch-top, .branch-bottom, .sand {
+  position: absolute;
+}
+.building-container {
+  width: 80%;
+  height: 65%;
+  left: 10%;
+  bottom: 5%;
+}
+.building {
+  background: #F4ACB7;
+  height: 95%;
+  width: 95%;
+  left: 2.5%;
+  top: 2.5%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  overflow: hidden;
+}
+.vent {
+  height: 10%;
+  width: 8%;
+  top: 10%;
+  left: 46%;
+  background: #9D8189;
+  border: 5px #FFE5D9 solid;
+}
+.sign {
+  height: 15%;
+  width: 25%;
+  top: 25%;
+  left: 37.5%;
+  text-align: center;
+  background: #F8EABA;
+  font-family: sugui-bold, sans-serif;
+  font-weight: heavy;
+  font-size: 20pt;
+  border: 5px #9D8189 solid;
+  color: #9D8189;
+}
+.doors {
+  width: 80%;
+  height: 50%;
+  background: #FFE5D9;
+  bottom: 5%;
+  left: 10%;
+}
+.shadow {
+  background: rgba(0, 16, 17, 0.13);
+  width: 100%;
+  height: 150%;
+  left: -50%;
+  top: -50%;
+  transform: rotate(35deg);
+}
+.glass {
+  background: rgba(216, 226, 220, 0.65);
+}
+.door-left {
+  height: 93.33%;
+  width: 30%;
+  left: 3.33%;
+  top: 3.33%;
+}
+.door-center {
+  height: 93.33%;
+  width: 26.66%;
+  left: 36.66%;
+  top: 3.33%;
+}
+.door-right {
+  height: 93.33%;
+  width: 30%;
+  right: 3.33%;
+  top: 3.33%;
+}
+.trim {
+  height: 100%;
+  width: 100%;
+  left: 0%;
+  top: 0%;
+  border-top-left-radius: 50%;
+  border-top-right-radius: 50%;
+  border-top: 15px #FFE5D9 solid;
+  border-left: 15px #FFE5D9 solid;
+  border-right: 15px #FFE5D9 solid;
+}
+.patio {
+  background: #F4ACB7;
+  height: 5%;
+  width: 95%;
+  left: 2.5%;
+  bottom: 2.5%;
+}
+.stilt {
+  height: 100%;
+  width: 5%;
+  background: #F4ACB7;
+  top: 100%;
+}
+.stilt-l {
+  left: 5%;
+}
+.stilt-lc {
+  left: 30%;
+}
+.stilt-r {
+  right: 5%;
+}
+.stilt-rc {
+  right: 30%;
+}
+.flower-pot {
+  width: 10%;
+  height: 22.5%;
+  bottom: 5%;
+  right: 5%;
+}
+.foilage {
+  background: #8FC0A9;
+  top: 0%;
+  height: 50%;
+  width: 100%;
+  border-top-right-radius: 50%;
+  border-top-left-radius: 50%;
+  border-bottom-right-radius: 15px;
+  border-bottom-left-radius: 15px;
+}
+.stem {
+  -webkit-clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  clip-path: polygon(50% 0%, 0% 100%, 100% 100%);
+  height: 85%;
+  bottom: 0%;
+  width: 40%;
+  left: 30%;
+  background: white;
+}
+.branch-top {
+  -webkit-clip-path: polygon(50% 0%, 100% 100%, 100% 70%);
+  clip-path: polygon(50% 0%, 100% 100%, 100% 70%);
+  width: 75%;
+  height: 30%;
+  background: white;
+  top: 15%;
+  right: 50%;
+}
+.branch-bottom {
+  -webkit-clip-path: polygon(100% 0, 0 71%, 0 100%);
+  clip-path: polygon(100% 0, 0 71%, 0 100%);
+  width: 35%;
+  height: 13%;
+  background: white;
+  top: 19%;
+  left: 50%;
+}
+.pot {
+  background: #9D8189;
+  bottom: 0%;
+  height: 40%;
+  width: 100%;
+}
+.sand {
+  bottom: 0%;
+  left: 0%;
+  background: #F8EABA;
+  height: 18%;
+  width: 100%;
+}
+@media (max-width: 600px) {
+  .canvas {
+    width: 250px;
+    height: 312px;
+  }
+  .trim {
+    border-top: 6px #FFE5D9 solid;
+    border-left: 6px #FFE5D9 solid;
+    border-right: 6px #FFE5D9 solid;
+  }
+  .vent {
+    border: 2px #FFE5D9 solid;
+  }
+  .sign {
+    font-weight: heavy;
+    font-size: 8pt;
+    border: 2px #9D8189 solid;
+  }
+}
+@media (max-height: 750px) {
+  .canvas {
+    width: 250px;
+    height: 312px;
+  }
+  .trim {
+    border-top: 6px #FFE5D9 solid;
+    border-left: 6px #FFE5D9 solid;
+    border-right: 6px #FFE5D9 solid;
+  }
+  .vent {
+    border: 2px #FFE5D9 solid;
+  }
+  .sign {
+    font-weight: heavy;
+    font-size: 8pt;
+    border: 2px #9D8189 solid;
+  }
+}
+
+</style>
+
+ 
+<body>
+  <body>
+  <div class="canvas">
+    <div class="sand"></div>
+    <div class="building-container">
+      <div class="building">
+        <div class="vent"></div>
+        <div class="sign">MOTEL OFFICE</div>
+        <div class="doors">
+          <div class="glass door-left">
+          </div>
+          <div class="glass door-center">
+          </div>
+          <div class="glass door-right">
+          </div>          
+        </div>
+        <div class="flower-pot">
+          <div class="foilage"></div>
+          <div class="stem">
+          </div>
+          <div class="branch-top">
+          </div>
+          <div class="branch-bottom">
+          </div>
+          <div class="pot"></div>
+        </div>
+        <div class="shadow"></div>
+        <div class="trim"></div>
+      </div>
+      <div class="patio">
+        <div class="stilt stilt-l">
+        </div>
+        <div class="stilt stilt-lc"></div>
+        <div class="stilt stilt-rc"></div>
+        <div class="stilt stilt-r"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</body>
+</html>
