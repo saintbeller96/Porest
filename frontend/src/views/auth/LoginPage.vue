@@ -63,7 +63,7 @@ export default {
         .then(
           () => {
             console.log('move to home');
-            this.$router.push('/home');
+            this.$router.push('/main');
           },
           error => (this.error = error.message),
         );
