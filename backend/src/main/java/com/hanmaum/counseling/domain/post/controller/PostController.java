@@ -4,6 +4,7 @@ import com.hanmaum.counseling.domain.post.dto.FormDto;
 import com.hanmaum.counseling.domain.post.repository.LetterRepository;
 import com.hanmaum.counseling.domain.post.service.LetterService;
 import com.hanmaum.counseling.domain.post.service.ReplyService;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,7 +28,7 @@ public class PostController {
     public ResponseEntity<String> writeLetter(@RequestBody @Valid FormDto form,
                                               @PathVariable("postId") Long postId,
                                               Authentication auth) {
-        Long userId = null;
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
         letterService.writeLetter(form, postId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
@@ -38,7 +39,7 @@ public class PostController {
                                               @PathVariable("postId") Long postId,
                                              @PathVariable("letterId") Long letterId,
                                               Authentication auth) {
-        Long userId = null;
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
         replyService.writeReply(form, letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
