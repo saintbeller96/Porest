@@ -7,23 +7,21 @@ import lombok.ToString;
 import javax.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 
-/**
- * 사연을 뽑거나 선택할 때 사용할 Dto
- * 작성자: 김종성
- */
 @Getter
 @ToString
-public class SimpleStoryDto {
-
-    private Long storyId;
-
+public class SimplePostDto {
+    @NotNull
+    private Long postId;
+    @NotNull
+    private Long letterId;
     private FormDto detail;
 
-    public SimpleStoryDto(){}
+    public SimplePostDto(){}
 
     @Builder
-    public SimpleStoryDto(Long storyId, String title, String content, LocalDateTime date){
-        this.storyId = storyId;
+    public SimplePostDto(Long postId, Long letterId, String title, String content, LocalDateTime date){
+        this.postId = postId;
+        this.letterId = letterId;
         this.detail = new FormDto(title, content, date);
     }
 }
