@@ -7,14 +7,14 @@
       <article>
         <div>
           <p>email</p>
-          <input type="email" v-model="email" placeholder="이메일 주소를 입력해주세요." />
+          <input type="email" v-model="email" placeholder="이메일 주소를 입력해주세요." autocomplete="on" />
           <p v-if="!isValidEmail" class="error_message">
             잘못된 이메일 양식입니다.
           </p>
         </div>
         <div>
           <p>비밀번호</p>
-          <input type="password" v-model="password" placeholder="6~12자의 영문, 숫자 입력" />
+          <input type="password" v-model="password" placeholder="6~12자의 영문, 숫자 입력" autocomplete="off" />
           <p v-if="!isValidPwd && password.length < 6" class="error_message">6자 이상의 비밀번호를 입력해주세요.</p>
           <p v-else-if="!isValidPwd && password.length > 12" class="error_message">
             12자 이하의 비밀번호를 입력해주세요.
