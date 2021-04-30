@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.entity;
 
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
 
@@ -26,4 +27,13 @@ public class Reply {
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public Reply() {}
+
+    @Builder
+    public Reply(Long writerId, String title, String content, Letter letter) {
+        this.writerId = writerId;
+        this.form = new Form(title, content);
+        this.letter = letter;
+    }
 }

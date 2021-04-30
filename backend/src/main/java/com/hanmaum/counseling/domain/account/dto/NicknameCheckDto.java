@@ -4,7 +4,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.Email;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 
@@ -12,12 +11,11 @@ import javax.validation.constraints.Size;
 @NoArgsConstructor
 public class NicknameCheckDto {
     @NotEmpty
-    @Email
     @Size(max = 20)
     private String nickname;
 
     @Builder
-    public NicknameCheckDto(String nickname) {
+    public NicknameCheckDto(@NotEmpty @Size(max = 20) String nickname) {
         this.nickname = nickname;
     }
 }
