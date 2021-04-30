@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.service.story;
 
+import com.hanmaum.counseling.domain.post.dto.DetailStoryDto;
 import com.hanmaum.counseling.domain.post.dto.LetterReplyDto;
 import com.hanmaum.counseling.domain.post.dto.SimplePostDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
@@ -9,12 +10,14 @@ import com.hanmaum.counseling.domain.post.entity.Posts;
 import com.hanmaum.counseling.domain.post.entity.Story;
 import com.hanmaum.counseling.domain.post.repository.LetterRepository;
 import com.hanmaum.counseling.domain.post.repository.PostRepository;
+import com.hanmaum.counseling.domain.post.repository.story.PostContent;
 import com.hanmaum.counseling.domain.post.repository.story.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional
@@ -43,11 +46,12 @@ public class StoryServiceImpl implements StoryService{
     }
 
     @Override
-    public SimplePostDto pickStory(Long userId, Long storyId) {
+    public SimplePostDto pickStory(Long storyId, Long userId) {
         //사연 찾기
         Story story = storyRepository.findById(storyId).orElseThrow(
                 ()->{throw new IllegalStateException();}
         );
+        story.addPicked();
         //사연의 주인공과 현재 유저를 연결
         Posts post = postRepository.save(new Posts(story, userId, PostStatus.CONNECT));
 
@@ -73,8 +77,24 @@ public class StoryServiceImpl implements StoryService{
     }
 
     @Override
-    public List<LetterReplyDto> getStories(Long storyId, Long userId) {
+    public List<DetailStoryDto> getStory(Long storyId, Long userId) {
+        List<PostContent> postContents = storyRepository.getStory(storyId, userId);
+        List<DetailStoryDto> result = postContents.stream()
+                .collect(Collectors.groupingBy(pc -> pc.getPostId()))
+                .values().stream()
+                .map(this::convertToDetailStory)
+                .collect(Collectors.toList());
+        return result;
+    }
 
-        return null;
+    private DetailStoryDto convertToDetailStory(List<PostContent> pcList){
+        DetailStoryDto result = new DetailStoryDto();
+        Long postId = null;
+        for(PostContent pc : pcList){
+            postId = pc.getPostId();
+            result.getDetail().add(LetterReplyDto.convert(pc));
+        }
+        result.setPostId(postId);
+        return result;
     }
 }

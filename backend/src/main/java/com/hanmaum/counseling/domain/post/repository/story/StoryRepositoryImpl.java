@@ -40,7 +40,7 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
         while(true){
             int i = random.nextInt(ids.size());
             randomSet.add(ids.get(i));
-            if(randomSet.size() == CANDIDATES) break;
+            if(randomSet.size() == CANDIDATES || randomSet.size() == ids.size()) break;
         }
 
         return queryFactory
@@ -61,15 +61,7 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
      */
     @Override
     public List<PostContent> getStory(Long storyId, Long userId) {
-//        //ToDo: SubQuery로 바꾸기
-//        List<Long> ids = queryFactory
-//                .select(posts.id)
-//                .from(posts)
-//                .innerJoin(posts.story, story)
-//                .where(story.id.eq(storyId))
-//                .fetch();
-
-        List<PostContent> result = queryFactory
+        return queryFactory
                 .select(Projections.constructor(PostContent.class,
                         letter.post.id, letter.form.title, letter.form.content, letter.createdAt,
                         reply.form.title, reply.form.content, reply.createdAt
@@ -84,6 +76,5 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
                                 .where(story.id.eq(storyId))
                 ))
                 .fetch();
-        return result;
     }
 }

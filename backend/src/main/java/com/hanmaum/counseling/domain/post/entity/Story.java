@@ -45,4 +45,8 @@ public class Story {
         this.form = new Form(title, content);
         this.isOpened = isOpened;
     }
+
+    public void addPicked() {
+        this.picked+=1;
+    }
 }

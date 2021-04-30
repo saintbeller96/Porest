@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 @RequiredArgsConstructor
 public class LetterServiceImpl implements LetterService{
-    private LetterRepository letterRepository;
-    private PostRepository postRepository;
+    private final LetterRepository letterRepository;
+    private final PostRepository postRepository;
 
     @Override
     public Long writeLetter(FormDto form, Long postId, Long userId) {

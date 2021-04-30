@@ -1,8 +1,11 @@
 package com.hanmaum.counseling.domain.post.controller;
 
+import com.hanmaum.counseling.domain.post.dto.DetailStoryDto;
 import com.hanmaum.counseling.domain.post.dto.SimplePostDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -12,12 +15,14 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 import java.util.List;
 
+@Api(tags = {"Stories"})
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/stories")
 public class StoryController {
     private final StoryService storyService;
 
+    @ApiOperation("사연 등록")
     @PostMapping("")
     public ResponseEntity<?> putStory(@RequestBody @Valid SimpleStoryDto storyDto, Authentication auth){
         Long userId = null;
@@ -25,6 +30,7 @@ public class StoryController {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
+    @ApiOperation("선택할 후보 사연들을 보여줌")
     @GetMapping("/candidates")
     public ResponseEntity<List<SimpleStoryDto>> getCandidates(Authentication auth){
         Long userId = null;
@@ -32,10 +38,19 @@ public class StoryController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("사연 선택")
     @PostMapping("/{storyId}")
     public ResponseEntity<SimplePostDto> pickStory(@PathVariable("storyId") Long storyId, Authentication auth){
         Long userId = null;
-        SimplePostDto result = storyService.pickStory(userId, storyId);
+        SimplePostDto result = storyService.pickStory(storyId, userId);
+        return ResponseEntity.ok(result);
+    }
+
+    @ApiOperation("사연과 관련된 모든 편지-답장을 가져옴")
+    @GetMapping("/{storyId}")
+    public ResponseEntity<List<DetailStoryDto>> getStory(@PathVariable("storyId") Long storyId, Authentication auth){
+        Long userId = null;
+        List<DetailStoryDto> result = storyService.getStory(storyId, userId);
         return ResponseEntity.ok(result);
     }
 }

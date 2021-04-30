@@ -15,7 +15,6 @@ import java.time.LocalDateTime;
 @ToString
 public class SimpleStoryDto {
 
-    @NotNull
     private Long storyId;
 
     private FormDto detail;
