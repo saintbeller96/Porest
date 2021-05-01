@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    redirect: '/main',
+    redirect: '/commingsoon',
   },
   {
     path: '/main',
@@ -73,6 +73,11 @@ const routes = [
     path: '/chat/:hostID/:roomID',
     name: 'Chat',
     component: () => import('@/views/room/ChatRoomPage.vue'),
+  },
+  {
+    path: '/commingsoon',
+    name: 'Commingsoon',
+    component: () => import('@/views/main/CommingsoonPage.vue'),
   },
 ];
 
