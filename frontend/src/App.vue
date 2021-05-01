@@ -35,7 +35,6 @@ export default {
     },
   },
   mounted() {
-    console.log('process', process.env.VUE_APP_FIREBASE_API_KEY);
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
         this.user = user;

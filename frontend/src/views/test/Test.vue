@@ -1,6 +1,6 @@
 <template>
   <div class="text-wrapper">
-    <h1>Scroll</h1>
+    <h1 @click="moveToServer">Scroll</h1>
     <div class="progress">
       <span class="progress-bar"></span>
     </div>
@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
   name: 'Test',
   data() {
@@ -41,6 +42,11 @@ export default {
         cloudWrap.style.transform = 'translate(0,' + scrollTop / 1.4 + 'px)';
       }),
         false;
+    },
+    moveToServer() {
+      axios.get('http://localhost:3000/', { params: { data: '' } }).then(response => {
+        console.log(response);
+      });
     },
   },
 };
