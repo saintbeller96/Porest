@@ -225,7 +225,6 @@ body,html {
     height: 90%;
   }
 
-
   .video-wrapper-controler {
     width: 20%;
     height: 100%;
@@ -265,7 +264,7 @@ body,html {
   
   border-radius: 3px;
   background-image: url('/image/default_image_1.svg');
-  background-position: 50% -60%;
+  background-position: 50% -80%;
   background-size: 45%;
   background-repeat: no-repeat;
 }
