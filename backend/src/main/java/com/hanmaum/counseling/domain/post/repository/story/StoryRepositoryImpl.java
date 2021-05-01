@@ -12,7 +12,6 @@ import java.util.*;
 
 import static com.hanmaum.counseling.domain.post.entity.QCounsel.counsel;
 import static com.hanmaum.counseling.domain.post.entity.QLetter.*;
-import static com.hanmaum.counseling.domain.post.entity.QReply.reply;
 import static com.hanmaum.counseling.domain.post.entity.QStory.story;
 
 @Repository
@@ -50,25 +49,26 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
     }
 
     /**
-     * 사연에 속한 Post의 Id를 가져온 후
-     * 각각의 Post에 속한 Letter-Reply을 반환
+     * 사연에 속한 상담의 Id를 가져온 후
+     * 각각의 상담에 속한 Letter-Reply을 반환
      */
     @Override
-    public List<CounselContent> getStory(Long storyId, Long userId) {
-        return queryFactory
-                .select(Projections.constructor(CounselContent.class,
-                        letter.counsel.id, letter.form.title, letter.form.content, letter.createdAt,
-                        reply.form.title, reply.form.content, reply.createdAt
-                ))
-                .from(reply)
-                .innerJoin(reply.letter, letter)
-                .where(letter.counsel.id.in(
-                        JPAExpressions
-                                .select(counsel.id)
-                                .from(counsel)
-                                .innerJoin(counsel.story, story)
-                                .where(story.id.eq(storyId))
-                ))
-                .fetch();
+    public List<CounselContent> findStoryOfUserById(Long storyId, Long userId) {
+//        return queryFactory
+//                .select(Projections.constructor(CounselContent.class,
+//                        letter.counsel.id, letter.form.title, letter.form.content, letter.createdAt,
+//                        reply.form.title, reply.form.content, reply.createdAt
+//                ))
+//                .from(reply)
+//                .innerJoin(reply.letter, letter)
+//                .where(letter.counsel.id.in(
+//                        JPAExpressions
+//                                .select(counsel.id)
+//                                .from(counsel)
+//                                .innerJoin(counsel.story, story)
+//                                .where(story.id.eq(storyId))
+//                ))
+//                .fetch();
+        return null;
     }
 }

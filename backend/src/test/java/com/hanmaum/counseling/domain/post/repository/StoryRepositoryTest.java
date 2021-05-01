@@ -85,10 +85,10 @@ class StoryRepositoryTest {
                         .build();
                 em.persist(letter);
 
-                Reply reply = Reply.builder()
+                Letter reply = letter.builder()
                         .title(k + "reply title" + i)
                         .content(k + "reply content" + i)
-                        .letter(letter)
+                        .parentLetter(letter)
                         .writerId(2L).build();
                 em.persist(reply);
             }

@@ -23,7 +23,7 @@ public class Counsel {
     @JoinColumn(name = "story_id")
     private Story story;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "counsel")
     private List<Letter> letters = new ArrayList<>();
 
     @Enumerated(EnumType.STRING)

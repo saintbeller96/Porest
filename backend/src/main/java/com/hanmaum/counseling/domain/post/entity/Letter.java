@@ -3,7 +3,6 @@ package com.hanmaum.counseling.domain.post.entity;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,6 +18,10 @@ public class Letter {
     @Column(name = "writer_id")
     private Long writerId;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "letter_id")
+    private Letter parentLetter;
+
     @Embedded
     private Form form;
 
@@ -26,23 +29,22 @@ public class Letter {
     @JoinColumn(name = "counsel_id")
     private Counsel counsel;
 
-    @OneToOne(mappedBy = "letter")
-    private Reply reply;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     public Letter(){}
 
     @Builder
-    public Letter(Long writerId, String title, String content, Counsel counsel) {
+    public Letter(Long writerId, Letter parentLetter, String title, String content, Counsel counsel) {
         this.writerId = writerId;
+        this.parentLetter = parentLetter;
         this.form = new Form(title, content);
         this.counsel = counsel;
     }
-    public static Letter write(Long writerId, String title, String content, Counsel counsel){
+    public static Letter write(Long writerId, Letter parentLetter, String title, String content, Counsel counsel){
         return Letter.builder()
                 .writerId(writerId)
+                .parentLetter(parentLetter)
                 .title(title)
                 .content(content)
                 .counsel(counsel)

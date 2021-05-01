@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface StoryRepositoryCustom {
     List<SimpleStoryDto> getCandidates(Long userId);
-    List<CounselContent> getStory(Long storyId, Long userId);
+    List<CounselContent> findStoryOfUserById(Long storyId, Long userId);
 }

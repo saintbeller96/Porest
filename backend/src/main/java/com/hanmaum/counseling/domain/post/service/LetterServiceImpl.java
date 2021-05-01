@@ -4,7 +4,7 @@ import com.hanmaum.counseling.domain.post.dto.FormDto;
 import com.hanmaum.counseling.domain.post.entity.Counsel;
 import com.hanmaum.counseling.domain.post.entity.Letter;
 import com.hanmaum.counseling.domain.post.repository.LetterRepository;
-import com.hanmaum.counseling.domain.post.repository.post.CounselRepository;
+import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
@@ -15,7 +15,7 @@ public class LetterServiceImpl implements LetterService{
     private final CounselRepository counselRepository;
 
     @Override
-    public Long writeLetter(FormDto form, Long counselId, Long userId) {
+    public Long writeLetter(FormDto form, Long counselId, Long parentLetterId, Long userId) {
         Counsel counsel = counselRepository.findById(counselId).orElseThrow(
                 ()->{throw new IllegalStateException();}
         );

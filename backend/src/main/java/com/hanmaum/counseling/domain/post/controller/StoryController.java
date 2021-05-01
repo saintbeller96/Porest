@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.post.controller;
 
-import com.hanmaum.counseling.domain.post.dto.DetailStoryDto;
+import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleCounselDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
@@ -49,9 +49,9 @@ public class StoryController {
 
     @ApiOperation("사연과 관련된 모든 편지-답장을 가져옴")
     @GetMapping("/{storyId}")
-    public ResponseEntity<List<DetailStoryDto>> getStory(@PathVariable("storyId") Long storyId, Authentication auth){
+    public ResponseEntity<List<DetailCounselDto>> getStory(@PathVariable("storyId") Long storyId, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        List<DetailStoryDto> result = storyService.getStory(storyId, userId);
+        List<DetailCounselDto> result = storyService.getStory(storyId, userId);
         return ResponseEntity.ok(result);
     }
 
