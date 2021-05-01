@@ -15,23 +15,13 @@ import java.time.LocalDateTime;
 @ToString
 public class SimpleStoryDto {
 
-    @NotNull
     private Long storyId;
-
-    @NotNull
-    private Long letterId;
 
     private FormDto detail;
 
     public SimpleStoryDto(){}
 
     @Builder
-    public SimpleStoryDto(Long storyId, Long letterId, String title, String content, LocalDateTime date){
-        this.storyId = storyId;
-        this.letterId = letterId;
-        this.detail = new FormDto(title, content, date);
-    }
-
     public SimpleStoryDto(Long storyId, String title, String content, LocalDateTime date){
         this.storyId = storyId;
         this.detail = new FormDto(title, content, date);
