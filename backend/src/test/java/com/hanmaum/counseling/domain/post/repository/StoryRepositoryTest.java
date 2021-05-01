@@ -65,7 +65,7 @@ class StoryRepositoryTest {
         em.flush();
         em.clear();
         //when
-        List<CounselContent> result = storyRepository.getStory(story.getId(), userId);
+        List<CounselContent> result = storyRepository.findStoryOfUserById(story.getId(), userId);
         //then
         result.forEach(System.out::println);
         Assertions.assertThat(result.size()).isEqualTo(8);
