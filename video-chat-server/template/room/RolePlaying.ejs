@@ -6,11 +6,23 @@
 {% endblock %}
 {% block content -%}
 <div class="video-ar-chat-room-wrapper" id="video-ar-wrapper">
+  <div class="warning-for-landsacpe">
+    <div class="warging-section">
+      <div class="warning-section-wrapper">
+        <div class="warning-section-header">
+          원활한 화상채팅을 위해서 가로모드로 변경해 주세요!
+        </div>
+        <div class="warning-section-content">
+          <img src="/image/selfie.svg" alt="">
+        </div>
+      </div>
+    </div>
+  </div>
   <div class="popup-wrapper">
     <div class="popup-content-wrapper">
       <div class="popup-content-section">
       <div class="popup-content-header">채팅방을 떠나시겠습니까?</div>
-      <div class="popup-content-content"><img src="/image/unicorn3.png" alt=""></div>
+      <div class="popup-content-content"><img src="/image/unicorn.svg" alt=""></div>
       <div class="popup-content-btns">
         <div class="exit-btn">떠날래요!</div>
         <div class="exit-canlce-btn">안떠날래요!</div>
@@ -101,6 +113,5 @@
 {% block script%}
 <!-- <script defer src="/js/face-api.min.js"></script> -->
 <!-- <script src="/js/script.js" defer></script> -->
-<script src="/js/face-ar.js" defer></script>
-
+<script  src="/js/face-ar.js" defer></script>
 {% endblock %}

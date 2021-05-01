@@ -2,7 +2,6 @@
 const express = require("express");
 // running express service
 const app = express();
-
 // scoket.io를 위한 서버를 가지고 와야 한다.
 const server = require("http").Server(app);
 
