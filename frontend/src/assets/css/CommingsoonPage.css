@@ -47,11 +47,10 @@ font-family: 'Shadows Into Light Two', cursive;
 
 li {
   display: inline-block;
-  font-size: 1.em;
+  font-size: 1rem;
   list-style-type: none;
   padding-right: 0.4em;
   text-transform: uppercase;
-  z-index: 20;
   color: WHITE;
    font-family: 'Caveat', cursive;
   

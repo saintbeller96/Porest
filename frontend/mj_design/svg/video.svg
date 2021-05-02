@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 470.73 385.01">
+<?xml-stylesheet type="text/css" href="../MainPage2.css"?>
+
+<svg class="svg_video" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-25 -20 530 475">
   <defs>
     <style>
       .cls-1 {
@@ -621,7 +623,7 @@
   </defs>
   <g class="cls-1">
     <g id="video">
-      <g id="video_island">
+      <g id="video_island" class="video_shadow">
         <g>
           <path class="cls-2" d="M465.17,412l-6.57-6.89,7.83,2Z" transform="translate(-434.93 -265)"/>
           <path class="cls-2" d="M458.6,405.13l6.57,6.89-.57,2.18,3.76,1L645.55,598.77l-5.15,19.75c-11-2.52-21.13-8.55-30.57-17.8L459.15,448.52c-9.69-9.68-13.16-17.73-10.6-24.21l5.32-20.41Z" transform="translate(-434.93 -265)"/>

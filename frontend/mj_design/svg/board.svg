@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 410.55 355.11">
+<?xml-stylesheet type="text/css" href="../MainPage2.css"?>
+
+<svg class="svg_board" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-30 -20 480 420">
   <defs>
     <style>
       .cls-1 {
@@ -3396,7 +3398,7 @@
   </defs>
   <g class="cls-1">
     <g id="board">
-      <g id="board_island">
+      <g id="board_island" class="board_shadow">
         <g>
           <g>
             <polygon class="cls-2" points="29.23 140.18 28.21 139.74 29.12 139.11 30.14 139.55 29.23 140.18"/>

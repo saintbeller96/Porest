@@ -1,4 +1,6 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="0 0 664.82 579.34">
+<?xml-stylesheet type="text/css" href="../MainPage2.css"?>
+
+<svg class="svg_radio" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-20 -15 720 650">
   <defs>
     <style>
       .cls-1 {
@@ -16118,7 +16120,7 @@
   </defs>
   <g class="cls-2">
     <g id="radio">
-      <g id="radio_island">
+      <g id="radio_island" class="radio_shadow">
         <g>
           <path class="cls-3" d="M1058,470.28h-9.83V476h-15.83v4.51h-1.4V476h-.51V463.3l-6.38-4H757.92v17.38h-24v3.42h-3.7v-4h-4.85V469.6H705v17.78c-.38,5.48,3.71,10.68,12.38,16l139.51,86.35A49.38,49.38,0,0,0,872,596.17a43.76,43.76,0,0,0,8.43,1.23c8.55.14,17.1-2.46,25.78-7.66l139.38-86.48c8.93-5.48,13-10.95,12.38-16.29Z" transform="translate(-401.73 -294.3)"/>
           <path class="cls-4" d="M1045.62,483.84c16.59-9.45,16.59-18.89.13-28.34L906.24,374.84c-16.47-9.45-33.06-9.45-49.4,0L717.33,455.5C709,460.35,705,465.08,705,469.8S709,479.24,717.33,484l139.51,80.54a57.15,57.15,0,0,0,15.06,6,39.32,39.32,0,0,0,8.56,1.15c8.55.13,17.1-2.29,25.78-7.14Z" transform="translate(-401.73 -294.3)"/>
