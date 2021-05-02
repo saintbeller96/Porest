@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    redirect: '/main',
+    redirect: '/commingsoon',
   },
   {
     path: '/main',
@@ -23,6 +23,11 @@ const routes = [
     path: '/signup',
     name: 'Signup',
     component: () => import('@/views/auth/SignupPage.vue'),
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('@/views/test/Test.vue'),
   },
   {
     path: '/auth',
@@ -53,6 +58,31 @@ const routes = [
     path: '/mailbox/my-mailbox/letter-detail/letter-reply',
     name: 'LetterReply',
     component: () => import('@/views/mailbox/LetterReplyPage.vue'),
+  },
+  {
+    path: '/home',
+    name: 'Home',
+    component: () => import('@/views/test/Home.vue'),
+  },
+  {
+    path: '/rooms',
+    name: 'RoomsPage',
+    component: () => import('@/views/room/RoomsPage.vue'),
+  },
+  {
+    path: '/checkin/:hostID/:roomID',
+    name: 'CheckIn',
+    component: () => import('@/views/room/CheckInPage.vue'),
+  },
+  {
+    path: '/chat/:hostID/:roomID',
+    name: 'Chat',
+    component: () => import('@/views/room/ChatRoomPage.vue'),
+  },
+  {
+    path: '/commingsoon',
+    name: 'Commingsoon',
+    component: () => import('@/views/main/CommingsoonPage.vue'),
   },
 ];
 
