@@ -14,11 +14,10 @@ export default {
   async LOGIN({ commit }, userData) {
     const { data } = await loginUser(userData);
     var decoded = jwt_decode(data.token);
-    console.log(decoded);
     commit('setUserId', decoded.id);
     commit('setUsername', decoded.username);
     commit('setUserEmail', decoded.email);
-    commit('setToken', data.token);
+    commit('setToken', 'Bearer ' + data.token);
     commit('setImg', decoded.profile_img);
     commit('setTemperature', decoded.temperature);
 
@@ -26,7 +25,7 @@ export default {
     saveUserIdToCookie(decoded.id);
     saveUserNameToCookie(decoded.username);
     saveUserEmailToCookie(decoded.email);
-    saveAuthToCookie(data.token);
+    saveAuthToCookie('Bearer ' + data.token);
     saveUserImgFromCookie(decoded.profile_img);
     saveUserTemperatureFromCookie(decoded.temperature);
     return data;

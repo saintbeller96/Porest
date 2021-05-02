@@ -22,10 +22,10 @@
       </div>
       <div>
         <p>비밀번호</p>
-        <input type="password" v-model="password1" placeholder="6~12자의 영문, 숫자 입력" autocomplete="off" />
-        <p v-if="!isValidPwd && password1.length < 6" class="error_message">6자 이상의 비밀번호를 입력해주세요.</p>
-        <p v-else-if="!isValidPwd && password1.length > 12" class="error_message">
-          12자 이하의 비밀번호를 입력해주세요.
+        <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+        <p v-if="!isValidPwd && password1.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
+        <p v-else-if="!isValidPwd && password1.length > 20" class="error_message">
+          20자 이하의 비밀번호를 입력해주세요.
         </p>
       </div>
       <div>
