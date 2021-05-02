@@ -1,25 +1,54 @@
 <template>
   <div>
-    <img src="@/assets/image/flower.jpg" class="background" />
-    <div class="mailbox-container">
-      <img src="@/assets/image/mailbox.png" class="mailbox" />
-    </div>
-    <div class="mail-list-intro">
-      <p>내 우체통 페이지</p>
-      <p>편지 리스트 보여지는 곳</p>
-    </div>
-    <!-- <button @click="goToLetterDetail">편지 디테일 이동</button> -->
-    <!-- <div>
-      <img src="@/assets/image/envelope.png" class="envelope" />
-    </div> -->
-
-    <!-- 편지 봉투 -->
-    <div class="envelope" @click="goToLetterDetail">
-      <div class="envelope-cap"></div>
-      <div class="latter-form">
-        <p>어제 이런 일이 있었습니다</p>
+    <section>
+      <!-- <img src="@/assets/image/407.jpg" alt="" /> -->
+      <div class="card">
+        <div class="wrapper">
+          <div class="box">
+            <div class="box-container">
+              <h2>letter 1</h2>
+              <p>안녕하세요 내용입니다</p>
+              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-container">
+              <h2>letter 2</h2>
+              <p>안녕하세요 내용입니다</p>
+              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-container">
+              <h2>letter 3</h2>
+              <p>안녕하세요 내용입니다</p>
+              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-container">
+              <h2>letter 4</h2>
+              <p>안녕하세요 내용입니다</p>
+              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-container">
+              <h2>letter 5</h2>
+              <p>안녕하세요 내용입니다</p>
+              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+            </div>
+          </div>
+          <div class="box">
+            <div class="box-container">
+              <h2>letter 6</h2>
+              <p>안녕하세요 내용입니다</p>
+              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
+    </section>
   </div>
 </template>
 
@@ -34,132 +63,113 @@ export default {
 </script>
 
 <style scoped>
-.background {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap');
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-.mailbox-container {
+section {
   display: flex;
   justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-image: url('../../assets/image/407.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  padding: 50px;
 }
 
-.mailbox {
+.card {
+  display: -webkit-flex;
+  display: -moz-flex;
+  display: -ms-flex;
+  display: -o-flex;
+  /* min-height: 100vh; */
+}
+
+.wrapper {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 30px;
+}
+
+.wrapper .box {
+  width: 250px;
+  height: 250px;
+  border-radius: 15px;
+  transition: transform 500ms ease-out;
+  overflow: hidden;
+  color: #fff;
+  padding: 5%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(30px);
+  border: 2px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.box h2 {
+  font-size: 17px;
+  margin-bottom: 30px;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Black Han Sans', sans-serif;
+}
+.box p {
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: 'Nanum Brush Script', cursive;
+  font-size: 20px;
+}
+
+.box a {
+  border: none;
+  background: #fff;
+  padding: 10px 30px;
+  display: inline-block;
+  margin-top: 20px;
+  text-decoration: none;
+  font-size: 16px;
+  border-radius: 50px;
+  font-family: 'Black Han Sans', sans-serif;
+}
+
+/* .wrapper .box:before {
+  content: '';
+  background: rgba(255, 255, 255, 0.3);
+  width: 60%;
+  height: 100%;
+  top: 0%;
+  left: -125%e;
+  transform: skew(45deg);
   position: absolute;
-  width: 350px;
-  /* width: 25vw; */
-  /* max-width: 23vw; */
-  pointer-events: none;
-  margin-top: 35vh;
-}
-
-.mail-list-intro {
-  position: relative;
-  font-size: 1.5em;
-  color: white;
-}
-
-button {
-  position: relative;
-}
-
-/* .envelope {
-  position: absolute;
-  width: 10vw;
+  animation-direction: left;
+  transition-duration: 500ms;
 } */
 
-.envelope {
-  width: 16.6vw;
-  /* 봉투 열릴때 파란 부분 */
-  height: 24.45vh;
-  background: #fec040;
-  /* margin: 0vh auto 0; */
-  margin-left: 20vw;
+.wrapper .box:hover {
+  transform: translateY(-5%);
+}
+
+/* .wrapper .box:hover:before {
+  left: 150%;
+} */
+
+/* .container {
   position: relative;
-  cursor: pointer;
-}
-.envelope:after,
-.envelope:before {
-  content: '';
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  border-style: solid;
-  border-width: 24.45vh 0 0 16.6vw;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #ffd274;
-  z-index: 5;
-}
-.envelope:after {
-  border-width: 24.45vh 16.6vw 0 0;
-  border-color: rgba(0, 0, 0, 0) #ffe2a4 rgba(0, 0, 0, 0) rgba(0, 0, 0, 0);
-}
-.envelope .envelope-cap {
-  position: absolute;
-  left: 0;
-  top: -1.74vh;
-  width: 100%;
-  height: 1.74vh;
-  z-index: 20;
-  background: #fec040;
-  transition: 0.2s 0.2s ease-in;
-  transform-origin: 50% 100% 0;
-  transform: rotateX(180deg);
-}
-.envelope .envelope-cap:after {
-  content: '';
-  border-style: solid;
-  border-width: 0 8.3vw 12.61vh 8.3vw;
-  border-color: rgba(0, 0, 0, 0) rgba(0, 0, 0, 0) #fec040 rgba(0, 0, 0, 0);
-  position: absolute;
-  left: 0;
-  bottom: 100%;
-}
-.envelope .latter-form {
-  background: #fff;
-  padding: 1.5vh;
-  width: 12.89vw;
-  height: 18vh;
-  position: absolute;
-  left: 1.09vw;
-  bottom: 0;
-  z-index: 3;
-  line-height: 2;
-  transition: 0.2s ease-in;
-  font-size: 0.7em;
-}
-.envelope .latter-form textarea {
-  display: block;
-  width: 100%;
-}
-.envelope .latter-form .latter-control {
-  border: none;
-  outline: none;
-  border-bottom: 1px solid #000;
-}
-.envelope .latter-form .latter-btn {
-  border: 1px solid #333;
-  background: #fff;
-  padding: 0.94vh 2.62vw;
-  border-radius: 10px;
-  font-size: 8px;
-  float: right;
-  cursor: pointer;
-}
-.envelope .latter-form .latter-btn:hover {
-  background: #000;
-  color: #fff;
-}
-.envelope:hover .latter-form {
-  bottom: 7.63vw;
-  transition: 0.3s 0.3s ease-in;
-}
-.envelope:hover .envelope-cap {
-  transform: rotateX(0deg);
-  transition: 0.3s ease-in;
-  z-index: 2;
-}
+  width: calc(100% - 100px);
+  min-height: calc(100vh - 280px);
+  min-height: 500px;
+  background: rgba(255, 255, 255, 0.5);
+  box-shadow: 0 15px 35px rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 50px;
+} */
 </style>

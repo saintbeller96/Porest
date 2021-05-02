@@ -46,6 +46,4 @@ export default {
 };
 </script>
 
-<style src="@/assets/css/common/reset.css">
-  
-</style>
+<style src="@/assets/css/common/reset.css"></style>
