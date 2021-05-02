@@ -3,6 +3,10 @@
     <header>
       Login page
     </header>
+    a: {{ id }}
+    {{ token_payload }}
+    <br />
+    <button @click="decodeToken">a</button>
     <form @submit.prevent="login">
       <article>
         <div>
@@ -30,6 +34,7 @@
 </template>
 
 <script>
+import jwt_decode from 'jwt-decode';
 import { validateEmail, validatePwd } from '@/utils/validation';
 import FireBase from 'firebase/app';
 import 'firebase/auth';
@@ -39,6 +44,10 @@ export default {
       email: '',
       nickname: '',
       password: '',
+      token_payload: '', // 디코딩 결과
+      id: '',
+      token:
+        'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJwcm9maWxlX2ltZyI6bnVsbCwibmlja25hbWUiOiJiIiwidGVtcGVyYXR1cmUiOm51bGwsImlkIjo5LCJleHAiOjE2MjAyNTkyMDAsImVtYWlsIjoiYkBiLmNvbSJ9.pD28NE-IsvhOACF9EF-SdeDCrbo8ggYm-_uCm_RqCEUklYs8emF3p4YY79rPHrVHfaPu2zKutK5p_RGsaEQiGg',
     };
   },
   computed: {
@@ -67,6 +76,10 @@ export default {
           },
           error => (this.error = error.message),
         );
+    },
+    decodeToken() {
+      this.token_payload = jwt_decode(this.token);
+      this.id = this.token_payload.id;
     },
   },
 };

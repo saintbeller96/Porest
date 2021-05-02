@@ -36,7 +36,6 @@ export default {
     commit('setUsername', '');
     commit('setUserEmail', '');
     commit('setToken', '');
-    commit('setUserLocation', '');
     commit('setImg', '');
     saveUserIdToCookie('');
     saveUserNameToCookie('');
