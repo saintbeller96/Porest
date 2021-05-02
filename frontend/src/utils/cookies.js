@@ -16,6 +16,9 @@ function saveAuthToCookie(value) {
 function saveUserImgFromCookie(value) {
   document.cookie = `login_img=${value}`;
 }
+function saveUserTemperatureFromCookie(value) {
+  document.cookie = `login_temperature=${value}`;
+}
 function getUserIdFromCookie() {
   return document.cookie.replace(/(?:(?:^|.*;\s*)login_id\s*=\s*([^;]*).*$)|^.*$/, '$1');
 }
@@ -30,6 +33,9 @@ function getUserEmailFromCookie() {
 }
 function getUserImgFromCookie() {
   return document.cookie.replace(/(?:(?:^|.*;\s*)login_img\s*=\s*([^;]*).*$)|^.*$/, '$1');
+}
+function getUserTemperatureFromCookie() {
+  return document.cookie.replace(/(?:(?:^|.*;\s*)login_temperature\s*=\s*([^;]*).*$)|^.*$/, '$1');
 }
 
 function getAuthFromCookie() {
@@ -46,11 +52,13 @@ export {
   saveUserNameToCookie,
   saveUserEmailToCookie,
   saveUserImgFromCookie,
+  saveUserTemperatureFromCookie,
   getAuthFromCookie,
   getUserIdFromCookie,
   getUserUidFromCookie,
   getUserNameFromCookie,
   getUserEmailFromCookie,
   getUserImgFromCookie,
+  getUserTemperatureFromCookie,
   deleteCookie,
 };

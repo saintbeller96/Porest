@@ -17,4 +17,7 @@ export default {
   setImg(state, img) {
     state.profileImg = img;
   },
+  setTemperature(state, temperature) {
+    state.temperature = temperature;
+  },
 };

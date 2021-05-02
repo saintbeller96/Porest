@@ -5,6 +5,7 @@ import {
   getUserEmailFromCookie,
   getUserNameFromCookie,
   getUserImgFromCookie,
+  getUserTemperatureFromCookie,
 } from '@/utils/cookies';
 
 export default {
@@ -14,4 +15,5 @@ export default {
   username: getUserNameFromCookie() || '',
   token: getAuthFromCookie() ? `Token ${getAuthFromCookie()}` : '',
   profileImg: getUserImgFromCookie() || '',
+  temperature: getUserTemperatureFromCookie() || '',
 };

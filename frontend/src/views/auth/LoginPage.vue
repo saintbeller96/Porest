@@ -3,46 +3,40 @@
     <header>
       Login page
     </header>
-    a: {{ id }}
-    {{ token_payload }}
+    <!-- <form @submit.prevent="login"> -->
+    <article>
+      <div>
+        <p>email</p>
+        <input type="email" v-model="email" placeholder="이메일 주소를 입력해주세요." autocomplete="on" />
+        <p v-if="!isValidEmail" class="error_message">
+          잘못된 이메일 양식입니다.
+        </p>
+      </div>
+      <div>
+        <p>비밀번호</p>
+        <input type="password" v-model="password" placeholder="6~12자의 영문, 숫자 입력" autocomplete="off" />
+        <p v-if="!isValidPwd && password.length < 6" class="error_message">6자 이상의 비밀번호를 입력해주세요.</p>
+        <p v-else-if="!isValidPwd && password.length > 12" class="error_message">
+          12자 이하의 비밀번호를 입력해주세요.
+        </p>
+      </div>
+    </article>
     <br />
-    <button @click="decodeToken">a</button>
-    <form @submit.prevent="login">
-      <article>
-        <div>
-          <p>email</p>
-          <input type="email" v-model="email" placeholder="이메일 주소를 입력해주세요." autocomplete="on" />
-          <p v-if="!isValidEmail" class="error_message">
-            잘못된 이메일 양식입니다.
-          </p>
-        </div>
-        <div>
-          <p>비밀번호</p>
-          <input type="password" v-model="password" placeholder="6~12자의 영문, 숫자 입력" autocomplete="off" />
-          <p v-if="!isValidPwd && password.length < 6" class="error_message">6자 이상의 비밀번호를 입력해주세요.</p>
-          <p v-else-if="!isValidPwd && password.length > 12" class="error_message">
-            12자 이하의 비밀번호를 입력해주세요.
-          </p>
-        </div>
-      </article>
-      <br />
-      <button :disabled="!checkForm">로그인 하기</button>
-    </form>
+    <button :disabled="!checkForm" @click="submitForm">로그인 하기</button>
+    <!-- </form> -->
     <br />
     <p @click="goToSignup">회원가입 페이지 이동</p>
   </section>
 </template>
 
 <script>
-import jwt_decode from 'jwt-decode';
 import { validateEmail, validatePwd } from '@/utils/validation';
-import FireBase from 'firebase/app';
-import 'firebase/auth';
+// import FireBase from 'firebase/app';
+// import 'firebase/auth';
 export default {
   data() {
     return {
       email: '',
-      nickname: '',
       password: '',
       token_payload: '', // 디코딩 결과
       id: '',
@@ -65,22 +59,29 @@ export default {
     goToSignup() {
       this.$router.push({ name: 'Signup' });
     },
-    login() {
-      console.log('login');
-      FireBase.auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          () => {
-            console.log('move to home');
-            this.$router.push('/main');
-          },
-          error => (this.error = error.message),
-        );
+    async submitForm() {
+      try {
+        await this.$store.dispatch('LOGIN', {
+          email: this.email,
+          password: this.password,
+        });
+        this.$router.push('/main');
+      } catch (error) {
+        alert('이메일이나 비밀번호를 다시 확인해주세요.');
+      }
     },
-    decodeToken() {
-      this.token_payload = jwt_decode(this.token);
-      this.id = this.token_payload.id;
-    },
+    // login() {
+    //   console.log('login');
+    //   FireBase.auth()
+    //     .signInWithEmailAndPassword(this.email, this.password)
+    //     .then(
+    //       () => {
+    //         console.log('move to home');
+    //         this.$router.push('/main');
+    //       },
+    //       error => (this.error = error.message),
+    //     );
+    // },
   },
 };
 </script>
