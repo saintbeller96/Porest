@@ -18,10 +18,8 @@ public class UserController {
     private final UserService userService;
 
     @PostMapping("/profile-img")
-    public ResponseEntity<?> updateProfileImg(MultipartFile image, HttpServletRequest request) throws IOException {
-
+    public ResponseEntity<?> updateProfileImg(MultipartFile image, HttpServletRequest request) {
         Map<String, Object> result = userService.updateProfileImg(image, request);
-        if(result != null) return ResponseEntity.ok(result);
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok(result);
     }
 }

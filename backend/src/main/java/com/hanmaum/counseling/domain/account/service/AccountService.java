@@ -4,10 +4,8 @@ import com.hanmaum.counseling.domain.account.dto.JwtTokenDto;
 import com.hanmaum.counseling.domain.account.dto.RedundancyDto;
 import com.hanmaum.counseling.domain.account.dto.SignupDto;
 import com.hanmaum.counseling.domain.account.dto.LoginDto;
-import com.hanmaum.counseling.domain.account.entity.Role;
 import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
-import com.hanmaum.counseling.domain.account.repository.RoleRepository;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.security.JwtProvider;
 import lombok.RequiredArgsConstructor;
@@ -20,44 +18,36 @@ import javax.validation.Valid;
 @RequiredArgsConstructor
 public class AccountService {
     private final UserRepository userRepository;
-    private final RoleRepository roleRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
     public User saveUser(@Valid SignupDto request){
-        Role userRole = roleRepository.findByRoleType(RoleType.ROLE_USER);
-
         //이메일 또는 닉네임 중복 체크
-        if(!existEmail(request.getEmail()).isRedundancy() || !existNickName(request.getNickname()).isRedundancy()) {
-            return null;
+        if(!existEmail(request.getEmail()).isRedundancy() || !existNickname(request.getNickname()).isRedundancy()) {
+            throw new IllegalStateException();
         }
 
         User user = User.builder()
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(userRole)
+                .role(RoleType.ROLE_USER)
                 .build();
 
         return userRepository.save(user);
     }
 
     public User findByEmail(String email){
-        return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
     }
 
     public JwtTokenDto findByEmailAndPassword(LoginDto request){
-        User user = findByEmail(request.getEmail());
-        if(user != null){
-            if(passwordEncoder.matches(request.getPassword(), user.getPassword())){
-                String token = jwtProvider.generateToken(user);
-                return JwtTokenDto.builder().token(token).build();
-            }
-        }
-        return null;
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(IllegalStateException::new);
+        String token = jwtProvider.generateToken(user);
+        return JwtTokenDto.builder().token(token).build();
     }
 
-    public RedundancyDto existNickName(String nickname) {
+    public RedundancyDto existNickname(String nickname) {
         boolean redundancy = userRepository.existsByNickname(nickname);
         return RedundancyDto.builder().redundancy(!redundancy).build();
     }

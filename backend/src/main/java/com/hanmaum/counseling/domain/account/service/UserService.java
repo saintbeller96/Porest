@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.account.service;
 
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.global.GlobalExceptionController;
 import com.hanmaum.counseling.security.JwtProvider;
 import com.hanmaum.counseling.utils.FirebaseStorageUtil;
 import lombok.RequiredArgsConstructor;
@@ -22,7 +23,7 @@ public class UserService {
     private final UserRepository userRepository;
     private final JwtProvider jwtProvider;
 
-    public Map<String, Object> updateProfileImg(MultipartFile multipartFile, HttpServletRequest request) throws IOException {
+    public Map<String, Object> updateProfileImg(MultipartFile multipartFile, HttpServletRequest request){
 
         //authorization header 가지고오기
         String token = request.getHeader("Authorization");
@@ -30,10 +31,15 @@ public class UserService {
         String email = jwtProvider.getEmailFromToken(token);
 
         //파일 업로드
-        String fileName = firebaseStorageUtil.uploadUserProfileImage(multipartFile);
+        String fileName = null;
+        try {
+            fileName = firebaseStorageUtil.uploadUserProfileImage(multipartFile);
+        } catch (IOException e) {
+            throw new IllegalArgumentException();
+        }
 
         //사용자 정보 update
-        User user = userRepository.findByEmail(email);
+        User user = userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
         user.setProfileImg(fileName);
         userRepository.save(user);
 

@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
 
@@ -33,9 +34,10 @@ public class User {
     @Column
     private String profileImg;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id")
-    private Role role;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "role")
+    @ColumnDefault("'ROLE_USER'")
+    private RoleType role;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -44,7 +46,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Builder
-    public User(String email, String password, String nickname, Role role) {
+    public User(String email, String password, String nickname, RoleType role) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;

@@ -38,15 +38,13 @@ public class AccountController {
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
         User user = accountService.saveUser(request);
-        if(user != null)  return ResponseEntity.status(HttpStatus.OK).build();
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/login")
     public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request){
         JwtTokenDto result = accountService.findByEmailAndPassword(request);
-        if(result != null) return ResponseEntity.ok(result);
-        else return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        return ResponseEntity.ok(result);
     }
 
     @PostMapping("/email-check")
@@ -57,7 +55,7 @@ public class AccountController {
 
     @PostMapping("/nickname-check")
     public ResponseEntity<RedundancyDto> nicknameCheck(@RequestBody @Valid NicknameCheckDto nickname){
-        RedundancyDto result = accountService.existNickName(nickname.getNickname());
+        RedundancyDto result = accountService.existNickname(nickname.getNickname());
         return ResponseEntity.ok(result);
     }
 }
