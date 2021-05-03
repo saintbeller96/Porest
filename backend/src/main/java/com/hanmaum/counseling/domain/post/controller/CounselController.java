@@ -1,9 +1,8 @@
 package com.hanmaum.counseling.domain.post.controller;
 
 import com.hanmaum.counseling.domain.post.dto.FormDto;
-import com.hanmaum.counseling.domain.post.repository.LetterRepository;
 import com.hanmaum.counseling.domain.post.service.LetterService;
-import com.hanmaum.counseling.domain.post.service.ReplyService;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -14,33 +13,34 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@Api(tags = {"Posts"})
+@Api(tags = {"Counsels"})
 @RestController
-@RequestMapping("/posts")
+@RequestMapping("/counsels")
 @RequiredArgsConstructor
-public class PostController {
+public class CounselController {
     private final LetterService letterService;
-    private final ReplyService replyService;
 
     @ApiOperation("편지 작성")
-    @PostMapping("/{postId}/letters")
+    @PostMapping("/{counselId}/letters/{letterId}")
     public ResponseEntity<String> writeLetter(@RequestBody @Valid FormDto form,
-                                              @PathVariable("postId") Long postId,
+                                              @PathVariable("counselId") Long counselId,
+                                             @PathVariable("letterId") Long letterId,
                                               Authentication auth) {
-        Long userId = null;
-        letterService.writeLetter(form, postId, userId);
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        letterService.writeLetter(form, counselId, letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 
-    @ApiOperation("답장 작성")
-    @PostMapping("/{postId}/letters/{letterId}")
-    public ResponseEntity<String> writeReply(@RequestBody @Valid FormDto form,
-                                              @PathVariable("postId") Long postId,
-                                             @PathVariable("letterId") Long letterId,
+    @ApiOperation("편지 읽음")
+    @PostMapping("/{counselId}/letters/{letterId}/read")
+    public ResponseEntity<String> readLetter(@PathVariable("counselId") Long counselId,
+                                              @PathVariable("letterId") Long letterId,
                                               Authentication auth) {
-        Long userId = null;
-        replyService.writeReply(form, letterId, userId);
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        letterService.readLetter(letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
+
+    //Todo 1. 상담 취소, 2. 상담 종료
 
 }

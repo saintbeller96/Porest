@@ -8,15 +8,15 @@ import java.util.List;
 
 @Getter
 @ToString
-public class DetailStoryDto {
-    private Long postId;
+public class DetailCounselDto {
+    private Long counselId;
     private List<LetterReplyDto> detail;
 
-    public DetailStoryDto(){
+    public DetailCounselDto(){
         detail = new ArrayList<>();
     }
 
-    public void setPostId(Long postId){
-        this.postId = postId;
+    public void setCounselId(Long counselId){
+        this.counselId = counselId;
     }
 }

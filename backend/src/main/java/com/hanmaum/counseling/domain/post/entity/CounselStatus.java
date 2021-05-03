@@ -1,5 +1,5 @@
 package com.hanmaum.counseling.domain.post.entity;
 
-public enum PostStatus {
+public enum CounselStatus {
     CANCEL, CONNECT, END
 }
