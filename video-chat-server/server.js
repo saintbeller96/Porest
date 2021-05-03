@@ -2,7 +2,6 @@
 const express = require("express");
 // running express service
 const app = express();
-
 // scoket.io를 위한 서버를 가지고 와야 한다.
 const server = require("http").Server(app);
 
@@ -47,8 +46,10 @@ app.get("/api/video", async (req, res) => {
 
 ///test
 app.get("/", (req, res) => {
+  console.log(req.query.data)
   res.redirect("/video_chat");
 });
+
 
 // app.get("/:room", (req, res) => {
 //   res.render("room", { roomId: req.params.room });
@@ -61,7 +62,7 @@ app.get("/video_chat", (req, res) => {
   res.redirect(`video_chat/room/${uuidV4()}`);
 });
 
-app.get("/video_chat/ar/", (req, res) => {
+app.get("/ar", (req, res) => {
   res.redirect(`video_chat/room/ar/${uuidV4()}`);
 });
 

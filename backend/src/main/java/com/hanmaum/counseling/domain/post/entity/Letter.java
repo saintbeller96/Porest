@@ -2,8 +2,8 @@ package com.hanmaum.counseling.domain.post.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -19,33 +19,50 @@ public class Letter {
     @Column(name = "writer_id")
     private Long writerId;
 
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "letter_id")
+    private Letter parentLetter;
+
     @Embedded
     private Form form;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "post_id")
-    private Posts post;
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private LetterStatus status;
 
-    @OneToOne(mappedBy = "letter")
-    private Reply reply;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "counsel_id")
+    private Counsel counsel;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    public void setCounsel(Counsel counsel){
+        this.counsel = counsel;
+    }
+    public void setStatus(LetterStatus status){this.status = status;}
+
     public Letter(){}
 
     @Builder
-    public Letter(Long writerId, String title, String content, Posts post) {
+    public Letter(Long writerId, Letter parentLetter, String title, String content, LetterStatus status) {
         this.writerId = writerId;
+        this.parentLetter = parentLetter;
         this.form = new Form(title, content);
-        this.post = post;
+        this.status = status;
     }
-    public static Letter write(Long writerId, String title, String content, Posts post){
+    public static Letter write(Long writerId, Letter parentLetter, String title, String content){
         return Letter.builder()
                 .writerId(writerId)
+                .parentLetter(parentLetter)
                 .title(title)
                 .content(content)
-                .post(post)
+                .status(LetterStatus.WAIT)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s  |  %s", this.form.getTitle(), this.form.getContent());
     }
 }
