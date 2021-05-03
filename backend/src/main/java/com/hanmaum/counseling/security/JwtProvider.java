@@ -59,4 +59,10 @@ public class JwtProvider {
         Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
         return claims.get("email", String.class);
     }
+    public Map<String, Object> getUserInfoFromToken(String token){
+        Claims claims = Jwts.parser().setSigningKey(jwtSecret).parseClaimsJws(token).getBody();
+        log.info(""+claims);
+
+        return claims;
+    }
 }
