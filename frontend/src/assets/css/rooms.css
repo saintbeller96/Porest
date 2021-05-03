@@ -1,0 +1,5 @@
+.rooms-wrapper {
+  width: 100vw;
+  min-height: 100vh;
+  background-image:linear-gradient(to right,#fcdc29 0%,#fcdc29 70%,#fff 70%, #fff 100%) ;
+}

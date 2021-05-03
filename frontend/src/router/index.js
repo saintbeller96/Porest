@@ -79,6 +79,11 @@ const routes = [
     name: 'Commingsoon',
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
+  {
+    path: '/drawing',
+    name: 'Drawing',
+    component: () => import('@/views/joy/DrawingPage.vue'),
+  },
 ];
 
 const router = new VueRouter({

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="rooms-wrapper">
     <form>
       <label for="roomNmae">RoomName</label>
       <input
@@ -86,3 +86,4 @@ export default {
   },
 };
 </script>
+<style scoped src="@/assets/css/rooms.css"></style>
