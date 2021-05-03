@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.dto;
 
+import com.hanmaum.counseling.domain.post.entity.Letter;
 import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,6 +23,17 @@ public class LetterReplyDto {
                           String replyTitle, String replyContent, LocalDateTime replyDate){
         this.letter = new FormDto(letterTitle, letterContent, letterDate);
         this.reply = new FormDto(replyTitle, replyContent, replyDate);
+    }
+
+    public static LetterReplyDto of(Letter letter, Letter reply){
+        return LetterReplyDto.builder()
+                .letterTitle(letter.getForm().getTitle())
+                .letterContent(letter.getForm().getContent())
+                .letterDate(letter.getCreatedAt())
+                .replyTitle(reply.getForm().getTitle())
+                .replyContent(reply.getForm().getContent())
+                .replyDate(reply.getCreatedAt())
+                .build();
     }
 
     public static LetterReplyDto convert(CounselContent pc){

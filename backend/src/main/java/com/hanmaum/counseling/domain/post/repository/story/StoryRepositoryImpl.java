@@ -2,13 +2,16 @@ package com.hanmaum.counseling.domain.post.repository.story;
 
 
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
+import com.hanmaum.counseling.domain.post.entity.Story;
 import com.querydsl.core.types.Projections;
 import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
 import java.util.*;
+import java.util.stream.Collectors;
 
 import static com.hanmaum.counseling.domain.post.entity.QCounsel.counsel;
 import static com.hanmaum.counseling.domain.post.entity.QLetter.*;
@@ -18,6 +21,7 @@ import static com.hanmaum.counseling.domain.post.entity.QStory.story;
 @RequiredArgsConstructor
 public class StoryRepositoryImpl implements StoryRepositoryCustom{
     private final JPAQueryFactory queryFactory;
+    private final EntityManager em;
     private final int CANDIDATES  = 6;
     private final int PICK_MAX = 3;
 
@@ -48,27 +52,23 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
                 .fetch();
     }
 
-    /**
-     * 사연에 속한 상담의 Id를 가져온 후
-     * 각각의 상담에 속한 Letter-Reply을 반환
-     */
     @Override
-    public List<CounselContent> findStoryOfUserById(Long storyId, Long userId) {
-//        return queryFactory
-//                .select(Projections.constructor(CounselContent.class,
-//                        letter.counsel.id, letter.form.title, letter.form.content, letter.createdAt,
-//                        reply.form.title, reply.form.content, reply.createdAt
-//                ))
-//                .from(reply)
-//                .innerJoin(reply.letter, letter)
-//                .where(letter.counsel.id.in(
-//                        JPAExpressions
-//                                .select(counsel.id)
-//                                .from(counsel)
-//                                .innerJoin(counsel.story, story)
-//                                .where(story.id.eq(storyId))
-//                ))
-//                .fetch();
-        return null;
+    public List<Story> findByWriterId(Long userId) {
+        List<Story> stories = queryFactory
+                .selectFrom(story).distinct()
+                .leftJoin(story.counsels, counsel).fetchJoin()
+                .where(story.writerId.eq(userId))
+                .fetch();
+
+        List<Long> selectedStoryIds = stories.stream()
+                .map(Story::getId)
+                .collect(Collectors.toList());
+
+        queryFactory
+                .selectFrom(counsel).distinct()
+                .leftJoin(counsel.letters).fetchJoin()
+                .where(counsel.story.id.in(selectedStoryIds))
+                .fetch();
+        return stories;
     }
 }

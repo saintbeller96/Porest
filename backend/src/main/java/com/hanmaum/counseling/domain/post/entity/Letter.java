@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.post.entity;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
 
 import javax.persistence.*;
@@ -25,6 +26,10 @@ public class Letter {
     @Embedded
     private Form form;
 
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private LetterStatus status;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "counsel_id")
     private Counsel counsel;
@@ -32,22 +37,32 @@ public class Letter {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
+    public void setCounsel(Counsel counsel){
+        this.counsel = counsel;
+    }
+    public void setStatus(LetterStatus status){this.status = status;}
+
     public Letter(){}
 
     @Builder
-    public Letter(Long writerId, Letter parentLetter, String title, String content, Counsel counsel) {
+    public Letter(Long writerId, Letter parentLetter, String title, String content, LetterStatus status) {
         this.writerId = writerId;
         this.parentLetter = parentLetter;
         this.form = new Form(title, content);
-        this.counsel = counsel;
+        this.status = status;
     }
-    public static Letter write(Long writerId, Letter parentLetter, String title, String content, Counsel counsel){
+    public static Letter write(Long writerId, Letter parentLetter, String title, String content){
         return Letter.builder()
                 .writerId(writerId)
                 .parentLetter(parentLetter)
                 .title(title)
                 .content(content)
-                .counsel(counsel)
+                .status(LetterStatus.WAIT)
                 .build();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s  |  %s", this.form.getTitle(), this.form.getContent());
     }
 }

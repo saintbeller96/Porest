@@ -3,6 +3,8 @@ package com.hanmaum.counseling.domain.post.controller;
 import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleCounselDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
+import com.hanmaum.counseling.domain.post.dto.UserStoryInfoDto;
+import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
 import io.swagger.annotations.Api;
@@ -15,6 +17,8 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.List;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Api(tags = {"Stories"})
 @RestController
@@ -22,6 +26,19 @@ import java.util.List;
 @RequestMapping("/stories")
 public class StoryController {
     private final StoryService storyService;
+    private final CounselService counselService;
+
+    @ApiOperation("유저의 사연/유저가 답변한 사연 가져오기")
+    @GetMapping("")
+    public ResponseEntity<Map<String, List<UserStoryInfoDto>>> putStory(Authentication auth){
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        List<UserStoryInfoDto> s = storyService.getUserStoryInfo(userId);
+        List<UserStoryInfoDto> c = counselService.getUserCounselInfo(userId);
+        Map<String, List<UserStoryInfoDto>> response = new ConcurrentHashMap<>();
+        response.put("my-letter-reply", s);
+        response.put("other-letter-reply", c);
+        return ResponseEntity.ok(response);
+    }
 
     @ApiOperation("사연 등록")
     @PostMapping("")

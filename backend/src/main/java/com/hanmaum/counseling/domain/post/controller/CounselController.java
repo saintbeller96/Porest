@@ -31,6 +31,16 @@ public class CounselController {
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 
+    @ApiOperation("편지 읽음")
+    @PostMapping("/{counselId}/letters/{letterId}/read")
+    public ResponseEntity<String> readLetter(@PathVariable("counselId") Long counselId,
+                                              @PathVariable("letterId") Long letterId,
+                                              Authentication auth) {
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        letterService.readLetter(letterId, userId);
+        return ResponseEntity.status(HttpStatus.CREATED).body("created");
+    }
+
     //Todo 1. 상담 취소, 2. 상담 종료
 
 }

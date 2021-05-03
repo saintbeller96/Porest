@@ -8,7 +8,6 @@ class NicknameGeneratorTest {
 
     @Test
     void test() throws Exception{
-
         //when
         String pos = NicknameGenerator.generatePositive();
         String neg = NicknameGenerator.generateNegative();
