@@ -79,6 +79,11 @@ const routes = [
     name: 'Commingsoon',
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
+  {
+    path: '/rootmail/reply',
+    name: 'RootMailReply',
+    component: () => import('@/views/mailbox/RootMailReplyPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
