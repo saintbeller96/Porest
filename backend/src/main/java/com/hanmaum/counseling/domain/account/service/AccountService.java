@@ -5,6 +5,7 @@ import com.hanmaum.counseling.domain.account.dto.RedundancyDto;
 import com.hanmaum.counseling.domain.account.dto.SignupDto;
 import com.hanmaum.counseling.domain.account.dto.LoginDto;
 import com.hanmaum.counseling.domain.account.entity.Role;
+import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.repository.RoleRepository;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
@@ -24,7 +25,7 @@ public class AccountService {
     private final JwtProvider jwtProvider;
 
     public User saveUser(@Valid SignupDto request){
-        Role userRole = roleRepository.findByName("ROLE_USER");
+        Role userRole = roleRepository.findByRoleType(RoleType.ROLE_USER);
 
         //이메일 또는 닉네임 중복 체크
         if(!existEmail(request.getEmail()).isRedundancy() || !existNickName(request.getNickname()).isRedundancy()) {

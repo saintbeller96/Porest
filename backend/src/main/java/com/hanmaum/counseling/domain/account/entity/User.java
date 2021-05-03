@@ -50,4 +50,8 @@ public class User {
         this.nickname = nickname;
         this.role = role;
     }
+
+    public void setProfileImg(String profileImg) {
+        this.profileImg = profileImg;
+    }
 }

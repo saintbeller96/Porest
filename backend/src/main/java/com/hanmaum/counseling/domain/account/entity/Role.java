@@ -1,7 +1,9 @@
 package com.hanmaum.counseling.domain.account.entity;
 
+import com.fasterxml.jackson.annotation.JsonEnumDefaultValue;
 import lombok.Data;
 import lombok.Getter;
+import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
 
@@ -12,6 +14,8 @@ public class Role {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
-    @Column
-    private String name;
+    @Enumerated(EnumType.STRING)
+    @Column(name = "name")
+    @ColumnDefault("'ROLE_USER'")
+    private RoleType roleType;
 }
