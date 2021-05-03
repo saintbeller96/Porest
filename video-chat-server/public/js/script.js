@@ -243,8 +243,8 @@ function addVideoStream(video, stream, userId, who) {
       const canvas = faceapi.createCanvasFromMedia(video);
       videoGrid.append(canvas);
       const displaySize = {
-        width: video.clientWidth +150,
-        height: video.clientHeight - 25,
+        width: video.clientWidth ,
+        height: video.clientHeight,
       };
       // console.log(displaySize, video.clientWidth);
       faceapi.matchDimensions(canvas, displaySize);
