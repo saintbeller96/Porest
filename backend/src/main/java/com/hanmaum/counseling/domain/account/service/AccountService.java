@@ -12,11 +12,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.security.auth.login.LoginException;
 import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
+    static final String LOGIN_FAIL = "아이디 비밀번호 확인";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
@@ -41,8 +43,11 @@ public class AccountService {
         return userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
     }
 
-    public JwtTokenDto findByEmailAndPassword(LoginDto request){
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(IllegalStateException::new);
+    public JwtTokenDto findByEmailAndPassword(LoginDto request) throws LoginException {
+      User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new LoginException(LOGIN_FAIL));
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new LoginException(LOGIN_FAIL);
+        }
         String token = jwtProvider.generateToken(user);
         return JwtTokenDto.builder().token(token).build();
     }

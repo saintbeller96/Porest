@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.security.auth.login.LoginException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
@@ -41,6 +42,13 @@ public class GlobalExceptionController {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(value = LoginException.class)
+    public ResponseEntity<?> loginException(LoginException e){
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(e.toString())
+                .build());
+    }
     private String mappingErrorMessage(ConstraintViolation<?> cv){
         final String path = cv.getPropertyPath().toString();
         final String property = path.substring(path.lastIndexOf('.') + 1);

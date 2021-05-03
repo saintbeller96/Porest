@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.security.auth.login.LoginException;
 import javax.validation.Valid;
 
 /**
@@ -42,7 +43,7 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request){
+    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request) throws LoginException {
         JwtTokenDto result = accountService.findByEmailAndPassword(request);
         return ResponseEntity.ok(result);
     }
