@@ -2,12 +2,11 @@
 const express = require("express");
 // running express service
 const app = express();
-
 // scoket.io를 위한 서버를 가지고 와야 한다.
 const server = require("http").Server(app);
 
 const nunjucks = require("nunjucks");
-const bodyParser = require("body-parser");
+// const bodyParser = require("body-parser");
 
 const room = require("./routes/Room");
 const getTheGoods = require("./public/js/video");
@@ -17,8 +16,8 @@ nunjucks.configure("template", {
   express: app,
 });
 
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+// app.use(bodyParser.json());
+// app.use(bodyParser.urlencoded({ extended: false }));
 
 const io = require("socket.io")(server, {
   transports: ["polling", "websocket"],
@@ -45,20 +44,33 @@ app.get("/api/video", async (req, res) => {
   res.status(200).send(theGoods);
 });
 
-app.get("/abcd", (req, res) => {
-  console.log('abcd in')
-  res.redirect(`/abcd/room/${uuidV4()}`);
+///test
+app.get("/", (req, res) => {
+  console.log(req.query.data)
+  res.redirect("/video_chat");
 });
 
-app.get("/abcd/ar/", (req, res) => {
-  res.redirect(`/abcd/room/anonymity/${uuidV4()}`);
+
+// app.get("/:room", (req, res) => {
+//   res.render("room", { roomId: req.params.room });
+// });
+
+///
+
+app.get("/video_chat", (req, res) => {
+  console.log("abcd in");
+  res.redirect(`video_chat/room/${uuidV4()}`);
+});
+
+app.get("/ar", (req, res) => {
+  res.redirect(`video_chat/room/ar/${uuidV4()}`);
 });
 
 // app.get("/abcd/ar", (req, res) => {
 //   res.render("ar/index.html");
 // });
 
-app.use("/abcd/room", room);
+app.use("/video_chat/room", room);
 
 // app.get("/:room", (req, res) => {
 //   res.render("room", { roomId: req.params.room });

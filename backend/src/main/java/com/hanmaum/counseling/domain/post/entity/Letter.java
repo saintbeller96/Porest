@@ -1,8 +1,9 @@
 package com.hanmaum.counseling.domain.post.entity;
 
+import lombok.Builder;
 import lombok.Getter;
+import lombok.ToString;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,16 +19,50 @@ public class Letter {
     @Column(name = "writer_id")
     private Long writerId;
 
-    @Column(name = "content", columnDefinition="TEXT")
-    private String content;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "letter_id")
+    private Letter parentLetter;
+
+    @Embedded
+    private Form form;
+
+    @Column(name = "status")
+    @Enumerated(EnumType.STRING)
+    private LetterStatus status;
 
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "story_id")
-    private Story story;
-
-    @OneToOne(mappedBy = "letter")
-    private Reply reply;
+    @JoinColumn(name = "counsel_id")
+    private Counsel counsel;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
+
+    public void setCounsel(Counsel counsel){
+        this.counsel = counsel;
+    }
+    public void setStatus(LetterStatus status){this.status = status;}
+
+    public Letter(){}
+
+    @Builder
+    public Letter(Long writerId, Letter parentLetter, String title, String content, LetterStatus status) {
+        this.writerId = writerId;
+        this.parentLetter = parentLetter;
+        this.form = new Form(title, content);
+        this.status = status;
+    }
+    public static Letter write(Long writerId, Letter parentLetter, String title, String content){
+        return Letter.builder()
+                .writerId(writerId)
+                .parentLetter(parentLetter)
+                .title(title)
+                .content(content)
+                .status(LetterStatus.WAIT)
+                .build();
+    }
+
+    @Override
+    public String toString() {
+        return String.format("%s  |  %s", this.form.getTitle(), this.form.getContent());
+    }
 }

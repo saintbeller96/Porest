@@ -1,5 +1,7 @@
 package com.hanmaum.counseling.domain.post.entity;
 
+import com.hanmaum.counseling.commons.NicknameGenerator;
+import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
@@ -7,6 +9,8 @@ import org.hibernate.annotations.UpdateTimestamp;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -16,17 +20,25 @@ public class Story {
     @Column(name = "story_id")
     private Long id;
 
-    private Long from;
+    @Column(name = "writer_id", nullable = false)
+    private Long writerId;
 
-    private Long to;
+    @Embedded
+    private Form form;
+
+    @Column(name = "temp_nickname")
+    private String tempNickName;
 
     @Column(name = "is_opened")
     @ColumnDefault("false")
     private Boolean isOpened;
 
-    @Column(name = "status")
-    @Enumerated(EnumType.STRING)
-    private StoryStatus status;
+    @Column(name = "picked")
+    @ColumnDefault("0")
+    private int picked;
+
+    @OneToMany(mappedBy = "story", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Counsel> counsels = new ArrayList<>();
 
     @CreationTimestamp
     private LocalDateTime createdAt;
@@ -35,4 +47,21 @@ public class Story {
     private LocalDateTime updatedAt;
 
     public Story(){};
+
+    public void addCounsel(Counsel counsel){
+        this.counsels.add(counsel);
+        counsel.setStory(this);
+    }
+
+    @Builder
+    public Story(Long writerId, String title, String content, Boolean isOpened) {
+        this.writerId = writerId;
+        this.tempNickName = NicknameGenerator.generateNegative();
+        this.form = new Form(title, content);
+        this.isOpened = isOpened;
+    }
+
+    public void addPicked() {
+        this.picked+=1;
+    }
 }
