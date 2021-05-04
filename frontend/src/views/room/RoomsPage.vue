@@ -1,23 +1,35 @@
 <template>
   <div class="rooms-wrapper">
-    <form>
-      <label for="roomNmae">RoomName</label>
-      <input
-        type="text"
-        class="form-control"
-        name="roomName"
-        placeholder="Room name"
-        aria-describedby="buttonAdd"
-        v-model="roomName"
-        ref="roomName"
-      />
-      <button type="submit" class="btn btn-sm btn-info" id="buttonAdd" @click.prevent="addRoom">
-        +
-      </button>
-    </form>
-    <div v-for="(room, index) in rooms" :key="index">
-      <div @click="moveToCheckIn(room.id)">{{ room.name }}</div>
-      <span @click="deleteRoom(room.id)">Delete</span>
+    <div class="rooms-section-wrapper">
+      <div class="rooms-section-inner-wrapper">
+        <div class="rooms-section-left">
+          <div class="rooms-section-left-header">
+            화상채팅방
+            <form>
+              <label for="roomNmae">RoomName</label>
+              <input
+                type="text"
+                class="form-control"
+                name="roomName"
+                placeholder="Room name"
+                aria-describedby="buttonAdd"
+                v-model="roomName"
+                ref="roomName"
+              />
+              <button type="submit" class="btn btn-sm btn-info" id="buttonAdd" @click.prevent="addRoom">
+                +
+              </button>
+            </form>
+          </div>
+          <div class="rooms-section-left-content"></div>
+        </div>
+        <div class="rooms-section-right">
+          <div v-for="(room, index) in rooms" :key="index">
+            <div @click="moveToCheckIn(room.id)">{{ room.name }} 방</div>
+            <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">Delete</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -29,7 +41,7 @@ import 'firebase/auth';
 export default {
   name: 'RoomsPage',
   data() {
-    return {
+    return { 
       roomName: null,
       uid: this.$store.state.uid,
       rooms: [],
@@ -73,12 +85,13 @@ export default {
         createdAt: FireBase.firestore.FieldValue.serverTimestamp(),
       });
     },
-    deleteRoom(roomId) {
+    deleteRoom(roomId, index) {
       db.collection('users')
         .doc(this.user.uid)
         .collection('rooms')
         .doc(roomId)
         .delete();
+      this.rooms.splice(index, 1);
     },
     moveToCheckIn(roomId) {
       this.$router.push(`/checkin/${this.uid}/${roomId}`);
