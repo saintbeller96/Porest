@@ -10,6 +10,7 @@ import java.util.List;
 @ToString
 public class DetailCounselDto {
     private Long counselId;
+    private String counsellorNickname;
     private List<LetterReplyDto> detail;
 
     public DetailCounselDto(){
@@ -19,4 +20,5 @@ public class DetailCounselDto {
     public void setCounselId(Long counselId){
         this.counselId = counselId;
     }
+    public void setCounsellorNickname(String nickname) {this.counsellorNickname = nickname;}
 }
