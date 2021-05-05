@@ -15,7 +15,7 @@ export default {
     const { data } = await loginUser(userData);
     var decoded = jwt_decode(data.token);
     commit('setUserId', decoded.id);
-    commit('setUsername', decoded.username);
+    commit('setUsername', decoded.nickname);
     commit('setUserEmail', decoded.email);
     commit('setToken', 'Bearer ' + data.token);
     commit('setImg', decoded.profile_img);
@@ -23,7 +23,7 @@ export default {
 
     // 쿠키에 저장
     saveUserIdToCookie(decoded.id);
-    saveUserNameToCookie(decoded.username);
+    saveUserNameToCookie(decoded.nickname);
     saveUserEmailToCookie(decoded.email);
     saveAuthToCookie('Bearer ' + data.token);
     saveUserImgFromCookie(decoded.profile_img);

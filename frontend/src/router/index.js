@@ -74,6 +74,11 @@ const routes = [
     name: 'Chat',
     component: () => import('@/views/room/ChatRoomPage.vue'),
   },
+  {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/profile/ProfilePage.vue'),
+  },
 ];
 
 const router = new VueRouter({

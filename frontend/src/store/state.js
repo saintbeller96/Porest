@@ -12,7 +12,7 @@ export default {
   id: getUserIdFromCookie() || '',
   uid: getUserUidFromCookie() || '',
   email: getUserEmailFromCookie() || '',
-  username: getUserNameFromCookie() || '',
+  nickname: getUserNameFromCookie() || '',
   token: getAuthFromCookie() ? `Token ${getAuthFromCookie()}` : '',
   profileImg: getUserImgFromCookie() || '',
   temperature: getUserTemperatureFromCookie() || '',
