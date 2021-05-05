@@ -79,6 +79,11 @@ const routes = [
     name: 'Commingsoon',
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
+  {
+    path: '/feeling-record',
+    name: 'FeelingRecord',
+    component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
