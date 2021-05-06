@@ -9,6 +9,7 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import javax.security.auth.login.LoginException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Path;
@@ -41,10 +42,27 @@ public class GlobalExceptionController {
         return ResponseEntity.badRequest().body(errorResponse);
     }
 
+    @ExceptionHandler(value = LoginException.class)
+    public ResponseEntity<?> loginException(LoginException e){
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(e.toString())
+                .build());
+    }
     private String mappingErrorMessage(ConstraintViolation<?> cv){
         final String path = cv.getPropertyPath().toString();
         final String property = path.substring(path.lastIndexOf('.') + 1);
         return String.format("{} is {}.{}", property, cv.getInvalidValue(), cv.getMessage());
+    }
+
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException e){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.builder()
+                        .message(e.getMessage())
+                        .code(e.toString()).
+                                build());
     }
 
     //나머지 예외는 서버 에러로 처리
