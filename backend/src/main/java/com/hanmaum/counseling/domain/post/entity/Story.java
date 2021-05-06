@@ -26,8 +26,8 @@ public class Story {
     @Embedded
     private Form form;
 
-    @Column(name = "temp_nickname")
-    private String tempNickName;
+    @Column(name = "writer_nickname")
+    private String writerNickName;
 
     @Column(name = "is_opened")
     @ColumnDefault("false")
@@ -56,7 +56,7 @@ public class Story {
     @Builder
     public Story(Long writerId, String title, String content, Boolean isOpened) {
         this.writerId = writerId;
-        this.tempNickName = NicknameGenerator.generateNegative();
+        this.writerNickName = NicknameGenerator.generateNegative();
         this.form = new Form(title, content);
         this.isOpened = isOpened;
     }

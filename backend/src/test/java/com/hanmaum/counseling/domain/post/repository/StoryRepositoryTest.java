@@ -1,6 +1,5 @@
 package com.hanmaum.counseling.domain.post.repository;
 
-import com.hanmaum.counseling.TestConfig;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.entity.*;
 import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
