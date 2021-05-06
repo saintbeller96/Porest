@@ -42,6 +42,6 @@ public class LetterController {
                                              Authentication auth) {
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
         letterService.readLetter(letterId, userId);
-        return ResponseEntity.status(HttpStatus.CREATED).body("created");
+        return ResponseEntity.ok("Read Letter");
     }
 }

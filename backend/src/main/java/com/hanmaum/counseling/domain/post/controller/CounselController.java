@@ -25,6 +25,7 @@ public class CounselController {
     private final LetterService letterService;
     private final CounselService counselService;
 
+    @ApiOperation("현재 사용자의 모든 상담 내역을 반환")
     @GetMapping("")
     public ResponseEntity<List<DetailCounselDto>> getDetailCounsels(Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
@@ -32,12 +33,18 @@ public class CounselController {
         return ResponseEntity.ok(result);
     }
 
+    @ApiOperation("상담 ID로 현재 사용자의 상담 내역을 반환")
     @GetMapping("/{counselId}")
-    public ResponseEntity<DetailCounselDto> getDetailCounsel(@PathVariable("counselId") Long counselId,
-                                                                 Authentication auth){
+    public ResponseEntity<DetailCounselDto> getDetailCounsel(@PathVariable("counselId") Long counselId, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
         DetailCounselDto detailCounsel = counselService.getDetailCounsel(counselId, userId);
         return ResponseEntity.ok(detailCounsel);
+    }
+
+    @GetMapping("/counsellors")
+    public ResponseEntity<?> getCounsellors(){
+
+        return ResponseEntity.ok("");
     }
     //Todo 1. 상담 취소, 2. 상담 종료
 
