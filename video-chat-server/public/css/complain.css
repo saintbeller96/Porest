@@ -13,6 +13,50 @@
   width: 100%;
   height: 100vh;
   background-color: #000;
+  overflow: hidden;
+}
+
+.first_guid {
+  position: absolute;
+  opacity: 1;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  z-index: 30;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(0,0,0,0.9);
+  transition: .5s all;
+
+}
+.first_guid h1 {
+  font-weight: 600;
+  padding: 1rem 0;
+  letter-spacing: 1px;
+}
+
+.first_guid p {
+  padding: 0.2rem 0;
+  letter-spacing: 1px;
+
+}
+.entrance_btn {
+  margin-top: 1rem;
+  padding: 0.4rem;
+  border: 2px solid #fff;
+  border-radius: 10px;
+  background-color: #fff;
+  color: #333;
+  letter-spacing: 1px;
+}
+
+.hide_guid  {
+  opacity: 0;
+  z-index: -20;
 }
 .main {
   display: flex;
@@ -27,6 +71,18 @@
     animation: head_umum all 1s infinite;
 }
 
+.speech__recognition {
+  position: absolute;
+  width: 100%;
+  height: 50%;
+  top: 100%;
+  left: 0%;
+  bottom:0%;
+  border: 1px solid #fff;
+}
+.text {
+  color: white;
+}
 @keyframes head_umum { 
  100% {
      transform: rotate(120deg);
@@ -229,10 +285,13 @@
   border: 25px solid #ffc333;
   border-radius: 100px;
   background-color: #810332;
-  animation: hello 1.75s forwards;
 /*	 animation: mouth 3.75s alternate;*/
 }
 
+
+.monster__body {
+  
+}
 
 @keyframes hello {
   0%, 10%, 100% {
@@ -248,19 +307,19 @@
     height: 20%;
  }
   25% {
-    width: 90%;
+    width: 100%;
     height: 30%;
  }
   30% {
-    width: 70%;
+    width: 100%;
     height: 40%;
  }
   35% {
-    width: 60%;
+    width: 80%;
     height: 45%;
  }
   40% {
-    width: 55%;
+    width: 65%;
     height: 50%;
  }
   45% {
@@ -383,7 +442,7 @@
 }
 .monster__top {
   position: absolute;
-  top: -30px;
+  top: -10px;
   width: 70px;
   height: 20px;
   border-bottom-left-radius: 10px;
@@ -522,6 +581,84 @@
     height: 10%;
  }
 }
+@keyframes mouth1 {
+  0%, 10%, 100% {
+    width: 100%;
+    height: 0%;
+ }
+  15% {
+    width: 90%;
+    height: 30%;
+ }
+  20% {
+    width: 50%;
+    height: 70%;
+ }
+  25% {
+    width: 70%;
+    height: 70%;
+ }
+  30% {
+    width: 80%;
+    height: 60%;
+ }
+  35% {
+    width: 60%;
+    height: 70%;
+ }
+  40% {
+    width: 55%;
+    height: 75%;
+ }
+  45% {
+    width: 50%;
+    height: 90%;
+ }
+  50% {
+    width: 40%;
+    height: 70%;
+ }
+  55% {
+    width: 70%;
+    height: 95%;
+ }
+  60% {
+    width: 40%;
+    height: 50%;
+ }
+  65% {
+    width: 100%;
+    height: 60%;
+ }
+  70% {
+    width: 100%;
+    height: 70%;
+ }
+  75% {
+    width: 90%;
+    height: 70%;
+ }
+  80% {
+    width: 50%;
+    height: 70%;
+ }
+  85% {
+    width: 90%;
+    height: 50%;
+ }
+  85% {
+    width: 40%;
+    height: 70%;
+ }
+  90% {
+    width: 90%;
+    height: 30%;
+ }
+  95% {
+    width: 100%;
+    height: 10%;
+ }
+}
 @keyframes tongue {
   0%, 20%, 100% {
     bottom: -80px;
@@ -562,13 +699,27 @@
  width: 30px;
  color: white;
 }
-
-.self_video {
+.video__wrapper {
   position: absolute;
-  width: 10rem;
-  height: 10rem;
-  background-color: #fff;
   bottom: 0;
   right: 0;
+  width: 20rem;
+  height: 20rem;
 
+}
+.self_video {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+#video-live {
+  position: absolute;
+  width: 100%;
+  height:100%;
+}
+
+canvas {
+  position: absolute;
 }
