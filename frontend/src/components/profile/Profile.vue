@@ -3,9 +3,6 @@
     <div class="profile_img">
       <img src="@/assets/image/profile.png" alt="" />
     </div>
-    <div>
-      <!-- <p>{{ $store.state.nickname }}</p> -->
-    </div>
   </div>
 </template>
 

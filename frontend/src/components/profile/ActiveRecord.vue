@@ -1,13 +1,32 @@
 <template>
-  <div>
-    <div class="active-record-container">
-      <div>활동 내역</div>
+  <div class="active-record-container">
+    <div id="tabs">
+      <button
+        v-for="(tab, index) in tabs"
+        :key="index"
+        :class="{ active: currentTab === index }"
+        @click="currentTab = index"
+      >
+        {{ tab }}
+      </button>
+      <div class="tab-content">
+        <div v-show="currentTab == 0">tab content 1</div>
+        <div v-show="currentTab == 1">tab content 2</div>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+export default {
+  name: '#tabs',
+  data() {
+    return {
+      currentTab: 0,
+      tabs: ['내 사연', '답변한 사연'],
+    };
+  },
+};
 </script>
 
 <style scoped>
