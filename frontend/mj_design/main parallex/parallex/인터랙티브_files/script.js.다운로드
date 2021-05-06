@@ -32,8 +32,6 @@ function scrollFunc(e) {
     iframe.setAttribute('src', url + '?autoplay=1&mute=0');
   }
   for (var i = 0; i < totalNum; i++) {
-    // imageAll[i].style.transform = "perspective(400px) translateZ("+ scrollTop/5 +"px)";
-    //        console.log(scrollTop , 1+scrollTop / (5*(totalNum-i))*0.001 );
     imageAll[i].style.transform =
       'perspective(400px) translateZ(' +
       scrollTop / (50 * (totalNum - i)) +
@@ -42,6 +40,8 @@ function scrollFunc(e) {
       'px) scale(' +
       (1 + (scrollTop / (5 * (totalNum - i))) * 0.001) +
       ') ';
+    // imageAll[i].style.transform = "perspective(400px) translateZ("+ scrollTop/5 +"px)";
+    //        console.log(scrollTop , 1+scrollTop / (5*(totalNum-i))*0.001 );
     if (i === 1) {
       imageAll[i].style.transform =
         'perspective(400px) translateZ(' +
@@ -53,7 +53,6 @@ function scrollFunc(e) {
         ') translateX(' +
         -(1 + (scrollTop / (5 * (totalNum - i))) * 0.015) +
         'px)';
-      continue;
     }
     if (i == 6) {
       imageAll[i].style.transform =
@@ -62,9 +61,7 @@ function scrollFunc(e) {
         'px) translateY(' +
         -scrollTop / (40 * (totalNum - i)) +
         'px)';
-      continue;
     }
-    imageAll[i].style.opacity = 1 - (scrollTop / (10 * totalNum)) * 0.001;
   }
 }
 

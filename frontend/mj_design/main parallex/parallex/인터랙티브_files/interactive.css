@@ -68,32 +68,24 @@ section.mainPage .imageWrap .parallax_image:nth-child(1) {
 
 }
 
-section.mainPage .imageWrap .parallax_image:nth-child(2)::before{
-  position: absolute;
-  content: "";
-  top: -10%;
-  left: -8%;
-  width: 140rem;
-  height: 140rem;
-  border-radius: 100%;
-  background-color: rgba(255,255, 255, 0.2);
-  box-shadow: 0 0 100px rgba(255,255, 255, 0.4);
-
-
-}
 section.mainPage .imageWrap .parallax_image:nth-child(2) {
   /* background-image: url(../parallex/moon_top.svg); */
   /* background-image: url(../parallex/moon.png); */
-  top: -40%;
-  left: 1.5%;
-  width: 120rem;
-  height: 120rem;
+  top: -35%;
+  left: 10%;
+  width: 100rem;
+  height: 100rem;
   border-radius: 100%;
   background-color: #fff;
   transform: scale(0.1);
-  box-shadow: 0 0 100px rgba(255,255, 255, 0.9);
-
     /* background-size: cover; */
+}
+section.mainPage .imageWrap .parallax_image:nth-child(2)::before{
+  content: "";
+  width: 121rem;
+  height: 121rem;
+  background-color: #ffa600;
+
 }
 
 section.mainPage .imageWrap .parallax_image:nth-child(3) {
