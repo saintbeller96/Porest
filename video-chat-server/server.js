@@ -66,6 +66,10 @@ app.get("/ar", (req, res) => {
   res.redirect(`video_chat/room/ar/${uuidV4()}`);
 });
 
+app.get("/secret", (req, res) => {
+  res.redirect(`video_chat/room/secret/${uuidV4()}`);
+});
+
 // app.get("/abcd/ar", (req, res) => {
 //   res.render("ar/index.html");
 // });
