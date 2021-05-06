@@ -1,4 +1,3 @@
-/*@import "compass/css3";*/
 @import url(https://fonts.googleapis.com/css?family=Allan:700,400);
 @keyframes new {
   0% {
@@ -41,11 +40,11 @@
 @keyframes letter-out {
   0% {
     transform: translate3d(0, 0, 0);
-    box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px;
+    /* box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px; */
   }
   100% {
     transform: translate3d(0, -733.3333333333px, 0);
-    box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px;
+    /* box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px; */
   }
 }
 @keyframes send {
@@ -92,29 +91,30 @@
 @keyframes letter-in {
   0% {
     transform: translate3d(0, -733.3333333333px, 0);
-    box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px;
+    box-shadow: inset 0 0px 30px -5px #6A5ACD, 0 0 20px -5px;
   }
   100% {
     transform: translate3d(0, 0, 0);
-    box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px;
+    box-shadow: inset 0 0px 30px -5px #8572EE, 0 0 10px -5px;
   }
 }
 
-body, html { 
+.write-letter-wrapper { 
   width: 100vw;
   height: 100vh;
   margin: 0;
   padding: 0;
   box-sizing: border-box; 
   overflow: hidden;
-}
-
-body {
   position: relative;
   perspective: 800px;
-    background-image: url(../26_april_11.jpg);
+  /* background-color: #454545; */
+  background-image: url(../../image/sky.jpg);
   background-size: 1950px;
+  
+  
 }
+
 
 
 .envelope {
@@ -138,15 +138,16 @@ body {
   width: 100%;
   height: 100%;
   
-  background-color:white;
+  background-color:#B4B4FF;;
   border-radius: 5px;
-  box-shadow: inset 0 0 30px -5px black, 0 0 20px -5px;
+  box-shadow: inset 0 0 30px -5px #8282FF, 0 0 20px -5px;
 }
 .envelope .front {
   backface-visibility: hidden;
   cursor: pointer;
   display: table;
   transform: translate3d(0, 0, 1px);
+  backface-visibility: hidden;
 }
 .envelope .front:focus {
   outline: none;
@@ -189,6 +190,7 @@ body {
   font-size: 30px;
 }
 .envelope .back {
+    position: relative;
   transform: rotateY(180deg) translate3d(0, 0, 1px);
 }
 .envelope .back .flap {
@@ -201,7 +203,7 @@ body {
   content: "";
   position: absolute;
   background-color: #B4B4FF;
-  box-shadow: inset 0 0 30px -7px white;
+  box-shadow: inset 0 0 30px -7px #8282FF;
 }
 .envelope .back .top-flap:before, .envelope .back .bottom-flap:before {
   width: calc(550px / 1.414);
@@ -255,30 +257,22 @@ body {
   border-bottom-left-radius: 30px;
   border-top-left-radius: 5px;
 }
+
 .envelope .back .letter {
-  z-index: 1;
   position: absolute;
+  /* z-index: 2; */
   top: 5px;
   left: 10px;
   width: 530px;
   height: 346.6666666667px;
-/*
-  background-color: white;
+  background-color:#DCEBFF;
   border-radius: 5px;
   padding: 0 30px;
   box-sizing: border-box;
-  box-shadow: inset 0 0px 30px -5px #B4B4FF, 0 0 10px -5px;
-  
-*/
-  
-background: rgba( 144, 19, 254, 0.25 );
-box-shadow: 0 8px 32px 0 rgba( 31, 38, 135, 0.37 );
-  
-backdrop-filter: blur( 6.0px );
--webkit-backdrop-filter: blur( 6.0px );
-border-radius: 10px;
-border: 1px solid rgba( 255, 255, 255, 0.18 );
+  box-shadow: inset 0 0px 30px -5px #8282FF, 0 0 10px -5px;
 }
+
+
 .envelope .back .letter div {
   position: relative;
   margin-top: 25px;
@@ -290,7 +284,8 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   opacity: 0;
   top: -15px;
   transition: all 0.1s linear;
-  color: #ADADAD;
+  color:  white ;
+  background-color:transparent;
 }
 .envelope .back .letter label.show {
   opacity: 1;
@@ -300,7 +295,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   color: inherit;
 }
 .envelope .back .letter ::placeholder {
-  color: #ADADAD;
+  color: white;
 }
 .envelope .back .letter input[type='text'], .envelope .back .letter textarea {
   border: none;
@@ -308,7 +303,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   width: 100%;
   padding: 5px;
   margin: 0;
-  background-color:#B4B4FF;
+  background-color: #DCEBFF;
 
 }
 .envelope .back .letter input:focus, .envelope .back .letter textarea:focus {
@@ -319,7 +314,7 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   font-size: 20px;
 }
 .envelope .back .letter input[type='text'] {
-  height: 33px;
+  height: 32px;
 }
 .envelope .back .letter input[type='submit'] {
   font-weight: bold;
@@ -327,13 +322,16 @@ border: 1px solid rgba( 255, 255, 255, 0.18 );
   border: none;
   border-radius: 2px;
   padding: 5px 20px;
-  background-color: #e7e1bc;
+  background-color:#DCEBFF;
+  border-radius: 5px;
+  box-sizing: border-box;
   margin: 0;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
 .envelope .back .letter input[type='submit']:hover {
-  background-color: #DCD0AA;
+  background-color: #8282FF;
+  color: whi;
 }
 .envelope .back .letter textarea {
   resize: none;

@@ -33,7 +33,7 @@
     <div class="flap bottom-flap"></div>
     <div class="flap top-flap"></div>
   </div>
-</div>
+  </div>
   </div>
 </template>
 
