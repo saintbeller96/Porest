@@ -27,11 +27,11 @@ public class StoryServiceImpl implements StoryService{
     private final LetterRepository letterRepository;
 
     @Override
-    public Long putStory(SimpleStoryDto storyDto, Long userId) {
+    public Long putStory(FormDto formDto, Long userId) {
         Story story = Story.builder()
                 .isOpened(false)
-                .title(storyDto.getDetail().getTitle())
-                .content(storyDto.getDetail().getContent())
+                .title(formDto.getTitle())
+                .content(formDto.getContent())
                 .writerId(userId)
                 .build();
         Story save = storyRepository.save(story);
@@ -46,9 +46,8 @@ public class StoryServiceImpl implements StoryService{
     @Override
     public SimpleCounselDto pickStory(Long storyId, Long userId) {
         //사연 찾기
-        Story story = storyRepository.findById(storyId).orElseThrow(
-                ()->{throw new IllegalStateException();}
-        );
+        Story story = storyRepository.findById(storyId)
+                .orElseThrow(IllegalStateException::new);
         story.addPicked();
         //사연의 주인공과 현재 유저를 연결
         Counsel counsel = counselRepository.save(Counsel.createConnectedCounsel(story, userId));
@@ -74,7 +73,7 @@ public class StoryServiceImpl implements StoryService{
         for(Counsel counsel : story.getCounsels()){
             int len = counsel.getLetters().size();
             Letter lastLetter = counsel.getLetters().get(len-1);
-            if(lastLetter.getWriterId()!=story.getWriterId() && lastLetter.getStatus() == LetterStatus.READ){
+            if(lastLetter.getWriterId()!=story.getWriterId() && lastLetter.getStatus() == LetterStatus.WAIT){
                 cnt++;
             }
         }

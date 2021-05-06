@@ -8,5 +8,7 @@ import java.util.List;
 
 public interface CounselService {
     DetailCounselDto getDetailCounsel(Long counselId, Long userId);
+    List<DetailCounselDto> getDetailCounsels(Long userId);
     List<UserStoryInfoDto> getUserCounselInfo(Long userId);
+    void finishCounsel(Long counselId, Long userId);
 }

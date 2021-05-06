@@ -41,7 +41,7 @@ public class UserStoryInfoDto {
                 .title(story.getForm().getTitle())
                 .createdAt(story.getCreatedAt())
                 .numOfNewReply(numOfNewReply)
-                .nickname(counsel.getTempNickname())
+                .nickname(counsel.getCounsellorNickname())
                 .build();
     }
 }

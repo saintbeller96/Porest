@@ -20,8 +20,8 @@ public class Counsel {
     @Column(name = "counsellor_id")
     private Long counsellorId;
 
-    @Column(name = "temp_nickname")
-    private String tempNickname;
+    @Column(name = "counsellor_nickname")
+    private String counsellorNickname;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "story_id")
@@ -38,9 +38,9 @@ public class Counsel {
     public Counsel(){}
 
     @Builder
-    public Counsel(Story story, String tempNickname, Long counsellorId, CounselStatus status) {
-        setStory(story);
-        this.tempNickname = tempNickname;
+    public Counsel(Story story, Long counsellorId, CounselStatus status) {
+        this.story = story;
+        this.counsellorNickname = NicknameGenerator.generatePositive();
         this.counsellorId = counsellorId;
         this.status = status;
     }
@@ -58,8 +58,11 @@ public class Counsel {
         return Counsel.builder()
                 .story(story)
                 .counsellorId(userId)
-                .tempNickname(NicknameGenerator.generatePositive())
                 .status(CounselStatus.CONNECT)
                 .build();
+    }
+
+    public void setStatus(CounselStatus status){
+        this.status = status;
     }
 }

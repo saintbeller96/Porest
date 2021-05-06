@@ -24,8 +24,8 @@ public class CounselRepositoryImpl implements CounselRepositoryCustom {
     public Optional<Counsel> findByCounselId(Long counselId) {
         Counsel find = queryFactory
                 .select(counsel)
-                .from(letter)
-                .leftJoin(letter.counsel, counsel).fetchJoin()
+                .from(counsel)
+                .leftJoin(counsel.letters).fetchJoin()
                 .where(counsel.id.eq(counselId))
                 .fetchOne();
         return Optional.ofNullable(find);
@@ -38,6 +38,16 @@ public class CounselRepositoryImpl implements CounselRepositoryCustom {
                 .join(counsel.story).fetchJoin()
                 .leftJoin(counsel.letters).fetchJoin()
                 .where(counsel.counsellorId.eq(counsellorId))
+                .fetch();
+    }
+
+    @Override
+    public List<Counsel> findByUserId(Long userId) {
+        return queryFactory
+                .selectFrom(counsel).distinct()
+                .join(counsel.story).fetchJoin()
+                .leftJoin(counsel.letters).fetchJoin()
+                .where(counsel.story.writerId.eq(userId))
                 .fetch();
     }
 }
