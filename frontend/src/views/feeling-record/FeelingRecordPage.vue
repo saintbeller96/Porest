@@ -1,6 +1,8 @@
 <template>
   <body>
-    <div class="container">
+    감정 기록
+    <calendar></calendar>
+    <!-- <div class="container">
       <div class="my-calendar clearfix">
         <div class="clicked-date">
           <div class="cal-day"></div>
@@ -29,18 +31,22 @@
           </table>
         </div>
       </div>
-    </div>
+    </div> -->
   </body>
 </template>
 
 <script>
-import { build } from '@/assets/js/Calendar.js';
-import '../../assets/css/Calendar.css';
+// import { build } from '@/assets/js/Calendar.js';
+// import '../../assets/css/Calendar.css';
+import Calendar from '@/components/feeling-record/Calendar';
 export default {
-  mounted() {
-    build();
+  // mounted() {
+  //   build();
+  // },
+  components: {
+    Calendar,
   },
 };
 </script>
 
-<style></style>
+<style scoped></style>
