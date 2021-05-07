@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 const routes = [
   {
     path: '/',
-    redirect: '/main',
+    redirect: '/commingsoon',
   },
   {
     path: '/main',
@@ -55,6 +55,11 @@ const routes = [
     component: () => import('@/views/mailbox/LetterDetailPage.vue'),
   },
   {
+    path: '/mailbox/my-mailbox/letter-detail/letter-reply',
+    name: 'LetterReply',
+    component: () => import('@/views/mailbox/LetterReplyPage.vue'),
+  },
+  {
     path: '/home',
     name: 'Home',
     component: () => import('@/views/test/Home.vue'),
@@ -78,6 +83,11 @@ const routes = [
     path: '/profile',
     name: 'Profile',
     component: () => import('@/views/profile/ProfilePage.vue'),
+  },
+  {
+    path: '/commingsoon',
+    name: 'Commingsoon',
+    component: () => import('@/views/main/CommingsoonPage.vue'),
   },
 ];
 
