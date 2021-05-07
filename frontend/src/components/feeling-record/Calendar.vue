@@ -15,7 +15,7 @@
       </thead>
       <tbody>
         <tr v-for="(date, idx) in dates" :key="idx">
-          <td v-for="(day, index) in date" :key="index">{{ day }}</td>
+          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, day)">{{ day }}</td>
         </tr>
       </tbody>
     </table>
@@ -35,6 +35,7 @@ export default {
       year: 0,
       month: 0,
       today: 0,
+      targetDate: [],
     };
   },
   created() {
@@ -109,6 +110,10 @@ export default {
       if (weekOfDays.length > 0) dates.push(weekOfDays); // 남은 날짜 추가
       this.nextMonthBegin = weekOfDays[0];
       return dates;
+    },
+    getTargetDate(year, month, day) {
+      this.targetDate = [year, month, day];
+      this.$emit('get-target-date', this.targetDate);
     },
   },
 };
