@@ -43,12 +43,18 @@ export default {
   height: 100vh;
   width: 100vw;
   display: grid;
-  background-image: linear-gradient(135deg, #a8edea 10%, #fed6e3 100%);
+  /* background-image: linear-gradient(135deg, #a8edea 10%, #fed6e3 100%); */
+  background-image: linear-gradient(-45deg, #ffc796 0%, #ff6b95 100%);
   justify-content: center;
   /* 그리드 나누기 */
   grid-template-columns: repeat(7, 1fr);
   grid-template-rows: 1fr 1fr;
   box-sizing: border-box;
+
+  /* background-image: url('../../assets/image/407.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed; */
 }
 
 .profile-area {
