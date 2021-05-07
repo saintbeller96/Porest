@@ -12,15 +12,19 @@ myVideo.muted = true;
 enteranceBtn.addEventListener('click',()=>{
   sayHello()
   firstGuid.classList.add('hide_guid');
-    const audio = new Audio(`/audio/sound1.mp3`);
-    audio.loop = false; // 반복재생하지 않음
-    audio.volume = 0.5; // 음량 설정
-    audio.play(); // sound1.mp3 재생
+  audioPlay(1);
+  setTimeout(()=>{
+    defaultFace()
+  },1500)
     recognition.start();
     setTimeout(()=>{
       startFaceDetecting()
     },500)
 })
+
+function defaultFace(){
+  mouth.style.animation = "umm .5s "
+}
 
 function sayHello(){
   mouth.style.animation = "hello 1.75s forwards"
@@ -153,20 +157,18 @@ recognition.addEventListener('result',(e)=>{
   p.innerText = " "+text;
   textSection.appendChild(p)
   if(text.includes('안녕') && answer === 0){
-    const audio = new Audio(`/audio/sound${1}.mp3`);
-    audio.loop = false; // 반복재생하지 않음
-    audio.volume = 0.5; // 음량 설정
-    audio.play(); // sound1.mp3 재생
+    sayHello()
+    audioPlay(1)
+    setTimeout(()=>{
+      defaultFace()
+    },1500)
   }
 
-  if(text.includes('다음에 또 올게') && answer === 0){
-    const audio = new Audio(`/audio/sound${4}.mp3`);
+  if(text.includes('다음에 또 올게')){
     console.log(varEmotion['happy'])
     const varEmotion_current = varEmotion['happy']
     let now;
-    audio.loop = false; // 반복재생하지 않음
-    audio.volume = 0.5; // 음량 설정
-    audio.play(); // sound1.mp3 재생
+    audioPlay(4)
     sayLongSpeek();
     setTimeout(()=>{
       now =varEmotion['happy']
@@ -175,20 +177,27 @@ recognition.addEventListener('result',(e)=>{
         console.log('고마워')
         mouth.style.animation = 'stop 1s'
         saySpeek();
-        let audio = new Audio(`/audio/sound${5}.mp3`);
-        console.log(varEmotion['happy'])
-        audio.loop = false; // 반복재생하지 않음
-        audio.volume = 0.5; // 음량 설정
-        audio.play(); // sound1.mp3 재생
+        audioPlay(5)
+        setTimeout(()=>{
+          defaultFace()
+        },2500)
         setTimeout(() => {
-          audio = new Audio(`/audio/sound${6}.mp3`);
-          console.log(varEmotion['happy'])
-          audio.loop = false; // 반복재생하지 않음
-          audio.volume = 0.5; // 음량 설정
-          audio.play(); // sound1.mp3 재생
+          saySpeek();
+          audioPlay(6)
+          setTimeout(()=>{
+            defaultFace()
+          },4000)
         },2200);
       }
     },9000);
+  }
+
+  if(text.includes('힘들어')){
+    sayHello();
+    audioPlay(3);
+    setTimeout(()=>{
+      defaultFace()
+    },2500)
   }
 }
 
@@ -208,3 +217,28 @@ recognition.addEventListener('end',()=>{
   // }
   recognition.start();
 })
+
+
+var video = document.getElementById("myVideo");
+
+// Get the button
+var btn = document.getElementById("myBtn");
+
+// Pause and play the video, and change the button text
+function myFunction() {
+  if (video.paused) {
+    video.play();
+    btn.innerHTML = "Pause";
+  } else {
+    video.pause();
+    btn.innerHTML = "Play";
+  }
+}
+
+
+function audioPlay(soundId){
+  audio = new Audio(`/audio/sound${soundId}.mp3`);
+  audio.loop = false; // 반복재생하지 않음
+  audio.volume = 0.5; // 음량 설정
+  audio.play(); // sound1.mp3 재생
+}
