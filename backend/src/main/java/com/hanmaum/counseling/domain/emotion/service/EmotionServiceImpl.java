@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -20,8 +21,15 @@ public class EmotionServiceImpl implements EmotionService{
     @Override
     public Long saveEmotion(EmotionDetailDto emotionDto, Long userId) {
         Emotion emotion = Emotion.convertedFromDto(emotionDto, userId);
+        validate(userId);
         Emotion save = emotionRepository.save(emotion);
         return save.getId();
+    }
+
+    //이미 오늘 감정을 기록했으면 예외 던짐
+    private void validate(Long userId){
+        emotionRepository.findByDate(LocalDateTime.now(), userId).ifPresent(
+                emotion->{throw new IllegalStateException("이미 오늘의 감정을 기록했습니다.");});
     }
 
     @Override

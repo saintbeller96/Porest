@@ -51,7 +51,7 @@ public class EmotionController {
     }
 
     @ApiOperation("감정 기록 삭제")
-    @GetMapping("/{emotionId}")
+    @DeleteMapping("/{emotionId}")
     public ResponseEntity<String> deleteEmotionDetail(@PathVariable("emotionId") Long emotionId, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
         emotionService.deleteEmotion(emotionId, userId);
