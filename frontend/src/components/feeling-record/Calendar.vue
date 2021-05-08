@@ -1,32 +1,34 @@
 <template>
-  <section>
-    <span>
-      <button @click="calendarMonth(-1)">
-        &lt;
-      </button>
-      {{ year }}년 {{ month }}월
-      <button @click="calendarMonth(1)">
-        &gt;
-      </button>
-    </span>
+  <div class="calendar-container">
+    <header>
+      <i class="fas fa-chevron-left" @click="calendarMonth(-1)"></i> {{ year }}년 {{ month }}월
+      <i class="fas fa-chevron-right" @click="calendarMonth(1)"></i>
+    </header>
     <table>
       <thead>
         <th v-for="day in days" :key="day">{{ day }}</th>
       </thead>
       <tbody>
         <tr v-for="(date, idx) in dates" :key="idx">
-          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, day)">{{ day }}</td>
+          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, day, idx)" class="dates">
+            <p v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+              {{ day }}
+            </p>
+            <p v-else-if="today === day && presentYear === year && presentMonth === month" class="today">{{ day }}</p>
+            <p v-else>{{ day }}</p>
+          </td>
         </tr>
       </tbody>
     </table>
-  </section>
+  </div>
 </template>
 
 <script>
+import '@/assets/css/Calendar.css';
 export default {
   data() {
     return {
-      days: ['일요일', '월요일', '화요일', '수요일', '목요일', '금요일', '토요일'],
+      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
       dates: [],
       presentYear: 0,
       presentMonth: 0,
@@ -35,11 +37,13 @@ export default {
       year: 0,
       month: 0,
       today: 0,
+      now: 0,
       targetDate: [],
     };
   },
   created() {
     const date = new Date();
+    this.now = [];
     this.presentYear = date.getFullYear();
     this.presentMonth = date.getMonth() + 1;
     this.year = this.presentYear;
@@ -111,7 +115,12 @@ export default {
       this.nextMonthBegin = weekOfDays[0];
       return dates;
     },
-    getTargetDate(year, month, day) {
+    getTargetDate(year, month, day, idx) {
+      if (idx === 0 && day > 20) {
+        month -= 1;
+      } else if ((idx === 4 || idx === 5) && day < 10) {
+        month += 1;
+      }
       this.targetDate = [year, month, day];
       this.$emit('get-target-date', this.targetDate);
     },

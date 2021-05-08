@@ -94,6 +94,11 @@ const routes = [
     name: 'FeelingRecord',
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
   },
+  {
+    path: '/feeling-record/dairy',
+    name: 'Dairy',
+    component: () => import('@/views/feeling-record/DairyPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
