@@ -15,13 +15,6 @@
         <div class="card">4</div>
         <div class="card">4</div>
         <div class="card">4</div>
-        <div class="card">4</div>
-        <div class="card">4</div>
-        <div class="card">4</div>
-        <div class="card">4</div>
-        <div class="card">4</div>
-        <div class="card">4</div>
-        <div class="card">4</div>
       </div>
     </div>
     <div class="prev-button button">prev</div>

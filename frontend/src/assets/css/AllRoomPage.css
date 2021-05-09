@@ -14,7 +14,7 @@
   height: 100%;
   top: 100%;
   left: 50%;
-  transform: translate(-50%,-25%);
+  transform: translate(-50%,-55%);
 /*  border: 1px solid white;*/
 }
 
@@ -51,14 +51,14 @@
   color: #fff;
 }
 .prev-button {
-  top:50%;
+  top:100%;
   left:45%;
-  transform:translate(-45%,50%);
+  transform:translate(-45%,-50%);
 }
 .next-button {
-  top:50%;
+  top:100%;
   left:55%;
-  transform:translate(-55%,50%);
+  transform:translate(-55%,-50%);
 }
 
 
