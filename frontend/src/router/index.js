@@ -55,6 +55,11 @@ const routes = [
     component: () => import('@/views/mailbox/LetterDetailPage.vue'),
   },
   {
+    path: '/mailbox/my-mailbox/letter-detail/letter-reply',
+    name: 'LetterReply',
+    component: () => import('@/views/mailbox/LetterReplyPage.vue'),
+  },
+  {
     path: '/home',
     name: 'Home',
     component: () => import('@/views/test/Home.vue'),
@@ -75,9 +80,24 @@ const routes = [
     component: () => import('@/views/room/ChatRoomPage.vue'),
   },
   {
+    path: '/profile',
+    name: 'Profile',
+    component: () => import('@/views/profile/ProfilePage.vue'),
+  },
+  {
     path: '/commingsoon',
     name: 'Commingsoon',
     component: () => import('@/views/main/CommingsoonPage.vue'),
+  },
+  {
+    path: '/feeling-record',
+    name: 'FeelingRecord',
+    component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
+  },
+  {
+    path: '/feeling-record/dairy',
+    name: 'Dairy',
+    component: () => import('@/views/feeling-record/DairyPage.vue'),
   },
   {
     path: '/drawing',

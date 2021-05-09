@@ -3,7 +3,7 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 function validatePwd(pwd) {
-  const re = /^[A-Za-z0-9+]{6,12}$/;
+  const re = /^[A-Za-z0-9+]{8,20}$/;
   return re.test(pwd);
 }
 export { validateEmail, validatePwd };
