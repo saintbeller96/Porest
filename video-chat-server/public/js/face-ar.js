@@ -107,6 +107,9 @@ function initializeSession(video_apiKey, video_sessionId) {
     
     people++;
     const member = document.createElement('li')
+    // const userName =decodeURIComponent(document.cookie).split(';');
+    // console.log(userName)
+    
     member.innerHTML = `<span class="avatar"><img src="/image/happy.png"></span>`
     myProfile = member;
     users.append(member);
