@@ -11,6 +11,7 @@
     <div v-if="getTargetDate[0] <= year && getTargetDate[1] <= month && getTargetDate[2] <= today">
       <button @click="goToDairy">일기 쓰기</button>
     </div>
+    <!-- <button @click="goToDairy">일기 쓰기</button> -->
   </div>
 </template>
 
