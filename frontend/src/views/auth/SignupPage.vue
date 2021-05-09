@@ -12,8 +12,13 @@
           <div class="form">
             <p class="title">
               Email
-              <span v-if="!emailRedundancy" class="redundancy_check" @click="checkEmail">중복확인</span>
-              <span v-else class="redundancy_check" @click="checkEmail">중복확인 완료</span>
+              <span
+                v-if="!emailRedundancy || !isValidEmail || this.email.length === 0"
+                class="redundancy_check"
+                @click="checkEmail"
+                >중복확인</span
+              >
+              <span v-else class="redundancy_check2">중복확인 완료</span>
             </p>
             <div class="inputBox">
               <input
@@ -174,16 +179,20 @@ export default {
       }
     },
     async checkEmail() {
-      try {
-        let { data } = await emailCheck({
-          email: this.email,
-        });
-        this.emailRedundancy = data.redundancy;
-        if (!this.emailRedundancy) {
-          alert('이미 존재하는 이메일 주소입니다.');
+      if (this.email.length < 1 || !this.isValidEmail) {
+        alert('사용하실 이메일 주소를 올바르게 입력해주세요.');
+      } else {
+        try {
+          let { data } = await emailCheck({
+            email: this.email,
+          });
+          this.emailRedundancy = data.redundancy;
+          if (!this.emailRedundancy) {
+            alert('이미 존재하는 이메일 주소입니다.');
+          }
+        } catch (error) {
+          alert(error);
         }
-      } catch (error) {
-        alert(error);
       }
     },
   },
@@ -330,6 +339,14 @@ section {
 }
 
 .redundancy_check {
+  color: #fff;
+  font-size: 5px;
+  margin-right: 15px;
+  float: right;
+  cursor: pointer;
+}
+
+.redundancy_check2 {
   color: #fff;
   font-size: 5px;
   margin-right: 15px;
