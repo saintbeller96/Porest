@@ -109,6 +109,11 @@ const routes = [
     name: 'Drawing',
     component: () => import('@/views/joy/DrawingPage.vue'),
   },
+  {
+    path: '/mailbox/received',
+    name: 'MyReceivedMail',
+    component: () => import('@/views/mailbox/MyReceivedMailPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
