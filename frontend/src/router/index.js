@@ -30,11 +30,6 @@ const routes = [
     component: () => import('@/views/test/Test.vue'),
   },
   {
-    path: '/auth',
-    name: 'Auth',
-    component: () => import('@/views/auth/AuthPage.vue'),
-  },
-  {
     path: '/mailbox',
     name: 'Mailbox',
     component: () => import('@/views/mailbox/MailboxPage.vue'),
