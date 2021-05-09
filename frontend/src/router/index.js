@@ -15,6 +15,11 @@ const routes = [
     component: () => import('@/views/main/MainPage.vue'),
   },
   {
+    path: '/main/mainisland',
+    name: 'MainIsland',
+    component: () => import('@/views/main/MainIslandPage.vue'),
+  },
+  {
     path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/LoginPage.vue'),
@@ -86,6 +91,11 @@ const routes = [
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
   {
+    path: '/rootmail/reply',
+    name: 'RootMailReply',
+    component: () => import('@/views/mailbox/RootMailReplyPage.vue'),
+  },{
+
     path: '/feeling-record',
     name: 'FeelingRecord',
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
