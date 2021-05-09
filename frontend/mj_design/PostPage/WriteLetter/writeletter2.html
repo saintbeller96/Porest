@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>Document</title>
+  
+  <link rel="stylesheet" href="writeletter2.css">
+</head>
+<body>
+ 
+  
+  
+<div class="envelope open">
+  <div class="front">
+    <div class="stamp"></div>
+    <div class="mailme">
+      <p>당신의 고민을 담은 편지</p>
+      <p>한사랑 수목원이 전해드립니다</p>
+    </div>
+  </div>
+  
+  <div class="back">
+    <div class="letter">
+      <form class="mailform">
+        <div>
+          <label for="name">Name</label>
+          <input type="text" name="name" size="40" placeholder="Name">
+        </div>
+        <div>
+          <label for="emailadress">Email adress</label>
+          <input type="text" name="emailadress" size="40" placeholder="Email adress">
+        </div>
+        <div>
+          <label for="message">Message</label>
+          <textarea name="message" cols="40" rows="5" placeholder="Message"></textarea>
+        </div>
+        <div>
+          <input class="sendBtn" type="submit" value="Send">
+        </div>
+      </form>
+    </div>
+    <div class="flap left-flap"></div>
+    <div class="flap right-flap"></div>
+    <div class="flap bottom-flap"></div>
+    <div class="flap top-flap"></div>
+  </div>
+</div>
+
+<div class="notification">
+    <div>
+      <div>
+        <p>Message sent!</p>
+        <p>Write a new message</p>
+      </div>
+    </div>
+</div>
+
+</body>
+
+<script src="writeletter2.js"></script>
+</html>
