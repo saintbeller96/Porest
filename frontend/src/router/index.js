@@ -105,6 +105,11 @@ const routes = [
     name: 'Drawing',
     component: () => import('@/views/joy/DrawingPage.vue'),
   },
+  {
+    path: '/all/rooms',
+    name: 'AllRoom',
+    component: () => import('@/views/room/AllRoomPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
