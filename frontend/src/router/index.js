@@ -73,6 +73,7 @@ const routes = [
     path: '/checkin/:hostID/:roomID',
     name: 'CheckIn',
     component: () => import('@/views/room/CheckInPage.vue'),
+    props: true,
   },
   {
     path: '/chat/:hostID/:roomID',
@@ -108,6 +109,11 @@ const routes = [
     path: '/drawing',
     name: 'Drawing',
     component: () => import('@/views/joy/DrawingPage.vue'),
+  },
+  {
+    path: '/all/rooms',
+    name: 'AllRoom',
+    component: () => import('@/views/room/AllRoomPage.vue'),
   },
 ];
 
