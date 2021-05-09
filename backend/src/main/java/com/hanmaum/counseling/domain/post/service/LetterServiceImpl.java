@@ -38,7 +38,7 @@ public class LetterServiceImpl implements LetterService{
                 letter.setStatus(LetterStatus.READ);
             }
         }else{
-            if(letter.getParentLetter().getWriterId() == userId){
+            if(userId == letter.getParentLetter().getWriterId() ){
                 letter.setStatus(LetterStatus.READ);
             }
         }

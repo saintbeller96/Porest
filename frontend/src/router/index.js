@@ -99,6 +99,11 @@ const routes = [
     name: 'Dairy',
     component: () => import('@/views/feeling-record/DairyPage.vue'),
   },
+  {
+    path: '/drawing',
+    name: 'Drawing',
+    component: () => import('@/views/joy/DrawingPage.vue'),
+  },
 ];
 
 const router = new VueRouter({

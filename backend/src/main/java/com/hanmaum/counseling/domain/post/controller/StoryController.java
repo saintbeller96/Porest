@@ -1,15 +1,13 @@
 package com.hanmaum.counseling.domain.post.controller;
 
-import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
-import com.hanmaum.counseling.domain.post.dto.SimpleCounselDto;
-import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
-import com.hanmaum.counseling.domain.post.dto.UserStoryInfoDto;
+import com.hanmaum.counseling.domain.post.dto.*;
 import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
@@ -24,6 +22,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/stories")
+@Slf4j
 public class StoryController {
     private final StoryService storyService;
     private final CounselService counselService;
@@ -42,9 +41,9 @@ public class StoryController {
 
     @ApiOperation("사연 등록")
     @PostMapping("")
-    public ResponseEntity<?> putStory(@RequestBody @Valid SimpleStoryDto storyDto, Authentication auth){
+    public ResponseEntity<?> putStory(@RequestBody @Valid FormDto formDto, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        storyService.putStory(storyDto, userId);
+        storyService.putStory(formDto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
