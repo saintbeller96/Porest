@@ -73,6 +73,7 @@ const routes = [
     path: '/checkin/:hostID/:roomID',
     name: 'CheckIn',
     component: () => import('@/views/room/CheckInPage.vue'),
+    props: true,
   },
   {
     path: '/chat/:hostID/:roomID',

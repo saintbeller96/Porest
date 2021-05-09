@@ -1,11 +1,11 @@
 <template>
   <div id="app">
-    <!-- <div id="nav">
-      <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> |
-      <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> |
+    <div id="nav">
+      <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
+      <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
 
       <div to="#" @click="logout">로그 아웃</div>
-    </div> -->
+    </div>
     <router-view :user="user" />
   </div>
 </template>
@@ -37,8 +37,9 @@ export default {
   mounted() {
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log('user login request');
         this.user = user;
-        this.$store.dispatch('LOGIN', { userData: {}, firebaseData: this.user });
+        this.$store.dispatch('saveuUserUid', { firebaseData: this.user });
       }
     });
   },

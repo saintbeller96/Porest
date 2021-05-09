@@ -39,7 +39,7 @@ export default {
       roomName: null,
     };
   },
-  props: ['user'],
+  props: ['user', 'roomIdParams', 'roomNameParams'],
   methods: {
     handleCheckIn() {
       const roomRef = db
@@ -68,8 +68,7 @@ export default {
         this.nickName = user.nickName;
       }
     });
-
-    //Getting Room name
+    // Getting Room name
     db.collection('users')
       .doc(this.$route.params.hostID)
       .collection('rooms')
@@ -79,7 +78,8 @@ export default {
         if (doc.exists) {
           this.roomName = doc.data().name;
         } else {
-          this.$router.push('/');
+          // this.$router.push('/');
+          console.log('Room name is none');
         }
       });
   },

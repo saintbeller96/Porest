@@ -25,7 +25,7 @@
         </div>
         <div class="rooms-section-right">
           <div v-for="(room, index) in rooms" :key="index">
-            <div @click="moveToCheckIn(room.id)">{{ room }} 방</div>
+            <div @click="moveToCheckIn(room.id, room.name)">{{ room }} 방</div>
             <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">Delete</span>
           </div>
         </div>
@@ -45,7 +45,6 @@ export default {
       roomName: null,
       uid: this.$store.state.uid,
       rooms: [],
-      displays: [],
       addState: false,
       roomNameCheck: false,
     };
@@ -96,22 +95,26 @@ export default {
         .delete();
       this.rooms.splice(index, 1);
     },
-    moveToCheckIn(roomId) {
-      this.$router.push(`/checkin/${this.uid}/${roomId}`);
+    moveToCheckIn(roomId, roomNameParams) {
+      console.log('move to check in page', roomId);
+      console.log('this room name');
+      if (!this.uid) {
+        this.uid = 'none';
+      }
+      this.$router.push({
+        path: `/checkin/${this.uid}/${roomId}`,
+        params: { roomId: roomId, roomNameParams: roomNameParams },
+      });
     },
     async loadData() {
       const dbRef = db.collection('users');
       await dbRef.get().then(async querySnapshot => {
-        console.log('1정보를 모조리 가지고 올거야');
         await querySnapshot.forEach(async doc => {
-          console.log('2정보를 모조리 가지고 올거야');
           await dbRef
             .doc(doc.id)
             .collection('rooms')
             .onSnapshot(async snapShot => {
-              console.log('3정보를 모조리 가지고 올거야', this.rooms);
               await snapShot.forEach(ele => {
-                console.log('4정보를 모조리 가지고 올거야');
                 let dataForm = {
                   id: ele.id,
                   hostID: doc.id,
@@ -125,7 +128,6 @@ export default {
                     }
                   }
                   if (!state && this.addState) {
-                    console.log('없었으니까 추가할게');
                     this.rooms.unshift(dataForm);
                   } else if (!state && !this.addState) {
                     this.rooms.push(dataForm);
@@ -134,8 +136,6 @@ export default {
                   this.rooms.push(dataForm);
                 }
               });
-              console.log(this.rooms);
-              this.displays = [...this.rooms];
             });
         });
       });
