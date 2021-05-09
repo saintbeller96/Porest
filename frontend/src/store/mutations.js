@@ -5,8 +5,8 @@ export default {
   setUserUid(state, uid) {
     state.uid = uid;
   },
-  setUsername(state, username) {
-    state.username = username;
+  setUsername(state, nickname) {
+    state.nickname = nickname;
   },
   setUserEmail(state, email) {
     state.email = email;
@@ -16,5 +16,8 @@ export default {
   },
   setImg(state, img) {
     state.profileImg = img;
+  },
+  setTemperature(state, temperature) {
+    state.temperature = temperature;
   },
 };
