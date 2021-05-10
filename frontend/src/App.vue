@@ -1,10 +1,10 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> |
-      <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> |
+      <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
+      <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
 
-      <div to="#" @click="logout">로그 아웃</div>
+      <!-- <div to="#" @click="logout">로그 아웃</div> -->
     </div>
     <router-view :user="user" />
   </div>
@@ -35,11 +35,11 @@ export default {
     },
   },
   mounted() {
-    console.log('process', process.env.VUE_APP_FIREBASE_API_KEY);
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
+        console.log('user login request');
         this.user = user;
-        this.$store.dispatch('LOGIN', { userData: {}, firebaseData: this.user });
+        this.$store.dispatch('saveuUserUid', { firebaseData: this.user });
       }
     });
   },
@@ -47,3 +47,10 @@ export default {
 </script>
 
 <style src="@/assets/css/common/reset.css"></style>
+<style>
+@import '../node_modules/@syncfusion/ej2-base/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-popups/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
+</style>

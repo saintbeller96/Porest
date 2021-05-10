@@ -79,6 +79,16 @@ public class GlobalExceptionController {
         return String.format("{} is {}.{}", property, cv.getInvalidValue(), cv.getMessage());
     }
 
+    @ExceptionHandler(IllegalStateException.class)
+    public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException e){
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.builder()
+                        .message(e.getMessage())
+                        .code(e.toString()).
+                                build());
+    }
+
     //나머지 예외는 서버 에러로 처리
     @ExceptionHandler(Exception.class)
     public ResponseEntity<ErrorResponse> handleAll(Exception e){

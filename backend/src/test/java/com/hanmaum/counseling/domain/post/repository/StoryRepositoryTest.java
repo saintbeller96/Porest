@@ -1,11 +1,11 @@
 package com.hanmaum.counseling.domain.post.repository;
 
-import com.hanmaum.counseling.TestConfig;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.entity.*;
-import com.hanmaum.counseling.domain.post.repository.story.PostContent;
+import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
 import com.hanmaum.counseling.domain.post.repository.story.StoryRepository;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
@@ -18,7 +18,6 @@ import java.util.List;
 
 @DataJpaTest
 @ActiveProfiles("test")
-@Import(TestConfig.class)
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 class StoryRepositoryTest {
 
@@ -34,11 +33,11 @@ class StoryRepositoryTest {
         for(long i = 1; i<100; i++){
             Story story = Story.builder()
                     .writerId(i)
-                    .title("this is title of" + i)
-                    .content("this is content of " + i)
+                    .title("title " + i)
+                    .content("content " + i)
                     .isOpened(false)
                     .build();
-            storyRepository.save(story);
+            em.persist(story);
         }
         //when
         List<SimpleStoryDto> candidates = storyRepository.getCandidates(10L);
@@ -46,51 +45,59 @@ class StoryRepositoryTest {
         Assertions.assertThat(candidates.size()).isEqualTo(6);
     }
 
-
     @Test
-    void story_get_test() throws Exception{
+    @DisplayName("userId에 따라 해당 유저가 등록한 모든 Story 반환")
+    void findStoryByWriterIdTest() throws Exception{
         //given
-        Long userId = 1L;
-        Story story = null;
-        for(int i = 1; i<=3; i++){
-            Story s = Story.builder()
-                    .writerId(userId)
-                    .title(i + " this is title ")
-                    .content(i + " this is content ")
-                    .isOpened(false).build();
-            story = storyRepository.save(s);
-        }
+        Long writerId = 1L;
+        Story story = Story.builder()
+                .writerId(writerId)
+                .title("title ")
+                .content("content ")
+                .isOpened(false)
+                .build();
+        em.persist(story);
 
-        setDBCondition(story, userId);
+        setDBCondition(story);
         em.flush();
         em.clear();
         //when
-        List<PostContent> result = storyRepository.getStory(story.getId(), userId);
+        List<Story> result = storyRepository.findByWriterId(writerId);
         //then
-        result.forEach(System.out::println);
-        Assertions.assertThat(result.size()).isEqualTo(8);
+        for(var s : result){
+            for(var c : s.getCounsels()){
+                System.out.println(c.getLetters().size());
+            }
+        }
     }
 
-    void setDBCondition(Story story, Long userId){
+    void setDBCondition(Story story){
         for(int k = 1; k<3; k++){
-            Posts post = new Posts(story, userId, PostStatus.CONNECT);
-            em.persist(post);
+            Long counsellorId = 100000L + k;
+            Counsel counsel = Counsel.createConnectedCounsel(story, counsellorId);
+            story.addCounsel(counsel);
+            em.persist(counsel);
 
-            for(int i = 1; i<5; i++){
+            Letter parentLetter =  Letter.builder()
+                    .writerId(story.getId())
+                    .content(k + " letter content 1")
+                    .title(k + " letter title 1")
+                    .build();
+            counsel.addLetter(parentLetter);
+            for(int i = 2; i<6; i++){
+                Long writerId = story.getWriterId();
+                if(i%2 == 0){
+                    writerId = counsellorId;
+                }
                 Letter letter = Letter.builder()
-                        .writerId(story.getId())
-                        .content(k + story.getForm().getContent() + i)
-                        .title(k + story.getForm().getTitle() + i)
-                        .post(post)
+                        .writerId(writerId)
+                        .content(k + " letter content " + i)
+                        .title(k + " letter title " + i)
+                        .parentLetter(parentLetter)
                         .build();
                 em.persist(letter);
-
-                Reply reply = Reply.builder()
-                        .title(k + "reply title" + i)
-                        .content(k + "reply content" + i)
-                        .letter(letter)
-                        .writerId(2L).build();
-                em.persist(reply);
+                counsel.addLetter(letter);
+                parentLetter = letter;
             }
         }
     }

@@ -9,8 +9,15 @@
     <hr />
     <br />
     <div>
-      나의 우체통 페이지 바로가기
-      <button @click="goToMyMailbox">우체통 바로가기</button>
+      랜덤 뽑기 바로가기
+      <button @click="goToRandomMail">랜덤 뽑기 바로가기</button>
+    </div>
+    <br />
+    <hr />
+    <br />
+    <div>
+      받은 편지함 바로가기(답장하러가기)
+      <button @click="goToMyReceivedMail">받은 편지함 바로가기</button>
     </div>
   </div>
 </template>
@@ -21,8 +28,11 @@ export default {
     goToWriteLetterPage() {
       this.$router.push({ name: 'WriteLetter' });
     },
-    goToMyMailbox() {
-      this.$router.push({ name: 'MyMailbox' });
+    goToRandomMail() {
+      this.$router.push({ name: 'RandomMail' });
+    },
+    goToMyReceivedMail() {
+      this.$router.push({ name: 'MyReceivedMail' });
     },
   },
 };

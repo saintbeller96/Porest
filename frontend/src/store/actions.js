@@ -1,34 +1,36 @@
-// import { loginUser } from '@/api/auth';
+import { loginUser } from '@/api/auth';
+import jwt_decode from 'jwt-decode';
 import {
   saveAuthToCookie,
   saveUserIdToCookie,
-  saveUserUidToCookie,
   saveUserNameToCookie,
   saveUserEmailToCookie,
   saveUserImgFromCookie,
+  saveUserTemperatureFromCookie,
+  saveUserUidToCookie,
 } from '@/utils/cookies';
 
 export default {
   async LOGIN({ commit }, userData) {
-    console.log('dispatch', userData);
-    //     const { data } = await loginUser(userData);
-    //     commit('setUserId', data.id);
-    commit('setUserUid', userData.firebaseData.uid);
-    //     commit('setUsername', data.username);
-    //     commit('setUserEmail', data.email);
-    //     commit('setUserLocation', data.region);
-    //     commit('setToken', data.token);
-    //     commit('setImg', data.profile_img);
+    const { data } = await loginUser(userData);
+    var decoded = jwt_decode(data.token);
+    commit('setUserId', decoded.id);
+    commit('setUsername', decoded.nickname);
+    commit('setUserEmail', decoded.email);
+    commit('setToken', 'Bearer ' + data.token);
+    commit('setImg', decoded.profile_img);
+    commit('setTemperature', decoded.temperature);
 
-    //     // 쿠키에 저장
-    //     saveUserIdToCookie(data.id);
-    //     saveUserNameToCookie(data.username);
-    saveUserUidToCookie(userData.firebaseData.uid);
+    // 쿠키에 저장
+    saveUserIdToCookie(decoded.id);
+    saveUserNameToCookie(decoded.nickname);
+    saveUserEmailToCookie(decoded.email);
+    saveAuthToCookie('Bearer ' + data.token);
+    saveUserImgFromCookie(decoded.profile_img);
+    saveUserTemperatureFromCookie(decoded.temperature);
+    return data;
 
-    //     saveUserEmailToCookie(data.email);
-    //     saveAuthToCookie(data.token);
-    //     saveUserImgFromCookie(data.profile_img);
-    //     return data;
+    // firebase
   },
 
   async LOGOUT({ commit }) {
@@ -36,13 +38,20 @@ export default {
     commit('setUsername', '');
     commit('setUserEmail', '');
     commit('setToken', '');
-    commit('setUserLocation', '');
     commit('setImg', '');
+    commit('setTemperature', '');
     saveUserIdToCookie('');
     saveUserNameToCookie('');
-    saveUserUidToCookie('');
     saveUserEmailToCookie('');
     saveAuthToCookie('');
     saveUserImgFromCookie('');
+    saveUserTemperatureFromCookie('');
+    // saveUserUidToCookie('');
+  },
+
+  saveuUserUid({ commit }, payload) {
+    console.log('this is actions payload', payload.firebaseData.uid);
+    commit('setUserUid', payload.firebaseData.uid);
+    saveUserUidToCookie(payload.firebaseData.uid);
   },
 };
