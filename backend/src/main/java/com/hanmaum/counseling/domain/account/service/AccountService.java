@@ -40,7 +40,7 @@ public class AccountService {
         return userRepository.save(user);
     }
 
-    User findByEmail(String email) throws UserNotFoundException {
+    public User findByEmail(String email) throws UserNotFoundException {
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
     }
 
