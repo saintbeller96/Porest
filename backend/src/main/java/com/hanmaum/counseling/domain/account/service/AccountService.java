@@ -1,31 +1,32 @@
 package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.domain.account.dto.JwtTokenDto;
-import com.hanmaum.counseling.domain.account.dto.RedundancyDto;
-import com.hanmaum.counseling.domain.account.dto.SignupDto;
-import com.hanmaum.counseling.domain.account.dto.LoginDto;
+import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.security.JwtProvider;
+import exception.UserNotFoundException;
+import exception.WrongPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 @Service
 @RequiredArgsConstructor
 public class AccountService {
     static final String LOGIN_FAIL = "아이디 비밀번호 확인";
+    static final String NOT_FOUND = "없는 유저";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtProvider jwtProvider;
 
     public User saveUser(@Valid SignupDto request){
-        //이메일 또는 닉네임 중복 체크
-        if(!existEmail(request.getEmail()).isRedundancy() || !existNickname(request.getNickname()).isRedundancy()) {
+        //이메일 중복 체크
+        if(!existEmail(request.getEmail()).isRedundancy()) {
             throw new IllegalStateException();
         }
 
@@ -39,8 +40,8 @@ public class AccountService {
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email){
-        return userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
+    public User findByEmail(String email) throws UserNotFoundException {
+        return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
     }
 
     public JwtTokenDto findByEmailAndPassword(LoginDto request) throws LoginException {
@@ -52,13 +53,29 @@ public class AccountService {
         return JwtTokenDto.builder().token(token).build();
     }
 
-    public RedundancyDto existNickname(String nickname) {
-        boolean redundancy = userRepository.existsByNickname(nickname);
-        return RedundancyDto.builder().redundancy(!redundancy).build();
+    public void updatePassword(HttpServletRequest request, UpdatePasswordDto updatePasswordDto) throws WrongPasswordException, UserNotFoundException {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtProvider.getEmailFromToken(token);
+        User user = findByEmail(email);
+        if (!passwordEncoder.matches(updatePasswordDto.getOldPassword(), user.getPassword())) {
+             throw new WrongPasswordException("비밀번호가 틀렸습니다.");
+        }
+        String newPassword = passwordEncoder.encode(updatePasswordDto.getNewPassword());
+        user.setPassword(newPassword);
+        userRepository.save(user);
     }
+
 
     public RedundancyDto existEmail(String email) {
         boolean redundancy = userRepository.existsByEmail(email);
         return RedundancyDto.builder().redundancy(!redundancy).build();
+    }
+
+
+    public void deleteUser(HttpServletRequest request) throws UserNotFoundException {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtProvider.getEmailFromToken(token);
+        User user = findByEmail(email);
+        userRepository.delete(user);
     }
 }

@@ -4,15 +4,16 @@ import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.service.AccountService;
 import com.hanmaum.counseling.security.JwtProvider;
+import exception.UserNotFoundException;
+import exception.WrongPasswordException;
+import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.security.auth.login.LoginException;
+import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 /**
@@ -25,16 +26,6 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
-    private final JwtProvider jwtProvider;
-
-    @GetMapping("/admin/get")
-    public String getAdmin(){
-        return "관리자";
-    }
-    @GetMapping("/user/get")
-    public String getUser(){
-        return "일반 유저";
-    }
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
@@ -43,7 +34,7 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request) throws LoginException {
+    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request) throws LoginException, WrongPasswordException {
         JwtTokenDto result = accountService.findByEmailAndPassword(request);
         return ResponseEntity.ok(result);
     }
@@ -54,9 +45,16 @@ public class AccountController {
         return ResponseEntity.ok(result);
     }
 
-    @PostMapping("/nickname-check")
-    public ResponseEntity<RedundancyDto> nicknameCheck(@RequestBody @Valid NicknameCheckDto nickname){
-        RedundancyDto result = accountService.existNickname(nickname.getNickname());
-        return ResponseEntity.ok(result);
+    @PutMapping("update-password")
+    public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, HttpServletRequest httpServletRequest) throws WrongPasswordException, UserNotFoundException {
+        accountService.updatePassword(httpServletRequest, updatePasswordDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+
+    @DeleteMapping("/delete")
+    public ResponseEntity<?> deleteUser(HttpServletRequest request) throws UserNotFoundException {
+        accountService.deleteUser(request);
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 }
