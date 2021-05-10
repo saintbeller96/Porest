@@ -83,7 +83,7 @@ const routes = [
   {
     path: '/chat/:hostID/:roomID',
     name: 'Chat',
-    component: () => import('@/views/room/ChatRoomPage.vue'),
+    component: () => import('@/views/room/Approve.vue'),
   },
   {
     path: '/profile',
@@ -96,7 +96,6 @@ const routes = [
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
   {
-
     path: '/feeling-record',
     name: 'FeelingRecord',
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
@@ -115,6 +114,11 @@ const routes = [
     path: '/all/rooms',
     name: 'AllRoom',
     component: () => import('@/views/room/AllRoomPage.vue'),
+  },
+  {
+    path: '/joy/vr',
+    name: 'VrRoom',
+    component: () => import('@/views/joy/VrRoomPage.vue'),
   },
 ];
 

@@ -1,66 +1,56 @@
 <template>
-  <div>
-    <div>chat room</div>
+  <div class="approve-wrapper">
     <section>
-      <div class="container-fluid mt-4">
-        <div class="mb-3">
-          <span class="mb-0 h2 text-primary">{{ roomName }}</span>
-          <span class="ml-1" v-if="user && user.uid !== hostID">
-            Hosted by: <strong class="text-danger">{{ hostNickName }}</strong>
+      <div class="">
+        <div class="">
+          <span class="">{{ roomName }}</span>
+          <span class="" v-if="user && user.uid !== hostID">
+            Hosted by: <strong class="">{{ hostNickName }}</strong>
           </span>
         </div>
-        <div class="row" v-if="(user && user.uid == hostID) || attendeeApproved">
-          <div class="col-md-8"></div>
-          <div class="col-md-4">
+        <div class="" v-if="(user && user.uid == hostID) || attendeeApproved">
+          <div class="">
             <form>
               <input type="hidden" name="roomId" value="something" />
               <input type="hidden" name="userId" value="something" />
               <input type="hidden" name="roomName" value="something" />
-              <button v-if="!attendeeJoined && attendeeApproved" class="btn btn-primary mr-1" @click="doJoin">
+              <button v-if="!attendeeJoined && attendeeApproved" class="" @click="doJoin">
                 Join
               </button>
-              <button v-if="attendeeJoined" type="button" class="btn btn-danger mr-1" @click="doLeave">
+              <button v-if="attendeeJoined" type="button" class="" @click="doLeave">
                 Leave
               </button>
             </form>
-            <h4 class="mt-2">Attendees</h4>
-            <ul class="list-unstyled">
+            <h4 class="">Attendees</h4>
+            <ul class="">
               <li v-for="attendee in attendeesApprovedArr" :key="attendee.id">
                 <a
                   type="button"
-                  class="mr-2"
+                  class=""
                   title="Approve attendee"
                   @click="toggleApproval(attendee.id)"
                   v-if="user && user.uid == hostID"
                 >
                   approve
                 </a>
-                <span class="mr-2" :class="[attendee.webRTCID ? 'text-success' : 'text-secondary']" title="On Air">
-                </span>
+                <span class="" :class="[attendee.webRTCID ? 'text-success' : 'text-secondary']" title="On Air"> </span>
                 <span></span>
-                <span class="pl-1" :class="[attendee.id == user.uid ? 'font-weight-bold text-danger' : '']">{{
+                <span class="" :class="[attendee.id == user.uid ? 'font-weight-bold text-danger' : '']">{{
                   attendee.nickName
                 }}</span>
               </li>
             </ul>
             <div v-if="user && user.uid == hostID">
-              <h5 class="mt-4">Pending</h5>
-              <ul class="list-unstyled">
-                <li class="mb-1" v-for="attendee in attendeesPendingArr" :key="attendee.id">
+              <h5 class="">Pending</h5>
+              <ul class="">
+                <li class="" v-for="attendee in attendeesPendingArr" :key="attendee.id">
                   <span>
-                    <a type="button" class="mr-2" title="Approve attendee" @click="toggleApproval(attendee.id)"
-                      >approve
-                    </a>
-                    <a
-                      type="button"
-                      class="text-secondary pr-1"
-                      title="Delete Attendee"
-                      @click="deleteAttendee(attendee.id)"
-                    >
+                    <a type="button" class="" title="Approve attendee" @click="toggleApproval(attendee.id)">approve </a>
+                    <a type="button" class="" title="Delete Attendee" @click="deleteAttendee(attendee.id)">
                       delete
                     </a>
                   </span>
-                  <span class="pl-1">{{ attendee.nickName }}</span>
+                  <span class="">{{ attendee.nickName }}</span>
                 </li>
               </ul>
             </div>
@@ -218,3 +208,5 @@ export default {
   },
 };
 </script>
+
+<style scoped src="@/assets/css/Approve.css"></style>

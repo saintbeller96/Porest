@@ -24,6 +24,16 @@
                 <div class="face-show">공개</div>
                 <div class="face-noshow">비공개</div>
               </div>
+              <div class="room-category">
+                <div class="category" @click="">학교생활</div>
+                <div class="category">직장생활</div>
+                <div class="category">학업 및 진호</div>
+                <div class="category">심리 및 정서</div>
+                <div class="category">대인관계</div>
+                <div class="category">연애</div>
+                <div class="category">성</div>
+                <div class="category">자녀육아</div>
+              </div>
               <button type="submit" class="btn btn-sm btn-info" id="buttonAdd" @click.prevent="checkRoomName">
                 개설하기
               </button>
