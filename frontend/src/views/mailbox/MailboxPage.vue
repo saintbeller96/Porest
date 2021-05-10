@@ -3,7 +3,7 @@
     mailbox page
     <div>
       편지 작성하기 페이지 바로가기
-      <button @click="goToWriteLetterPage">편지 작성하기</button>
+      <button @click="goToWriteStoryPage">편지 작성하기</button>
     </div>
     <br />
     <hr />
@@ -25,14 +25,14 @@
 <script>
 export default {
   methods: {
-    goToWriteLetterPage() {
-      this.$router.push({ name: 'WriteLetter' });
+    goToStoryLetterPage() {
+      this.$router.push({ name: "WriteStory" });
     },
     goToRandomMail() {
-      this.$router.push({ name: 'RandomMail' });
+      this.$router.push({ name: "RandomMail" });
     },
     goToMyReceivedMail() {
-      this.$router.push({ name: 'MyReceivedMail' });
+      this.$router.push({ name: "MyReceivedMail" });
     },
   },
 };
