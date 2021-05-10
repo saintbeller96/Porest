@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.domain.post.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanmaum.counseling.commons.ControllerTestConfig;
 import com.hanmaum.counseling.domain.account.dto.SignupDto;
 import com.hanmaum.counseling.domain.account.entity.User;
 
@@ -25,7 +26,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static org.assertj.core.api.Assertions.*;
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;

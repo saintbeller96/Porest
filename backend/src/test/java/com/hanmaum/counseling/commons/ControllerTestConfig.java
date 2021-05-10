@@ -1,4 +1,4 @@
-package com.hanmaum.counseling.domain.post.controller;
+package com.hanmaum.counseling.commons;
 
 import org.springframework.boot.test.context.TestConfiguration;
 import org.springframework.context.annotation.Bean;
