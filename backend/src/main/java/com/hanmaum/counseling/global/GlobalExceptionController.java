@@ -1,9 +1,12 @@
 package com.hanmaum.counseling.global;
 
 import com.hanmaum.counseling.error.ErrorResponse;
+import exception.UserNotFoundException;
+import exception.WrongPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -12,9 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import javax.security.auth.login.LoginException;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
-import javax.validation.Path;
-import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
@@ -46,6 +48,28 @@ public class GlobalExceptionController {
     public ResponseEntity<?> loginException(LoginException e){
         return ResponseEntity.badRequest().body(ErrorResponse.builder()
                 .message(e.getMessage())
+                .code(e.toString())
+                .build());
+    }
+    @ExceptionHandler(value = {UserNotFoundException.class})
+    public ResponseEntity<?> userNotFoundException(Exception e){
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(e.toString())
+                .build());
+    }
+
+    @ExceptionHandler(value = WrongPasswordException.class)
+    public ResponseEntity<?> wrongPasswordException(WrongPasswordException e){
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(e.toString())
+                .build());
+    }
+    @ExceptionHandler(value = NoSuchElementException.class)
+    public ResponseEntity<?> noSuchElementException(NoSuchElementException e){
+        return ResponseEntity.badRequest().body(ErrorResponse.builder()
+                .message("gdgdg")
                 .code(e.toString())
                 .build());
     }
