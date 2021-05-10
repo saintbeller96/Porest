@@ -1,49 +1,15 @@
 <template>
   <div>
+    <button>랜덤 돌리기 </button>
     <section>
       <!-- <img src="@/assets/image/407.jpg" alt="" /> -->
       <div class="card">
         <div class="wrapper">
-          <div class="box">
+          <div class="box" v-for="(mail,index) in randomMails" :key="index">
             <div class="box-container">
               <h2>letter 1</h2>
               <p>안녕하세요 내용입니다</p>
-              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-container">
-              <h2>letter 2</h2>
-              <p>안녕하세요 내용입니다</p>
-              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-container">
-              <h2>letter 3</h2>
-              <p>안녕하세요 내용입니다</p>
-              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-container">
-              <h2>letter 4</h2>
-              <p>안녕하세요 내용입니다</p>
-              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-container">
-              <h2>letter 5</h2>
-              <p>안녕하세요 내용입니다</p>
-              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
-            </div>
-          </div>
-          <div class="box">
-            <div class="box-container">
-              <h2>letter 6</h2>
-              <p>안녕하세요 내용입니다</p>
-              <a href="#" @click="goToLetterDetail">읽으러 가기</a>
+              <div @click="goToRootMailReply">읽으러 가기</div>
             </div>
           </div>
         </div>
@@ -54,12 +20,18 @@
 
 <script>
 export default {
+  name:'RandomMail',
+  data(){
+    return {
+      randomMails:[1,2,3,4,5,6],
+    }
+  },
   methods: {
-    goToLetterDetail() {
-      this.$router.push({ name: 'LetterDetail' });
+    goToRootMailReply() {
+      this.$router.push({ name: 'RootMailReply' });
     },
   },
-};
+}
 </script>
 
 <style scoped>

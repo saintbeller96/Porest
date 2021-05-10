@@ -23,7 +23,6 @@
           <label for="content">content</label>
           <textarea name="content" cols="40" rows="5" placeholder="고민을 남겨주세요"></textarea>
         </div>
-        <p>작성날짜:2021</p>
         <div>
           <input class="sendBtn" type="submit" value="Send">
         </div>
@@ -40,7 +39,7 @@
     <div>
       <div>
         <p>Message sent!</p>
-        <p>Write a new message</p>
+        <p>Write a new message(보류)</p>
       </div>
     </div>
 </div>

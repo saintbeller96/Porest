@@ -45,19 +45,24 @@ const routes = [
     component: () => import('@/views/mailbox/WriteLetterPage.vue'),
   },
   {
-    path: '/mailbox/my-mailbox',
-    name: 'MyMailbox',
-    component: () => import('@/views/mailbox/MyMailboxPage.vue'),
+    path: '/mailbox/random-mail',
+    name: 'RandomMail',
+    component: () => import('@/views/mailbox/RandomMailPage.vue'),
   },
   {
-    path: '/mailbox/my-mailbox/letter-detail',
-    name: 'LetterDetail',
-    component: () => import('@/views/mailbox/LetterDetailPage.vue'),
+    path: '/mailbox/random-mail/rootmail/reply',
+    name: 'RootMailReply',
+    component: () => import('@/views/mailbox/RootMailReplyPage.vue'),
   },
   {
     path: '/mailbox/my-mailbox/letter-detail/letter-reply',
     name: 'LetterReply',
     component: () => import('@/views/mailbox/LetterReplyPage.vue'),
+  },
+  {
+    path: '/mailbox/received',
+    name: 'MyReceivedMail',
+    component: () => import('@/views/mailbox/MyReceivedMailPage.vue'),
   },
   {
     path: '/home',
@@ -90,10 +95,6 @@ const routes = [
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
   {
-    path: '/rootmail/reply',
-    name: 'RootMailReply',
-    component: () => import('@/views/mailbox/RootMailReplyPage.vue'),
-  },{
 
     path: '/feeling-record',
     name: 'FeelingRecord',
@@ -109,11 +110,7 @@ const routes = [
     name: 'Drawing',
     component: () => import('@/views/joy/DrawingPage.vue'),
   },
-  {
-    path: '/mailbox/received',
-    name: 'MyReceivedMail',
-    component: () => import('@/views/mailbox/MyReceivedMailPage.vue'),
-  },
+  
 ];
 
 const router = new VueRouter({

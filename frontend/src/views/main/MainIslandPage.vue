@@ -2,13 +2,12 @@
   
 <div class="mainisland">
   <div class="main_wrapper">
-    <div class="post_ground_wrapper">
-      <div class="post_ground_container">
-        <div class="post_island">
+    <div class="post_ground_wrapper" >
+      <div class="post_ground_container" @click="goToMailbox">
+        <div class="post_island" >
           <object :data="post_island" type="image/svg+xml"></object>
           <span class="post_shadow"></span>
         </div>
-
       </div>
     </div>
 
@@ -62,16 +61,20 @@
 
 <script>
 export default {
-    data(){
-        return {
-            post_island: require('../../assets/svg/post.svg'),
-            board_island: require('../../assets/svg/board.svg'),
-            radio_island:require('../../assets/svg/radio.svg'),
-            video_island: require('../../assets/svg/video.svg'),
-            calender_island:require('../../assets/svg/calender.svg')
-
-        }
+  data(){
+    return {
+      post_island: require('../../assets/svg/post.svg'),
+      board_island: require('../../assets/svg/board.svg'),
+      radio_island: require('../../assets/svg/radio.svg'),
+      video_island: require('../../assets/svg/video.svg'),
+      calender_island: require('../../assets/svg/calender.svg'),
     }
+  },
+  methods: {
+    goToMailbox() {
+      this.$router.push({name:'Mailbox'});
+    }
+  },
 }
 </script>
 
