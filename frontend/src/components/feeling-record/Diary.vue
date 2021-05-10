@@ -9,9 +9,8 @@
     </div>
 
     <div v-if="getTargetDate[0] <= year && getTargetDate[1] <= month && getTargetDate[2] <= today">
-      <button @click="goToDairy">일기 쓰기</button>
+      <button @click="openModal">모달 열기</button>
     </div>
-    <button @click="openModal">모달 열기</button>
   </div>
 </template>
 
@@ -29,9 +28,6 @@ export default {
     };
   },
   methods: {
-    goToDairy() {
-      this.$router.push({ path: '/feeling-record/dairy', query: { date: this.getTargetDate } });
-    },
     openModal() {
       this.$emit('open-modal', this.modal);
     },

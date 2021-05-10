@@ -96,15 +96,9 @@ const routes = [
     component: () => import('@/views/main/CommingsoonPage.vue'),
   },
   {
-
     path: '/feeling-record',
     name: 'FeelingRecord',
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
-  },
-  {
-    path: '/feeling-record/dairy',
-    name: 'Dairy',
-    component: () => import('@/views/feeling-record/DairyPage.vue'),
   },
   {
     path: '/drawing',
