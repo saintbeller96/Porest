@@ -10,35 +10,37 @@
         <div class="square" style="--i:4;"></div>
         <div class="container">
           <div class="form">
-            <p class="welcome">Welcome to POREST :)</p>
-            <p class="title">
-              Email
-            </p>
-            <div class="inputBox">
-              <input
-                type="email"
-                class="input"
-                v-model="email"
-                placeholder="이메일 주소를 입력해주세요."
-                autocomplete="on"
-              />
-            </div>
-            <p v-if="!isValidEmail" class="error_message">
-              잘못된 이메일 양식입니다.
-            </p>
+            <form @submit.prevent>
+              <p class="welcome">Welcome to POREST :)</p>
+              <p class="title">
+                Email
+              </p>
+              <div class="inputBox">
+                <input
+                  type="email"
+                  class="input"
+                  v-model="email"
+                  placeholder="이메일 주소를 입력해주세요."
+                  autocomplete="on"
+                />
+              </div>
+              <p v-if="!isValidEmail" class="error_message">
+                잘못된 이메일 양식입니다.
+              </p>
 
-            <p class="title">비밀번호</p>
-            <div class="inputBox">
-              <input type="password" v-model="password" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
-            </div>
-            <p v-if="!isValidPwd && password.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
-            <p v-else-if="!isValidPwd && password.length > 20" class="error_message">
-              20자 이하의 비밀번호를 입력해주세요.
-            </p>
-            <button @click="submitForm" class="button">Login</button>
-            <div class="go-to-signup-container">
-              <span @click="goToSignup" class="go-to-signup">회원가입 하러 가기</span>
-            </div>
+              <p class="title">비밀번호</p>
+              <div class="inputBox">
+                <input type="password" v-model="password" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+              </div>
+              <p v-if="!isValidPwd && password.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
+              <p v-else-if="!isValidPwd && password.length > 20" class="error_message">
+                20자 이하의 비밀번호를 입력해주세요.
+              </p>
+              <button @click="submitForm" class="button">Login</button>
+              <div class="go-to-signup-container">
+                <span @click="goToSignup" class="go-to-signup">회원가입 하러 가기</span>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -48,8 +50,8 @@
 
 <script>
 import { validateEmail, validatePwd } from '@/utils/validation';
-// import FireBase from 'firebase/app';
-// import 'firebase/auth';
+import FireBase from 'firebase/app';
+import 'firebase/auth';
 import AuthForm from '@/components/auth/AuthForm';
 export default {
   components: {
@@ -77,7 +79,6 @@ export default {
     goToSignup() {
       this.$router.push({ name: 'Signup' });
     },
-
     // register() {
     //   if (!this.error) {
     //     FireBase.auth()
@@ -98,14 +99,26 @@ export default {
     // },
     async submitForm() {
       try {
-        await this.$store.dispatch('LOGIN', {
-          email: this.email,
-          password: this.password,
-        });
-        this.$router.push('/main');
+        this.fireBaseLogin();
+        // await this.$store.dispatch('LOGIN', {
+        //   email: this.email,
+        //   password: this.password,
+        // });
+        // this.$router.push('/main');
       } catch (error) {
         alert('이메일이나 비밀번호를 다시 확인해주세요.');
       }
+    },
+    fireBaseLogin() {
+      console.log('login');
+      FireBase.auth()
+        .signInWithEmailAndPassword(this.email, this.password)
+        .then(
+          response => {
+            console.log('response status', response);
+          },
+          error => (this.error = error.message),
+        );
     },
   },
 };

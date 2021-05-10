@@ -12,12 +12,17 @@
         <div class="row" v-if="(user && user.uid == hostID) || attendeeApproved">
           <div class="col-md-8"></div>
           <div class="col-md-4">
-            <button v-if="!attendeeJoined && attendeeApproved" class="btn btn-primary mr-1" @click="doJoin">
-              Join
-            </button>
-            <button v-if="attendeeJoined" type="button" class="btn btn-danger mr-1" @click="doLeave">
-              Leave
-            </button>
+            <form>
+              <input type="hidden" name="roomId" value="something" />
+              <input type="hidden" name="userId" value="something" />
+              <input type="hidden" name="roomName" value="something" />
+              <button v-if="!attendeeJoined && attendeeApproved" class="btn btn-primary mr-1" @click="doJoin">
+                Join
+              </button>
+              <button v-if="attendeeJoined" type="button" class="btn btn-danger mr-1" @click="doLeave">
+                Leave
+              </button>
+            </form>
             <h4 class="mt-2">Attendees</h4>
             <ul class="list-unstyled">
               <li v-for="attendee in attendeesApprovedArr" :key="attendee.id">
@@ -28,7 +33,7 @@
                   @click="toggleApproval(attendee.id)"
                   v-if="user && user.uid == hostID"
                 >
-                approve
+                  approve
                 </a>
                 <span class="mr-2" :class="[attendee.webRTCID ? 'text-success' : 'text-secondary']" title="On Air">
                 </span>
@@ -74,7 +79,8 @@
 </template>
 
 <script>
-import Firebase from 'firebase';
+import axios from 'axios';
+// import Firebase from 'firebase';
 import db from '@/db';
 export default {
   data: function() {
@@ -128,38 +134,29 @@ export default {
       }
     },
     doJoin() {
-      this.$refs.webrtc.join();
-      this.attendeeJoined = true;
+      const form = document.querySelector('form');
+      form.action = 'http://localhost:3000/ar';
+      form.method = 'POST';
+      form.target = 'pop';
+      form.roomId.value = this.roomID;
+      form.userId.value = this.user.uid;
+      form.roomName.value = this.roomName;
+      // this.$refs.webrtc.join();
+      // this.attendeeJoined = true;
+      // this.$router.push('http://localhost:3000/ar', { data: { Uid: this.user.uid, who: 'host' } });
+      // window.location = 'http://localhost:3000/ar';
+      window.open('', 'pop');
+      form.submit();
+      // this.$router.push({
+      //   path: '/github',
+      //   beforeEnter() {
+      //     window.location.href = 'http://localhost:3000/ar';
+      //   },
+      // });
     },
     doLeave() {
       this.$refs.webrtc.leave();
       this.attendeeJoined = false;
-    },
-    doAttendeeJoined(joinID) {
-      console.log('join');
-      const ref = db
-        .collection('users')
-        .doc(this.hostID)
-        .collection('rooms')
-        .doc(this.roomID)
-        .collection('attendees')
-        .doc(this.user.uid);
-      ref.update({
-        webRTCID: joinID,
-      });
-    },
-    doAttendeeLeft(leftID) {
-      console.log('left');
-      const ref = db
-        .collection('users')
-        .doc(this.hostID)
-        .collection('rooms')
-        .doc(this.roomID)
-        .collection('attendees')
-        .doc(this.user.uid);
-      ref.update({
-        webRTCID: null,
-      });
     },
   },
   props: ['user'],
