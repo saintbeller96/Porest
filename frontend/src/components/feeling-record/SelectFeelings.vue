@@ -5,11 +5,11 @@
       <label class="menu-open-button" for="menu-open">
         <i class="fa fa-bars"></i>
       </label>
-      <img src="../../assets/image/feeling/1.png" class="menu-item" @click="getFeeling" />
-      <img src="../../assets/image/feeling/2.png" class="menu-item" />
-      <img src="../../assets/image/feeling/3.png" class="menu-item" />
-      <img src="../../assets/image/feeling/4.png" class="menu-item" />
       <img src="../../assets/image/feeling/5.png" class="menu-item" />
+      <img src="../../assets/image/feeling/4.png" class="menu-item" />
+      <img src="../../assets/image/feeling/3.png" class="menu-item" />
+      <img src="../../assets/image/feeling/2.png" class="menu-item" />
+      <img src="../../assets/image/feeling/1.png" class="menu-item" @click="getFeeling" />
     </nav>
   </div>
 </template>
@@ -30,10 +30,11 @@ export default {
 </script>
 
 <style scoped>
-/* .menu {
-  -webkit-filter: url(#shadowed-goo);
-  top: 30%;
-} */
+.menu {
+  /* -webkit-filter: url(#shadowed-goo); */
+  /* top: 30%; */
+  /* position: static; */
+}
 
 .menu-open-button {
   background: #ffd93b;
@@ -72,7 +73,7 @@ export default {
   display: none;
 }
 .menu {
-  position: absolute;
+  /* position: absolute; */
   width: 93%;
   /* width: 650px; */
   /* height: 150px; */
@@ -80,7 +81,7 @@ export default {
   box-sizing: border-box;
   font-size: 15px;
   text-align: left;
-  margin-top: 3vh;
+  /* margin-top: 3vh; */
 }
 
 .menu-item:hover {

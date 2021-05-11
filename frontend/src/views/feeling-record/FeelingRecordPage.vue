@@ -19,6 +19,8 @@
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
+      <img src="../../assets/image/bubble.png" />
+      <img src="../../assets/image/bubble.png" />
     </div>
   </div>
 </template>
@@ -214,6 +216,16 @@ export default {
 .bubbles img:nth-child(9) {
   animation-delay: 2s;
   width: 35px;
+  z-index: -1000;
+}
+.bubbles img:nth-child(10) {
+  animation-delay: 6s;
+  width: 33px;
+  z-index: -1000;
+}
+.bubbles img:nth-child(11) {
+  animation-delay: 3s;
+  width: 22px;
   z-index: -1000;
 }
 </style>
