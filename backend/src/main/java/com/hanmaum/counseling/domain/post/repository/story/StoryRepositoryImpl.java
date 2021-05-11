@@ -35,7 +35,9 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
                 .where(story.writerId.ne(userId)
                         .and(story.picked.lt(PICK_MAX)))
                 .fetch();
-
+        if(ids.size() == 0){
+            return Collections.emptyList();
+        }
         Set<Long> randomSet = new HashSet<>();
         Random random = new Random();
         while(true){
