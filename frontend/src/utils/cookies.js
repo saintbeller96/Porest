@@ -2,6 +2,7 @@ function saveUserIdToCookie(value) {
   document.cookie = `login_id=${value}`;
 }
 function saveUserUidToCookie(value) {
+  console.log('cookie 저장');
   document.cookie = `login_uid=${value}`;
 }
 function saveUserNameToCookie(value) {

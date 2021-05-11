@@ -1,15 +1,15 @@
 <template>
   <div>
-    <button>랜덤 돌리기 </button>
+    <button>랜덤 돌리기</button>
     <section>
       <!-- <img src="@/assets/image/407.jpg" alt="" /> -->
       <div class="card">
         <div class="wrapper">
-          <div class="box" v-for="(mail,index) in randomMails" :key="index">
+          <div class="box" v-for="(story, index) in stories" :key="index">
             <div class="box-container">
-              <h2>letter 1</h2>
-              <p>안녕하세요 내용입니다</p>
-              <div @click="goToRootMailReply">읽으러 가기</div>
+              <h2>{{ story.detail.title }}</h2>
+              <p>{{ story.detail.content }}</p>
+              <div @click="goToRootMailReply(story.storyId)">읽으러 가기</div>
             </div>
           </div>
         </div>
@@ -19,23 +19,31 @@
 </template>
 
 <script>
+import { getCandidatesOfStories } from "@/api/stories";
 export default {
-  name:'RandomMail',
-  data(){
+  name: "RandomMail",
+  data() {
     return {
-      randomMails:[1,2,3,4,5,6],
-    }
+      randomMails: [1, 2, 3, 4, 5, 6],
+      stories: [],
+    };
   },
   methods: {
-    goToRootMailReply() {
-      this.$router.push({ name: 'RootMailReply' });
+    async getRandomStories() {
+      this.stories = await getCandidatesOfStories();
+    },
+    goToRootMailReply(id) {
+      this.$router.push({ name: "RootMailReply", params: { storyId: id } });
     },
   },
-}
+  mounted() {
+    this.getRandomStories();
+  },
+};
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap");
 * {
   margin: 0;
   padding: 0;
@@ -47,7 +55,7 @@ section {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url('../../assets/image/407.jpg');
+  background-image: url("../../assets/image/407.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -89,12 +97,12 @@ section {
   font-size: 17px;
   margin-bottom: 30px;
   color: rgba(255, 255, 255, 0.7);
-  font-family: 'Black Han Sans', sans-serif;
+  font-family: "Black Han Sans", sans-serif;
 }
 .box p {
   line-height: 1.9;
   color: rgba(255, 255, 255, 0.7);
-  font-family: 'Nanum Brush Script', cursive;
+  font-family: "Nanum Brush Script", cursive;
   font-size: 20px;
 }
 
@@ -107,7 +115,7 @@ section {
   text-decoration: none;
   font-size: 16px;
   border-radius: 50px;
-  font-family: 'Black Han Sans', sans-serif;
+  font-family: "Black Han Sans", sans-serif;
 }
 
 /* .wrapper .box:before {

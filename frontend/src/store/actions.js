@@ -40,13 +40,14 @@ export default {
     commit('setToken', '');
     commit('setImg', '');
     commit('setTemperature', '');
+    commit('setUserUid', '');
     saveUserIdToCookie('');
     saveUserNameToCookie('');
     saveUserEmailToCookie('');
     saveAuthToCookie('');
     saveUserImgFromCookie('');
     saveUserTemperatureFromCookie('');
-    // saveUserUidToCookie('');
+    saveUserUidToCookie('');
   },
 
   saveuUserUid({ commit }, payload) {
