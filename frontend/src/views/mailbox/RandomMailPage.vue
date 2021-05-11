@@ -19,9 +19,9 @@
 </template>
 
 <script>
-import { getCandidatesOfStories } from "@/api/stories";
+import { getCandidatesOfStories } from '@/api/stories';
 export default {
-  name: "RandomMail",
+  name: 'RandomMail',
   data() {
     return {
       randomMails: [1, 2, 3, 4, 5, 6],
@@ -33,7 +33,7 @@ export default {
       this.stories = await getCandidatesOfStories();
     },
     goToRootMailReply(id) {
-      this.$router.push({ name: "RootMailReply", params: { storyId: id } });
+      this.$router.push({ name: 'RootMailReply', params: { storyId: id } });
     },
   },
   mounted() {
@@ -43,7 +43,7 @@ export default {
 </script>
 
 <style scoped>
-@import url("https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap');
 * {
   margin: 0;
   padding: 0;
@@ -55,7 +55,7 @@ section {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background-image: url("../../assets/image/407.jpg");
+  background-image: url('../../assets/image/407.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -97,12 +97,12 @@ section {
   font-size: 17px;
   margin-bottom: 30px;
   color: rgba(255, 255, 255, 0.7);
-  font-family: "Black Han Sans", sans-serif;
+  font-family: 'Black Han Sans', sans-serif;
 }
 .box p {
   line-height: 1.9;
   color: rgba(255, 255, 255, 0.7);
-  font-family: "Nanum Brush Script", cursive;
+  font-family: 'Nanum Brush Script', cursive;
   font-size: 20px;
 }
 
@@ -115,7 +115,7 @@ section {
   text-decoration: none;
   font-size: 16px;
   border-radius: 50px;
-  font-family: "Black Han Sans", sans-serif;
+  font-family: 'Black Han Sans', sans-serif;
 }
 
 /* .wrapper .box:before {

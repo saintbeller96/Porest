@@ -44,7 +44,9 @@ export default {
       if (user) {
         console.log('user login request');
         this.user = user;
-        this.$store.dispatch('saveuUserUid', { firebaseData: this.user });
+        if (this.$store.state.uid == '') {
+          this.$store.dispatch('saveuUserUid', { firebaseData: this.user });
+        }
       }
     });
   },

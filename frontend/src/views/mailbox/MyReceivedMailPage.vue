@@ -1,6 +1,6 @@
 <template>
   <div class="received-mail-main-wrapper">
-    <!-- <Star></Star> -->
+    <Star></Star>
     <div class="received-mail-inner-wrapper">
       받은편지함 페이지
       <div>
@@ -12,10 +12,17 @@
 </template>
 
 <script>
+import { getMyStories } from '@/api/stories';
+
 import Star from '@/components/common/Star.vue';
 
 export default {
   name: 'MyReceivedMailPage',
+  data() {
+    return {
+      stories: null,
+    };
+  },
   components: {
     Star,
   },
@@ -23,6 +30,12 @@ export default {
     goToLetterReply() {
       this.$router.push({ name: 'LetterReply' });
     },
+    async getMyStories() {
+      this.stories = await getMyStories();
+    },
+  },
+  mounted() {
+    console.log(this.stories);
   },
 };
 </script>
