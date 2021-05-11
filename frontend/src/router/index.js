@@ -50,7 +50,7 @@ const routes = [
     component: () => import('@/views/mailbox/RandomMailPage.vue'),
   },
   {
-    path: '/mailbox/random-mail/rootmail/reply',
+    path: '/mailbox/random-mail/rootmail/reply/:storyId',
     name: 'RootMailReply',
     component: () => import('@/views/mailbox/RootMailReplyPage.vue'),
   },

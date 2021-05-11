@@ -12,7 +12,7 @@ export default {
     state.email = email;
   },
   setToken(state, token) {
-    state.token = `Token ${token}`;
+    state.token = token;
   },
   setImg(state, img) {
     state.profileImg = img;
