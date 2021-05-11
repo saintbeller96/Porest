@@ -67,13 +67,17 @@ export default {
         .doc(this.roomId);
       roomRef.get().then(doc => {
         if (doc.exists) {
+          console.log('존재한다.');
           roomRef
             .collection('attendees')
             .doc(this.user.uid)
             .set({
               createdAt: Firebase.firestore.FieldValue.serverTimestamp(),
             })
-            .then(() => this.$router.push(`/chat/${this.hostId}/${this.roomId}`));
+            .then(() => {
+              this.$emit('showApprove');
+              // this.$router.push(`/chat/${this.hostId}/${this.roomId}`)
+            });
         }
       });
     },

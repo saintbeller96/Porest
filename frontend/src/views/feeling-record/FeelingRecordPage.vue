@@ -4,7 +4,10 @@
       <calendar @get-target-date="getDate"></calendar>
     </div>
     <div class="dairy-area">
-      <dairy :getTargetDate="targetDate"></dairy>
+      <dairy :getTargetDate="targetDate" @open-modal="openModal"> </dairy>
+      <modal v-if="isModalViewed" @close-modal="isModalViewed = false">
+        <writing-dairy></writing-dairy>
+      </modal>
     </div>
   </div>
 </template>
@@ -12,19 +15,27 @@
 <script>
 import Calendar from '@/components/feeling-record/Calendar';
 import Dairy from '@/components/feeling-record/Dairy';
+import WritingDairy from '@/components/feeling-record/WritingDairy';
+import Modal from '@/components/common/Modal';
 export default {
   components: {
     Calendar,
     Dairy,
+    Modal,
+    WritingDairy,
   },
   data() {
     return {
       targetDate: [],
+      isModalViewed: '',
     };
   },
   methods: {
     getDate(date) {
       this.targetDate = date;
+    },
+    openModal(modal) {
+      this.isModalViewed = modal;
     },
   },
 };

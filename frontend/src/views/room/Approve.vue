@@ -1,70 +1,69 @@
 <template>
   <div class="approve-wrapper">
-    <section>
-      <div class="">
-        <div class="">
-          <span class="">{{ roomName }}</span>
-          <span class="" v-if="user && user.uid !== hostID">
-            Hosted by: <strong class="">{{ hostNickName }}</strong>
-          </span>
-        </div>
-        <div class="" v-if="(user && user.uid == hostID) || attendeeApproved">
-          <div class="">
-            <form>
-              <input type="hidden" name="roomId" value="something" />
-              <input type="hidden" name="userId" value="something" />
-              <input type="hidden" name="roomName" value="something" />
-              <button v-if="!attendeeJoined && attendeeApproved" class="" @click="doJoin">
-                Join
-              </button>
-              <button v-if="attendeeJoined" type="button" class="" @click="doLeave">
-                Leave
-              </button>
-            </form>
-            <h4 class="">Attendees</h4>
-            <ul class="">
-              <li v-for="attendee in attendeesApprovedArr" :key="attendee.id">
-                <a
-                  type="button"
-                  class=""
-                  title="Approve attendee"
-                  @click="toggleApproval(attendee.id)"
-                  v-if="user && user.uid == hostID"
-                >
-                  approve
-                </a>
-                <span class="" :class="[attendee.webRTCID ? 'text-success' : 'text-secondary']" title="On Air"> </span>
-                <span></span>
-                <span class="" :class="[attendee.id == user.uid ? 'font-weight-bold text-danger' : '']">{{
-                  attendee.nickName
-                }}</span>
-              </li>
-            </ul>
-            <div v-if="user && user.uid == hostID">
-              <h5 class="">Pending</h5>
-              <ul class="">
-                <li class="" v-for="attendee in attendeesPendingArr" :key="attendee.id">
-                  <span>
-                    <a type="button" class="" title="Approve attendee" @click="toggleApproval(attendee.id)">approve </a>
-                    <a type="button" class="" title="Delete Attendee" @click="deleteAttendee(attendee.id)">
-                      delete
-                    </a>
-                  </span>
-                  <span class="">{{ attendee.nickName }}</span>
-                </li>
-              </ul>
-            </div>
-          </div>
-        </div>
-        <div v-else>
-          <p class="lead">
-            Hi
-            <strong class="text-primary font-weight-bold">{{ user.nickName }}</strong
-            >, you're currently in the room waiting for the owner of the chat to add you to the meeting. Please wait.
-          </p>
+    <div class="approve-inner-wrapper">
+      <div class="room-name-header">
+        <div class="room_name">{{ roomName }}</div>
+        <div class="buttons">
+          <form class="approve-form" @submit.prevent>
+            <input type="hidden" name="roomId" value="something" />
+            <input type="hidden" name="userId" value="something" />
+            <input type="hidden" name="roomName" value="something" />
+            <button v-if="!attendeeJoined && attendeeApproved" class="join-btn" @click="doJoin">
+              입장하기
+            </button>
+            <button v-if="!attendeeJoined && attendeeApproved" class="leave-btn" @click="doLeave">
+              나가기
+            </button>
+          </form>
         </div>
       </div>
-    </section>
+      <div class="attendee-list-wrapper" v-if="(user && user.uid == hostId) || attendeeApproved">
+        <div class="attendee-attend">
+          <h4 class="">참가자</h4>
+          <ul class="">
+            <li v-for="(attendee, index) in attendeesApprovedArr" :key="attendee.id">
+              <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
+              <div class="attendee-nickname" v-else>담이</div>
+              <a
+                type="button"
+                class="approve-btn-attend"
+                title="Approve attendee"
+                @click="toggleApproval(attendee.id)"
+                v-if="user && user.uid == hostId"
+              >
+                내보내기
+              </a>
+            </li>
+          </ul>
+        </div>
+        <div v-if="user && user.uid == hostId" class="attendee-wait">
+          <h4 class="">참가 대기자</h4>
+          <ul class="">
+            <li class="" v-for="(attendee, index) in attendeesPendingArr" :key="attendee.id">
+              <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
+              <div class="attendee-nickname" v-else>담이</div>
+              <span>
+                <a
+                  type="button"
+                  class="approve-btn-attend"
+                  title="Approve attendee"
+                  @click="toggleApproval(attendee.id)"
+                  >참가승인
+                </a>
+                <a type="button" class="approve-btn-delete" title="Delete Attendee" @click="deleteAttendee(attendee.id)"
+                  >참가거절</a
+                >
+              </span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div v-else>
+        <p class="lead">
+          안녕하세요! 현재 참가 요청에 대한 방장의 승인이 진행 중에 있습니다. 잠시만 기다려주세요!
+        </p>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -75,9 +74,6 @@ import db from '@/db';
 export default {
   data: function() {
     return {
-      hostID: this.$route.params.hostID,
-      roomID: this.$route.params.roomID,
-      roomName: null,
       hostNickName: null,
       attendeesPendingArr: [],
       attendeesApprovedArr: [],
@@ -88,12 +84,13 @@ export default {
   components: {},
   methods: {
     toggleApproval: function(attendeeID) {
-      if (this.user && this.user.uid == this.hostID) {
+      // host인 경우만 승인이 가능하다.
+      if (this.user && this.user.uid == this.hostId) {
         const ref = db
           .collection('users')
           .doc(this.user.uid)
           .collection('rooms')
-          .doc(this.roomID)
+          .doc(this.roomId)
           .collection('attendees')
           .doc(attendeeID);
 
@@ -113,22 +110,24 @@ export default {
       }
     },
     deleteAttendee: function(attendeeID) {
-      if (this.user && this.user.uid == this.hostID) {
+      console.log('삭제한다');
+      // host인 경우만 삭제가 가능하다
+      if (this.user && this.user.uid == this.hostId) {
         db.collection('users')
           .doc(this.user.uid)
           .collection('rooms')
-          .doc(this.roomID)
+          .doc(this.roomId)
           .collection('attendees')
           .doc(attendeeID)
           .delete();
       }
     },
     doJoin() {
-      const form = document.querySelector('form');
+      const form = document.querySelector('.approve-form');
       form.action = 'http://localhost:3000/ar';
       form.method = 'POST';
       form.target = 'pop';
-      form.roomId.value = this.roomID;
+      form.roomId.value = this.roomId;
       form.userId.value = this.user.uid;
       form.roomName.value = this.roomName;
       // this.$refs.webrtc.join();
@@ -145,21 +144,25 @@ export default {
       // });
     },
     doLeave() {
-      this.$refs.webrtc.leave();
       this.attendeeJoined = false;
+      this.$emit('exitRoom');
     },
   },
-  props: ['user'],
+  props: ['user', 'roomId', 'roomName', 'hostId'],
+
   mounted() {
+    console.log('this is approve page', this.user, this.roomId, this.roomName, this.hostId);
     const roomRef = db
       .collection('users')
-      .doc(this.$route.params.hostID)
+      .doc(this.hostId)
       .collection('rooms')
-      .doc(this.$route.params.roomID);
+      .doc(this.roomId);
     //Get Room Name
     roomRef.get().then(roomDoc => {
-      if (roomDoc.exists) this.roomName = roomDoc.data().name;
-      else this.$router.push('/');
+      if (!roomDoc.exists) {
+        alert('존재하지 않는 상담방입니다.');
+        this.$router.push('/all/rooms');
+      }
     });
     //Get Host Name
     roomRef.collection('attendees').onSnapshot(snapShot => {
@@ -168,8 +171,8 @@ export default {
       let tempApproved = [];
       snapShot.forEach(attendeeDoc => {
         //Host Display Name
-        if (this.hostID === attendeeDoc.id) {
-          this.hostNickName = attendeeDoc.data().nickName;
+        if (this.hostId === attendeeDoc.id) {
+          this.hostNickName = '담이';
         }
         //Cheking If User Checked In
         if (this.user && this.user.uid == attendeeDoc.id) {
@@ -182,9 +185,7 @@ export default {
           }
           tempApproved.push({
             id: attendeeDoc.id,
-            nickName: attendeeDoc.data().nickName,
             approved: attendeeDoc.data().approved,
-            webRTCID: attendeeDoc.data().webRTCID,
           });
         } else {
           //Push all users that are NOT approved to the pending arr.
@@ -193,14 +194,13 @@ export default {
           }
           tempPendeing.push({
             id: attendeeDoc.id,
-            nickName: attendeeDoc.data().nickName,
             approved: attendeeDoc.data().approved,
-            webRTCID: attendeeDoc.data().webRTCID,
           });
         }
       });
       if (!userCheckedIn) {
-        this.$router.push(`/checkin/${this.hostID}/${this.roomID}`);
+        alert('체크인 하지 않은 유저는 입장하실 수 없습니다.');
+        this.$router.push(`/all/rooms`);
       }
       this.attendeesPendingArr = tempPendeing;
       this.attendeesApprovedArr = tempApproved;

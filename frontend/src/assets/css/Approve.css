@@ -6,3 +6,110 @@
   justify-content: center;
   align-items: center;
 }
+
+.approve-inner-wrapper {
+  width: 30rem;
+  height: 30rem;
+  padding: 1rem;
+  border-radius: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  backdrop-filter: blur(5px);
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+}
+
+.room-name-header {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.room_name{
+  font-size: 1.5rem;
+  color: white;
+  /* margin-bottom: 3rem; */
+  position: relative;
+  padding-bottom: 0.5rem;
+  border-bottom: 2px solid #fff;
+}
+
+.leave-btn,.join-btn {
+  display: inline-block;
+  color: #333;
+  text-align: center;
+  line-height: 1.5rem;
+  width: 4rem;
+  font-size: 0.8rem;
+  font-weight: 400;
+  /* height: 1.5rem; */
+  border-radius: 0.4rem;
+  margin-left: 0.5rem;
+  padding: 0.1rem;
+  background-color: #fff;
+  transition: all 1s;
+  cursor: pointer;
+}
+
+.leave-btn:hover, .join-btn:hover {
+  background-color: #667eea;
+}
+.attendee-list-wrapper {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
+
+
+h4 {
+  font-size: 1.2rem;
+  color: #fff;
+  margin:1rem 0 ;
+}
+
+.attendee-wait, .attendee-attend {
+  width: 100%;
+  height: 10rem;
+}
+
+li {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin: 1rem 0;
+}
+
+.attendee-nickname{
+  height: 1.1rem;
+  font-weight: 600;
+  color: #667eea;
+}
+
+.approve-btn-delete,.approve-btn-attend{
+  width: 4rem;
+  font-size: 0.8rem;
+  color: #fff;
+  border-radius: 0.3rem;
+  margin-right: 0.3rem;
+  display: inline-block;
+  padding: 0.3rem ;
+  background-color: #667eea;
+
+}
+
+.lead {
+  margin: 3rem 0;
+  color: #fff;
+  font-size: 1.3rem;
+  letter-spacing: 1px;
+  line-height: 1.5rem;
+}

@@ -25,12 +25,17 @@ export default {
   },
   methods: {
     logout() {
+      // :TODO 삭제요청
+      console.log(this.$router.history.current.name);
+      this.$store.dispatch('LOGOUT');
       FireBase.auth()
         .signOut()
         .then(() => {
           console.log('logout');
           this.user = null;
-          this.$router.push('/login');
+          if (this.$router.history.current.name != 'Login') {
+            this.$router.push('/login');
+          }
         });
     },
   },

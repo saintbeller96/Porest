@@ -1,11 +1,7 @@
 <template>
   <div class="rooms-wrapepr">
     <div class="background-image"></div>
-    <section class="star-wrapper">
-      <div id="stars"></div>
-      <div id="stars2"></div>
-      <div id="stars3"></div>
-    </section>
+    <Star></Star>
     <div class="list-pop-up">
       <div class="list-pop-up-inner-wrapper">
         <div class="room-card">
@@ -19,6 +15,7 @@
             <form @submit.prevent>
               <input type="text" placeholder="상담소 이름을 적어주세요" v-model="roomName" />
               <div class="capacity-wrapper">
+                <h2>참가 허용 인원</h2>
                 <div class="capacity-count">
                   <div class="count-btn count-plus">더하기</div>
                   <div class="count-num">1</div>
@@ -33,13 +30,6 @@
                 <div class="non-public public-btn public-active" @click="publicState == false">비공개</div>
               </div>
               <h2>상담 분야 소개</h2>
-              <!-- <textarea
-                name="desc"
-                cols="30"
-                rows="10"
-                v-model="roomDesc"
-                placeholder="상담소의 짧은 소개를 작성해주세요"
-              ></textarea> -->
               <div class="room-category-select">
                 <div class="room-category" data-value="1">학교 생활</div>
                 <div class="room-category" data-value="2">직장 생활</div>
@@ -74,7 +64,7 @@
                 </div>
               </div>
               <div class="room-item-right">
-                <div class="enter-room-btn" @click="moveToCheckIn(room.id, room.name)">
+                <div class="enter-room-btn" @click="moveToCheckIn(room.hostID, room.id, room.name)">
                   <span>입장</span><span>하기</span>
                 </div>
               </div>
@@ -165,19 +155,30 @@
     </div>
     <div class="prev-button button">prev</div>
     <div class="next-button button">next</div>
+    <approve
+      class="aprrove-pop-up"
+      v-if="approveState"
+      @exitRoom="exitCheckin"
+      :user="user"
+      :roomId="roomId"
+      :hostId="hostId"
+      :roomName="roomName"
+    ></approve>
     <check-in-page
       v-if="checkinState"
       class="check-in-pop-up"
       :user="user"
       :roomId="roomId"
-      :hostId="uid"
+      :hostId="hostId"
       :roomName="roomName"
+      @showApprove="showApprove"
     ></check-in-page>
     <div class="checkin-exit" @click="exitCheckin">떠나기</div>
   </div>
 </template>
 
 <script>
+import Star from '@/components/common/Star.vue';
 import CheckInPage from '@/views/room/CheckInPage.vue';
 import Approve from '@/views/room/Approve.vue';
 import { init } from '@/assets/js/AllRoomPage.js';
@@ -201,12 +202,14 @@ export default {
       roomId: null,
       hostId: null,
       checkinState: false,
+      approveState: false,
       categories: ['학교 생활', '직장 생활', '학업 및 진로', '자녀 양육', '대인 관계', '심리 및 정서', '연애', '기타'],
     };
   },
   components: {
     CheckInPage,
     Approve,
+    Star,
   },
   props: ['user'],
   async mounted() {
@@ -217,8 +220,13 @@ export default {
     }
   },
   methods: {
+    showApprove() {
+      console.log('approve');
+      this.approveState = true;
+    },
     exitCheckin() {
       this.checkinState = false;
+      this.approveState = false;
       const checkinExit = document.querySelector('.checkin-exit');
       checkinExit.classList.remove('checkin-exit-show');
       console.log(this.checkinState);
@@ -290,13 +298,14 @@ export default {
         .delete();
       this.rooms.splice(index, 1);
     },
-    moveToCheckIn(roomId, roomName) {
+    moveToCheckIn(hostId, roomId, roomName) {
       this.checkinState = true;
       console.log('move to check in page', roomId);
       console.log('this room name');
       if (!this.uid) {
         this.uid = 'none';
       }
+      this.hostId = hostId;
       this.roomId = roomId;
       this.roomName = roomName;
       const checkinExit = document.querySelector('.checkin-exit');

@@ -98,13 +98,15 @@ export default {
     //   }
     // },
     async submitForm() {
+      console.log('login');
       try {
+        await this.$store.dispatch('LOGIN', {
+          email: this.email,
+          password: this.password,
+        });
+        console.log('이동');
         this.fireBaseLogin();
-        // await this.$store.dispatch('LOGIN', {
-        //   email: this.email,
-        //   password: this.password,
-        // });
-        // this.$router.push('/main');
+        this.$router.push('/main');
       } catch (error) {
         alert('이메일이나 비밀번호를 다시 확인해주세요.');
       }
