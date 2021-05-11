@@ -5,25 +5,22 @@
         <div class="post_ground_container" @click="goToMailbox">
           <div class="post_island">
             <object :data="post_island" type="image/svg+xml"></object>
-            <span class="post_shadow"></span>
           </div>
         </div>
       </div>
 
-      <div class="board_ground_wrapper">
-        <div class="board_ground_container">
-          <div class="board_island">
-            <object :data="board_island" type="image/svg+xml"></object>
-            <span class="board_shadow"></span>
+      <div class="game_ground_wrapper">
+        <div class="game_ground_container">
+          <div class="game_island">
+            <object :data="game_island" type="image/svg+xml"></object>
           </div>
         </div>
       </div>
 
-      <div class="radio_ground_wrapper">
-        <div class="radio_ground_container">
-          <div class="radio_island">
-            <object :data="radio_island" type="image/svg+xml"></object>
-            <span class="radio_shadow"></span>
+      <div class="chat_ground_wrapper">
+        <div class="chat_ground_container">
+          <div class="chat_island">
+            <object :data="chat_island" type="image/svg+xml"></object>
           </div>
         </div>
       </div>
@@ -32,7 +29,6 @@
         <div class="video_ground_container">
           <div class="video_island">
             <object :data="video_island" type="image/svg+xml"></object>
-            <span class="video_shadow"></span>
           </div>
         </div>
       </div>
@@ -41,7 +37,6 @@
         <div class="calender_ground_container" @click="goToFeelingRecord">
           <div class="calender_island">
             <object :data="calender_island" type="image/svg+xml"></object>
-            <span class="calender_shadow"></span>
           </div>
         </div>
       </div>
@@ -53,11 +48,11 @@
 export default {
   data() {
     return {
-      post_island: require('../../assets/svg/post.svg'),
-      board_island: require('../../assets/svg/board.svg'),
-      radio_island: require('../../assets/svg/radio.svg'),
-      video_island: require('../../assets/svg/video.svg'),
-      calender_island: require('../../assets/svg/calender.svg'),
+      post_island: require('../../assets/svg/post_final.svg'),
+      game_island: require('../../assets/svg/game_final.svg'),
+      chat_island: require('../../assets/svg/chat_final.svg'),
+      video_island: require('../../assets/svg/video_final.svg'),
+      calender_island: require('../../assets/svg/calender_final.svg'),
     };
   },
   methods: {
