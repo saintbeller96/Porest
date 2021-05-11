@@ -3,10 +3,11 @@
     <div class="rooms-section-wrapper">
       <div class="rooms-section-inner-wrapper">
         <div class="rooms-section-left">
-          <div class="rooms-section-left-header">
-            화상채팅방
+          <div class="rooms-section-left-header"></div>
+          <div class="rooms-section-left-content">
+            <h1>화상상담방 개설하기</h1>
             <form>
-              <label for="roomNmae">RoomName</label>
+              <label for="roomNmae">상담방 이름</label>
               <input
                 type="text"
                 class="form-control"
@@ -16,17 +17,35 @@
                 v-model="roomName"
                 ref="roomName"
               />
+              <label for="roomCapacity">상담방 허용인원</label>
+              <input type="number" min="1" max="2" :value="capacity" />명
+              <label for="roomPublic">상담방 얼굴 공개 여부</label>
+              <div class="roomPublic-wrapper">
+                <div class="face-show">공개</div>
+                <div class="face-noshow">비공개</div>
+              </div>
+              <div class="room-category">
+                <div class="category" @click="">학교생활</div>
+                <div class="category">직장생활</div>
+                <div class="category">학업 및 진호</div>
+                <div class="category">심리 및 정서</div>
+                <div class="category">대인관계</div>
+                <div class="category">연애</div>
+                <div class="category">성</div>
+                <div class="category">자녀육아</div>
+              </div>
               <button type="submit" class="btn btn-sm btn-info" id="buttonAdd" @click.prevent="checkRoomName">
-                +
+                개설하기
               </button>
             </form>
           </div>
-          <div class="rooms-section-left-content"></div>
         </div>
         <div class="rooms-section-right">
           <div v-for="(room, index) in rooms" :key="index">
-            <div @click="moveToCheckIn(room.id)">{{ room }} 방</div>
-            <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">Delete</span>
+            <div class="room-card-wrapper">
+              <div @click="moveToCheckIn(room.id, room.name)">{{ room }} 방</div>
+              <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">Delete</span>
+            </div>
           </div>
         </div>
       </div>
@@ -45,9 +64,9 @@ export default {
       roomName: null,
       uid: this.$store.state.uid,
       rooms: [],
-      displays: [],
       addState: false,
       roomNameCheck: false,
+      capacity: 1,
     };
   },
   props: ['user'],
@@ -96,22 +115,26 @@ export default {
         .delete();
       this.rooms.splice(index, 1);
     },
-    moveToCheckIn(roomId) {
-      this.$router.push(`/checkin/${this.uid}/${roomId}`);
+    moveToCheckIn(roomId, roomNameParams) {
+      console.log('move to check in page', roomId);
+      console.log('this room name');
+      if (!this.uid) {
+        this.uid = 'none';
+      }
+      this.$router.push({
+        path: `/checkin/${this.uid}/${roomId}`,
+        params: { roomId: roomId, roomNameParams: roomNameParams },
+      });
     },
     async loadData() {
       const dbRef = db.collection('users');
       await dbRef.get().then(async querySnapshot => {
-        console.log('1정보를 모조리 가지고 올거야');
         await querySnapshot.forEach(async doc => {
-          console.log('2정보를 모조리 가지고 올거야');
           await dbRef
             .doc(doc.id)
             .collection('rooms')
             .onSnapshot(async snapShot => {
-              console.log('3정보를 모조리 가지고 올거야', this.rooms);
               await snapShot.forEach(ele => {
-                console.log('4정보를 모조리 가지고 올거야');
                 let dataForm = {
                   id: ele.id,
                   hostID: doc.id,
@@ -125,7 +148,6 @@ export default {
                     }
                   }
                   if (!state && this.addState) {
-                    console.log('없었으니까 추가할게');
                     this.rooms.unshift(dataForm);
                   } else if (!state && !this.addState) {
                     this.rooms.push(dataForm);
@@ -134,8 +156,6 @@ export default {
                   this.rooms.push(dataForm);
                 }
               });
-              console.log(this.rooms);
-              this.displays = [...this.rooms];
             });
         });
       });

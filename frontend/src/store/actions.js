@@ -7,7 +7,7 @@ import {
   saveUserEmailToCookie,
   saveUserImgFromCookie,
   saveUserTemperatureFromCookie,
-  // saveUserUidToCookie,
+  saveUserUidToCookie,
 } from '@/utils/cookies';
 
 export default {
@@ -31,8 +31,6 @@ export default {
     return data;
 
     // firebase
-    // commit('setUserUid', userData.firebaseData.uid);
-    // saveUserUidToCookie(userData.firebaseData.uid);
   },
 
   async LOGOUT({ commit }) {
@@ -42,12 +40,19 @@ export default {
     commit('setToken', '');
     commit('setImg', '');
     commit('setTemperature', '');
+    commit('setUserUid', '');
     saveUserIdToCookie('');
     saveUserNameToCookie('');
     saveUserEmailToCookie('');
     saveAuthToCookie('');
     saveUserImgFromCookie('');
     saveUserTemperatureFromCookie('');
-    // saveUserUidToCookie('');
+    saveUserUidToCookie('');
+  },
+
+  saveuUserUid({ commit }, payload) {
+    console.log('this is actions payload', payload.firebaseData.uid);
+    commit('setUserUid', payload.firebaseData.uid);
+    saveUserUidToCookie(payload.firebaseData.uid);
   },
 };

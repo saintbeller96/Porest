@@ -8,11 +8,15 @@ import lombok.extern.java.Log;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAmount;
+import java.time.temporal.TemporalUnit;
+import java.util.*;
 
 @Component
 @Log
@@ -22,7 +26,7 @@ public class JwtProvider {
     private String jwtSecret;
 
     public String generateToken(User user){
-        Date ExpireDate = Date.from(LocalDate.now().plusDays(5).atStartOfDay(ZoneId.systemDefault()).toInstant());
+        Date ExpireDate = Date.from(Instant.now().plusSeconds(7200));
 
         Map<String, Object> headers = new HashMap<>();
         headers.put("typ", "JWT");

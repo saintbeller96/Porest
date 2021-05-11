@@ -25,14 +25,20 @@ public class User {
     @Column
     private String password;
 
+    //TODO : 닉네임 삭제 예정
     @Column
     private String nickname;
 
     @Column
+    @ColumnDefault("36")
     private Long temperature;
 
     @Column
     private String profileImg;
+
+    @Column
+    @ColumnDefault("1")
+    private Long profileImgNumber;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
@@ -56,4 +62,6 @@ public class User {
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
     }
+    public void setProfileImgNumber(Long profileImgNumber){this.profileImgNumber = profileImgNumber;}
+    public void setPassword(String password){ this.password = password; }
 }
