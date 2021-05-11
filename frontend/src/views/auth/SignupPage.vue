@@ -10,75 +10,79 @@
         <div class="square" style="--i:4;"></div>
         <div class="container">
           <div class="form">
-            <p class="title">
-              Email
-              <span
-                v-if="!emailRedundancy || !isValidEmail || this.email.length === 0"
-                class="redundancy_check"
-                @click="checkEmail"
-                >중복확인</span
-              >
-              <span v-else class="redundancy_check2">중복확인 완료</span>
-            </p>
-            <div class="inputBox">
-              <input
-                type="email"
-                class="input"
-                v-model="email"
-                placeholder="이메일 주소를 입력해주세요."
-                autocomplete="on"
-              />
-            </div>
-            <p v-if="!isValidEmail" class="error_message">
-              잘못된 이메일 양식입니다.
-            </p>
-            <p v-else-if="!emailRedundancy && email" class="error_message">
-              이메일 중복 확인을 진행해주세요
-            </p>
+            <form @submit.prevent>
+              <p class="title">
+                Email
+                <span
+                  v-if="!emailRedundancy || !isValidEmail || this.email.length === 0"
+                  class="redundancy_check"
+                  @click="checkEmail"
+                  >중복확인</span
+                >
+                <span v-else class="redundancy_check2">중복확인 완료</span>
+              </p>
+              <div class="inputBox">
+                <input
+                  type="email"
+                  class="input"
+                  v-model="email"
+                  placeholder="이메일 주소를 입력해주세요."
+                  autocomplete="on"
+                />
+              </div>
+              <p v-if="!isValidEmail" class="error_message">
+                잘못된 이메일 양식입니다.
+              </p>
+              <p v-else-if="!emailRedundancy && email" class="error_message">
+                이메일 중복 확인을 진행해주세요
+              </p>
 
-            <p class="title">닉네임</p>
-            <div class="inputBox">
-              <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요." autocomplete="off" />
-            </div>
-
-            <p class="title">비밀번호</p>
-            <div class="inputBox">
-              <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
-            </div>
-            <p v-if="!isValidPwd && password1.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
-            <p v-else-if="!isValidPwd && password1.length > 20" class="error_message">
-              20자 이하의 비밀번호를 입력해주세요.
-            </p>
-
-            <p class="title">비밀번호 확인</p>
-            <div class="inputBox">
-              <input
-                type="password"
-                v-model="password2"
-                placeholder="비밀번호를 다시 입력해주세요."
-                autocomplete="off"
-              />
-            </div>
-            <p v-if="!isValidPwdConfirm" class="error_message">
-              다시 비밀번호를 확인해주세요.
-            </p>
-
-            <p class="title">가입 약관 동의</p>
-            <div class="terms-check">
-              <div class="accordion">
-                <register-terms></register-terms>
+              <p class="title">닉네임</p>
+              <div class="inputBox">
+                <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요." autocomplete="off" />
               </div>
 
-              <p v-if="!isTermsChecked" class="error_message_2">
-                이용 약관을 확인해주세요.
+              <p class="title">비밀번호</p>
+              <div class="inputBox">
+                <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+              </div>
+              <p v-if="!isValidPwd && password1.length < 8" class="error_message">
+                8자 이상의 비밀번호를 입력해주세요.
               </p>
-              <input type="checkbox" name="terms" value="true" v-model="terms" />
-              <span class="term" @click="checkTerms">약관 확인</span>
-            </div>
-            <button @click="submitForm" class="button">Sign up</button>
-            <div class="go-to-login-container">
-              <span @click="goToLogin" class="go-to-login">로그인 하러 가기</span>
-            </div>
+              <p v-else-if="!isValidPwd && password1.length > 20" class="error_message">
+                20자 이하의 비밀번호를 입력해주세요.
+              </p>
+
+              <p class="title">비밀번호 확인</p>
+              <div class="inputBox">
+                <input
+                  type="password"
+                  v-model="password2"
+                  placeholder="비밀번호를 다시 입력해주세요."
+                  autocomplete="off"
+                />
+              </div>
+              <p v-if="!isValidPwdConfirm" class="error_message">
+                다시 비밀번호를 확인해주세요.
+              </p>
+
+              <p class="title">가입 약관 동의</p>
+              <div class="terms-check">
+                <div class="accordion">
+                  <register-terms></register-terms>
+                </div>
+
+                <p v-if="!isTermsChecked" class="error_message_2">
+                  이용 약관을 확인해주세요.
+                </p>
+                <input type="checkbox" name="terms" value="true" v-model="terms" />
+                <span class="term" @click="checkTerms">약관 확인</span>
+              </div>
+              <button type="submit" @click="submitForm" class="button">Sign up</button>
+              <div class="go-to-login-container">
+                <span @click="goToLogin" class="go-to-login">로그인 하러 가기</span>
+              </div>
+            </form>
           </div>
         </div>
       </div>
@@ -88,8 +92,8 @@
 
 <script>
 import { signupUser, emailCheck } from '@/api/auth';
-// import FireBase from 'firebase/app';
-// import 'firebase/auth';
+import FireBase from 'firebase/app';
+import 'firebase/auth';
 import { validateEmail, validatePwd } from '@/utils/validation';
 import AuthForm from '@/components/auth/AuthForm';
 import RegisterTerms from '@/components/auth/RegisterTerms';
@@ -170,6 +174,20 @@ export default {
             email: this.email,
             password: this.password1,
           });
+          FireBase.auth()
+            .createUserWithEmailAndPassword(this.email, this.password1)
+            .then(
+              userCred => {
+                return userCred.user
+                  .updateProfile({
+                    nickname: this.nickname,
+                  })
+                  .then(() => {
+                    this.$router.push('/home');
+                  });
+              },
+              error => (this.error = error.message),
+            );
           this.$router.push('/main');
         } catch (error) {
           alert(error);

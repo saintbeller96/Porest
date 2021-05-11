@@ -3,12 +3,33 @@ export const init = () => {
   let currentCard = 0;
   let currentDeg = 0;
   let rotateDeg;
-  let pageNum;
-
+  const cardWrapper = document.querySelector('.card-main-wrapper');
   const cards = document.querySelectorAll('.card');
   const prev = document.querySelector('.prev-button');
   const next = document.querySelector('.next-button');
+  const exitBtn = document.querySelector('.room-list-eixt-btn');
+  const listPopUp = document.querySelector('.list-pop-up');
+  const createRoom = document.querySelector('.create-chat-room');
+  const createRoomFront = document.querySelector('.room-card-front');
+  const createRoomBack = document.querySelector('.room-card-back');
+  const exitroomBtn = document.querySelector('.exit-room-create');
+  const publicBtn = document.querySelector('.public');
+  const NonpublicBtn = document.querySelector('.non-public');
+  const roomCategorySelect = document.querySelector('.room-category-select');
+  const roomCategory = document.querySelectorAll('.room-category');
+  const categoryName = document.querySelector('.category-name');
+  const categories = [
+    '학교 생활',
+    '직장 생활',
+    '학업 및 진로',
+    '자녀 양육',
+    '대인 관계',
+    '심리 및 정서',
+    '연애',
+    '기타',
+  ];
   console.log(cards);
+
   totalCards = cards.length;
   rotateDeg = 360 / totalCards;
   console.log(rotateDeg);
@@ -50,4 +71,107 @@ export const init = () => {
       cards[i].style.transform = `rotate(${currentDeg + rotateDeg * i}deg) translateY(-350px)`;
     }
   }
+
+  function wrapperHandler(e) {
+    if (e.target.classList.contains('card-outer')) {
+      let selectCard = e.target;
+      let selectCardId = parseInt(e.target.dataset.value, 10) - 1;
+      categoryName.dataset.value = selectCardId;
+      categoryName.innerText = `${categories[selectCardId]}`;
+      roomCategory.forEach(ele => {
+        if (ele.dataset.value == selectCardId + 1) {
+          ele.classList.add('room-category-selected');
+        }
+      });
+      cardWrapper.classList.add('bottom');
+      listPopUp.classList.add('list-pop-up-show');
+      selectCard.classList.add('card-show');
+      prev.classList.add('button-hide');
+      next.classList.add('button-hide');
+      // let diffrent = Math.abs(currentCard - selectCardId);
+      // console.log(currentCard, selectCardId);
+      // if (diffrent >= 4) {
+      //   for (let i = 0; i < -diffrent; i++) {
+      //     next.click();
+      //   }
+      // } else {
+      //   for (let i = 0; i < diffrent; i++) {
+      //     prev.click();
+      //   }
+      // }
+    }
+  }
+
+  function exitHandler() {
+    listPopUp.classList.remove('list-pop-up-show');
+    cardWrapper.classList.remove('bottom');
+    prev.classList.remove('button-hide');
+    next.classList.remove('button-hide');
+    createRoomBack.classList.remove('room-card-back-fade');
+    createRoomFront.classList.remove('room-card-front-fade');
+    roomCategory.forEach(ele => {
+      ele.classList.remove('room-category-selected');
+    });
+  }
+  function createRoomHandler() {
+    createRoomBack.classList.add('room-card-back-fade');
+    createRoomFront.classList.add('room-card-front-fade');
+  }
+  function createRoomExitHandler() {
+    createRoomBack.classList.remove('room-card-back-fade');
+    createRoomFront.classList.remove('room-card-front-fade');
+  }
+  exitroomBtn.addEventListener('click', createRoomExitHandler);
+  createRoom.addEventListener('click', createRoomHandler);
+  exitBtn.addEventListener('click', exitHandler);
+  cardWrapper.addEventListener('click', wrapperHandler);
+
+  function publicBtnHandler() {
+    publicBtn.classList.add('public-active');
+    NonpublicBtn.classList.remove('public-active');
+  }
+  function nonpublicBtnHandler() {
+    publicBtn.classList.remove('public-active');
+    NonpublicBtn.classList.add('public-active');
+  }
+
+  publicBtn.addEventListener('click', publicBtnHandler);
+  NonpublicBtn.addEventListener('click', nonpublicBtnHandler);
+
+  let capacityNumber = 1;
+  const countPlus = document.querySelector('.count-plus');
+  const countMinus = document.querySelector('.count-minus');
+  const countNum = document.querySelector('.count-num');
+  const capacityWarningOver = document.querySelector('.capacity-warning-over');
+  const capacityWarningLess = document.querySelector('.capacity-warning-less');
+
+  function capacityPlusHandler() {
+    if (capacityNumber <= 3) {
+      capacityNumber++;
+      countNum.innerText = capacityNumber;
+      capacityWarningOver.classList.remove('capacity-warning-show');
+      capacityWarningLess.classList.remove('capacity-warning-show');
+    } else {
+      capacityWarningOver.classList.add('capacity-warning-show');
+    }
+  }
+  function capacityMinusHandler() {
+    if (capacityNumber >= 2) {
+      capacityNumber--;
+      countNum.innerText = capacityNumber;
+      capacityWarningLess.classList.remove('capacity-warning-show');
+      capacityWarningOver.classList.remove('capacity-warning-show');
+    } else {
+      capacityWarningLess.classList.add('capacity-warning-show');
+    }
+  }
+  function roomCategoryHandler(e) {
+    if (e.target.classList.contains('room-category')) {
+      e.target.classList.toggle('room-category-selected');
+    }
+  }
+
+  countPlus.addEventListener('click', capacityPlusHandler);
+  countMinus.addEventListener('click', capacityMinusHandler);
+  roomCategorySelect.addEventListener('click', roomCategoryHandler);
 };
