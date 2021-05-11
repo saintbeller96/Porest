@@ -90,9 +90,12 @@ function onWindowResize() {
 
 function typing() {
   let index = 0;
-  let txt = ['당신의 오늘 하루는', '무수히 빛나는 별보다', '더 빛나고 아름답습니다'];
+  // let txt = ['당신의 오늘 하루는', '무수히 빛나는 별보다', '더 빛나고 아름답습니다'];
+  let txt = '당신의 오늘 하루는 무수히 빛나는 별보다 더 빛나고 아름답습니다.';
   let speed = 210;
   let count = 0;
+  let currentText = '';
+  let letter = '';
   const typeBoard = document.querySelector('.type');
   const audio = document.querySelector('#typing');
 
@@ -106,16 +109,46 @@ function typing() {
   //   }
   // });
 
+  const audioTag = document.querySelector('audio');
+  const whiteShow = document.querySelector('.white-show');
   const entrance = document.querySelector('.entrance');
   entrance.addEventListener('click', () => {
-    for (let i = 0; i < txt.length; i++) {
-      type(txt[i]);
-    }
+    entrance.classList.add('hide');
+    setTimeout(() => {
+      // audioTag.play();
+      type();
+    }, 1000);
   });
 
-  function type(word) {
-    typeBoard.innerHTML += word.charAt(index);
-    index++;
-    setTimeout(type, speed);
+  async function type() {
+    // if (count === 3) {
+    //   return;
+    // }
+    if (index === txt.length) {
+      // count = 0;
+      setTimeout(() => {
+        whiteShow.classList.add('active');
+      }, 2000);
+    }
+    // currentText = txt[count];
+    currentText = txt;
+    letter = currentText.slice(0, ++index);
+    typeBoard.textContent = letter;
+    // if (letter.length === currentText.length) {
+    //   count++;
+    //   index = 0;
+    //   await setTimeout(() => {
+    //     type();
+    //     audioTag.play();
+    //   }, 1000);
+    // } else {
+    await setTimeout(type, 180);
+    // }
   }
+}
+
+async function delay() {
+  await setTimeout(() => {
+    console.log('pause');
+  }, 1000);
 }
