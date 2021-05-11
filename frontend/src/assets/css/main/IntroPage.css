@@ -1,0 +1,39 @@
+.intro-wrapper {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); 
+  position: relative;
+}
+
+.letter,.intro-entrance {
+
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: inherit;
+  color:#fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.header,.entrance {
+  font-size: 2rem;
+  transition: all .7s;
+  transform:perspective(1200px) translate3d(0,0,-500px);
+}
+
+.type {
+    font-size: 2rem;
+  transform:perspective(1200px) translate3d(0,0,-200px);
+}
+
+.entrance:hover {
+  transform:perspective(1200px) translate3d(0,0,-200px);
+}
