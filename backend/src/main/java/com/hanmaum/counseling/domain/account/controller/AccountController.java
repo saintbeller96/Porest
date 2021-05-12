@@ -69,4 +69,9 @@ public class AccountController {
         accountService.deleteUser(request);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
+
+    @PostMapping("/find-password")
+    public ResponseEntity<?> findPassword(@RequestBody FindPasswordDto findPasswordDto) throws MessagingException {
+        return accountService.findPassword(findPasswordDto.getEmail(), findPasswordDto.getNickname());
+    }
 }
