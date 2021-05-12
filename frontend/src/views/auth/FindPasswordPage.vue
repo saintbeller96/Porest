@@ -11,7 +11,6 @@
         <div class="container">
           <div class="form">
             <form @submit.prevent>
-              <p class="welcome">Welcome to POREST :)</p>
               <p class="title">
                 Email
               </p>
@@ -19,29 +18,25 @@
                 <input
                   type="email"
                   class="input"
-                  v-model="email"
+                  v-model="userData.email"
                   placeholder="이메일 주소를 입력해주세요."
                   autocomplete="on"
                 />
               </div>
-              <p v-if="!isValidEmail" class="error_message">
-                잘못된 이메일 양식입니다.
-              </p>
 
-              <p class="title">비밀번호</p>
+              <p class="title">닉네임</p>
               <div class="inputBox">
-                <input type="password" v-model="password" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+                <input
+                  type="text"
+                  v-model="userData.nickname"
+                  placeholder="닉네임을 입력해주세요."
+                  autocomplete="off"
+                />
               </div>
-              <p v-if="!isValidPwd && password.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
-              <p v-else-if="!isValidPwd && password.length > 20" class="error_message">
-                20자 이하의 비밀번호를 입력해주세요.
-              </p>
-              <button @click="submitForm" class="button">Login</button>
-              <div class="go-to-find-password-container">
-                <span @click="goToFindPassword" class="go-to-find-password">비밀번호 찾기</span>
-              </div>
-              <div class="go-to-signup-container">
-                <span @click="goToSignup" class="go-to-signup">회원가입</span>
+
+              <button type="submit" @click="submitForm" class="button">임시 비밀번호 발급</button>
+              <div class="go-to-login-container">
+                <span @click="goToLogin" class="go-to-login">로그인 하러 가기</span>
               </div>
             </form>
           </div>
@@ -52,9 +47,7 @@
 </template>
 
 <script>
-import { validateEmail, validatePwd } from "@/utils/validation";
-import FireBase from "firebase/app";
-import "firebase/auth";
+import { findPassword } from "@/api/auth";
 import AuthForm from "@/components/auth/AuthForm";
 export default {
   components: {
@@ -62,71 +55,18 @@ export default {
   },
   data() {
     return {
-      email: "",
-      nickname: "",
-      password: "",
+      userData: {
+        email: "",
+        nickname: "",
+      },
     };
   },
-  computed: {
-    isValidEmail() {
-      return this.email === "" || validateEmail(this.email);
-    },
-    isValidPwd() {
-      return this.password === "" || validatePwd(this.password);
-    },
-    checkForm() {
-      return validateEmail(this.email) && validatePwd(this.password);
-    },
-  },
   methods: {
-    goToSignup() {
-      this.$router.push({ name: "Signup" });
-    },
-    // register() {
-    //   if (!this.error) {
-    //     FireBase.auth()
-    //       .createUserWithEmailAndPassword(this.email, this.password1)
-    //       .then(
-    //         userCred => {
-    //           return userCred.user
-    //             .updateProfile({
-    //               nickname: this.nickname,
-    //             })
-    //             .then(() => {
-    //               this.$router.push('/home');
-    //             });
-    //         },
-    //         error => (this.error = error.message),
-    //       );
-    //   }
-    // },
-    goToFindPassword() {
-      this.$router.push({ name: "FindPassword" });
+    goToLogin() {
+      this.$router.push({ name: "Login" });
     },
     async submitForm() {
-      console.log("login");
-      try {
-        await this.$store.dispatch("LOGIN", {
-          email: this.email,
-          password: this.password,
-        });
-        console.log("이동");
-        this.fireBaseLogin();
-        this.$router.push("/main");
-      } catch (error) {
-        alert("이메일이나 비밀번호를 다시 확인해주세요.");
-      }
-    },
-    fireBaseLogin() {
-      console.log("login");
-      FireBase.auth()
-        .signInWithEmailAndPassword(this.email, this.password)
-        .then(
-          (response) => {
-            console.log("response status", response);
-          },
-          (error) => (this.error = error.message)
-        );
+      await findPassword(this.userData);
     },
   },
 };
@@ -214,7 +154,7 @@ section {
   position: relative;
   min-width: 27vw;
   /* max-width: 27vw; */
-  min-height: 350px;
+  min-height: 400px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
@@ -265,23 +205,37 @@ section {
   color: #fff;
 }
 
-.welcome {
-  font-size: 20px;
-  margin-bottom: 30px;
-  color: #fff;
-  font-weight: bold;
-}
-
 .title {
   color: #fff;
   margin: 15px 0 8px 5px;
   font-size: 13px;
 }
 
+.redundancy_check {
+  color: #fff;
+  font-size: 5px;
+  margin-right: 15px;
+  float: right;
+  cursor: pointer;
+}
+
+.redundancy_check2 {
+  color: #fff;
+  font-size: 5px;
+  margin-right: 15px;
+  float: right;
+}
+
 .error_message {
   color: #fff;
   font-size: 5px;
   margin: 3px 0 20px 5px;
+}
+
+.error_message_2 {
+  color: #fff;
+  font-size: 5px;
+  margin: 0 0 10px 5px;
 }
 
 .button {
@@ -300,25 +254,24 @@ section {
   cursor: pointer;
 }
 
-.go-to-signup-container {
+.terms-check {
+  color: #fff;
+}
+
+.go-to-login-container {
   margin-top: 20px;
   float: right;
 }
 
-.go-to-signup {
+.go-to-login {
   color: #fff;
   font-size: 10px;
   cursor: pointer;
 }
 
-.go-to-find-password-container {
-  margin-top: 20px;
-  float: left;
-}
-
-.go-to-find-password {
-  color: #fff;
-  font-size: 10px;
+.term {
+  font-size: 15px;
+  margin-left: 5px;
   cursor: pointer;
 }
 </style>

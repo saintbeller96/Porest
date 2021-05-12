@@ -28,8 +28,8 @@ public class EmailUtil {
         }
     }
     private String setTemplate(String to, String text, int type){
-        String PASSWORD_TEXT = "POREST의 임시 비밀번호  입니다.";
-        String REGISTER_TEXT = "POREST의 인증 코드 입니다.";
+        String PASSWORD_TEXT = "POREST의 임시 비밀번호입니다.";
+        String REGISTER_TEXT = "POREST의 인증코드입니다.";
         String PASSWORD = "비밀번호 : ";
         String CODE = "인증코드 : ";
         //html 넣자.

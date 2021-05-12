@@ -37,6 +37,22 @@
                 이메일 중복 확인을 진행해주세요
               </p>
 
+              <!-- 이메일 인증 부분 start -->
+              <div v-if="emailRedundancy">
+                <span v-if="!verify" class="redundancy_check" @click="checkVerify">이메일 인증</span>
+                <span v-else class="redundancy_check2">이메일 인증 완료</span>
+              </div>
+              <div v-if="emailRedundancy" class="inputBox">
+                <input
+                  type="text"
+                  class="input"
+                  v-model="code"
+                  placeholder="이메일 인증코드를 입력해주세요"
+                  autocomplete="off"
+                />
+              </div>
+              <!-- 이메일 인증 부분  end -->
+
               <p class="title">닉네임</p>
               <div class="inputBox">
                 <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요." autocomplete="off" />
@@ -91,12 +107,12 @@
 </template>
 
 <script>
-import { signupUser, emailCheck } from '@/api/auth';
-import FireBase from 'firebase/app';
-import 'firebase/auth';
-import { validateEmail, validatePwd } from '@/utils/validation';
-import AuthForm from '@/components/auth/AuthForm';
-import RegisterTerms from '@/components/auth/RegisterTerms';
+import { signupUser, emailCheck, emailVerify, verifyCheck } from "@/api/auth";
+import FireBase from "firebase/app";
+import "firebase/auth";
+import { validateEmail, validatePwd } from "@/utils/validation";
+import AuthForm from "@/components/auth/AuthForm";
+import RegisterTerms from "@/components/auth/RegisterTerms";
 export default {
   components: {
     AuthForm,
@@ -104,23 +120,25 @@ export default {
   },
   data() {
     return {
-      email: '',
-      nickname: '',
-      password1: '',
-      password2: '',
+      email: "",
+      nickname: "",
+      password1: "",
+      password2: "",
+      code: "",
       terms: false,
       emailRedundancy: false,
+      verify: false,
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === '' || validateEmail(this.email);
+      return this.email === "" || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password1 === '' || validatePwd(this.password1);
+      return this.password1 === "" || validatePwd(this.password1);
     },
     isValidPwdConfirm() {
-      return this.password2 === '' || this.password1 === this.password2;
+      return this.password2 === "" || this.password1 === this.password2;
     },
     isTermsChecked() {
       return this.terms === true;
@@ -130,7 +148,7 @@ export default {
         validateEmail(this.email) &&
         validatePwd(this.password1) &&
         this.password1 === this.password2 &&
-        this.username !== '' &&
+        this.username !== "" &&
         this.terms === true &&
         this.emailRedundancy
       );
@@ -138,7 +156,7 @@ export default {
   },
   methods: {
     goToLogin() {
-      this.$router.push({ name: 'Login' });
+      this.$router.push({ name: "Login" });
     },
     checkTerms() {
       this.terms = !this.terms;
@@ -169,36 +187,37 @@ export default {
             email: this.email,
             nickname: this.nickname,
             password: this.password1,
+            code: this.code,
           });
-          await this.$store.dispatch('LOGIN', {
+          await this.$store.dispatch("LOGIN", {
             email: this.email,
             password: this.password1,
           });
           FireBase.auth()
             .createUserWithEmailAndPassword(this.email, this.password1)
             .then(
-              userCred => {
+              (userCred) => {
                 return userCred.user
                   .updateProfile({
                     nickname: this.nickname,
                   })
                   .then(() => {
-                    this.$router.push('/home');
+                    this.$router.push("/home");
                   });
               },
-              error => (this.error = error.message),
+              (error) => (this.error = error.message)
             );
-          this.$router.push('/main');
+          this.$router.push("/main");
         } catch (error) {
           alert(error);
         }
       } else {
-        alert('모든 항목을 입력해주세요.');
+        alert("모든 항목을 입력해주세요.");
       }
     },
     async checkEmail() {
       if (this.email.length < 1 || !this.isValidEmail) {
-        alert('사용하실 이메일 주소를 올바르게 입력해주세요.');
+        alert("사용하실 이메일 주소를 올바르게 입력해주세요.");
       } else {
         try {
           let { data } = await emailCheck({
@@ -206,12 +225,21 @@ export default {
           });
           this.emailRedundancy = data.redundancy;
           if (!this.emailRedundancy) {
-            alert('이미 존재하는 이메일 주소입니다.');
+            alert("이미 존재하는 이메일 주소입니다.");
+          } else {
+            await emailVerify({ email: this.email });
           }
         } catch (error) {
           alert(error);
         }
       }
+    },
+    async checkVerify() {
+      //기본적인 코드만 넣어놨습니다.
+      this.verify = await verifyCheck({
+        email: this.email,
+        code: this.code,
+      });
     },
   },
 };
@@ -222,7 +250,7 @@ export default {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url('../../assets/image/sky3.png');
+  background-image: url("../../assets/image/sky3.png");
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -394,6 +422,22 @@ section {
   border-right: 1px solid rgba(255, 255, 255, 0.7);
   border-bottom: 1px solid rgba(255, 255, 255, 0.7);
   margin-top: 25px;
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
+.verify_button {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  outline: none;
+  padding: 9px;
+  border-radius: 10px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
   color: #fff;
   font-size: 15px;
   cursor: pointer;
