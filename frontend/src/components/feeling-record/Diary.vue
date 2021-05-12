@@ -126,6 +126,7 @@ export default {
   display: flex;
   justify-content: center;
   line-height: 27px;
-  text-align: center;
+  /* text-align: center; */
+  text-align: justify;
 }
 </style>

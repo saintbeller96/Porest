@@ -37,8 +37,11 @@
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
               <button @click="submitForm" class="button">Login</button>
+              <div class="go-to-find-password-container">
+                <span @click="goToFindPassword" class="go-to-find-password">비밀번호 찾기</span>
+              </div>
               <div class="go-to-signup-container">
-                <span @click="goToSignup" class="go-to-signup">회원가입 하러 가기</span>
+                <span @click="goToSignup" class="go-to-signup">회원가입</span>
               </div>
             </form>
           </div>
@@ -49,27 +52,27 @@
 </template>
 
 <script>
-import { validateEmail, validatePwd } from '@/utils/validation';
-import FireBase from 'firebase/app';
-import 'firebase/auth';
-import AuthForm from '@/components/auth/AuthForm';
+import { validateEmail, validatePwd } from "@/utils/validation";
+import FireBase from "firebase/app";
+import "firebase/auth";
+import AuthForm from "@/components/auth/AuthForm";
 export default {
   components: {
     AuthForm,
   },
   data() {
     return {
-      email: '',
-      nickname: '',
-      password: '',
+      email: "",
+      nickname: "",
+      password: "",
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === '' || validateEmail(this.email);
+      return this.email === "" || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password === '' || validatePwd(this.password);
+      return this.password === "" || validatePwd(this.password);
     },
     checkForm() {
       return validateEmail(this.email) && validatePwd(this.password);
@@ -77,7 +80,7 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({ name: 'Signup' });
+      this.$router.push({ name: "Signup" });
     },
     // register() {
     //   if (!this.error) {
@@ -97,29 +100,32 @@ export default {
     //       );
     //   }
     // },
+    goToFindPassword() {
+      this.$router.push({ name: "FindPassword" });
+    },
     async submitForm() {
-      console.log('login');
+      console.log("login");
       try {
-        await this.$store.dispatch('LOGIN', {
+        await this.$store.dispatch("LOGIN", {
           email: this.email,
           password: this.password,
         });
-        console.log('이동');
+        console.log("이동");
         this.fireBaseLogin();
-        this.$router.push('/main');
+        this.$router.push("/main");
       } catch (error) {
-        alert('이메일이나 비밀번호를 다시 확인해주세요.');
+        alert("이메일이나 비밀번호를 다시 확인해주세요.");
       }
     },
     fireBaseLogin() {
-      console.log('login');
+      console.log("login");
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          response => {
-            console.log('response status', response);
+          (response) => {
+            console.log("response status", response);
           },
-          error => (this.error = error.message),
+          (error) => (this.error = error.message)
         );
     },
   },
@@ -131,7 +137,7 @@ export default {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url('../../assets/image/sky3.png');
+  background-image: url("../../assets/image/sky3.png");
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;
@@ -300,6 +306,17 @@ section {
 }
 
 .go-to-signup {
+  color: #fff;
+  font-size: 10px;
+  cursor: pointer;
+}
+
+.go-to-find-password-container {
+  margin-top: 20px;
+  float: left;
+}
+
+.go-to-find-password {
   color: #fff;
   font-size: 10px;
   cursor: pointer;

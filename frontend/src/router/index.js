@@ -30,6 +30,11 @@ const routes = [
     component: () => import('@/views/auth/SignupPage.vue'),
   },
   {
+    path: '/find-password',
+    name: 'FindPassword',
+    component: () => import('@/views/auth/FindPasswordPage.vue'),
+  },
+  {
     path: '/test',
     name: 'Test',
     component: () => import('@/views/test/Test.vue'),
@@ -99,6 +104,11 @@ const routes = [
     path: '/feeling-record',
     name: 'FeelingRecord',
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
+  },
+  {
+    path: '/feeling-record/dairy',
+    name: 'Dairy',
+    component: () => import('@/views/feeling-record/DairyPage.vue'),
   },
   {
     path: '/drawing',

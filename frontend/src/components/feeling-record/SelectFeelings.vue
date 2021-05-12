@@ -1,6 +1,13 @@
 <template>
   <div>
-    <nav class="menu">
+    <div class="images">
+      <img src="../../assets/image/feeling/5.png" />
+      <img src="../../assets/image/feeling/4.png" />
+      <img src="../../assets/image/feeling/3.png" />
+      <img src="../../assets/image/feeling/2.png" />
+      <img src="../../assets/image/feeling/1.png" @click="getFeeling" />
+    </div>
+    <!-- <nav class="menu">
       <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
       <label class="menu-open-button" for="menu-open">
         <i class="fa fa-bars"></i>
@@ -10,7 +17,7 @@
       <img src="../../assets/image/feeling/3.png" class="menu-item" />
       <img src="../../assets/image/feeling/2.png" class="menu-item" />
       <img src="../../assets/image/feeling/1.png" class="menu-item" @click="getFeeling" />
-    </nav>
+    </nav> -->
   </div>
 </template>
 
@@ -30,6 +37,22 @@ export default {
 </script>
 
 <style scoped>
+.images {
+  display: flex;
+  justify-content: center;
+}
+
+.images img {
+  width: 2.8vw;
+  margin: 0 0.5vw 0 0.5vw;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.images img:hover {
+  transform: scale(1.2);
+}
+
 .menu {
   /* -webkit-filter: url(#shadowed-goo); */
   /* top: 30%; */

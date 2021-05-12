@@ -5,11 +5,13 @@
     </div>
     <div class="diary-area box fade-in two">
       <diary :getTargetDate="targetDate" @open-modal="openModal"> </diary>
-      <modal v-if="isModalViewed" @close-modal="isModalViewed = false">
+      <writing-modal v-if="isModalViewed" @close-modal="isModalViewed = false">
         <writing-diary :getTargetDate="targetDate"></writing-diary>
-      </modal>
+      </writing-modal>
     </div>
     <div class="bubbles">
+      <img src="../../assets/image/bubble.png" />
+      <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
@@ -29,12 +31,12 @@
 import Calendar from '@/components/feeling-record/Calendar';
 import Diary from '@/components/feeling-record/Diary';
 import WritingDiary from '@/components/feeling-record/WritingDiary';
-import Modal from '@/components/common/Modal';
+import WritingModal from '@/components/feeling-record/modal/WritingModal';
 export default {
   components: {
     Calendar,
     Diary,
-    Modal,
+    WritingModal,
     WritingDiary,
   },
   data() {
@@ -142,7 +144,7 @@ export default {
 
 .bubbles img {
   width: 50px;
-  animation: bubble 6s linear infinite;
+  animation: bubble 7s linear infinite;
 }
 
 .bubbles {
@@ -179,53 +181,63 @@ export default {
   z-index: -1000;
 }
 .bubbles img:nth-child(2) {
-  animation-delay: 1s;
+  animation-delay: 3s;
   width: 33px;
   z-index: -1000;
 }
 .bubbles img:nth-child(3) {
-  animation-delay: 3s;
+  animation-delay: 1s;
   width: 25px;
   z-index: -1000;
 }
 .bubbles img:nth-child(4) {
-  animation-delay: 4.5s;
+  animation-delay: 5s;
   width: 20px;
   z-index: -1000;
 }
 .bubbles img:nth-child(5) {
-  animation-delay: 2s;
+  animation-delay: 8s;
   width: 25px;
   z-index: -1000;
 }
 .bubbles img:nth-child(6) {
-  animation-delay: 6s;
+  animation-delay: 10s;
   width: 30px;
   z-index: -1000;
 }
 .bubbles img:nth-child(7) {
-  animation-delay: 7s;
-  width: 35px;
+  animation-delay: 6s;
+  width: 22px;
   z-index: -1000;
 }
 .bubbles img:nth-child(8) {
-  animation-delay: 5s;
-  width: 35px;
+  animation-delay: 1s;
+  width: 10px;
   z-index: -1000;
 }
 .bubbles img:nth-child(9) {
   animation-delay: 2s;
-  width: 35px;
+  width: 15px;
   z-index: -1000;
 }
 .bubbles img:nth-child(10) {
-  animation-delay: 6s;
+  animation-delay: 4s;
   width: 33px;
   z-index: -1000;
 }
 .bubbles img:nth-child(11) {
   animation-delay: 3s;
   width: 22px;
+  z-index: -1000;
+}
+.bubbles img:nth-child(12) {
+  animation-delay: 0.5s;
+  width: 30px;
+  z-index: -1000;
+}
+.bubbles img:nth-child(13) {
+  animation-delay: 9s;
+  width: 28px;
   z-index: -1000;
 }
 </style>

@@ -29,7 +29,7 @@
   .post_ground_wrapper {
     position: absolute;
     width: 30%;
-    height: 30%;
+    height: 50%;
     top: 48%;
     left: 50%;
     transform: translate(-50%,-50%);
@@ -40,15 +40,16 @@
     width: 100%;
     height: 100%;
     transition: 2s all;
+
   }
   
   
   .post_island{
     position: absolute;  
-    top: 50%;
+    top: 55%;
     left: 50%;
     transform: translate(-50%,-50%);
-    width: 100%;
+    width: 103%;
     pointer-events: none;
 
   }
@@ -63,27 +64,27 @@
   
   /*-------board (게시판)--------*/
   
-  .board_ground_wrapper{
+  .game_ground_wrapper{
     position: absolute;
     width: 23%;
-    height: 23%;
-    top: 24%;
-    left: 20%;
+    height: 40%;
+    top: 31%;
+    left: 22%;
     transform: translate(-50%,-50%);
   }
   
-  .board_ground_container{
+  .game_ground_container{
     position: relative;
     width: 100%;
     height: 100%;
     transition: 2s all;
   }
   
-  .board_ground_container:hover {
+  .game_ground_container:hover {
     transform: scale(1.1) translateY(-20px);
   }
   
-  .board_island{
+  .game_island{
     position: absolute;  
     width: 100%;
     height: 100%;
@@ -93,53 +94,45 @@
    
   }
   
-  .board_shadow{
-     filter: drop-shadow( 5px 20px 20px rgba(0, 0, 0, .7));
-  }
-  
-  /*-------radio (라디오)--------*/
-  .radio_ground_wrapper{
+  /*-------하소연 -------*/
+  .chat_ground_wrapper{
     position: absolute;
     width: 23%;
     height: 23%;
-    top: 61%;
-    left: 20%;
+    top: 59%;
+    left: 24%;
     transform: translate(-50%,-50%);
-  /*  background-color: aqua;*/
   }
   
-  .radio_ground_container{
+  .chat_ground_container{
     position: relative;
     width: 100%;
     height: 100%;
     transition: 2s all;
   }
   
-  .radio_ground_container:hover {
+  .chat_ground_container:hover {
     transform: scale(1.1) translateY(-20px);
   }
   
-  .radio_island{
+  .chat_island{
     position: absolute;  
-    width: 100%;
-    height: 100%;
+    width: 101%;
+    height: 101%;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
    
   }
-  
-  .radio_shadow{
-    filter: drop-shadow( 5px 20px 20px rgba(0, 0, 0, .7));
-  }
+
   
   /*-------webrtc (화상채팅)--------*/
   
   .video_ground_wrapper{
     position: absolute;
     width: 23%;
-    height: 23%;
-    top: 27%;
+    height: 35%;
+    top: 32%;
     left: 80%;
     transform: translate(-50%,-50%);
   /*  background-color: aqua;*/
@@ -150,6 +143,7 @@
     width: 100%;
     height: 100%;
     transition: 2s all;
+    /* background-color: blue; */
   }
   
   .video_ground_container:hover {
@@ -158,18 +152,15 @@
   
   .video_island{
     position: absolute;  
-    width: 100%;
-    height: 100%;
+    width: 113%;
+    height: 109%;
     top: 50%;
     left: 50%;
     transform: translate(-50%,-50%);
   }
   
   
-  .video_shadow{
-     filter: drop-shadow( 5px 20px 20px rgba(0, 0, 0, .7));
-  }
-  
+
   /*-------감정달력--------*/
   
   
@@ -177,8 +168,8 @@
     position: absolute;
     width: 22.7%;
     height: 22.7%;
-    top: 61%;
-    left: 79.6%;
+    top: 62%;
+    left: 78%;
     transform: translate(-50%,-50%);
   /*  background-color: aqua;*/
   }
@@ -204,6 +195,3 @@
     pointer-events: none;
   }
   
-  .calender_shadow{
-     filter: drop-shadow( 5px 20px 20px rgba(0, 0, 0, .7));
-  }

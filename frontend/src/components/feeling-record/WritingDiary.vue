@@ -2,20 +2,29 @@
   <div class="writing-diary-container">
     <div class="date-container">
       <div v-if="getTargetDate.length === 0">
-        <p>{{ month }}월 {{ today }}일</p>
+        <p>{{ month }}월 {{ today }}일 수요일</p>
       </div>
       <div v-else>
-        <p>{{ getTargetDate[1] }}월 {{ getTargetDate[2] }}일</p>
+        <p>{{ getTargetDate[1] }}월 {{ getTargetDate[2] }}일 수요일</p>
       </div>
     </div>
-    <div class="line"></div>
+    <p class="title">오늘의 기분</p>
     <div class="feeling-container">
       <select-feelings></select-feelings>
     </div>
-    <div class="writing-container">
-      <textarea name="" id="" rows="5"></textarea>
+    <!-- <div class="line"></div> -->
+    <p class="title">
+      <span>오늘의 일기</span>
+      <span class="sticker" @click="openModal">스티커 추가</span>
+    </p>
+    <div class="diary-square">
+      <div class="writing-container">
+        <textarea name="" id="" rows="5"></textarea>
+      </div>
     </div>
-    <button class="button">등록</button>
+    <p class="save-btn">
+      <span>저장</span>
+    </p>
   </div>
 </template>
 
@@ -42,84 +51,117 @@ export default {
     this.month = date.getMonth() + 1;
     this.today = date.getDate();
   },
+  openModal() {
+    this.$emit('open-modal', this.modal);
+  },
 };
 </script>
 
 <style scoped>
-/* @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap'); */
-@import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&family=Nanum+Pen+Script&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&family=Nanum+Pen+Script&display=swap'); */
+
+@font-face {
+  font-family: 'UhBeemysen';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 
 .writing-diary-container {
-  padding: 10%;
-  max-width: 100%;
-  height: 200px;
+  padding: 8px;
+  width: 23vw;
+  height: 100%;
+  font-family: 'UhBeemysen';
   /* font-family: 'Nanum Pen Script', cursive; */
-  font-family: 'Gothic A1', sans-serif;
+  /* font-family: 'Gothic A1', sans-serif; */
+}
+
+.diary-square {
+  border: 1px solid #979797;
+  width: 100%;
+  min-height: 33vh;
+  /* padding: 8%; */
+  margin-top: 2vh;
+  /* border-radius: 5px; */
 }
 
 .date-container {
-  position: static;
-  font-size: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  margin-top: 3vh;
+  font-size: 25px;
+  font-weight: bold;
+  text-align: center;
 }
 
 .line {
-  width: 10vw;
+  width: 1.8vw;
   height: 1px;
   background: #959595;
-  display: flex;
-  margin: 0 auto;
   margin-bottom: 3vh;
-  margin-top: 2vh;
-}
-
-.feeling-container {
-  position: static;
+  margin-top: 1vh;
 }
 
 .writing-container {
   position: static;
-  margin-top: 13vh;
-  /* width: 100px; */
   display: flex;
   justify-content: center;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .writing-container textarea {
-  background: #fff;
-  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: #fdf6e8;
+  /* border: 1px solid rgba(0, 0, 0, 0.1); */
+  border: none;
   width: 100%;
+  height: 30vh;
   padding: 12px;
-  font-size: 15px;
-  min-height: 200px;
-  max-height: 400px;
+  font-weight: bold;
+  font-size: 25px;
+  /* min-height: 200px; */
+  /* max-height: 400px; */
   resize: vertical;
   border-radius: 5px;
-  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.8);
-  margin-bottom: 20px;
   opacity: 0.9;
   outline-style: none;
-  line-height: 25px;
-  font-family: 'Gothic A1', sans-serif;
+  line-height: 30px;
+  font-family: 'UhBeemysen';
 }
 
-.button {
-  width: 100%;
-  border: none;
-  outline: none;
-  padding: 9px;
-  border-radius: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-right: 1px solid rgba(255, 255, 255, 0.7);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-  /* margin-top: 25px; */
-  color: #fff;
-  font-size: 15px;
+.feeling-container {
+  margin-top: 2vh;
+}
+
+.title {
+  font-size: 21px;
+  font-weight: bold;
+  margin-top: 3vh;
+  color: #525252;
+}
+
+.sticker {
+  font-size: 17px;
+  float: right;
+  margin-top: 1vh;
   cursor: pointer;
-  background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-  /* background-image: linear-gradient(-20deg, #ddd6f3 0%, #faaca8 100%, #faaca8 100%); */
+}
+
+.sticker:hover {
+  color: #35ae6d;
+}
+
+.save-btn {
+  margin-top: 3vh;
+  text-align: right;
+}
+
+.save-btn span {
+  cursor: pointer;
+  color: #525252;
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.save-btn span:hover {
+  color: #35ae6d;
 }
 </style>
