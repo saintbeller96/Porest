@@ -12,6 +12,8 @@ import com.hanmaum.counseling.domain.post.service.LetterService;
 import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
+import com.hanmaum.counseling.utils.RedisUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
@@ -49,26 +51,38 @@ class CounselControllerTest {
     LetterService letterService;
     @Autowired
     UserRepository userRepository;
+    @Autowired
+    RedisUtil redisUtil;
 
     @BeforeEach
     void setUp(){
+        //여기 부분 필요해서 넣어놨는데 수정 필요하시면 수정해주세요!
+        String code[] = new String[3];
+        for (int i = 0; i<3; i++) {
+            code[i] = RandomStringUtils.randomAlphabetic(5);
+            StringBuilder key = new StringBuilder().append("test"+(i+1)+"@test.com").append("_").append(code[i]);
+            redisUtil.setDataExpire(key.toString(), "T", 180L);
+        }
         SignupDto dto = SignupDto.builder()
-                .email("test@test.com")
-                .password("1234")
+                .email("test1@test.com")
+                .password("12341234")
+                .code(code[0])
                 .nickname("사연자")
                 .build();
         User user = accountService.saveUser(dto);
 
         SignupDto dto2 = SignupDto.builder()
                 .email("test2@test.com")
-                .password("1234")
+                .password("12341234")
+                .code(code[1])
                 .nickname("상담사1")
                 .build();
         User counsellor = accountService.saveUser(dto2);
 
         SignupDto dto3 = SignupDto.builder()
                 .email("test3@test.com")
-                .password("1234")
+                .password("12341234")
+                .code(code[2])
                 .nickname("상담사2")
                 .build();
         User counsellor2 = accountService.saveUser(dto3);
@@ -101,7 +115,7 @@ class CounselControllerTest {
     @DisplayName("유저의 답장 상태 제공 200 반환")
     void get_user_reply_status_success() throws Exception{
         //given
-        User user = accountService.findByEmail("test@test.com");
+        User user = accountService.findByEmail("test1@test.com");
         //when
         ResultActions actions = mockMvc.perform(get("/stories")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -116,7 +130,7 @@ class CounselControllerTest {
     @DisplayName("자신이 보낸 모든 사연의 상세 내용들, 200 반환")
     void get_counsels_success() throws Exception{
         //given
-        User user = accountService.findByEmail("test@test.com");
+        User user = accountService.findByEmail("test1@test.com");
         //when
         ResultActions actions = mockMvc.perform(get("/counsels")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -130,7 +144,7 @@ class CounselControllerTest {
     @DisplayName("자신이 보낸 특정 사연의 상세 내용들, 200 반환")
     void get_detail_counsel_success() throws Exception{
         //given
-        User user = accountService.findByEmail("test@test.com");
+        User user = accountService.findByEmail("test1@test.com");
         List<DetailCounselDto> result = counselService.getDetailCounsels(user.getId());
         Long counselId = result.get(0).getCounselId();
         //when
@@ -146,7 +160,7 @@ class CounselControllerTest {
     @DisplayName("자신과 관련없는 사연을 요청했을 때, 404 반환")
     void get_detail_counsel_fail() throws Exception{
         //given
-        User user = accountService.findByEmail("test@test.com");
+        User user = accountService.findByEmail("test1@test.com");
         //when
         ResultActions actions = mockMvc.perform(get("/counsels/"+404L)
                 .contentType(MediaType.APPLICATION_JSON)

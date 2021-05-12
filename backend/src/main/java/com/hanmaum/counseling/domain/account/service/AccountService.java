@@ -37,7 +37,8 @@ public class AccountService {
 
     public User saveUser(@Valid SignupDto request){
         //이메일 중복 및 인증 여부 체크
-        if(!redisUtil.getData(request.getEmail()+"_"+request.getCode()).equals("T")){
+        String emailCheck = redisUtil.getData(request.getEmail()+"_"+request.getCode());
+        if(emailCheck == null || !emailCheck.equals("T")){
             throw new IllegalArgumentException("이메일 중복 및 인증을 진행해주세요.");
         }
         User user = User.builder()
@@ -50,8 +51,9 @@ public class AccountService {
                 .build();
 
         //케싱된 데이터 삭제
-        redisUtil.deleteData(request.getEmail());
-        redisUtil.deleteData(request.getEmail()+"-"+request.getCode());
+        String isEmailReady = redisUtil.getData(request.getEmail());
+        if(isEmailReady != null) redisUtil.deleteData(request.getEmail());
+        redisUtil.deleteData(request.getEmail()+"_"+request.getCode());
 
         return userRepository.save(user);
     }
