@@ -20,4 +20,10 @@ export default {
   setTemperature(state, temperature) {
     state.temperature = temperature;
   },
+  onStickerDrawer(state) {
+    state.stickerDrawer = true;
+  },
+  offStickerDrawer(state) {
+    state.stickerDrawer = false;
+  },
 };

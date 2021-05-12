@@ -12,11 +12,13 @@
     <div class="feeling-container">
       <select-feelings></select-feelings>
     </div>
-    <!-- <div class="line"></div> -->
     <p class="title">
-      <span>오늘의 일기</span>
-      <span class="sticker" @click="openModal">스티커 추가</span>
+      스티커 추가하기
     </p>
+    <div class="sticker-container">
+      <select-stickers></select-stickers>
+    </div>
+    <p class="title">오늘의 일기</p>
     <div class="diary-square">
       <div class="writing-container">
         <textarea name="" id="" rows="5"></textarea>
@@ -30,19 +32,21 @@
 
 <script>
 import SelectFeelings from '@/components/feeling-record/SelectFeelings';
+import SelectStickers from '@/components/feeling-record/SelectStickers';
+
 export default {
   props: {
     getTargetDate: Array,
   },
   components: {
     SelectFeelings,
+    SelectStickers,
   },
   data() {
     return {
       year: 0,
       month: 0,
       today: 0,
-      modal: true,
     };
   },
   created() {
@@ -51,9 +55,7 @@ export default {
     this.month = date.getMonth() + 1;
     this.today = date.getDate();
   },
-  openModal() {
-    this.$emit('open-modal', this.modal);
-  },
+  methods: {},
 };
 </script>
 
@@ -80,10 +82,8 @@ export default {
 .diary-square {
   border: 1px solid #979797;
   width: 100%;
-  min-height: 33vh;
-  /* padding: 8%; */
+  min-height: 24vh;
   margin-top: 2vh;
-  /* border-radius: 5px; */
 }
 
 .date-container {
@@ -113,14 +113,11 @@ export default {
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
   border: none;
   width: 100%;
-  height: 30vh;
+  height: 20vh;
   padding: 12px;
   font-weight: bold;
   font-size: 25px;
-  /* min-height: 200px; */
-  /* max-height: 400px; */
   resize: vertical;
-  border-radius: 5px;
   opacity: 0.9;
   outline-style: none;
   line-height: 30px;
@@ -131,22 +128,15 @@ export default {
   margin-top: 2vh;
 }
 
+.sticker-container {
+  margin-top: 2vh;
+}
+
 .title {
   font-size: 21px;
   font-weight: bold;
   margin-top: 3vh;
   color: #525252;
-}
-
-.sticker {
-  font-size: 17px;
-  float: right;
-  margin-top: 1vh;
-  cursor: pointer;
-}
-
-.sticker:hover {
-  color: #35ae6d;
 }
 
 .save-btn {
