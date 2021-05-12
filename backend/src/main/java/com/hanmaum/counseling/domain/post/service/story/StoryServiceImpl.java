@@ -1,20 +1,15 @@
 package com.hanmaum.counseling.domain.post.service.story;
 
-import com.hanmaum.counseling.commons.NicknameGenerator;
 import com.hanmaum.counseling.domain.post.dto.*;
 import com.hanmaum.counseling.domain.post.entity.*;
 import com.hanmaum.counseling.domain.post.repository.LetterRepository;
 import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
-import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
 import com.hanmaum.counseling.domain.post.repository.story.StoryRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
 @Service
@@ -34,8 +29,7 @@ public class StoryServiceImpl implements StoryService{
                 .content(formDto.getContent())
                 .writerId(userId)
                 .build();
-        Story save = storyRepository.save(story);
-        return save.getId();
+        return storyRepository.save(story).getId();
     }
 
     @Override
@@ -54,21 +48,24 @@ public class StoryServiceImpl implements StoryService{
         story.addCounsel(counsel);
         //최초의 편지는 사연의 내용을 그대로 작성
         Letter saveLetter = createFirstLetter(story, counsel);
+        //편지 저장
+        counsel.addLetter(saveLetter);
+        letterRepository.save(saveLetter);
 
         //선택한 사연의 정보 반환
         return SimpleCounselDto.create(counsel.getId(), saveLetter);
     }
 
     @Override
-    public List<UserStoryInfoDto> getUserStoryInfo(Long userId) {
+    public List<UserStoryStateDto> getUserStoryState(Long userId) {
         List<Story> stories = storyRepository.findByWriterId(userId);
-        List<UserStoryInfoDto> result = stories.stream()
-                .map(this::mappingStory)
+        List<UserStoryStateDto> result = stories.stream()
+                .map(this::mappingToUserStoryStateDto)
                 .collect(Collectors.toList());
         return result;
     }
 
-    private UserStoryInfoDto mappingStory(Story story){
+    private UserStoryStateDto mappingToUserStoryStateDto(Story story){
         int cnt = 0;
         for(Counsel counsel : story.getCounsels()){
             int len = counsel.getLetters().size();
@@ -77,9 +74,8 @@ public class StoryServiceImpl implements StoryService{
                 cnt++;
             }
         }
-        return UserStoryInfoDto.getMyStoryInfo(story, cnt);
+        return UserStoryStateDto.getMyStoryInfo(story, cnt);
     }
-
 
     private Letter createFirstLetter(Story story, Counsel counsel) {
         //사연 생성
@@ -89,11 +85,7 @@ public class StoryServiceImpl implements StoryService{
                 .title(story.getForm().getTitle())
                 .status(LetterStatus.WAIT)
                 .build();
-
-        //편지 저장
-        Letter saveLetter = letterRepository.save(letter);
-        counsel.addLetter(saveLetter);
-        return saveLetter;
+        return letter;
     }
 
     @Override

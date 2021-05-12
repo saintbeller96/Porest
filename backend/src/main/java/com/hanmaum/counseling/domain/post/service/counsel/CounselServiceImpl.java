@@ -2,7 +2,8 @@ package com.hanmaum.counseling.domain.post.service.counsel;
 
 import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
 import com.hanmaum.counseling.domain.post.dto.LetterReplyDto;
-import com.hanmaum.counseling.domain.post.dto.UserStoryInfoDto;
+import com.hanmaum.counseling.domain.post.dto.MyCounselDto;
+import com.hanmaum.counseling.domain.post.dto.UserStoryStateDto;
 import com.hanmaum.counseling.domain.post.entity.*;
 import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
 import lombok.RequiredArgsConstructor;
@@ -22,8 +23,8 @@ public class CounselServiceImpl implements CounselService{
     @Override
     @Transactional(readOnly = true)
     public DetailCounselDto getDetailCounsel(Long counselId, Long userId) {
-        Counsel counsel = counselRepository.findByCounselId(counselId)
-                .orElseThrow(IllegalStateException::new);
+        Counsel counsel = getCounsel(counselId);
+        //사연자와 상담사가 아니면 이 상담 내역에 접근 불가
         if(userId != counsel.getCounsellorId() && userId != counsel.getStory().getWriterId()){
             throw new IllegalStateException("This user is not affiliated with this counsel.");
         }
@@ -51,13 +52,13 @@ public class CounselServiceImpl implements CounselService{
             Letter reply = letters.get(i+1);
             result.getDetail().add(LetterReplyDto.of(letter, reply));
         }
-        //현재 letters가 홀수개이면 마지막 편지는 사연자의 편지
+        //현재 letters가 홀수이면 마지막 편지는 사연자의 편지
         if(len%2 == 1){
             Letter lastLetter = letters.get(len-1);
             result.getDetail().add(
                     LetterReplyDto.builder()
-                    .letterTitle(lastLetter.getForm().getTitle())
-                    .letterContent(lastLetter.getForm().getContent())
+                    .letterTitle(lastLetter.getTitle())
+                    .letterContent(lastLetter.getContent())
                     .letterDate(lastLetter.getCreatedAt())
                     .build());
         }
@@ -66,32 +67,69 @@ public class CounselServiceImpl implements CounselService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserStoryInfoDto> getUserCounselInfo(Long userId) {
+    public List<UserStoryStateDto> getUserCounselState(Long userId) {
         List<Counsel> counsels = counselRepository.findByCounsellorId(userId);
-        List<UserStoryInfoDto> result = counsels.stream()
-                .map(this::mapping)
+        List<UserStoryStateDto> result = counsels.stream()
+                .map(this::mappingToUserStoryStateDto)
                 .collect(Collectors.toList());
         return result;
     }
-
-    public UserStoryInfoDto mapping(Counsel counsel){
+    private UserStoryStateDto mappingToUserStoryStateDto(Counsel counsel){
         Story story = counsel.getStory();
         long count = counsel.getLetters().stream()
                 .filter(letter ->
                         letter.getWriterId() == story.getWriterId()
                         && letter.getStatus() == LetterStatus.WAIT)
                 .count();
-        return UserStoryInfoDto.getMyCounselInfo(story, counsel, (int)count);
+        return UserStoryStateDto.getMyCounselInfo(story, counsel, (int)count);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<MyCounselDto> getMyCounselingList(Long userId) {
+        List<Counsel> counsels = counselRepository.findByCounsellorId(userId);
+        return counsels.stream().map(this::mappingToMyCounselDto)
+                .collect(Collectors.toList());
+    }
+    private MyCounselDto mappingToMyCounselDto(Counsel counsel){
+        List<Letter> letters = counsel.getLetters();
+        int len = letters.size();
+        Letter last = letters.get(len-1);
+        String title = last.getForm().getTitle();
+        int num = 0;
+        //마지막 편지를 쓴 사람이 상담원이 아니고 이 편지를 아직 읽지 않았다면 num을 증가
+        if(last.getWriterId() != counsel.getCounsellorId() && last.getStatus() == LetterStatus.WAIT){
+            num++;
+        }
+        return new MyCounselDto(counsel.getId(), counsel.getStory().getWriterNickName(), title, num);
     }
 
     @Override
     @Transactional
-    public void finishCounsel(Long counselId, Long userId) {
-        Counsel counsel = counselRepository.findByCounselId(counselId)
+    public Long finishCounsel(Long counselId, Long userId) {
+        Counsel counsel = getCounsel(counselId);
+        validateUser(userId, counsel);
+        counsel.setStatus(CounselStatus.END);
+        return counselId;
+    }
+
+    @Override
+    @Transactional
+    public Long cancelCounsel(Long counselId, Long userId) {
+        Counsel counsel = getCounsel(counselId);
+        validateUser(userId, counsel);
+        counsel.setStatus(CounselStatus.CANCEL);
+        return counselId;
+    }
+
+    private Counsel getCounsel(Long counselId) {
+        return counselRepository.findByCounselId(counselId)
                 .orElseThrow(IllegalStateException::new);
+    }
+
+    private void validateUser(Long userId, Counsel counsel){
         if(userId != counsel.getStory().getWriterId()){
             throw new IllegalStateException("This user cannot modify this counsel");
         }
-        counsel.setStatus(CounselStatus.END);
     }
 }

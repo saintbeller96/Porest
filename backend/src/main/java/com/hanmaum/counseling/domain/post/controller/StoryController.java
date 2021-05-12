@@ -29,11 +29,11 @@ public class StoryController {
 
     @ApiOperation("유저의 사연/유저가 답변한 사연 가져오기")
     @GetMapping("")
-    public ResponseEntity<Map<String, List<UserStoryInfoDto>>> putStory(Authentication auth){
+    public ResponseEntity<Map<String, List<UserStoryStateDto>>> putStory(Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        List<UserStoryInfoDto> s = storyService.getUserStoryInfo(userId);
-        List<UserStoryInfoDto> c = counselService.getUserCounselInfo(userId);
-        Map<String, List<UserStoryInfoDto>> response = new ConcurrentHashMap<>();
+        List<UserStoryStateDto> s = storyService.getUserStoryState(userId);
+        List<UserStoryStateDto> c = counselService.getUserCounselState(userId);
+        Map<String, List<UserStoryStateDto>> response = new ConcurrentHashMap<>();
         response.put("my-letter-reply", s);
         response.put("other-letter-reply", c);
         return ResponseEntity.ok(response);
@@ -72,4 +72,11 @@ public class StoryController {
     }
 
     //Todo 사연 삭제, 사연 공개/비공개 설정
+    @ApiOperation("사연과 삭제")
+    @DeleteMapping("/{storyId}")
+    public ResponseEntity<String> deleteStory(@PathVariable("storyId") Long storyId, Authentication auth){
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        
+        return ResponseEntity.ok("delete");
+    }
 }
