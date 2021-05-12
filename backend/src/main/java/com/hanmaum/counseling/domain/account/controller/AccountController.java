@@ -12,6 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -27,6 +28,7 @@ public class AccountController {
 
     private final AccountService accountService;
 
+
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
         User user = accountService.saveUser(request);
@@ -34,7 +36,7 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request) throws LoginException, WrongPasswordException {
+    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request) throws LoginException {
         JwtTokenDto result = accountService.findByEmailAndPassword(request);
         return ResponseEntity.ok(result);
     }
@@ -43,6 +45,16 @@ public class AccountController {
     public ResponseEntity<RedundancyDto> emailCheck(@RequestBody @Valid EmailCheckDto email){
         RedundancyDto result = accountService.existEmail(email.getEmail());
         return ResponseEntity.ok(result);
+    }
+    @PostMapping("/verify-check")
+    public ResponseEntity<?> verifyCheck(@RequestBody VerifyDto verifyDto){
+        return accountService.verifyCheck(verifyDto.getEmail(), verifyDto.getCode());
+    }
+
+    @PostMapping("/email-verify")
+    public ResponseEntity<?> verify(@RequestBody EmailCheckDto emailVerifyDto) throws MessagingException {
+        accountService.sendVerifyEmail(emailVerifyDto.getEmail());
+        return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("update-password")

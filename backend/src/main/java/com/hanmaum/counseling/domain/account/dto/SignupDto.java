@@ -31,10 +31,16 @@ public class SignupDto {
     @Size(max = 20)
     private String nickname;
 
+    @NotEmpty
+    @Size(min = 5, max = 5)
+    private String code;
+
     @Builder
-    public SignupDto(@NotEmpty @Size(min = 8, max = 20) String password, @NotEmpty @Email @Size(max = 40) String email, @NotEmpty @Size(max = 20) String nickname) {
+
+    public SignupDto(@NotEmpty @Size(min = 8, max = 20) String password, @NotEmpty @Email @Size(max = 40) String email, @NotEmpty @Size(max = 20) String nickname, @NotEmpty @Size(min = 5, max = 5) String code) {
         this.password = password;
         this.email = email;
         this.nickname = nickname;
+        this.code = code;
     }
 }
