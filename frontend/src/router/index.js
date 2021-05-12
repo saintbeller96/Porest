@@ -35,6 +35,16 @@ const routes = [
     component: () => import('@/views/main/IntroPage.vue'),
   },
   {
+    path: '/find-password',
+    name: 'FindPassword',
+    component: () => import('@/views/auth/FindPasswordPage.vue'),
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('@/views/test/Test.vue'),
+  },
+  {
     path: '/mailbox',
     name: 'Mailbox',
     component: () => import('@/views/mailbox/MailboxPage.vue'),

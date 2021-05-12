@@ -3,7 +3,7 @@
     mailbox page
     <div>
       편지 작성하기 페이지 바로가기
-      <button @click="goToWriteStoryPage">편지 작성하기</button>
+      <button @click="goToStoryLetterPage">편지 작성하기</button>
     </div>
     <br />
     <hr />
