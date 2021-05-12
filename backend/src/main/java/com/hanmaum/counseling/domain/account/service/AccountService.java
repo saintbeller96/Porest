@@ -22,6 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor
@@ -131,5 +132,23 @@ public class AccountService {
         String email = jwtProvider.getEmailFromToken(token);
         User user = findByEmail(email);
         userRepository.delete(user);
+    }
+
+    public ResponseEntity<?> findPassword(String email, String nickname) throws MessagingException {
+        boolean isExist =  userRepository.existsByEmailAndNickname(email, nickname);
+        Map<String, Object> result = new HashMap<>();
+        if(isExist){
+            //임시 비밀번호 메일 전송
+            User user = userRepository.findByEmail(email).orElseThrow(IllegalArgumentException::new);
+            String temporaryPassword = RandomStringUtils.randomAlphabetic(8);
+            user.setPassword(passwordEncoder.encode(temporaryPassword));
+            userRepository.save(user);
+
+            emailUtil.sendMail(email,"POREST의 임시 비밀번호 메일입니다.", temporaryPassword);
+        }
+        else{
+            result.put("message","입력하신 정보가 옮바르지 않습니다.");
+        }
+        return isExist ? ResponseEntity.ok().build() : ResponseEntity.badRequest().body(result);
     }
 }
