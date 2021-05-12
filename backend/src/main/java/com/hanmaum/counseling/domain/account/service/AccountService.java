@@ -87,8 +87,10 @@ public class AccountService {
         String isDuplicateEmail = redisUtil.getData(email);
 
         if(isDuplicateEmail == null){
-            redisUtil.setDataExpire(email, "ready", 3600);
              redundancy = userRepository.existsByEmail(email);
+             if(!redundancy) {
+                 redisUtil.setDataExpire(email, "ready", 3600);
+             }
         }
         return RedundancyDto.builder().redundancy(!redundancy).build();
     }
