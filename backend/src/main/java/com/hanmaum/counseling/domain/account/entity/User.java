@@ -52,10 +52,12 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Builder
-    public User(String email, String password, String nickname, RoleType role) {
+    public User(String email, String password, String nickname, Long temperature, Long profileImgNumber, RoleType role) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
+        this.temperature = temperature;
+        this.profileImgNumber = profileImgNumber;
         this.role = role;
     }
 
