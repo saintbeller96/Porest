@@ -1,6 +1,32 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-30 -20 550 475">
   <defs>
     <style>
+
+    .round-1,.round-3,.round-5 {
+      transform: translate(0,-30px,0);
+      animation: round-1 3s infinite alternate linear;
+    }
+    .round-3{
+      animation-delay:1.2s;
+    }
+    .round-5{
+      animation-delay:2.5s;
+    }
+    .round-2,.round-4,.round-7 {
+      transform: translate(0,-30px,0);
+      animation: round-1 3s 2s infinite alternate linear;
+    }
+    .round-4{
+      animation-delay:1.2s;
+    }
+    .round-7{
+      animation-delay:2.5s;
+    }
+    @keyframes round-1 {
+      100%{
+        transform: translate3d(0,30px,0);
+      }
+    }
       .cls-1, .cls-39, .cls-40, .cls-41, .cls-42, .cls-98 {
         fill: none;
       }
@@ -1771,49 +1797,49 @@
         </g>
       </g>
       <g id="video_round">
-        <g>
+        <g class="round-1">
           <g id="Axonometric_Cylinder" data-name="Axonometric Cylinder">
             <path class="cls-115" d="M544.69,407.49c2.35-1.41,5.63-1.23,9.25.86,7.16,4.13,13,14.19,13,22.46,0,4.08-1.42,7-3.71,8.34l-2.47,1.43-18.5-31.67Z" transform="translate(-457.54 -347.12)"/>
             <path id="Cylinder_face" data-name="Cylinder face" class="cls-116" d="M564.45,432.23c0,8.27-5.81,11.62-13,7.49s-13-14.19-13-22.46,5.81-11.62,13-7.49S564.45,424,564.45,432.23Z" transform="translate(-457.54 -347.12)"/>
           </g>
           <path class="cls-117" d="M544.39,427.49c0,2.16,14.18,10.35,14.18,8.18v-2.76a8.08,8.08,0,0,0-3.89-6.14l-6.4-3.69c-2.15-1.24-3.89-.5-3.89,1.65Zm7.09-12.42c2.36,1.36,4.28,4.38,4.28,6.74s-1.92,3.18-4.28,1.81-4.28-4.38-4.28-6.75S549.12,413.7,551.48,415.07Z" transform="translate(-457.54 -347.12)"/>
         </g>
-        <g>
+        <g class="round-2">
           <g id="Axonometric_Cylinder-2" data-name="Axonometric Cylinder">
             <path class="cls-118" d="M589.51,469.17c2.35-1.41,5.63-1.24,9.25.86,7.16,4.13,13,14.19,13,22.46,0,4.08-1.42,7-3.71,8.34l-2.47,1.42-18.5-31.66Z" transform="translate(-457.54 -347.12)"/>
             <path id="Cylinder_face-2" data-name="Cylinder face" class="cls-116" d="M609.26,493.91c0,8.27-5.8,11.62-13,7.48s-13-14.19-13-22.45,5.81-11.62,13-7.49S609.26,485.64,609.26,493.91Z" transform="translate(-457.54 -347.12)"/>
           </g>
           <path class="cls-117" d="M589.21,489.16c0,2.17,14.18,10.35,14.18,8.19v-2.76a8.07,8.07,0,0,0-3.89-6.14l-6.4-3.69c-2.15-1.24-3.89-.5-3.89,1.64Zm7.09-12.42c2.36,1.37,4.28,4.39,4.28,6.75s-1.92,3.18-4.28,1.81-4.28-4.38-4.28-6.75S593.94,475.38,596.3,476.74Z" transform="translate(-457.54 -347.12)"/>
         </g>
-        <g>
+        <g class="round-3">
           <g id="Axonometric_Cylinder-3" data-name="Axonometric Cylinder">
             <path class="cls-119" d="M723.87,364.64c2.36-1.41,5.63-1.23,9.26.86,7.16,4.13,13,14.19,13,22.46,0,4.08-1.41,7-3.71,8.34l-2.46,1.43-18.51-31.67Z" transform="translate(-457.54 -347.12)"/>
             <path id="Cylinder_face-3" data-name="Cylinder face" class="cls-116" d="M743.63,389.38c0,8.27-5.81,11.62-13,7.49s-13-14.19-13-22.46,5.8-11.62,13-7.49S743.63,381.11,743.63,389.38Z" transform="translate(-457.54 -347.12)"/>
           </g>
           <path class="cls-117" d="M723.57,384.64c0,2.16,14.18,10.35,14.18,8.18v-2.76a8.05,8.05,0,0,0-3.89-6.13l-6.39-3.7c-2.15-1.24-3.9-.5-3.9,1.65Zm7.09-12.42c2.37,1.36,4.28,4.38,4.28,6.75s-1.91,3.17-4.28,1.8-4.28-4.38-4.28-6.74S728.3,370.85,730.66,372.22Z" transform="translate(-457.54 -347.12)"/>
         </g>
-        <g>
+        <g class="round-4">
           <g id="Axonometric_Cylinder-4" data-name="Axonometric Cylinder">
             <path class="cls-120" d="M569.13,347.68c1.45-.87,3.47-.76,5.7.53a17.65,17.65,0,0,1,8,13.83c0,2.51-.87,4.29-2.29,5.14l-1.51.87-11.4-19.49Z" transform="translate(-457.54 -347.12)"/>
             <path id="Cylinder_face-4" data-name="Cylinder face" class="cls-116" d="M581.29,362.91c0,5.1-3.57,7.16-8,4.61s-8-8.73-8-13.82,3.57-7.16,8-4.61S581.29,357.82,581.29,362.91Z" transform="translate(-457.54 -347.12)"/>
           </g>
           <path class="cls-117" d="M569.17,359.63c0,1.26,8.28,6.05,8.28,4.78V362.8a4.75,4.75,0,0,0-2.27-3.59l-3.74-2.15c-1.26-.73-2.27-.3-2.27,1Zm4.14-7.26a5.2,5.2,0,0,1,2.5,3.95c0,1.38-1.12,1.85-2.5,1.05a5.17,5.17,0,0,1-2.5-3.94C570.81,352.05,571.93,351.57,573.31,352.37Z" transform="translate(-457.54 -347.12)"/>
         </g>
-        <g>
+        <g class="round-5">
           <g id="Axonometric_Cylinder-5" data-name="Axonometric Cylinder">
             <path class="cls-121" d="M774.53,446.06c1.45-.86,3.47-.76,5.7.53a17.65,17.65,0,0,1,8,13.83c0,2.52-.87,4.29-2.28,5.14l-1.52.87L773,446.94Z" transform="translate(-457.54 -347.12)"/>
             <path id="Cylinder_face-5" data-name="Cylinder face" class="cls-116" d="M786.69,461.3c0,5.09-3.57,7.15-8,4.61a17.65,17.65,0,0,1-8-13.83c0-5.09,3.57-7.16,8-4.61S786.69,456.2,786.69,461.3Z" transform="translate(-457.54 -347.12)"/>
           </g>
           <path class="cls-117" d="M774.57,458c0,1.27,8.28,6.05,8.28,4.79v-1.62a4.72,4.72,0,0,0-2.27-3.58l-3.74-2.16c-1.26-.73-2.27-.3-2.27,1Zm4.14-7.26a5.2,5.2,0,0,1,2.5,3.95c0,1.38-1.12,1.85-2.5,1.05a5.17,5.17,0,0,1-2.5-3.94C776.21,450.43,777.33,450,778.71,450.75Z" transform="translate(-457.54 -347.12)"/>
         </g>
-        <g>
+        <g class="round-6">
           <g id="Axonometric_Cylinder-6" data-name="Axonometric Cylinder">
             <path class="cls-122" d="M619.53,379.33c1.45-.87,3.47-.76,5.7.53,4.41,2.54,8,8.73,8,13.82,0,2.52-.87,4.3-2.29,5.14l-1.51.88L618,380.2Z" transform="translate(-457.54 -347.12)"/>
             <path id="Cylinder_face-6" data-name="Cylinder face" class="cls-116" d="M631.69,394.56c0,5.09-3.57,7.16-8,4.61a17.65,17.65,0,0,1-8-13.83c0-5.09,3.57-7.15,8-4.61A17.65,17.65,0,0,1,631.69,394.56Z" transform="translate(-457.54 -347.12)"/>
           </g>
           <path class="cls-117" d="M619.57,391.28c0,1.26,8.28,6,8.28,4.78v-1.61a4.73,4.73,0,0,0-2.27-3.59l-3.74-2.16c-1.26-.72-2.27-.29-2.27,1Zm4.14-7.26a5.19,5.19,0,0,1,2.5,3.94c0,1.38-1.12,1.86-2.5,1.06a5.19,5.19,0,0,1-2.5-3.94C621.21,383.69,622.33,383.22,623.71,384Z" transform="translate(-457.54 -347.12)"/>
         </g>
-        <g>
+        <g class="round-7">
           <g id="Axonometric_Cylinder-7" data-name="Axonometric Cylinder">
             <path class="cls-123" d="M698.4,507.64c1.45-.87,3.47-.76,5.7.53a17.65,17.65,0,0,1,8,13.83c0,2.51-.87,4.29-2.29,5.14l-1.51.87-11.4-19.49Z" transform="translate(-457.54 -347.12)"/>
             <ellipse id="Cylinder_face-7" data-name="Cylinder face" class="cls-116" cx="702.58" cy="518.27" rx="6.52" ry="11.29" transform="translate(-622.54 73.6) rotate(-30)"/>

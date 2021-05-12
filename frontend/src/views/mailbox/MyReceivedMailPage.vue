@@ -1,6 +1,6 @@
 <template>
   <div class="received-mail-main-wrapper">
-    <Star></Star>
+    <Star class="star"></Star>
     <div class="received-mail-inner-wrapper">
       받은편지함 페이지
       <div>

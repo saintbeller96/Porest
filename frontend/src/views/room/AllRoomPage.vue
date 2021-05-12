@@ -343,6 +343,7 @@ export default {
                     }
                   }
                   if (!state) {
+                    console.log('더할거에요');
                     this.rooms.unshift(dataForm);
                   }
                 } else {

@@ -120,6 +120,11 @@ const routes = [
     name: 'VrRoom',
     component: () => import('@/views/joy/VrRoomPage.vue'),
   },
+  {
+    path: '/star3d',
+    name: 'Star3D',
+    component: () => import('@/components/common/Star3D.vue'),
+  },
 ];
 
 const router = new VueRouter({

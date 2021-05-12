@@ -1,3 +1,5 @@
+import router from '@/router/index.js';
+
 let camera, scene, renderer, particles, particle, material, particleCount, points, texture;
 let xSpeed, ySpeed;
 xSpeed = 0.0;
@@ -18,7 +20,7 @@ function init() {
   scene.fog = new THREE.FogExp2('#222', 0.001);
 
   camera = new THREE.PerspectiveCamera(75, winWidth / winHeight, 1, 1000);
-  camera.position.z = 1;
+  camera.position.z = 0;
   camera.position.y = 1;
   camera.rotation.x = Math.PI / 2;
 
@@ -128,7 +130,10 @@ function typing() {
       // count = 0;
       setTimeout(() => {
         whiteShow.classList.add('active');
-      }, 2000);
+        setTimeout(() => {
+          router.push('/main/mainisland');
+        }, 450);
+      }, 1000);
     }
     // currentText = txt[count];
     currentText = txt;
@@ -145,10 +150,4 @@ function typing() {
     await setTimeout(type, 180);
     // }
   }
-}
-
-async function delay() {
-  await setTimeout(() => {
-    console.log('pause');
-  }, 1000);
 }

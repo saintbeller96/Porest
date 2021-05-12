@@ -449,7 +449,7 @@ textarea::placeholder {
 
 }
 ::-webkit-scrollbar-thumb {
-  background-color:#667eea;
+  background-color:#fff;
   border-radius: 6px;
   
 }
