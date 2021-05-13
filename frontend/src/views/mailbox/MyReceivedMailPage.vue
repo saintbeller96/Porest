@@ -45,7 +45,27 @@
           </div>
         </div>
       </section>
+      <div class="box-wrapper">
+        <div class="box" @click="openAll">
+          <div class="side-1">
+            <div class="side inner-side flap-1"></div>
+            <div class="side inner-side flap-2"></div>
+          </div>
+          <div class="side side-2">모든 편지보기</div>
+          <div class="side side-3"></div>
+          <div class="side side-4"></div>
+          <div class="side side-5"></div>
+          <div class="side side-6"></div>
+          <span class="box_papers"></span>
+          <span class="box_papers"></span>
+          <span class="box_papers"></span>
+          <span class="box_papers"></span>
+          <span class="box_papers"></span>
+          <span class="box_papers"></span>
+        </div>
+      </div>
     </div>
+    <all-letters v-if="openAllLetters" @exitAll="exitAll" class="all_letters"></all-letters>
   </div>
 </template>
 
@@ -53,6 +73,7 @@
 import { getMyStories } from '@/api/stories';
 import MyCounselList from '@/components/mail/MyCounselList.vue';
 import MyStoryList from '@/components/mail/MyStoryList.vue';
+import AllLetters from '@/components/mail/AllLetters.vue';
 import Star from '@/components/common/Star.vue';
 
 export default {
@@ -61,12 +82,14 @@ export default {
     return {
       stories: null,
       viewStoryState: true,
+      openAllLetters: false,
     };
   },
   components: {
     Star,
     MyCounselList,
     MyStoryList,
+    AllLetters,
   },
   methods: {
     goToLetterReply() {
@@ -77,6 +100,12 @@ export default {
     },
     openUserBoard(value) {
       this.viewStoryState = value;
+    },
+    openAll() {
+      this.openAllLetters = true;
+    },
+    exitAll() {
+      this.openAllLetters = false;
     },
   },
   mounted() {

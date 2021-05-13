@@ -44,11 +44,11 @@ export default {
   width: 100%;
   height: 18%;
   border-radius: 1rem;
-  padding: 0.5rem;
+  padding: 1rem 0.5rem;
   margin: 1rem 0;
   color: #444;
   backdrop-filter: blur(15px);
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  /* box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1); */
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(166, 201, 247, 0.2);
   border-bottom: 1px solid rgba(107, 153, 240, 0.2);

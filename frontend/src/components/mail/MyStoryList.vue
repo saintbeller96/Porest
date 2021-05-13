@@ -67,7 +67,7 @@ export default {
   width: 100%;
   min-height: 10%;
   border-radius: 1rem;
-  padding: 0.5rem 0.3rem;
+  padding: 0.5rem 1rem;
   margin: 1rem 0;
   backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.2);
@@ -78,14 +78,15 @@ export default {
 }
 
 .story_header {
+  padding-top: 0.5rem;
   display: flex;
   width: 100%;
   height: 20%;
+
   /* height: 30%; */
   justify-content: space-between;
   /* margin: 0.3rem 0; */
-  border: 1px solid;
-  font-size: 1.1rem;
+  xfont-size: 1.1rem;
   font-weight: 600;
 }
 .story_title {
@@ -112,7 +113,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid;
   margin: 1rem 0;
 }
 .received_reply_num {
@@ -127,7 +127,6 @@ export default {
   border-radius: 0.3rem;
   padding: 0.5rem 0.3rem;
   margin: 0.5rem 0;
-  border: 1px solid;
   color: white;
   border: none;
   cursor: pointer;
