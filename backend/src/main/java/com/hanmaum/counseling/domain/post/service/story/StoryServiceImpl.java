@@ -24,7 +24,6 @@ public class StoryServiceImpl implements StoryService{
     @Override
     public Long putStory(FormDto formDto, Long userId) {
         Story story = Story.builder()
-                .isOpened(false)
                 .title(formDto.getTitle())
                 .content(formDto.getContent())
                 .writerId(userId)

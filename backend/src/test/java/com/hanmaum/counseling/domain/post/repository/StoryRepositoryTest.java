@@ -35,7 +35,6 @@ class StoryRepositoryTest {
                     .writerId(i)
                     .title("title " + i)
                     .content("content " + i)
-                    .isOpened(false)
                     .build();
             em.persist(story);
         }
@@ -54,7 +53,6 @@ class StoryRepositoryTest {
                 .writerId(writerId)
                 .title("title ")
                 .content("content ")
-                .isOpened(false)
                 .build();
         em.persist(story);
 

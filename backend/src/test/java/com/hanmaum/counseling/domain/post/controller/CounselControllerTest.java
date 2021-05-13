@@ -26,6 +26,7 @@ import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.transaction.annotation.Transactional;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -55,24 +56,29 @@ class CounselControllerTest {
     PasswordEncoder encoder;
     @Autowired
     ObjectMapper mapper;
+    @Autowired
+    EntityManager em;
 
     @BeforeEach
     void setUp(){
         User user = User.builder()
                 .nickname("a")
                 .email("user@test.com")
+                .temperature(36)
                 .role(RoleType.ROLE_USER)
                 .password(encoder.encode("1234"))
                 .build();
         User counsellor = User.builder()
                 .nickname("b")
                 .email("counsellor1@test.com")
+                .temperature(36)
                 .role(RoleType.ROLE_USER)
                 .password(encoder.encode("1234"))
                 .build();
         User counsellor2 = User.builder()
                 .nickname("c")
                 .email("counsellor2@test.com")
+                .temperature(36)
                 .role(RoleType.ROLE_USER)
                 .password(encoder.encode("1234"))
                 .build();
@@ -105,6 +111,11 @@ class CounselControllerTest {
         //답장
         Long letterId2 = letterService.writeLetter(new FormDto("두번째 상담사의 답변입니다", "그러시군요 ㅋㅋ", null),
                 tempDto2.getCounselId(), tempDto2.getLetterId(), counsellor2.getId());
+    }
+    @AfterEach
+    void setDown(){
+        em.flush();
+        em.clear();
     }
 
     @Test
@@ -207,9 +218,12 @@ class CounselControllerTest {
         Long storyId = temp1.get(0).getStoryId();
         List<UserCounselStateDto> temp2 = storyService.getCounselStateOfUserWithStory(storyId, user.getId());
         Long counselId = temp2.get(0).getCounselId();
+        EvaluateDto dto = new EvaluateDto(true, EvaluateDto.EvaluateType.GOOD);
+        String content = mapper.writeValueAsString(dto);
         //when
         ResultActions actions = mockMvc.perform(post("/counsels/" + counselId + "/finish")
                 .contentType(MediaType.APPLICATION_JSON)
+                .content(content)
                 .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
         //then
         actions.andExpect(status().isOk())
