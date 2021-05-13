@@ -1,0 +1,18 @@
+<?xml-stylesheet type="text/css" href="./postmain2.css"?>
+<svg height="100%" version="1.1" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+
+       <g id="plane2">
+
+        <polygon id="top_left_wing" points="150,150, 150,0, 0,150" style="fill:#ffffff;"/>
+        <polygon id="top_right_wing" points="150,0 150,150 300,150" style="fill:#ffffff;" />
+        <polygon id="left_wing" points="150,0 90,150 0,150" style="fill:#ffffff;" />
+        <polygon id="right_wing" points="150,0 210,150 300,150" style="fill:#ffffff;" />
+        <polygon id="left_bottom" points="0,150 150,150 150,190 90,150" style="fill:#ffffff;" stroke-width="0.5" />
+        <polygon id="right_bottom" points="150,150 300,150 210,150 150,190" style="fill:#ffffff;"  stroke-width="0.5"/>
+        
+        <polygon id="left_inside_wing" points="150,0 210,150 150,190" fill="#eeeeee" 
+         stroke="#dddddd" stroke-width="1"/>
+        <polygon id="right_inside_wing" points="150,0 90,150 150,190" style="fill:#eeeeee;" stroke="#dddddd" stroke-width="1" />
+      </g>
+
+    </svg>
