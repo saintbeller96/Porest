@@ -88,7 +88,7 @@ public class CounselServiceImpl implements CounselService{
                 }
             }
         }
-        return new UserCounselStateDto(counsel.getId(), counsel.getStory().getWriterNickName(), last.getTitle(), num);
+        return new UserCounselStateDto(counsel.getId(), counsel.getStory().getWriterNickName(), last.getTitle(), num, last.getCreatedAt());
     }
 
     @Override
