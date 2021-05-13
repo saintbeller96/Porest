@@ -5,6 +5,7 @@
   <title>Document</title>
 
   <link rel="stylesheet" href="postmain.css">
+  <script src="http://yui.yahooapis.com/3.18.1/build/yui/yui-min.js"></script>
 </head>
 
 <body>
@@ -14,13 +15,36 @@
 
 
   
- <div class="post_main_room">
-  <div class="post_room_wall wall_left"></div>
-  <div class="post_room_wall wall_right"></div>
-  <div class="post_floor"></div>
-</div>
+  <div id="demo" style="margin-left:100px;margin-top:300px">
+        <img src="http://www.meriqueen-woolmark.com/03_doolyit_image/birdright.jpg">
+    </div>
+
 
 
 
 </body>
-<script src="postmain.js"></script></html>
+ <script type="text/javascript">
+    YUI().use('anim', function(Y) {
+        
+        demoA = Y.one('#demo'); // The animated element
+ 
+        var anim = new Y.Anim({
+            node: demoA,
+            duration: 2.5,
+            easing: Y.Easing.easeOut
+        });           
+        
+ 
+        var startAnim = function(e){
+            demoA.setStyles({'left': 1000, 'top': 1000}); 
+            anim.set('to', {curve: [ [784,-34], [713,395], [279,231] ]});
+            anim.run();
+        };    
+ 
+        Y.one('#demo').on('click', startAnim);
+        startAnim();    
+    });
+    
+ 
+    </script>
+</html>

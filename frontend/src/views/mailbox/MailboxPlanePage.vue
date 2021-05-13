@@ -9,7 +9,7 @@
         <div class="post_main_wall post_wall_bottom"></div>
       </div>
 
-      <div class="planesvg"><img src="@/assets/svg/plane_fold.svg" alt="" /></div>
+      <div id="planesvg" class="planesvg"><img src="@/assets/image/plane2.svg" alt="" /></div>
 
       <div class="plane_fold">
         <svg height="100%" version="1.1" width="100%" xml:space="preserve" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
@@ -33,6 +33,7 @@
 
 <script>
 export default {
+ 
 }
 </script>
 
