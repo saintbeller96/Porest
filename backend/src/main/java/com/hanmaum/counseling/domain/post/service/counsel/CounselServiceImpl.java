@@ -2,7 +2,7 @@ package com.hanmaum.counseling.domain.post.service.counsel;
 
 import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
 import com.hanmaum.counseling.domain.post.dto.LetterReplyDto;
-import com.hanmaum.counseling.domain.post.dto.MyCounselDto;
+import com.hanmaum.counseling.domain.post.dto.UserCounselStateDto;
 import com.hanmaum.counseling.domain.post.dto.UserStoryStateDto;
 import com.hanmaum.counseling.domain.post.entity.*;
 import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
@@ -28,7 +28,6 @@ public class CounselServiceImpl implements CounselService{
         if(userId != counsel.getCounsellorId() && userId != counsel.getStory().getWriterId()){
             throw new IllegalStateException("This user is not affiliated with this counsel.");
         }
-
         return convertToDetailCounselDto(counsel);
     }
 
@@ -67,41 +66,29 @@ public class CounselServiceImpl implements CounselService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<UserStoryStateDto> getUserCounselState(Long userId) {
+    public List<UserCounselStateDto> getCounselStateOfUser(Long userId) {
         List<Counsel> counsels = counselRepository.findByCounsellorId(userId);
-        List<UserStoryStateDto> result = counsels.stream()
-                .map(this::mappingToUserStoryStateDto)
+        return counsels.stream()
+                .filter(counsel -> counsel.getStatus() == CounselStatus.CONNECT)
+                .map(this::mappingToCounselStateDto)
                 .collect(Collectors.toList());
-        return result;
-    }
-    private UserStoryStateDto mappingToUserStoryStateDto(Counsel counsel){
-        Story story = counsel.getStory();
-        long count = counsel.getLetters().stream()
-                .filter(letter ->
-                        letter.getWriterId() == story.getWriterId()
-                        && letter.getStatus() == LetterStatus.WAIT)
-                .count();
-        return UserStoryStateDto.getMyCounselInfo(story, counsel, (int)count);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<MyCounselDto> getMyCounselingList(Long userId) {
-        List<Counsel> counsels = counselRepository.findByCounsellorId(userId);
-        return counsels.stream().map(this::mappingToMyCounselDto)
-                .collect(Collectors.toList());
-    }
-    private MyCounselDto mappingToMyCounselDto(Counsel counsel){
+    private UserCounselStateDto mappingToCounselStateDto(Counsel counsel){
         List<Letter> letters = counsel.getLetters();
         int len = letters.size();
         Letter last = letters.get(len-1);
-        String title = last.getForm().getTitle();
         int num = 0;
-        //마지막 편지를 쓴 사람이 상담원이 아니고 이 편지를 아직 읽지 않았다면 num을 증가
-        if(last.getWriterId() != counsel.getCounsellorId() && last.getStatus() == LetterStatus.WAIT){
-            num++;
+        //마지막 편지를 쓴 사람이 사연의 주인공이고 이 편지를 아직 읽지 않았다면 num을 증가
+        for(Letter letter : letters){
+            if(letter.getWriterId() == counsel.getStory().getWriterId()){
+                last = letter;
+                if(last.getStatus() == LetterStatus.WAIT){
+                    num++;
+                }
+            }
         }
-        return new MyCounselDto(counsel.getId(), counsel.getStory().getWriterNickName(), title, num);
+        return new UserCounselStateDto(counsel.getId(), counsel.getStory().getWriterNickName(), last.getTitle(), num);
     }
 
     @Override
@@ -110,15 +97,6 @@ public class CounselServiceImpl implements CounselService{
         Counsel counsel = getCounsel(counselId);
         validateUser(userId, counsel);
         counsel.setStatus(CounselStatus.END);
-        return counselId;
-    }
-
-    @Override
-    @Transactional
-    public Long cancelCounsel(Long counselId, Long userId) {
-        Counsel counsel = getCounsel(counselId);
-        validateUser(userId, counsel);
-        counsel.setStatus(CounselStatus.CANCEL);
         return counselId;
     }
 

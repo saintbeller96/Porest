@@ -40,8 +40,7 @@ public class StoryServiceImpl implements StoryService{
     @Override
     public SimpleCounselDto pickStory(Long storyId, Long userId) {
         //사연 찾기
-        Story story = storyRepository.findById(storyId)
-                .orElseThrow(IllegalStateException::new);
+        Story story = getStory(storyId);
         story.addPicked();
         //사연의 주인공과 현재 유저를 연결
         Counsel counsel = counselRepository.save(Counsel.createConnectedCounsel(story, userId));
@@ -89,8 +88,48 @@ public class StoryServiceImpl implements StoryService{
     }
 
     @Override
-    public List<DetailCounselDto> getStory(Long storyId, Long userId) {
+    public List<UserCounselStateDto> getCounselStateOfUserWithStory(Long storyId, Long userId) {
+        Story story = getStory(storyId);
+        if(story.getWriterId() != userId){
+            throw new IllegalStateException("해당 사용자는 이 사연의 상담 내역에 접근할 권한이 없습니다");
+        }
+        return story.getCounsels().stream()
+                .filter(counsel -> counsel.getStatus() == CounselStatus.CONNECT)
+                .map(this::mappingToUserCounselStateDto)
+                .collect(Collectors.toList());
+    }
 
-        return null;
+    private UserCounselStateDto mappingToUserCounselStateDto(Counsel counsel) {
+        List<Letter> letters = counsel.getLetters();
+        int len = letters.size();
+        Letter last = letters.get(len-1);
+        int num = 0;
+        //상담사가 해준 마지막 답장을 last에 저장
+        //해당 답장이 읽지 않은 상태이면 num 증가
+        for(Letter letter : letters){
+            if(last.getWriterId() == counsel.getCounsellorId()){
+                last = letter;
+                if(last.getStatus() == LetterStatus.WAIT){
+                    num++;
+                }
+            }
+        }
+        return new UserCounselStateDto(counsel.getId(), counsel.getCounsellorNickname(), last.getTitle(), num);
+    }
+
+    @Override
+    public Long deleteStory(Long storyId, Long userId) {
+        Story story = getStory(storyId);
+        if(story.getWriterId() != userId)
+            throw new IllegalStateException("이 유저는 사연을 삭제할 권한이 없습니다.");
+        if(story.getCounsels().size() == 0){
+            throw new IllegalStateException("상담이 진행 중인 사연은 삭제가 불가합니다.");
+        }
+        storyRepository.delete(story);
+        return storyId;
+    }
+
+    private Story getStory(Long storyId) {
+        return storyRepository.findByIdFetch(storyId).orElseThrow(IllegalStateException::new);
     }
 }

@@ -9,5 +9,6 @@ public interface StoryService {
     List<SimpleStoryDto> getCandidates(Long userId);
     SimpleCounselDto pickStory(Long storyId, Long userId);
     List<UserStoryStateDto> getUserStoryState(Long userId);
-    List<DetailCounselDto> getStory(Long storyId, Long userId);
+    List<UserCounselStateDto> getCounselStateOfUserWithStory(Long storyId, Long userId);
+    Long deleteStory(Long storyId, Long userId);
 }
