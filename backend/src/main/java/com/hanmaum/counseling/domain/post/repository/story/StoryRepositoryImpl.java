@@ -2,28 +2,36 @@ package com.hanmaum.counseling.domain.post.repository.story;
 
 
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
+import com.hanmaum.counseling.domain.post.entity.QStory;
 import com.hanmaum.counseling.domain.post.entity.Story;
 import com.querydsl.core.types.Projections;
-import com.querydsl.jpa.JPAExpressions;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
 
-import javax.persistence.EntityManager;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static com.hanmaum.counseling.domain.post.entity.QCounsel.counsel;
-import static com.hanmaum.counseling.domain.post.entity.QLetter.*;
 import static com.hanmaum.counseling.domain.post.entity.QStory.story;
 
 @Repository
 @RequiredArgsConstructor
 public class StoryRepositoryImpl implements StoryRepositoryCustom{
     private final JPAQueryFactory queryFactory;
-    private final EntityManager em;
     private final int CANDIDATES  = 6;
     private final int PICK_MAX = 3;
+
+
+    @Override
+    public Optional<Story> findByIdFetch(Long storyId) {
+        Story result = queryFactory
+                .selectFrom(story)
+                .leftJoin(story.counsels).fetchJoin()
+                .where(story.id.eq(storyId))
+                .fetchOne();
+        return Optional.ofNullable(result);
+    }
 
     /**
      * 랜덤으로 CANDIDATES 명의 사연을 중복없이 뽑기
