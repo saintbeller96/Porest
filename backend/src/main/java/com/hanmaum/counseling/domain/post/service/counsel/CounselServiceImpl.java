@@ -96,10 +96,10 @@ public class CounselServiceImpl implements CounselService{
     public Long finishCounsel(EvaluateDto evaluate, Long counselId, Long userId) {
         Counsel counsel = getCounsel(counselId);
         validateUser(userId, counsel);
-        User user = userRepository.findById(userId)
+        User counsellor = userRepository.findById(counsel.getCounsellorId())
                 .orElseThrow(IllegalStateException::new);
 
-        user.setTemperature(user.getTemperature() + evaluate.getEvaluate().getScore());
+        counsellor.setTemperature(counsellor.getTemperature() + evaluate.getEvaluate().getScore());
         counsel.setStatus(CounselStatus.END);
         counsel.setOpenStatus(evaluate.isOpen());
         return counselId;
