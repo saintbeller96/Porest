@@ -114,7 +114,7 @@ public class StoryServiceImpl implements StoryService{
                 }
             }
         }
-        return new UserCounselStateDto(counsel.getId(), counsel.getCounsellorNickname(), last.getTitle(), num);
+        return new UserCounselStateDto(counsel.getId(), counsel.getCounsellorNickname(), last.getTitle(), num, last.getCreatedAt());
     }
 
     @Override
