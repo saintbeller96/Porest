@@ -1,6 +1,33 @@
 <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" viewBox="-30 -20 480 420">
   <defs>
     <style>
+    #game_ballon{
+      animation: 3.5s ballon infinite linear alternate;  
+    }
+
+    @keyframes ballon {
+      100%{
+        transform: translate3d(0,-50px,0);
+      }
+    }
+
+    #game_people2{
+      animation: 1.5s people2 infinite linear alternate;
+    }
+    #game_people3{
+    animation: 1.5s .5s people3 infinite linear alternate;
+    }
+
+    @keyframes people2 {
+      100%{
+        transform: translate3d(15px,15px,0);
+      }
+    }
+      @keyframes people3 {
+      100%{
+        transform: translate3d(-15px,15px,0);
+      }
+    }
       .cls-1, .cls-114, .cls-115, .cls-116, .cls-117, .cls-69, .cls-78, .cls-79, .cls-80, .cls-81, .cls-89 {
         fill: none;
       }
