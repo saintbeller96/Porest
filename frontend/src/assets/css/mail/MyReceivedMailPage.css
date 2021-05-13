@@ -40,16 +40,20 @@
 
 
 .received_mail_inner_right {
-    padding: 1rem;
+    padding:0 1rem 0 1rem;
     width: 68%;
     height: 100%;
     border-radius: 1rem;
-    backdrop-filter: blur(15px);
-    background: rgba(255, 255, 255, 0.2);
-    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-    border: 1px solid rgba(255, 255, 255, 0.5);
-    border-right: 1px solid rgba(255, 255, 255, 0.2);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    backdrop-filter: blur(0px);
+    /* background: rgba(255, 255, 255, 0.2); */
+    /* box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1); */
+    /* border: 1px solid rgba(255, 255, 255, 0.5); */
+    /* border-right: 1px solid rgba(255, 255, 255, 0.2); */
+    /* border-bottom: 1px solid rgba(255, 255, 255, 0.2); */
 }
 
 
@@ -104,4 +108,148 @@
     border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
+.root_mail_header {
+    width: 100%;
+    height: 10%;
+    border-radius: inherit;
+		backdrop-filter: blur(15px);
+    background: rgba(255, 255, 255, 0.2);
+    box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-right: 1px solid rgba(255, 255, 255, 0.2);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
 
+.write_reply {
+    width: 100%;
+    height: 89%;
+		padding: 0 1.5rem;
+    border-radius: inherit;
+    display: flex;
+    justify-content: space-around;
+}
+
+.letter_paper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+		justify-content: space-around;
+    align-items: center;
+}
+.letter_form_wrapper {
+    position: relative;
+		padding: 1rem;
+    width: 40%;
+    height: 90%;
+    background-color: rgba(247, 243, 236, 0.993);
+		border: 1px solid black;
+
+}
+
+.letter_form_wrapper::before{
+  position: absolute;
+  content: '';
+	top: 4px;
+	left: -5px;
+	z-index: -1;
+	width: 100%;
+	height: 100%;
+	/* background-color: rgba(247, 243, 236, 0.938); */
+	
+	box-shadow: 0 0 8px rgba(0, 0, 0, 0.2);
+	transform: rotate(-2.5deg);
+	backdrop-filter: blur(15px);
+	background: rgba(255, 255, 255, 0.2);
+
+	box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+	border: 1px solid rgba(255, 255, 255, 0.5);
+	border-right: 1px solid rgba(255, 255, 255, 0.2);
+	border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+
+.letter_form_wrapper::after {
+position: absolute;
+content: '';
+background-color: #f6f6f6;
+box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+z-index: -1;
+left: -3px;
+top: 1px;
+width: 100%;
+height: 100%;
+transform: rotate(1.4deg);
+backdrop-filter: blur(15px);
+background: rgba(255, 255, 255, 0.2);
+
+box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+border: 1px solid rgba(255, 255, 255, 0.5);
+border-right: 1px solid rgba(255, 255, 255, 0.2);
+border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+} 
+
+.paper {
+	width: 100%;
+	height: 100%;
+	padding: 1rem;
+	letter-spacing: 1px ;
+	line-height: 1rem;
+	background-color: inherit;
+	overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width:12px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color:#f6f6f6;
+  border-radius: 6px;
+}
+
+.paper_header {
+	width: 100%;
+	padding: 0.3rem 0;
+	font-weight: 600;
+	min-height: 10%;
+}
+
+.paper_content {
+	width: 100%;
+	min-height: 80%;
+	line-height: 1.5rem;
+	text-decoration: underline;
+}
+
+.paper_footer {
+	width: 100%;
+	height: 7%;
+	padding: 0.5rem 0;
+	display: flex;
+	justify-content: flex-end;
+	align-items: center;
+}
+input {
+	margin-top: 0.5rem;
+	width: 100%;
+	height: 2rem;
+	font-size: 1.1rem;
+	outline: none;
+	border: none;
+	letter-spacing: 1px;
+	background-color: #fbfbfb;
+
+}
+
+textarea {
+	margin-top: 1rem;
+	width: 100%;
+	min-height: 23rem;
+	line-height: 1.5rem;
+	border: none;
+	font-size: 1.2rem;
+	outline: none;
+	cursor: pointer;
+	background-color: #fbfbfb;
+}

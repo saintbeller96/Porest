@@ -14,7 +14,36 @@
       </section>
 
       <section class="received_mail_inner_right">
-        <div class="write_reply"></div>
+        <div class="root_mail_header"></div>
+        <div class="write_reply">
+          <div class="letter_paper">
+            <div class="letter_form_wrapper">
+              <div class="paper">
+                <div class="paper_header">제목 : 저도 같은 경험을 한적이 있습니다.</div>
+                <div class="paper_content">
+                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero commodi architecto labore optio aut
+                  cumque dolorem praesentium eaque aperiam obcaecati modi voluptates aliquid, iusto in expedita
+                  voluptatum voluptas dolore. Reiciendis. Lorem, ipsum dolor sit amet consectetur adipisicing elit.
+                </div>
+                <div class="paper_footer">
+                  <div class="ban_btn">신고</div>
+                </div>
+              </div>
+            </div>
+            <div class="letter_form_wrapper">
+              <div class="paper">
+                <div class="paper_header">제목 작성하기 <input type="text" /></div>
+                <div class="paper_content">
+                  내용 작성하기
+                  <textarea name="" id=""></textarea>
+                </div>
+                <div class="paper_footer">
+                  <div class="ban_btn">답장 보내기</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </section>
     </div>
   </div>
