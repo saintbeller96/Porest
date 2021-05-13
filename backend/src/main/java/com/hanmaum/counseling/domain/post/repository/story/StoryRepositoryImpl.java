@@ -27,7 +27,7 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
     public Optional<Story> findByIdFetch(Long storyId) {
         Story result = queryFactory
                 .selectFrom(story)
-                .join(story.counsels).fetchJoin()
+                .leftJoin(story.counsels).fetchJoin()
                 .where(story.id.eq(storyId))
                 .fetchOne();
         return Optional.ofNullable(result);
