@@ -170,23 +170,4 @@ class StoryControllerTest {
         actions.andExpect(status().isNotFound())
                 .andDo(print());
     }
-
-    @Test
-    @DisplayName("사연과 관련된 모든 편지 내용 가져오고 200 반환")
-    void test() throws Exception{
-        //given
-
-        Long storyId = 1L;
-        //when
-        ResultActions actions = mockMvc.perform(get("/stories/" + storyId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(user(CustomUserDetails.fromUserToCustomUserDetails(counsellor)))
-        );
-        //then
-        actions.andExpect(status().isOk())
-                .andDo(print());
-    }
-
-
-
 }
