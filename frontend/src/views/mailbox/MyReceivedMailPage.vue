@@ -4,22 +4,26 @@
     <div class="received_mail_inner_wrapper">
       <section class="received_mail_inner_left">
         <div class="section_header">
-          <div class="header_btn">위로 받기</div>
-          <div class="header_btn">위로 보내기</div>
+          <div class="header_btn" @click="openUserBoard(true)">위로 받기</div>
+          <div class="header_btn" @click="openUserBoard(false)">위로 보내기</div>
+        </div>
+        <div class="section_body">
+          <my-story-list v-if="viewStoryState"></my-story-list>
+          <my-counsel-list v-else></my-counsel-list>
         </div>
       </section>
-      받은편지함 페이지
-      <div>
-        답장 주고받기 바로가기
-        <button @click="goToLetterReply">답장 주고받기 바로가기</button>
-      </div>
+
+      <section class="received_mail_inner_right">
+        <div class="write_reply"></div>
+      </section>
     </div>
   </div>
 </template>
 
 <script>
 import { getMyStories } from '@/api/stories';
-
+import MyCounselList from '@/components/mail/MyCounselList.vue';
+import MyStoryList from '@/components/mail/MyStoryList.vue';
 import Star from '@/components/common/Star.vue';
 
 export default {
@@ -27,10 +31,13 @@ export default {
   data() {
     return {
       stories: null,
+      viewStoryState: true,
     };
   },
   components: {
     Star,
+    MyCounselList,
+    MyStoryList,
   },
   methods: {
     goToLetterReply() {
@@ -38,6 +45,9 @@ export default {
     },
     async getMyStories() {
       this.stories = await getMyStories();
+    },
+    openUserBoard(value) {
+      this.viewStoryState = value;
     },
   },
   mounted() {
