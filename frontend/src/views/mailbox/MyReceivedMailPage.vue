@@ -1,7 +1,13 @@
 <template>
-  <div class="received-mail-main-wrapper">
-    <Star class="star"></Star>
-    <div class="received-mail-inner-wrapper">
+  <div class="received_mail_main_wrapper">
+    <!-- <Star class="star"></Star> -->
+    <div class="received_mail_inner_wrapper">
+      <section class="received_mail_inner_left">
+        <div class="section_header">
+          <div class="header_btn">위로 받기</div>
+          <div class="header_btn">위로 보내기</div>
+        </div>
+      </section>
       받은편지함 페이지
       <div>
         답장 주고받기 바로가기
