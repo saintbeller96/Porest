@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.ban.service;
 
 public interface BanReportService {
-    Long reportBan();
+    Long reportBan(Long userId);
     Long processBan();
 }

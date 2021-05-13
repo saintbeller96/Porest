@@ -1,12 +1,14 @@
 package com.hanmaum.counseling.domain.ban.entity;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Ban {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

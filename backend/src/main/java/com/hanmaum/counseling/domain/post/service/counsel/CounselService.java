@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.domain.post.service.counsel;
 
 import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
+import com.hanmaum.counseling.domain.post.dto.EvaluateDto;
 import com.hanmaum.counseling.domain.post.dto.UserCounselStateDto;
 import com.hanmaum.counseling.domain.post.dto.UserStoryStateDto;
 
@@ -29,5 +30,5 @@ public interface CounselService {
      */
     List<UserCounselStateDto> getCounselStateOfUser(Long userId);
 
-    Long finishCounsel(Long counselId, Long userId);
+    Long finishCounsel(EvaluateDto evaluate, Long counselId, Long userId);
 }

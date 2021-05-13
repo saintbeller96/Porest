@@ -4,12 +4,14 @@ import com.hanmaum.counseling.domain.post.entity.Counsel;
 import com.hanmaum.counseling.domain.post.entity.Story;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @ToString
+@NoArgsConstructor
 public class UserStoryStateDto {
     private Long storyId;
     private String title;
