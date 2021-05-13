@@ -3,6 +3,7 @@ package com.hanmaum.counseling.domain.ban.entity;
 import com.hanmaum.counseling.domain.account.entity.User;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.boot.context.properties.bind.DefaultValue;
@@ -12,9 +13,10 @@ import java.time.LocalDateTime;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class BanReport {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "ban_request_id")
+    @Column(name = "ban_report_id")
     private Long id;
 
     @Column(name = "reporter_id")

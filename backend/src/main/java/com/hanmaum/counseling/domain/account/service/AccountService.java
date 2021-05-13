@@ -46,8 +46,8 @@ public class AccountService {
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .temperature(36)
                 .profileImgNumber(1L)
-                .temperature(36L)
                 .role(RoleType.ROLE_USER)
                 .build();
 

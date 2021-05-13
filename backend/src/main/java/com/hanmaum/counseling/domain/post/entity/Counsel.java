@@ -35,6 +35,10 @@ public class Counsel {
     @ColumnDefault("'CONNECT'")
     private CounselStatus status;
 
+    @Column(name = "is_opened")
+    @ColumnDefault("false")
+    private Boolean isOpened;
+
     public Counsel(){}
 
     @Builder
@@ -65,4 +69,5 @@ public class Counsel {
     public void setStatus(CounselStatus status){
         this.status = status;
     }
+    public void setOpenStatus(boolean b) {this.isOpened = b;}
 }
