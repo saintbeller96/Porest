@@ -1,56 +1,9 @@
 <template>
   <div class="sticker-box">
     <swiper class="swiper" :options="swiperOption">
-      <swiper-slide><img src="../../assets/image/sticker/1.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/2.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/3.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/4.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/5.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/6.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/7.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/8.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/9.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/10.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/11.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/12.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/13.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/14.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/15.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/16.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/17.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/18.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/19.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/20.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/21.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/22.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/23.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/24.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/25.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/26.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/27.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/28.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/29.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/30.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/31.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/32.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/33.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/34.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/35.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/36.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/37.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/38.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/39.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/40.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/41.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/42.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/43.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/44.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/45.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/46.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/47.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/48.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/49.png" class="img"/></swiper-slide>
-      <swiper-slide><img src="../../assets/image/sticker/50.png" class="img"/></swiper-slide>
+      <swiper-slide v-for="(data, idx) in todaysSticker" :key="idx"
+        ><img :src="data" class="img" @click="getStickerIndex(idx)"
+      /></swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
     </swiper>
   </div>
@@ -75,6 +28,7 @@ export default Vue.extend({
           el: '.swiper-pagination',
           clickable: true,
         },
+
         // breakpoints: {
         //   1024: {
         //     slidesPerView: 4,
@@ -94,10 +48,67 @@ export default Vue.extend({
         //   },
         // },
       },
+      todaysSticker: [
+        require('../../assets/image/sticker/1.png'),
+        require('../../assets/image/sticker/2.png'),
+        require('../../assets/image/sticker/3.png'),
+        require('../../assets/image/sticker/4.png'),
+        require('../../assets/image/sticker/5.png'),
+        require('../../assets/image/sticker/6.png'),
+        require('../../assets/image/sticker/7.png'),
+        require('../../assets/image/sticker/8.png'),
+        require('../../assets/image/sticker/9.png'),
+        require('../../assets/image/sticker/10.png'),
+        require('../../assets/image/sticker/11.png'),
+        require('../../assets/image/sticker/12.png'),
+        require('../../assets/image/sticker/13.png'),
+        require('../../assets/image/sticker/14.png'),
+        require('../../assets/image/sticker/15.png'),
+        require('../../assets/image/sticker/16.png'),
+        require('../../assets/image/sticker/17.png'),
+        require('../../assets/image/sticker/18.png'),
+        require('../../assets/image/sticker/19.png'),
+        require('../../assets/image/sticker/20.png'),
+        require('../../assets/image/sticker/21.png'),
+        require('../../assets/image/sticker/22.png'),
+        require('../../assets/image/sticker/23.png'),
+        require('../../assets/image/sticker/24.png'),
+        require('../../assets/image/sticker/25.png'),
+        require('../../assets/image/sticker/26.png'),
+        require('../../assets/image/sticker/27.png'),
+        require('../../assets/image/sticker/28.png'),
+        require('../../assets/image/sticker/29.png'),
+        require('../../assets/image/sticker/30.png'),
+        require('../../assets/image/sticker/31.png'),
+        require('../../assets/image/sticker/32.png'),
+        require('../../assets/image/sticker/33.png'),
+        require('../../assets/image/sticker/34.png'),
+        require('../../assets/image/sticker/35.png'),
+        require('../../assets/image/sticker/36.png'),
+        require('../../assets/image/sticker/37.png'),
+        require('../../assets/image/sticker/38.png'),
+        require('../../assets/image/sticker/39.png'),
+        require('../../assets/image/sticker/40.png'),
+        require('../../assets/image/sticker/41.png'),
+        require('../../assets/image/sticker/42.png'),
+        require('../../assets/image/sticker/43.png'),
+        require('../../assets/image/sticker/44.png'),
+        require('../../assets/image/sticker/45.png'),
+        require('../../assets/image/sticker/46.png'),
+        require('../../assets/image/sticker/47.png'),
+        require('../../assets/image/sticker/48.png'),
+        require('../../assets/image/sticker/49.png'),
+        require('../../assets/image/sticker/50.png'),
+      ],
     };
   },
-  created() {},
-  methods: {},
+  methods: {
+    getStickerIndex(n) {
+      let index = n + 1;
+      this.$store.state.selectedSticker = `${index}.png`;
+      console.log(this.$store.state.selectedSticker);
+    },
+  },
   computed: {},
 });
 </script>

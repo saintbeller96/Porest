@@ -6,16 +6,27 @@
     </header>
     <table>
       <thead>
-        <th v-for="day in days" :key="day">{{ day }}</th>
+        <th v-for="(day, idx) in days" :key="idx">
+          <div v-if="idx === 0" class="sunday">{{ day }}</div>
+          <div v-else-if="idx === 6" class="saturday">{{ day }}</div>
+          <div v-else>{{ day }}</div>
+        </th>
       </thead>
       <tbody>
         <tr v-for="(date, idx) in dates" :key="idx">
-          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, day, idx)" class="dates">
-            <p v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+          <td
+            v-for="(day, index) in date"
+            :key="index"
+            @click="getTargetDate(year, month, day, idx, index)"
+            class="dates"
+          >
+            <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
               {{ day }}
-            </p>
-            <p v-else-if="today === day && presentYear === year && presentMonth === month" class="today">{{ day }}</p>
-            <p v-else>{{ day }}</p>
+            </div>
+            <div v-else-if="today === day && presentYear === year && presentMonth === month" class="today">
+              {{ day }}
+            </div>
+            <div v-else>{{ day }}</div>
           </td>
         </tr>
       </tbody>
@@ -24,11 +35,12 @@
 </template>
 
 <script>
-import '@/assets/css/Calendar.css';
+import '@/assets/css/feelingRecord/Calendar.css';
+import { getEmotionsOfRecord, getEmotionDetail } from '@/api/emotions';
 export default {
   data() {
     return {
-      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      days: ['일', '월', '화', '수', '목', '금', '토'],
       dates: [],
       presentYear: 0,
       presentMonth: 0,
@@ -39,6 +51,7 @@ export default {
       today: 0,
       now: 0,
       targetDate: [],
+      emotionList: [],
     };
   },
   created() {
@@ -67,6 +80,7 @@ export default {
       }
       const [monthFirstDay, monthLastDate, lastMonthLastDate] = this.getFirstDayLastDate(this.year, this.month);
       this.dates = this.getMonthOfDays(monthFirstDay, monthLastDate, lastMonthLastDate);
+      this.loadEmotionRecord();
     },
     getFirstDayLastDate(year, month) {
       const firstDay = new Date(year, month - 1, 1).getDay(); // 이번 달 시작 요일
@@ -115,14 +129,55 @@ export default {
       this.nextMonthBegin = weekOfDays[0];
       return dates;
     },
-    getTargetDate(year, month, day, idx) {
+    getTargetDate(year, month, day, idx, index) {
       if (idx === 0 && day > 20) {
         month -= 1;
       } else if ((idx === 4 || idx === 5) && day < 10) {
         month += 1;
       }
-      this.targetDate = [year, month, day];
+      this.targetDate = [year, month, day, this.days[index]];
       this.$emit('get-target-date', this.targetDate);
+      this.getTargetId(day);
+      this.loadDiaryDetail(year, month, day);
+    },
+    getTargetId(day) {
+      if (this.emotionList) {
+        for (let i = 0; i < this.emotionList.length; i++) {
+          if (this.emotionList[i].day === day) {
+            this.$store.state.targetDateId = this.emotionList[i].emotionId;
+            break;
+          }
+        }
+      } else {
+        this.$store.state.targetDateId = 0;
+      }
+    },
+    async loadEmotionRecord() {
+      try {
+        let { data } = await getEmotionsOfRecord(this.month, this.year);
+        this.emotionList = data;
+        this.$store.state.thisMonthFeelings = this.emotionList;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async loadDiaryDetail(year, month, day) {
+      const id = this.$store.state.targetDateId;
+      if (id > 0) {
+        try {
+          const { data } = await getEmotionDetail(id);
+          let targetMonth = Number(data.createdAt.slice(5, 7));
+          let targetYear = Number(data.createdAt.slice(0, 4));
+          let targetDay = Number(data.createdAt.slice(8, 10));
+          if (year === targetYear && month === targetMonth && day === targetDay) {
+            this.$store.state.targetDateDetail = data;
+          } else {
+            this.$store.state.targetDateDetail = '';
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      }
     },
   },
 };

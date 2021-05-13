@@ -16,5 +16,10 @@ export default {
   token: getAuthFromCookie() ? `${getAuthFromCookie()}` : '',
   profileImg: getUserImgFromCookie() || '',
   temperature: getUserTemperatureFromCookie() || '',
-  stickerDrawer: false,
+  thisMonthFeelings: [],
+  targetDateId: 0,
+  targetDateDetail: '',
+  stickerindex: 0,
+  selectedSticker: '',
+  emotionIndex: 0,
 };

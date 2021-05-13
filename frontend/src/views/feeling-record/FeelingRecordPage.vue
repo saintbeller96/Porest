@@ -32,6 +32,7 @@ import Calendar from '@/components/feeling-record/Calendar';
 import Diary from '@/components/feeling-record/Diary';
 import WritingDiary from '@/components/feeling-record/WritingDiary';
 import WritingModal from '@/components/feeling-record/modal/WritingModal';
+
 export default {
   components: {
     Calendar,
@@ -186,7 +187,7 @@ export default {
   z-index: -1000;
 }
 .bubbles img:nth-child(3) {
-  animation-delay: 1s;
+  animation-delay: 11s;
   width: 25px;
   z-index: -1000;
 }

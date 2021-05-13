@@ -2,13 +2,14 @@
   <div class="writing-diary-container">
     <div class="date-container">
       <div v-if="getTargetDate.length === 0">
-        <p>{{ month }}월 {{ today }}일 수요일</p>
+        <p>{{ month }}월 {{ today }}일 {{ days[day] }}요일</p>
       </div>
       <div v-else>
-        <p>{{ getTargetDate[1] }}월 {{ getTargetDate[2] }}일 수요일</p>
+        <p>{{ getTargetDate[1] }}월 {{ getTargetDate[2] }}일 {{ getTargetDate[3] }}요일</p>
       </div>
     </div>
     <p class="title">오늘의 기분</p>
+    {{ content }}
     <div class="feeling-container">
       <select-feelings></select-feelings>
     </div>
@@ -21,11 +22,11 @@
     <p class="title">오늘의 일기</p>
     <div class="diary-square">
       <div class="writing-container">
-        <textarea name="" id="" rows="5"></textarea>
+        <textarea name="" id="" rows="5" v-model="content"></textarea>
       </div>
     </div>
     <p class="save-btn">
-      <span>저장</span>
+      <span @click="createDiary">저장</span>
     </p>
   </div>
 </template>
@@ -33,6 +34,7 @@
 <script>
 import SelectFeelings from '@/components/feeling-record/SelectFeelings';
 import SelectStickers from '@/components/feeling-record/SelectStickers';
+import { createEmotion } from '@/api/emotions';
 
 export default {
   props: {
@@ -47,6 +49,8 @@ export default {
       year: 0,
       month: 0,
       today: 0,
+      days: ['일', '월', '화', '수', '목', '금', '토'],
+      content: '',
     };
   },
   created() {
@@ -54,8 +58,25 @@ export default {
     this.year = date.getFullYear();
     this.month = date.getMonth() + 1;
     this.today = date.getDate();
+    this.day = date.getDay();
   },
-  methods: {},
+  methods: {
+    async createDiary() {
+      try {
+        console.log(this.content);
+        console.log(this.$store.state.emotionIndex);
+        console.log(this.$store.state.selectedSticker);
+        await createEmotion({
+          content: this.content,
+          feeling: this.$store.state.emotionIndex,
+          imageUrl: this.$store.state.selectedSticker,
+        });
+        alert('성공');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+  },
 };
 </script>
 
@@ -117,11 +138,20 @@ export default {
   padding: 12px;
   font-weight: bold;
   font-size: 25px;
-  resize: vertical;
+  resize: none;
   opacity: 0.9;
   outline-style: none;
   line-height: 30px;
   font-family: 'UhBeemysen';
+}
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+::-webkit-scrollbar-corner {
+}
+::-webkit-scrollbar-thumb {
+  background-color: #35ae6d;
+  border-radius: 6px;
 }
 
 .feeling-container {
@@ -140,14 +170,15 @@ export default {
 }
 
 .save-btn {
-  margin-top: 3vh;
+  margin-top: 2vh;
+  margin-right: 0.5vw;
   text-align: right;
 }
 
 .save-btn span {
   cursor: pointer;
   color: #525252;
-  font-size: 25px;
+  font-size: 27px;
   font-weight: bold;
 }
 

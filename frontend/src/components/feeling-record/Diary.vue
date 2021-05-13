@@ -4,22 +4,22 @@
       <!-- 날짜 -->
       <div class="date-container">
         <div v-if="getTargetDate.length === 0">
-          <p>{{ month }}월 {{ today }}일</p>
+          <span>{{ today }}일 {{ days[day] }}요일</span>
         </div>
         <div v-else>
-          <p>{{ getTargetDate[1] }}월 {{ getTargetDate[2] }}일</p>
+          <span>{{ getTargetDate[2] }}일 {{ getTargetDate[3] }}요일</span>
+          <img :src="todaysFeelingImg[$store.getters.getFeeling]" class="emotion" />
         </div>
       </div>
 
-      <!-- 선택한 감정 -->
-      <div class="chosen-feeling">
-        <img src="../../assets/image/feeling/5.png" class="menu-item" />
+      <!-- 선택한 이모지 -->
+      <div class="chosen-sticker" v-if="$store.state.targetDateDetail">
+        <img :src="todaysSticker[$store.getters.getStickerIndex]" />
       </div>
-      <div class="feeling-detail"><p>기분 최고!</p></div>
 
       <!-- 일기 내용 -->
-      <div class="diary-detail">
-        <p>오늘 이런 일들이 있었다.<br />재밌었다!</p>
+      <div class="diary-detail" v-if="$store.state.targetDateDetail">
+        <p>{{ $store.state.targetDateDetail['content'] }}</p>
       </div>
 
       <div v-if="getTargetDate[0] <= year && getTargetDate[1] <= month && getTargetDate[2] <= today">
@@ -42,7 +42,69 @@ export default {
       year: 0,
       month: 0,
       today: 0,
+      day: 0,
       modal: true,
+      days: ['일', '월', '화', '수', '목', '금', '토'],
+      detail: {},
+      todaysFeelingImg: [
+        require('../../assets/image/feeling/1.png'),
+        require('../../assets/image/feeling/2.png'),
+        require('../../assets/image/feeling/3.png'),
+        require('../../assets/image/feeling/4.png'),
+        require('../../assets/image/feeling/5.png'),
+      ],
+      todaysSticker: [
+        require('../../assets/image/sticker/1.png'),
+        require('../../assets/image/sticker/2.png'),
+        require('../../assets/image/sticker/3.png'),
+        require('../../assets/image/sticker/4.png'),
+        require('../../assets/image/sticker/5.png'),
+        require('../../assets/image/sticker/6.png'),
+        require('../../assets/image/sticker/7.png'),
+        require('../../assets/image/sticker/8.png'),
+        require('../../assets/image/sticker/9.png'),
+        require('../../assets/image/sticker/10.png'),
+        require('../../assets/image/sticker/11.png'),
+        require('../../assets/image/sticker/12.png'),
+        require('../../assets/image/sticker/13.png'),
+        require('../../assets/image/sticker/14.png'),
+        require('../../assets/image/sticker/15.png'),
+        require('../../assets/image/sticker/16.png'),
+        require('../../assets/image/sticker/17.png'),
+        require('../../assets/image/sticker/18.png'),
+        require('../../assets/image/sticker/19.png'),
+        require('../../assets/image/sticker/20.png'),
+        require('../../assets/image/sticker/21.png'),
+        require('../../assets/image/sticker/22.png'),
+        require('../../assets/image/sticker/23.png'),
+        require('../../assets/image/sticker/24.png'),
+        require('../../assets/image/sticker/25.png'),
+        require('../../assets/image/sticker/26.png'),
+        require('../../assets/image/sticker/27.png'),
+        require('../../assets/image/sticker/28.png'),
+        require('../../assets/image/sticker/29.png'),
+        require('../../assets/image/sticker/30.png'),
+        require('../../assets/image/sticker/31.png'),
+        require('../../assets/image/sticker/32.png'),
+        require('../../assets/image/sticker/33.png'),
+        require('../../assets/image/sticker/34.png'),
+        require('../../assets/image/sticker/35.png'),
+        require('../../assets/image/sticker/36.png'),
+        require('../../assets/image/sticker/37.png'),
+        require('../../assets/image/sticker/38.png'),
+        require('../../assets/image/sticker/39.png'),
+        require('../../assets/image/sticker/40.png'),
+        require('../../assets/image/sticker/41.png'),
+        require('../../assets/image/sticker/42.png'),
+        require('../../assets/image/sticker/43.png'),
+        require('../../assets/image/sticker/44.png'),
+        require('../../assets/image/sticker/45.png'),
+        require('../../assets/image/sticker/46.png'),
+        require('../../assets/image/sticker/47.png'),
+        require('../../assets/image/sticker/48.png'),
+        require('../../assets/image/sticker/49.png'),
+        require('../../assets/image/sticker/50.png'),
+      ],
     };
   },
   methods: {
@@ -55,6 +117,7 @@ export default {
     this.year = date.getFullYear();
     this.month = date.getMonth() + 1;
     this.today = date.getDate();
+    this.day = date.getDay();
   },
 };
 </script>
@@ -63,10 +126,17 @@ export default {
 @import url('https://fonts.googleapis.com/css2?family=Gothic+A1:wght@300&family=Nanum+Pen+Script&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Nanum+Pen+Script&display=swap');
 
+@font-face {
+  font-family: 'UhBeemysen';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 .dairy-container {
   height: 60vh;
   width: 80%;
-  background: rgba(255, 255, 255, 0.3);
+  background: rgba(255, 255, 255, 0.38);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   border-left: 1px solid rgba(255, 255, 255, 0.5);
@@ -77,39 +147,29 @@ export default {
   justify-content: center;
   padding: 6vh;
   margin-right: 6vw;
-  font-family: 'Gothic A1', sans-serif;
+  font-family: 'UhBeemysen';
 }
-
-/* .diary-contents {
-  width: 100%;
-  height: 50%;
-  border-radius: 5px;
-  background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.3);
-  border-top: 1.5px solid rgba(255, 255, 255, 0.8);
-  border-left: 1.5px solid rgba(255, 255, 255, 0.8);
-  opacity: 1;
-} */
 
 .date-container {
-  font-size: 17px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  color: #fff;
+  font-size: 25px;
   font-weight: bold;
-  margin-bottom: 3.5vh;
+  margin-bottom: 6vh;
 }
 
-.chosen-feeling {
+.emotion {
+  width: 23px;
+  margin-left: 0.5vw;
+}
+
+.chosen-sticker {
   display: flex;
   justify-content: center;
   align-items: center;
   margin-bottom: 2vh;
 }
 
-.chosen-feeling img {
-  width: 5vw;
+.chosen-sticker img {
+  width: 6vw;
 }
 
 .feeling-detail {
@@ -125,8 +185,9 @@ export default {
   height: 18vh;
   display: flex;
   justify-content: center;
-  line-height: 27px;
+  line-height: 32px;
   /* text-align: center; */
   text-align: justify;
+  font-size: 32px;
 }
 </style>
