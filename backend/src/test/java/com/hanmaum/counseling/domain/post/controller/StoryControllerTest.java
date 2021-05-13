@@ -10,6 +10,8 @@ import com.hanmaum.counseling.domain.post.dto.FormDto;
 import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.service.story.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
+import com.hanmaum.counseling.utils.RedisUtil;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -49,23 +51,33 @@ class StoryControllerTest {
 
     @Autowired
     ObjectMapper mapper;
-
+    @Autowired
+    RedisUtil redisUtil;
     User user;
     User counsellor;
 
     @BeforeEach
     void setUp(){
+        //여기 부분 필요해서 넣어놨는데 수정 필요하시면 수정해주세요!
+        String code[] = new String[2];
+        for (int i = 0; i<2; i++) {
+            code[i] = RandomStringUtils.randomAlphabetic(5);
+            StringBuilder key = new StringBuilder().append("test"+(i+1)+"@test.com").append("_").append(code[i]);
+            redisUtil.setDataExpire(key.toString(), "T", 180L);
+        }
         SignupDto dto = SignupDto.builder()
-                .email("test@test.com")
-                .password("1234")
+                .email("test1@test.com")
+                .password("12341234")
                 .nickname("사연자")
+                .code(code[0])
                 .build();
         user = accountService.saveUser(dto);
 
         SignupDto dto2 = SignupDto.builder()
                 .email("test2@test.com")
-                .password("1234")
+                .password("12341234")
                 .nickname("상담사")
+                .code(code[1])
                 .build();
         counsellor = accountService.saveUser(dto2);
 
@@ -158,23 +170,4 @@ class StoryControllerTest {
         actions.andExpect(status().isNotFound())
                 .andDo(print());
     }
-
-    @Test
-    @DisplayName("사연과 관련된 모든 편지 내용 가져오고 200 반환")
-    void test() throws Exception{
-        //given
-
-        Long storyId = 1L;
-        //when
-        ResultActions actions = mockMvc.perform(get("/stories/" + storyId)
-                .contentType(MediaType.APPLICATION_JSON)
-                .with(user(CustomUserDetails.fromUserToCustomUserDetails(counsellor)))
-        );
-        //then
-        actions.andExpect(status().isOk())
-                .andDo(print());
-    }
-
-
-
 }
