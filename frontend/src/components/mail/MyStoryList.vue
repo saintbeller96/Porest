@@ -1,21 +1,29 @@
 <template>
+  <!-- my stories -->
   <ul class="section_body_story_list story_list">
-    <li class="story_item" v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9]" :key="index">
+    <li class="story_item" v-for="(story, index) in stories" :key="index">
       <div class="story_header">
-        <h1 class="story_title">원시 사연 제목 위치</h1>
+        <h1 class="story_title" v-text="story.title"></h1>
       </div>
       <div class="story_body">
         <div class="received_reply">
-          <div class="received_reply_num">새로운 답장 3 통</div>
-          <div class="reply_users_accodian_open" @click="openUsers(index)">열기</div>
+          <div class="received_reply_num" v-text="'새로운 답장 ' + story.numOfNewReply + '통'"></div>
+          <div class="reply_users_accodian_open" @click="openUsers(index, story.storyId)">열기</div>
         </div>
+
+        <!-- reply -->
         <ul class="reply_users" v-if="openUsersState == index">
-          <li class="reply_user" v-for="(reply, index) in replyArr" :key="index">
+          <li
+            class="reply_user"
+            v-for="(reply, index) in replies"
+            :key="index"
+            @click="openStory(story.storyId, reply.counselId, reply.numOfReplies)"
+          >
             <div class="reply_user_header">
-              <h1>익명의 토끼</h1>
-              <div class="date">재답장 수신 날짜</div>
+              <h1 v-text="reply.writerNickname"></h1>
+              <div class="date" v-text="setDate(reply.updatedAt)"></div>
             </div>
-            <p>익명의 토끼가 보낸 답장의 제목</p>
+            <p v-text="reply.title"></p>
           </li>
         </ul>
       </div>
@@ -24,22 +32,63 @@
 </template>
 
 <script>
+import { getMyStories, getStoryOfAllLetters } from "@/api/stories";
+import { getCounsel } from "@/api/counsels";
 export default {
-  name: 'Mystroylist',
+  name: "Mystroylist",
   data() {
     return {
-      replyArr: [1, 2, 3, 4, 5, 6, 7, 8, 9],
+      replies: {},
+      stories: {},
       openUsersState: -1,
     };
   },
   methods: {
-    openUsers(index) {
+    openUsers(index, storyId) {
       if (this.openUsersState == index) {
         this.openUsersState = -1;
       } else {
+        this.getReplies(storyId);
         this.openUsersState = index;
       }
     },
+    //story 리스트를 가지고 온다.
+    async getMyStories() {
+      this.stories = await getMyStories();
+    },
+    async getReplies(storyId) {
+      this.replies = await getStoryOfAllLetters(storyId);
+    },
+    setDate(date) {
+      //date.substring(0, 4)   -> 년
+      //date.substring(6, 7)   -> 월
+      //date.substring(8, 10)  -> 일
+      //date.substring(11, 13) -> 시
+      //date.substring(14, 16) -> 분
+      let writeTime = new Date(date);
+      let elapsed = new Date() - writeTime;
+      if ((elapsed = elapsed / 1000) < 60) {
+        return "방금 전";
+      } else if ((elapsed = elapsed / 60) < 60) {
+        return Math.floor(elapsed) + "분 전";
+      } else if ((elapsed = elapsed / 60) < 24) {
+        return Math.floor(elapsed) + "시간 전";
+      } else if ((elapsed /= 24) < 31) {
+        return Math.floor(elapsed) + "일 전";
+      } else if ((elapsed /= 30) < 12) {
+        return Math.floor(elapsed) + "달 전";
+      } else {
+        return Math.floor(elapsed / 12) + "년 전";
+      }
+    },
+
+    //스토리 열기를 누르고 목록 중 하나를 클릭하면 오른쪽에 띄우자
+    openStory(storyId, counselId, numOfNewReply) {
+      getCounsel(counselId);
+    },
+  },
+  mounted() {
+    this.getMyStories();
   },
 };
 </script>
@@ -137,7 +186,7 @@ export default {
 }
 .reply_user:hover {
   background-color: #667eea;
-  
+
   transform: perspective(300px) scale(1.01);
 }
 .reply_user > * {
