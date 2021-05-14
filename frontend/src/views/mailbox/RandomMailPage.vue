@@ -1,5 +1,6 @@
 <template>
   <div class="random-mail">
+    <div class="random_ball"></div>
     <!-- <section>
       <div class="card">
         <div class="wrapper">

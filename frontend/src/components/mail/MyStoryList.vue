@@ -57,8 +57,7 @@ export default {
   width: 7px;
   height: 4px;
 }
-::-webkit-scrollbar-corner {
-}
+
 ::-webkit-scrollbar-thumb {
   background-color: #fff;
   border-radius: 6px;
@@ -68,25 +67,26 @@ export default {
   width: 100%;
   min-height: 10%;
   border-radius: 1rem;
-  padding: 0.5rem 0.3rem;
+  padding: 0.5rem 1rem;
   margin: 1rem 0;
   backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 5px 1px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .story_header {
+  padding-top: 0.5rem;
   display: flex;
   width: 100%;
   height: 20%;
+
   /* height: 30%; */
   justify-content: space-between;
   /* margin: 0.3rem 0; */
-  border: 1px solid;
-  font-size: 1.1rem;
+  xfont-size: 1.1rem;
   font-weight: 600;
 }
 .story_title {
@@ -113,7 +113,6 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  border: 1px solid;
   margin: 1rem 0;
 }
 .received_reply_num {
@@ -128,7 +127,6 @@ export default {
   border-radius: 0.3rem;
   padding: 0.5rem 0.3rem;
   margin: 0.5rem 0;
-  border: 1px solid;
   color: white;
   border: none;
   cursor: pointer;
@@ -137,7 +135,7 @@ export default {
 }
 .reply_user:hover {
   background-color: #667eea;
-  
+
   transform: perspective(300px) scale(1.01);
 }
 .reply_user > * {
