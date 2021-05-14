@@ -9,7 +9,6 @@
       </div>
     </div>
     <p class="title">오늘의 기분</p>
-    {{ content }}
     <div class="feeling-container">
       <select-feelings></select-feelings>
     </div>
@@ -25,16 +24,17 @@
         <textarea name="" id="" rows="5" v-model="content"></textarea>
       </div>
     </div>
-    <p class="save-btn">
+    <!-- <p class="save-btn">
       <span @click="createDiary">저장</span>
-    </p>
+    </p> -->
+    <slot name="buttons" :createDiary="createDiary" :updateDiary="updateDiary" :deleteDiary="deleteDiary"></slot>
   </div>
 </template>
 
 <script>
 import SelectFeelings from '@/components/feeling-record/SelectFeelings';
 import SelectStickers from '@/components/feeling-record/SelectStickers';
-import { createEmotion } from '@/api/emotions';
+import { createEmotion, updateEmotion, deleteEmotionDetail } from '@/api/emotions';
 
 export default {
   props: {
@@ -59,6 +59,18 @@ export default {
     this.month = date.getMonth() + 1;
     this.today = date.getDate();
     this.day = date.getDay();
+
+    // update일경우
+    const id = this.$store.state.targetDateId;
+    if (id) {
+      try {
+        (this.content = this.$store.state.targetDateDetail['content']),
+          (this.feeling = this.$store.state.targetDateDetail['feeling']),
+          (this.imageUrl = this.$store.state.targetDateDetail['imageUrl']);
+      } catch (error) {
+        console.log(error);
+      }
+    }
   },
   methods: {
     async createDiary() {
@@ -72,6 +84,41 @@ export default {
           imageUrl: this.$store.state.selectedSticker,
         });
         alert('성공');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async updateDiary() {
+      try {
+        const id = this.$store.state.targetDateId;
+        this.checkUpdateForm();
+        await updateEmotion(id, {
+          content: this.content,
+          feeling: this.feeling,
+          imageUrl: this.imageUrl,
+        });
+        alert('수정 성공');
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    checkUpdateForm() {
+      if (this.$store.state.emotionIndex) {
+        this.feeling = this.$store.state.emotionIndex;
+      } else {
+        this.feeling = this.$store.state.targetDateDetail['feeling'];
+      }
+      if (this.$store.state.selectedSticker) {
+        this.imageUrl = this.$store.state.selectedSticker;
+      } else {
+        this.imageUrl = this.$store.state.targetDateDetail['imageUrl'];
+      }
+    },
+    async deleteDiary() {
+      try {
+        const id = this.$store.state.targetDateId;
+        await deleteEmotionDetail(id);
+        alert('삭제 성공');
       } catch (error) {
         console.log(error);
       }

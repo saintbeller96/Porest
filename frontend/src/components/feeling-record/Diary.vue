@@ -5,10 +5,16 @@
       <div class="date-container">
         <div v-if="getTargetDate.length === 0">
           <span>{{ today }}일 {{ days[day] }}요일</span>
+          <span class="setting-btn" v-if="$store.state.targetDateDetail" @click="openUpdateModal"
+            ><i class="fas fa-cog"></i
+          ></span>
         </div>
         <div v-else>
           <span>{{ getTargetDate[2] }}일 {{ getTargetDate[3] }}요일</span>
           <img :src="todaysFeelingImg[$store.getters.getFeeling]" class="emotion" />
+          <span class="setting-btn" v-if="$store.state.targetDateDetail" @click="openUpdateModal"
+            ><i class="fas fa-cog"></i
+          ></span>
         </div>
       </div>
 
@@ -22,11 +28,15 @@
         <p>{{ $store.state.targetDateDetail['content'] }}</p>
       </div>
 
-      <div v-if="getTargetDate[0] <= year && getTargetDate[1] <= month && getTargetDate[2] <= today">
-        <button @click="openModal">일기 쓰기</button>
-      </div>
-      <div v-else-if="!getTargetDate.length">
-        <button @click="openModal">일기 쓰기</button>
+      <div
+        v-if="
+          getTargetDate[0] === year &&
+            getTargetDate[1] === month &&
+            getTargetDate[2] === today &&
+            !$store.state.targetDateDetail
+        "
+      >
+        <button @click="openCreateModal">일기 쓰기</button>
       </div>
     </div>
   </div>
@@ -108,8 +118,13 @@ export default {
     };
   },
   methods: {
-    openModal() {
+    openUpdateModal() {
       this.$emit('open-modal', this.modal);
+      this.$store.commit('getDiaryModalStatus', 'update');
+    },
+    openCreateModal() {
+      this.$emit('open-modal', this.modal);
+      this.$store.commit('getDiaryModalStatus', 'create');
     },
   },
   created() {
@@ -159,6 +174,16 @@ export default {
 .emotion {
   width: 23px;
   margin-left: 0.5vw;
+}
+.setting-btn {
+  /* color: #635ac1; */
+  color: #fff;
+  float: right;
+  font-size: 15px;
+  opacity: 0.8;
+  margin-top: -10px;
+  margin-right: -10px;
+  cursor: pointer;
 }
 
 .chosen-sticker {

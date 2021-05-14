@@ -17,7 +17,8 @@ export default {
   },
   methods: {
     getFeeling(n) {
-      this.$store.state.emotionIndex = n;
+      this.$store.commit('getEmotionIndex', n);
+      // this.$store.state.emotionIndex = n;
       console.log(this.$store.state.emotionIndex);
     },
   },

@@ -22,4 +22,6 @@ export default {
   stickerindex: 0,
   selectedSticker: '',
   emotionIndex: 0,
+  diaryModalStatus: '',
+  // todaysDiaryId: 0,
 };

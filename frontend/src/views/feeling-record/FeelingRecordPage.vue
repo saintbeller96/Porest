@@ -6,7 +6,12 @@
     <div class="diary-area box fade-in two">
       <diary :getTargetDate="targetDate" @open-modal="openModal"> </diary>
       <writing-modal v-if="isModalViewed" @close-modal="isModalViewed = false">
-        <writing-diary :getTargetDate="targetDate"></writing-diary>
+        <div v-if="$store.state.diaryModalStatus === 'create'">
+          <create-diary :getTargetDate="targetDate"></create-diary>
+        </div>
+        <div v-else-if="$store.state.diaryModalStatus === 'update'">
+          <update-diary :getTargetDate="targetDate"></update-diary>
+        </div>
       </writing-modal>
     </div>
     <div class="bubbles">
@@ -30,7 +35,8 @@
 <script>
 import Calendar from '@/components/feeling-record/Calendar';
 import Diary from '@/components/feeling-record/Diary';
-import WritingDiary from '@/components/feeling-record/WritingDiary';
+import CreateDiary from '@/components/feeling-record/CreateDiary';
+import UpdateDiary from '@/components/feeling-record/UpdateDiary';
 import WritingModal from '@/components/feeling-record/modal/WritingModal';
 
 export default {
@@ -38,7 +44,8 @@ export default {
     Calendar,
     Diary,
     WritingModal,
-    WritingDiary,
+    CreateDiary,
+    UpdateDiary,
   },
   data() {
     return {

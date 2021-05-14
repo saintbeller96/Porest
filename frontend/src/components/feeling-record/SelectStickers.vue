@@ -105,7 +105,8 @@ export default Vue.extend({
   methods: {
     getStickerIndex(n) {
       let index = n + 1;
-      this.$store.state.selectedSticker = `${index}.png`;
+      this.$store.commit('getSelectedSticker', `${index}.png`);
+      // this.$store.state.selectedSticker = `${index}.png`;
       console.log(this.$store.state.selectedSticker);
     },
   },

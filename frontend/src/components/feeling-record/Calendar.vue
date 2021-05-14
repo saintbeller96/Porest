@@ -144,19 +144,38 @@ export default {
       if (this.emotionList) {
         for (let i = 0; i < this.emotionList.length; i++) {
           if (this.emotionList[i].day === day) {
-            this.$store.state.targetDateId = this.emotionList[i].emotionId;
+            this.$store.commit('getTargetDateId', this.emotionList[i].emotionId);
             break;
+          } else {
+            this.$store.commit('getTargetDateId', 0);
           }
         }
       } else {
-        this.$store.state.targetDateId = 0;
+        this.$store.commit('getTargetDateId', 0);
       }
     },
+    // todaysDiary(month, year) {
+    //   if (this.emotionList && month === this.presentMonth && year === this.presentYear) {
+    //     for (let i = 0; i < this.emotionList.length; i++) {
+    //       if (this.emotionList[i].day === this.today) {
+    //         this.$store.commit('getTodaysDiaryId', this.emotionList[i].emotionId);
+    //       }
+    //       break;
+    //     }
+    //     const { data } = getEmotionDetail(this.$store.state.todaysDiaryId);
+    //     this.$store.commit('getTargetDateDetail', data);
+    //   } else {
+    //     this.$store.commit('getTargetDateId', 0);
+    //   }
+    //   console.log('111', this.$store.state.todaysDiaryId);
+    //   console.log('222', this.$store.state.targetDateDetail);
+    // },
     async loadEmotionRecord() {
       try {
         let { data } = await getEmotionsOfRecord(this.month, this.year);
         this.emotionList = data;
-        this.$store.state.thisMonthFeelings = this.emotionList;
+        // this.todaysDiary(this.month, this.year);
+        this.$store.commit('getThisMonthFeelings', this.emotionList);
       } catch (error) {
         console.log(error);
       }
@@ -170,13 +189,15 @@ export default {
           let targetYear = Number(data.createdAt.slice(0, 4));
           let targetDay = Number(data.createdAt.slice(8, 10));
           if (year === targetYear && month === targetMonth && day === targetDay) {
-            this.$store.state.targetDateDetail = data;
+            this.$store.commit('getTargetDateDetail', data);
           } else {
-            this.$store.state.targetDateDetail = '';
+            this.$store.commit('getTargetDateDetail', '');
           }
         } catch (error) {
           console.log(error);
         }
+      } else {
+        this.$store.commit('getTargetDateDetail', '');
       }
     },
   },
