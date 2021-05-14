@@ -1,14 +1,15 @@
 <template>
   <div class="intro-wrapper">
-    <audio src="@/assets/audio/typing_cut.mp3"></audio>
-    <div class="intro-entrance">
-      <div class="entrance">입장하기</div>
-    </div>
+    <!-- <Star class="star"></Star> -->
+
+    <div class="logo"></div>
+    <!-- <audio src="@/assets/audio/typing_cut.mp3"></audio> -->
+    <!-- <div class="intro-entrance"> -->
+    <!-- <div class="entrance">입장하기</div> -->
+    <!-- </div> -->
     <div class="magic">
-      <div class="random-ball-wrapper" @click="pop">
-        <div class="random_ball" @click="pop">
-          <Star class="star"></Star>
-        </div>
+      <div class="random-ball-wrapper">
+        <div class="random_ball"></div>
       </div>
       <div class="big">
         <div></div>
@@ -20,17 +21,19 @@
     </div>
     <div class="letter">
       <div class="type"></div>
+      <div class="text_intro">당신의 마음 속 이야기, POREST 세상 속에서 들려주세요.</div>
     </div>
     <div class="skip-btn">넘어가기</div>
     <div id="canvas"></div>
-    <div class="white-show"></div>
+    <!-- <div class="white-show"></div> -->
   </div>
 </template>
 
 <script>
 import Star from '@/components/common/Star.vue';
-
 import { startAnimation } from '@/assets/js/main/IntroPage.js';
+
+import { typing } from '@/assets/js/main/typing.js';
 export default {
   name: 'Intropage',
   data() {
@@ -41,15 +44,16 @@ export default {
   },
   mounted() {
     startAnimation();
+    typing();
   },
   methods: {
-    pop(e) {
-      e.target.classList.add('pop-ball');
-      const big = document.querySelector('.big');
-      const mystery = document.querySelector('.mystery');
-      big.classList.add('show');
-      mystery.classList.add('show');
-    },
+    // pop(e) {
+    //   e.target.classList.add('pop-ball');
+    //   const big = document.querySelector('.big');
+    //   const mystery = document.querySelector('.mystery');
+    //   big.classList.add('show');
+    //   mystery.classList.add('show');
+    // },
   },
 };
 </script>

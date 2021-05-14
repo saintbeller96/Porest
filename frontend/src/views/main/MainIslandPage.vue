@@ -1,6 +1,6 @@
 <template>
   <div class="mainisland">
-    <div class="white-background"></div>
+    <!-- <div class="white-background"></div> -->
     <Star class="star"></Star>
     <div class="main_wrapper">
       <div class="post_ground_wrapper">
@@ -79,13 +79,10 @@ export default {
   },
   mounted() {
     const mainislandWrapper = document.querySelector('.main_wrapper');
-    const whiteBg = document.querySelector('.white-background');
-    setTimeout(() => {
-      mainislandWrapper.classList.add('show');
-      setTimeout(() => {
-        whiteBg.classList.add('white-hide');
-      }, 300);
-    }, 0);
+    const mainisland = document.querySelector('.mainisland');
+    // const whiteBg = document.querySelector('.white-background');
+    mainisland.classList.add('show');
+    mainislandWrapper.classList.add('show');
   },
 };
 </script>

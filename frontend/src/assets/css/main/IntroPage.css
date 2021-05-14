@@ -5,13 +5,32 @@
   height: 100vh;
   overflow: hidden;
   background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); 
+  /* background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%); */
   position: relative;
 }
 
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+.magic {
+  opacity: 0;
+  transition: 1s 1s all;
+}
+.magic.show{
+  opacity: 1;
+}
+
 .random-ball-wrapper {
-  opacity: 0.8;
-  width: 10.5rem;
-  height: 10.5rem;
+  /* opacity: 0.8; */
+  width: 4.5rem;
+  height: 4.5rem;
   position: absolute;
   z-index: 33;
   top: 50%;
@@ -20,7 +39,22 @@
   transform-style: preserve-3d;
   transform: translate(-50%,-50%);
 }
+.text_intro {
+  opacity: 0;
+  position: absolute;
+  /* top: 40%; */
+  /* left: 50%; */
+  transform:perspective(1200px) translate3d(0,0,-200px);
+  color: #fff;
+  font-size: 600;
+  font-size: 2rem;
+  transition: 1s 1s all;
 
+}
+
+.text_intro.show {
+  opacity: 1;
+}
 .pop-ball{
   z-index: 0;
   animation: pop 2s forwards;
@@ -50,8 +84,13 @@
 
 }
 .star {
+  position: absolute;
+  top: 0;
+  left: 0;
   width: 100%;
   height: 100%;
+  z-index: 100;
+  pointer-events: none;
 }
 
 @keyframes wave {
@@ -68,21 +107,14 @@
 
 }
 
-.big,.mystery {
-  position:absolute;
-  top: 50%;
-  left: 50%;
-  width: 100vw;
-  height: 100vh;
-  transform: translate(-50%,-50%);
-}
 
 .big div{
   position: absolute;
   top: calc((50% - 1500px));
   left: calc((50% - 1500px));
   width: 3000px;
-  height: 3000px;
+  height:3000px;
+  transform: translate(-50%,-50%);
   border-radius: 50%;
   transform: scale(0);
 }
@@ -98,7 +130,7 @@
   background: #66a6ff; animation: big .5s 2.5s forwards;
   background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
   background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
-  background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+  /* background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%); */
 
 }
 .big.show div:nth-child(3) {
@@ -108,7 +140,11 @@
   /* background-image: linear-gradient(to top, #96fbc4 0%, #f9f586 100%); */
   /* background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); */
   background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); 
-  background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+  /* background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%); */
+  background-image: url('../../image/sky.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
 
   /* background-position: 50% 50%; */
   /* background-repeat: no-repeat; */
@@ -122,67 +158,22 @@
   100% {transform: scale(1);}
 }
 
-.mystery div {
-  position: absolute;
-  top: calc((50% - 5rem));
-  left: calc((50% - 5rem));
-  width: 10rem;
-  height: 10rem;
-  background-color: #fff;
-  border-radius: 100%;
-  transform: scale(0);
-}
-
-.mystery.show div:nth-child(1){
-  background-color: #66a6ff;
-  left: calc(30% - 5rem);
-  top: calc(35% - 5rem);
-  animation: big .3s 3s forwards;
-}
-
-.mystery.show div:nth-child(3){
-  background-color: #66a6ff;
-  top: calc(15% - 5rem);
-  left: calc(50% - 5rem);
-  animation: big .3s 3.3s forwards;
-}
-.mystery.show div:nth-child(4){
-  background-color: #66a6ff;
-  top: calc(35% - 5rem);
-  left: calc(70% - 5rem);
-  animation: big .3s 3.6s forwards;
-}
-.mystery.show div:nth-child(5){
-  background-color: #66a6ff;
-  top: calc(65% - 5rem);
-  left: calc(70% - 5rem);
-  animation: big .3s 3.9s forwards;
-}
-.mystery.show div:nth-child(6){
-  background-color: #66a6ff;
-  top: calc(85% - 5rem);
-  left: calc(50% - 5rem);
-  animation: big .3s 4.2s forwards;
-}
-
-.mystery.show div:nth-child(2){
-  background-color: #66a6ff;
-  top: calc(65% - 5rem);
-  left: calc(30% - 5rem);
-  animation: big .3s 4.5s forwards;
-}
-
 .letter,.intro-entrance {
   position: absolute;
-  top: 0;
+  top: 31%;
   left: 0;
   width: 100%;
   height: 100%;
   perspective: inherit;
-  color:#fff;
+  color:#444;
+  color: #fff;
+  /* background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%); */
+
+  font-weight: 600;
   display: flex;
   justify-content: center;
-  align-items: center;
+  align-items: flex-start;
+
 }
 .skip-btn {
   position: absolute;
@@ -208,10 +199,15 @@
 }
 
 .type {
-    font-size: 2rem;
+
+  font-size: 2rem;
   transform:perspective(1200px) translate3d(0,0,-200px);
+  transition: 1s all;
 }
 
+.type.hide {
+  opacity: 0;
+}
 .entrance:hover {
   transform:perspective(1200px) translate3d(0,0,-300px);
 }
