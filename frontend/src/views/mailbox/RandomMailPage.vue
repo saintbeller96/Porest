@@ -1,6 +1,27 @@
 <template>
   <div class="random-mail">
-    <div class="random_ball"></div>
+    <!-- <div id="canvas"></div> -->
+
+    <Star class="star"></Star>
+    <canvas class="fireworks"></canvas>
+    <div class="random-ball-wrapper" @click="pop">
+      <div class="random_ball" @click="pop"></div>
+    </div>
+    <div class="big">
+      <div></div>
+      <div></div>
+      <div></div>
+      <!-- <div></div> -->
+      <!-- <div></div> -->
+    </div>
+    <div class="mystery">
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
     <!-- <section>
       <div class="card">
         <div class="wrapper">
@@ -18,6 +39,9 @@
 </template>
 
 <script>
+import Star from '@/components/common/Star.vue';
+// import { startAnimation } from '@/assets/js/main/IntroPage.js';
+import { fireworks } from '@/assets/js/mail/RandomMailPage.js';
 import { getCandidatesOfStories } from '@/api/stories';
 export default {
   name: 'RandomMail',
@@ -27,6 +51,9 @@ export default {
       stories: [],
     };
   },
+  components: {
+    Star,
+  },
   methods: {
     async getRandomStories() {
       this.stories = await getCandidatesOfStories();
@@ -34,9 +61,20 @@ export default {
     goToRootMailReply(id) {
       this.$router.push({ name: 'RootMailReply', params: { storyId: id } });
     },
+    pop(e) {
+      e.target.classList.add('pop-ball');
+      const big = document.querySelector('.big');
+      const mystery = document.querySelector('.mystery');
+      big.classList.add('show');
+      mystery.classList.add('show');
+      setTimeout(() => {
+        fireworks();
+      }, 3000);
+    },
   },
   mounted() {
     this.getRandomStories();
+    // startAnimation();
   },
 };
 </script>
