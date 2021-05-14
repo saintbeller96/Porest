@@ -24,10 +24,9 @@
         <textarea name="" id="" rows="5" v-model="content"></textarea>
       </div>
     </div>
-    <!-- <p class="save-btn">
-      <span @click="createDiary">저장</span>
-    </p> -->
-    <slot name="buttons" :createDiary="createDiary" :updateDiary="updateDiary" :deleteDiary="deleteDiary"></slot>
+    <p class="save-btn">
+      <slot name="span" :createDiary="createDiary" :updateDiary="updateDiary" :deleteDiary="deleteDiary"></slot>
+    </p>
   </div>
 </template>
 
@@ -148,7 +147,7 @@ export default {
 }
 
 .diary-square {
-  border: 1px solid #979797;
+  /* border: 1px solid #979797; */
   width: 100%;
   min-height: 24vh;
   margin-top: 2vh;
@@ -177,7 +176,7 @@ export default {
 }
 
 .writing-container textarea {
-  background: #fdf6e8;
+  background: #fffcf5;
   /* border: 1px solid rgba(0, 0, 0, 0.1); */
   border: none;
   width: 100%;
@@ -227,6 +226,7 @@ export default {
   color: #525252;
   font-size: 27px;
   font-weight: bold;
+  margin-left: 1vw;
 }
 
 .save-btn span:hover {

@@ -1,8 +1,8 @@
 <template>
   <diary-edit-form :getTargetDate="getTargetDate">
-    <template slot="buttons" slot-scope="scopeProps">
-      <button @click="scopeProps.updateDiary">수정하기</button>
-      <button @click="scopeProps.deleteDiary">삭제하기</button>
+    <template slot="span" slot-scope="scopeProps">
+      <span @click="scopeProps.deleteDiary">삭제하기</span>
+      <span @click="scopeProps.updateDiary">수정하기</span>
     </template>
   </diary-edit-form>
 </template>

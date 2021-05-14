@@ -13,20 +13,18 @@
         </th>
       </thead>
       <tbody>
-        <tr v-for="(date, idx) in dates" :key="idx">
-          <td
-            v-for="(day, index) in date"
-            :key="index"
-            @click="getTargetDate(year, month, day, idx, index)"
-            class="dates"
-          >
+        <tr v-for="(date, idx) in dates2" :key="idx">
+          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, idx, index)" class="dates">
             <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
               {{ day }}
             </div>
-            <div v-else-if="today === day && presentYear === year && presentMonth === month" class="today">
+            <div v-else-if="day > 0 || day < 32">
               {{ day }}
             </div>
-            <div v-else>{{ day }}</div>
+            <div v-else>
+              <!-- 이모티콘은 문자열로 분류되어 남게 -->
+              <img :src="todaysFeelingImg[day[0]]" class="image" />
+            </div>
           </td>
         </tr>
       </tbody>
@@ -42,6 +40,7 @@ export default {
     return {
       days: ['일', '월', '화', '수', '목', '금', '토'],
       dates: [],
+      dates2: [],
       presentYear: 0,
       presentMonth: 0,
       lastMonthBegin: 0,
@@ -52,6 +51,13 @@ export default {
       now: 0,
       targetDate: [],
       emotionList: [],
+      todaysFeelingImg: [
+        require('../../assets/image/feeling/1.png'),
+        require('../../assets/image/feeling/2.png'),
+        require('../../assets/image/feeling/3.png'),
+        require('../../assets/image/feeling/4.png'),
+        require('../../assets/image/feeling/5.png'),
+      ],
     };
   },
   created() {
@@ -81,6 +87,7 @@ export default {
       const [monthFirstDay, monthLastDate, lastMonthLastDate] = this.getFirstDayLastDate(this.year, this.month);
       this.dates = this.getMonthOfDays(monthFirstDay, monthLastDate, lastMonthLastDate);
       this.loadEmotionRecord();
+      // this.targetDate(this.year, this.month, )
     },
     getFirstDayLastDate(year, month) {
       const firstDay = new Date(year, month - 1, 1).getDay(); // 이번 달 시작 요일
@@ -129,16 +136,17 @@ export default {
       this.nextMonthBegin = weekOfDays[0];
       return dates;
     },
-    getTargetDate(year, month, day, idx, index) {
-      if (idx === 0 && day > 20) {
+    getTargetDate(year, month, idx, index) {
+      let day2 = this.dates[idx][index];
+      if (idx === 0 && day2 > 20) {
         month -= 1;
-      } else if ((idx === 4 || idx === 5) && day < 10) {
+      } else if ((idx === 4 || idx === 5) && day2 < 10) {
         month += 1;
       }
-      this.targetDate = [year, month, day, this.days[index]];
+      this.targetDate = [year, month, day2, this.days[index]];
       this.$emit('get-target-date', this.targetDate);
-      this.getTargetId(day);
-      this.loadDiaryDetail(year, month, day);
+      this.getTargetId(day2);
+      this.loadDiaryDetail(year, month, day2);
     },
     getTargetId(day) {
       if (this.emotionList) {
@@ -154,28 +162,12 @@ export default {
         this.$store.commit('getTargetDateId', 0);
       }
     },
-    // todaysDiary(month, year) {
-    //   if (this.emotionList && month === this.presentMonth && year === this.presentYear) {
-    //     for (let i = 0; i < this.emotionList.length; i++) {
-    //       if (this.emotionList[i].day === this.today) {
-    //         this.$store.commit('getTodaysDiaryId', this.emotionList[i].emotionId);
-    //       }
-    //       break;
-    //     }
-    //     const { data } = getEmotionDetail(this.$store.state.todaysDiaryId);
-    //     this.$store.commit('getTargetDateDetail', data);
-    //   } else {
-    //     this.$store.commit('getTargetDateId', 0);
-    //   }
-    //   console.log('111', this.$store.state.todaysDiaryId);
-    //   console.log('222', this.$store.state.targetDateDetail);
-    // },
     async loadEmotionRecord() {
       try {
         let { data } = await getEmotionsOfRecord(this.month, this.year);
         this.emotionList = data;
-        // this.todaysDiary(this.month, this.year);
         this.$store.commit('getThisMonthFeelings', this.emotionList);
+        this.getFeelings();
       } catch (error) {
         console.log(error);
       }
@@ -198,6 +190,23 @@ export default {
         }
       } else {
         this.$store.commit('getTargetDateDetail', '');
+      }
+    },
+    getFeelings() {
+      this.dates2 = this.dates.map(v => v.slice());
+      for (let a = 0; a < this.dates2.length; a++) {
+        for (let b = 0; b < this.dates2[a].length; b++) {
+          if ((a === 0 && this.dates2[a][b] > 10) || ((a === 4 || a === 5) && this.dates2[a][b] < 10)) {
+            continue;
+          } else {
+            for (let c = 0; c < this.emotionList.length; c++) {
+              if (this.dates2[a][b] === this.emotionList[c]['day']) {
+                let feelNum = this.emotionList[c]['feeling'] - 1;
+                this.dates2[a][b] = String(feelNum) + '!';
+              }
+            }
+          }
+        }
       }
     },
   },

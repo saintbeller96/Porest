@@ -1,11 +1,13 @@
 <template>
   <div class="feeling-record-background">
-    <div class="calendar-area box fade-in one">
-      <calendar @get-target-date="getDate"></calendar>
-    </div>
-    <div class="diary-area box fade-in two">
-      <diary :getTargetDate="targetDate" @open-modal="openModal"> </diary>
-      <writing-modal v-if="isModalViewed" @close-modal="isModalViewed = false">
+    <div class="wrapper" @click="move">
+      <div class="calendar-area box fade-in">
+        <calendar @get-target-date="getDate"></calendar>
+      </div>
+      <div class="diary-area box fade-in">
+        <diary :getTargetDate="targetDate" @open-modal="openModal"> </diary>
+      </div>
+      <writing-modal v-if="isModalViewed" @close-modal="isModalViewed = false" class="modal">
         <div v-if="$store.state.diaryModalStatus === 'create'">
           <create-diary :getTargetDate="targetDate"></create-diary>
         </div>
@@ -14,7 +16,8 @@
         </div>
       </writing-modal>
     </div>
-    <div class="bubbles">
+    <!-- 물방울 영역 -->
+    <!-- <div class="bubbles">
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
@@ -28,7 +31,7 @@
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
       <img src="../../assets/image/bubble.png" />
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -60,6 +63,12 @@ export default {
     openModal(modal) {
       this.isModalViewed = modal;
     },
+    move() {
+      const calendarArea = document.querySelector('.calendar-area');
+      const diaryArea = document.querySelector('.diary-area');
+      calendarArea.classList.add('show');
+      diaryArea.classList.add('show');
+    },
   },
 };
 </script>
@@ -68,34 +77,60 @@ export default {
 .feeling-record-background {
   height: 100vh;
   width: 100vw;
-  display: grid;
-  /* background-image: linear-gradient(135deg, #a8edea 10%, #fed6e3 100%); */
+  margin: 0;
+  padding: 0;
   /* 그리드 나누기 */
-  grid-template-columns: repeat(6, 1fr);
+  /* display: grid; */
+  /* grid-template-columns: repeat(6, 1fr); */
   box-sizing: border-box;
-  position: fixed;
-
-  /* background-image: url('../../assets/image/407.jpg'); */
+  /* position: fixed; */
+  /* position: relative; */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
   background-image: url('../../assets/image/sky.jpg');
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
 }
 
+.wrapper {
+  width: 26vw;
+  height: 70vh;
+  position: relative;
+}
+
 .calendar-area {
-  grid-column-start: 2;
+  /* grid-column-start: 2;
   grid-column-end: 4;
   align-items: center;
   justify-content: center;
-  display: flex;
+  display: flex; */
+}
+
+.calendar-area,
+.diary-area {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transition: 1s all;
 }
 
 .diary-area {
-  grid-column-start: 4;
+  /* grid-column-start: 4;
   grid-column-end: 6;
   align-items: center;
   justify-content: center;
-  display: flex;
+  display: flex; */
+  opacity: 0;
+  z-index: -1;
+}
+
+.calendar-area.show {
+  transform: translateX(-14vw);
 }
 
 @-webkit-keyframes fadeIn {
@@ -123,13 +158,16 @@ export default {
   }
 }
 
-.fade-in {
-  opacity: 0; /* make things invisible upon start */
-  -webkit-animation: fadeIn ease-in 1; /* call our keyframe named fadeIn, use animattion ease-in and repeat it only 1 time */
+.diary-area.show {
+  transform: translateX(14vw);
+  z-index: 1;
+
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
   -moz-animation: fadeIn ease-in 1;
   animation: fadeIn ease-in 1;
 
-  -webkit-animation-fill-mode: forwards; /* this makes sure that after animation is done we remain at the last keyframe value (opacity: 1)*/
+  -webkit-animation-fill-mode: forwards;
   -moz-animation-fill-mode: forwards;
   animation-fill-mode: forwards;
 
@@ -138,19 +176,39 @@ export default {
   animation-duration: 1s;
 }
 
-.fade-in.one {
-  -webkit-animation-delay: 0.3s;
-  -moz-animation-delay: 0.3s;
-  animation-delay: 0.3s;
+.modal {
+  z-index: 2;
 }
 
-.fade-in.two {
+.fade-in {
+  opacity: 0;
+  -webkit-animation: fadeIn ease-in 1;
+  -moz-animation: fadeIn ease-in 1;
+  animation: fadeIn ease-in 1;
+
+  -webkit-animation-fill-mode: forwards;
+  -moz-animation-fill-mode: forwards;
+  animation-fill-mode: forwards;
+
+  -webkit-animation-duration: 1s;
+  -moz-animation-duration: 1s;
+  animation-duration: 0.5s;
+}
+
+/* .fade-in.one {
+  -webkit-animation-delay: 0.1s;
+  -moz-animation-delay: 0.1s;
+  animation-delay: 0.1s;
+} */
+
+/* .fade-in.two {
   -webkit-animation-delay: 0.7s;
   -moz-animation-delay: 0.7s;
   animation-delay: 0.7s;
-}
+} */
 
-.bubbles img {
+/* 물방울 영역 */
+/* .bubbles img {
   width: 50px;
   animation: bubble 7s linear infinite;
 }
@@ -247,5 +305,5 @@ export default {
   animation-delay: 9s;
   width: 28px;
   z-index: -1000;
-}
+} */
 </style>

@@ -149,8 +149,8 @@ export default {
 }
 
 .dairy-container {
-  height: 60vh;
-  width: 80%;
+  width: 26vw;
+  height: 61vh;
   background: rgba(255, 255, 255, 0.38);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   border-top: 1px solid rgba(255, 255, 255, 0.5);
@@ -161,23 +161,22 @@ export default {
   position: relative;
   justify-content: center;
   padding: 6vh;
-  margin-right: 6vw;
   font-family: 'UhBeemysen';
 }
 
 .date-container {
   font-size: 25px;
   font-weight: bold;
-  margin-bottom: 6vh;
+  margin-bottom: 8vh;
 }
 
 .emotion {
-  width: 23px;
+  width: 1.6vw;
   margin-left: 0.5vw;
 }
 .setting-btn {
-  /* color: #635ac1; */
-  color: #fff;
+  color: #635ac1;
+  /* color: #fff; */
   float: right;
   font-size: 15px;
   opacity: 0.8;
@@ -205,13 +204,13 @@ export default {
 }
 
 .diary-detail {
-  /* color: #fff; */
-  margin: 30px 0 10px 0;
+  margin: 4.1vh 0 1.38vh 0;
+  padding: 0 2vw 0 2vw;
   height: 18vh;
   display: flex;
   justify-content: center;
   line-height: 32px;
-  /* text-align: center; */
+  text-align: center;
   text-align: justify;
   font-size: 32px;
 }

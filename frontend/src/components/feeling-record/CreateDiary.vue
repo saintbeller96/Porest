@@ -1,7 +1,7 @@
 <template>
   <diary-edit-form :getTargetDate="getTargetDate">
-    <template slot="buttons" slot-scope="scopeProps">
-      <button @click="scopeProps.createDiary">저장하기</button>
+    <template slot="span" slot-scope="scopeProps">
+      <span @click="scopeProps.createDiary">저장하기</span>
     </template>
   </diary-edit-form>
 </template>
