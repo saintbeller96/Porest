@@ -52,27 +52,27 @@
 </template>
 
 <script>
-import { validateEmail, validatePwd } from "@/utils/validation";
-import FireBase from "firebase/app";
-import "firebase/auth";
-import AuthForm from "@/components/auth/AuthForm";
+import { validateEmail, validatePwd } from '@/utils/validation';
+import FireBase from 'firebase/app';
+import 'firebase/auth';
+import AuthForm from '@/components/auth/AuthForm';
 export default {
   components: {
     AuthForm,
   },
   data() {
     return {
-      email: "",
-      nickname: "",
-      password: "",
+      email: '',
+      nickname: '',
+      password: '',
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === "" || validateEmail(this.email);
+      return this.email === '' || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password === "" || validatePwd(this.password);
+      return this.password === '' || validatePwd(this.password);
     },
     checkForm() {
       return validateEmail(this.email) && validatePwd(this.password);
@@ -80,7 +80,7 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     // register() {
     //   if (!this.error) {
@@ -101,31 +101,31 @@ export default {
     //   }
     // },
     goToFindPassword() {
-      this.$router.push({ name: "FindPassword" });
+      this.$router.push({ name: 'FindPassword' });
     },
     async submitForm() {
-      console.log("login");
+      console.log('login');
       try {
-        await this.$store.dispatch("LOGIN", {
+        await this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.password,
         });
-        console.log("이동");
+        console.log('이동');
         this.fireBaseLogin();
-        this.$router.push("/main");
+        this.$router.push('/main');
       } catch (error) {
-        alert("이메일이나 비밀번호를 다시 확인해주세요.");
+        alert('이메일이나 비밀번호를 다시 확인해주세요.');
       }
     },
     fireBaseLogin() {
-      console.log("login");
+      console.log('login');
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          (response) => {
-            console.log("response status", response);
+          response => {
+            console.log('response status', response);
           },
-          (error) => (this.error = error.message)
+          error => (this.error = error.message),
         );
     },
   },
@@ -134,10 +134,12 @@ export default {
 
 <style scoped>
 .home-wrapper {
+  margin: 0;
+  padding: 0;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url("../../assets/image/sky3.png");
+  background-image: url('../../assets/image/sky3.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
   background-size: cover;

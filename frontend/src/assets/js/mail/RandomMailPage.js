@@ -21,7 +21,7 @@ export const fireworks = function() {
     y = e.clientY || e.touches[0].clientY;
   };
 
-  let colors = ['#FF324A', '#31FFA6', '#206EFF', '#FFFF99'];
+  let colors = ['#b721ff', '#00dbde', '#ff758c', '#0fd850'];
 
   let createCircle = function(x, y) {
     let p = {};
@@ -35,7 +35,7 @@ export const fireworks = function() {
     p.draw = function() {
       ctx.globalAlpha = p.alpha;
       ctx.beginPath();
-      ctx.arc(p.x, p.y, p.radius, 0, 2 * Math.PI, true);
+      ctx.arc(Math.abs(p.x), Math.abs(p.y), Math.abs(p.radius), 0, 2 * Math.PI, true);
       ctx.lineWidth = p.lineWidth;
       ctx.strokeStyle = p.color;
       ctx.stroke();

@@ -128,12 +128,15 @@ function typing() {
     // }
     if (index === txt.length) {
       // count = 0;
-      setTimeout(() => {
-        whiteShow.classList.add('active');
-        setTimeout(() => {
-          router.push('/main/mainisland');
-        }, 450);
-      }, 1000);
+      // 몽글이 떠올리기
+
+      
+      // setTimeout(() => {
+      //   whiteShow.classList.add('active');
+      //   setTimeout(() => {
+      //     router.push('/main/mainisland');
+      //   }, 450);
+      // }, 1000);
     }
     // currentText = txt[count];
     currentText = txt;
