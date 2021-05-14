@@ -125,7 +125,7 @@ export default {
           const whiteShow = document.querySelector('.white-show');
           whiteShow.classList.add('active');
         }, 1000);
-        this.$router.push('/intro');
+        this.$router.push({ name: 'Intro' });
       } catch (error) {
         alert('이메일이나 비밀번호를 다시 확인해주세요.');
       }

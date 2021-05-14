@@ -35,7 +35,7 @@ export const typing = () => {
     big.classList.add('show');
     setTimeout(() => {
       // audioTag.play();
-      router.push('/main/mainisland');
+      router.push({ name: 'MainIsland' });
     }, 3500);
   });
   async function type() {
