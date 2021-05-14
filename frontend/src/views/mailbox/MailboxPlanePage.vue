@@ -1,6 +1,5 @@
 <template>
   <div class="post_plane_main">
-
     <div class="post_main_wrapper">
       <div class="post_main post_main_container">
         <div class="post_main_wall post_wall_back"></div>
@@ -26,17 +25,18 @@
           </g>
         </svg>
       </div>
-
     </div>
   </div>
 </template>
 
 <script>
+import { init } from "@/assets/js/mail/MailboxPlanePage.js"
 export default {
- 
+mounted() {
+  init() ;
+}
 }
 </script>
 
 <style scoped src="@/assets/css/mail/MailboxPlanePage.css">
-
 </style>
