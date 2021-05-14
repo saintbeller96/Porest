@@ -8,6 +8,11 @@
   overflow: hidden;
 }
 
+.random_ball {
+  width: 3rem;
+  height: 3rem;
+  background-color: red;
+}
 
 section {
   display: flex;
