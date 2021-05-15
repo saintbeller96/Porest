@@ -1,5 +1,5 @@
 <template>
-  <diary-edit-form :getTargetDate="getTargetDate">
+  <diary-edit-form>
     <template slot="span" slot-scope="scopeProps">
       <span @click="scopeProps.deleteDiary">삭제하기</span>
       <span @click="scopeProps.updateDiary">수정하기</span>
@@ -12,9 +12,6 @@ import DiaryEditForm from '@/components/common/DiaryEditForm';
 export default {
   components: {
     DiaryEditForm,
-  },
-  props: {
-    getTargetDate: Array,
   },
 };
 </script>

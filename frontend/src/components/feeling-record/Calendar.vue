@@ -18,6 +18,9 @@
             <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
               {{ day }}
             </div>
+            <div v-else-if="day === today && presentMonth === month && presentYear === year" class="today">
+              {{ day }}
+            </div>
             <div v-else-if="day > 0 || day < 32">
               {{ day }}
             </div>
@@ -58,6 +61,7 @@ export default {
         require('../../assets/image/feeling/4.png'),
         require('../../assets/image/feeling/5.png'),
       ],
+      reRender: this.$store.getters.getRefreshCalendar,
     };
   },
   created() {
@@ -87,7 +91,6 @@ export default {
       const [monthFirstDay, monthLastDate, lastMonthLastDate] = this.getFirstDayLastDate(this.year, this.month);
       this.dates = this.getMonthOfDays(monthFirstDay, monthLastDate, lastMonthLastDate);
       this.loadEmotionRecord();
-      // this.targetDate(this.year, this.month, )
     },
     getFirstDayLastDate(year, month) {
       const firstDay = new Date(year, month - 1, 1).getDay(); // 이번 달 시작 요일
@@ -144,7 +147,7 @@ export default {
         month += 1;
       }
       this.targetDate = [year, month, day2, this.days[index]];
-      this.$emit('get-target-date', this.targetDate);
+      this.$store.commit('getTargetDate', [year, month, day2, this.days[index]]);
       this.getTargetId(day2);
       this.loadDiaryDetail(year, month, day2);
     },
@@ -185,6 +188,14 @@ export default {
         let { data } = await getEmotionsOfRecord(this.month, this.year);
         this.emotionList = data;
         this.$store.commit('getThisMonthFeelings', this.emotionList);
+
+        // 페이지 로드시 미리 오늘 날짜 기준 디테일이 들어오게 하기
+        for (let i = 0; i < this.emotionList.length; i++) {
+          if (this.emotionList[i].day === this.today) {
+            this.$store.commit('getTargetDateId', this.emotionList[i].emotionId);
+            this.loadDiaryDetail(this.presentYear, this.presentMonth, this.today);
+          }
+        }
         this.getFeelings();
       } catch (error) {
         console.log(error);
@@ -198,10 +209,12 @@ export default {
           let targetMonth = Number(data.createdAt.slice(5, 7));
           let targetYear = Number(data.createdAt.slice(0, 4));
           let targetDay = Number(data.createdAt.slice(8, 10));
+
           if (year === targetYear && month === targetMonth && day === targetDay) {
             this.$store.commit('getTargetDateDetail', data);
           } else {
             this.$store.commit('getTargetDateDetail', '');
+            this.$store.commit('getStickerIndex', 0);
           }
         } catch (error) {
           console.log(error);
@@ -211,6 +224,14 @@ export default {
       }
     },
   },
+  // beforeUpdate() {
+  //   console.log('!!!');
+  //   if (this.$store.getters.getRefreshCalendar === true) {
+  //     console.log('update!!!');
+  //     this.loadEmotionRecord();
+  //     this.$store.commit('getCalendarRefreshStatus', false);
+  //   }
+  // },
 };
 </script>
 

@@ -6,4 +6,7 @@ export default {
     let a = state.targetDateDetail['imageUrl'];
     return Number(a.split('.')[0]) - 1;
   },
+  getRefreshCalendar(state) {
+    return state.refreshCalendar;
+  },
 };

@@ -16,6 +16,8 @@ export default {
   token: getAuthFromCookie() ? `${getAuthFromCookie()}` : '',
   profileImg: getUserImgFromCookie() || '',
   temperature: getUserTemperatureFromCookie() || '',
+
+  // 감정 기록
   thisMonthFeelings: [],
   targetDateId: 0,
   targetDateDetail: '',
@@ -23,5 +25,7 @@ export default {
   selectedSticker: '',
   emotionIndex: 0,
   diaryModalStatus: '',
-  // todaysDiaryId: 0,
+  targetDate: [], // 캘린더에서 선택한 날짜
+  modalControl: false,
+  refreshCalendar: false,
 };

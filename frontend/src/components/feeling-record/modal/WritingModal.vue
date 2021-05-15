@@ -1,7 +1,8 @@
 <template>
   <div>
     <div class="modal">
-      <div class="overlay" @click="$emit('close-modal')"></div>
+      <div class="overlay" @click="closeModal"></div>
+      <!-- <div class="overlay" @click="$emit('close-modal')"></div> -->
       <div class="modal-card">
         <slot />
       </div>
@@ -10,7 +11,13 @@
 </template>
 
 <script>
-export default {};
+export default {
+  methods: {
+    closeModal() {
+      this.$store.commit('getModalStatus', false);
+    },
+  },
+};
 </script>
 
 <style scoped>

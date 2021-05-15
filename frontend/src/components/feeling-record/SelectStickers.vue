@@ -1,53 +1,60 @@
 <template>
   <div class="sticker-box">
-    <swiper class="swiper" :options="swiperOption">
+    <div class="stickers">
+      <div v-for="(data, idx) in todaysSticker" :key="idx" class="container">
+        <div class="img-container">
+          <img :src="data" class="img" :class="`item${idx}`" @click="getStickerIndex(idx)" />
+        </div>
+      </div>
+    </div>
+    <!-- <swiper class="swiper" :options="swiperOption">
       <swiper-slide v-for="(data, idx) in todaysSticker" :key="idx"
         ><img :src="data" class="img" @click="getStickerIndex(idx)"
       /></swiper-slide>
       <div class="swiper-pagination" slot="pagination"></div>
-    </swiper>
+    </swiper> -->
   </div>
 </template>
 
 <script>
 import Vue from 'vue';
-import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
+// import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
 import 'swiper/swiper-bundle.css';
 
-export default Vue.extend({
-  components: {
-    Swiper,
-    SwiperSlide,
-  },
+export default {
+  // components: {
+  //   Swiper,
+  //   SwiperSlide,
+  // },
   data() {
     return {
-      swiperOption: {
-        slidesPerView: 5,
-        spaceBetween: 10,
-        pagination: {
-          el: '.swiper-pagination',
-          clickable: true,
-        },
-
-        // breakpoints: {
-        //   1024: {
-        //     slidesPerView: 4,
-        //     spaceBetween: 40,
-        //   },
-        //   768: {
-        //     slidesPerView: 3,
-        //     spaceBetween: 30,
-        //   },
-        //   640: {
-        //     slidesPerView: 2,
-        //     spaceBetween: 20,
-        //   },
-        //   320: {
-        //     slidesPerView: 1,
-        //     spaceBetween: 10,
-        //   },
-        // },
-      },
+      check: [],
+      // swiperOption: {
+      //   slidesPerView: 5,
+      //   spaceBetween: 10,
+      //   pagination: {
+      //     el: '.swiper-pagination',
+      //     clickable: true,
+      //   },
+      //   breakpoints: {
+      //     1024: {
+      //       slidesPerView: 4,
+      //       spaceBetween: 40,
+      //     },
+      //     768: {
+      //       slidesPerView: 3,
+      //       spaceBetween: 30,
+      //     },
+      //     640: {
+      //       slidesPerView: 2,
+      //       spaceBetween: 20,
+      //     },
+      //     320: {
+      //       slidesPerView: 1,
+      //       spaceBetween: 10,
+      //     },
+      //   },
+      // },
       todaysSticker: [
         require('../../assets/image/sticker/1.png'),
         require('../../assets/image/sticker/2.png'),
@@ -105,16 +112,51 @@ export default Vue.extend({
   methods: {
     getStickerIndex(n) {
       let index = n + 1;
-      this.$store.commit('getSelectedSticker', `${index}.png`);
-      // this.$store.state.selectedSticker = `${index}.png`;
-      console.log(this.$store.state.selectedSticker);
+      if (this.check.length === 0) {
+        this.check.push(n);
+        const selected = document.querySelector(`.item${n}`);
+        selected.classList.toggle('selected');
+        this.$store.commit('getSelectedSticker', `${index}.png`);
+      } else {
+        let a = this.check.pop();
+        const selected1 = document.querySelector(`.item${a}`);
+        const selected2 = document.querySelector(`.item${n}`);
+        if (a === n) {
+          selected1.classList.toggle('selected');
+          this.$store.commit('getSelectedSticker', '');
+        } else if (a !== n) {
+          this.check.push(n);
+          selected1.classList.toggle('selected');
+          selected2.classList.toggle('selected');
+          this.$store.commit('getSelectedSticker', `${index}.png`);
+        }
+      }
     },
   },
-  computed: {},
-});
+  mounted() {
+    if (this.$store.state.stickerindex !== 0) {
+      let n = this.$store.state.stickerindex - 1;
+      this.check.push(n);
+      const selected = document.querySelector(`.item${n}`);
+      selected.classList.toggle('selected');
+    }
+  },
+};
 </script>
 
 <style scoped>
+.sticker-box {
+  height: 15vh;
+  width: 100%;
+  background: #fffcf5;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+.stickers {
+  margin-left: 1vw;
+}
+
 .swiper {
   height: 8vh;
   display: flex;
@@ -122,12 +164,25 @@ export default Vue.extend({
 }
 
 .img {
-  width: 3.2vw;
+  width: 2.8vw;
   cursor: pointer;
-  margin-top: 0.58vh;
+  margin-top: 1vh;
+  margin-right: 1.3vw;
+  filter: opacity(0.5) drop-shadow(0 0 0 white);
+  transition: 0.1s ease;
 }
 
 .img:hover {
-  transform: scale(1.2);
+  transform: scale(1.25);
+  filter: none;
+}
+
+.img-container {
+  float: left;
+}
+
+.selected {
+  transform: scale(1.25);
+  filter: none;
 }
 </style>

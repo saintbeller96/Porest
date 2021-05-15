@@ -1,5 +1,5 @@
 <template>
-  <diary-edit-form :getTargetDate="getTargetDate">
+  <diary-edit-form>
     <template slot="span" slot-scope="scopeProps">
       <span @click="scopeProps.createDiary">저장하기</span>
     </template>
@@ -11,9 +11,6 @@ import DiaryEditForm from '@/components/common/DiaryEditForm';
 export default {
   components: {
     DiaryEditForm,
-  },
-  props: {
-    getTargetDate: Array,
   },
 };
 </script>

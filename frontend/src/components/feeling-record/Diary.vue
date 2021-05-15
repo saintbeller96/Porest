@@ -3,14 +3,15 @@
     <div class="diary-contents">
       <!-- 날짜 -->
       <div class="date-container">
-        <div v-if="getTargetDate.length === 0">
+        <div v-if="$store.state.targetDate.length === 0">
           <span>{{ today }}일 {{ days[day] }}요일</span>
+          <img :src="todaysFeelingImg[$store.getters.getFeeling]" class="emotion" />
           <span class="setting-btn" v-if="$store.state.targetDateDetail" @click="openUpdateModal"
             ><i class="fas fa-cog"></i
           ></span>
         </div>
         <div v-else>
-          <span>{{ getTargetDate[2] }}일 {{ getTargetDate[3] }}요일</span>
+          <span>{{ $store.state.targetDate[2] }}일 {{ $store.state.targetDate[3] }}요일</span>
           <img :src="todaysFeelingImg[$store.getters.getFeeling]" class="emotion" />
           <span class="setting-btn" v-if="$store.state.targetDateDetail" @click="openUpdateModal"
             ><i class="fas fa-cog"></i
@@ -27,17 +28,55 @@
       <div class="diary-detail" v-if="$store.state.targetDateDetail">
         <p>{{ $store.state.targetDateDetail['content'] }}</p>
       </div>
-
       <div
         v-if="
-          (getTargetDate[0] === year &&
-            getTargetDate[1] === month &&
-            getTargetDate[2] === today &&
-            !$store.state.targetDateDetail) ||
-            (getTargetDate.length === 0 && !$store.state.targetDateDetail)
+          $store.state.targetDate[0] === year &&
+            $store.state.targetDate[1] === month &&
+            $store.state.targetDate[2] === today &&
+            $store.state.targetDateDetail === ''
         "
       >
-        <button @click="openCreateModal">일기 쓰기</button>
+        <div class="writing-btn">
+          <span @click="openCreateModal" class="btn">
+            오늘의 감정 기록하기 <span class="pencil"><i class="fas fa-pencil-alt"></i></span>
+          </span>
+        </div>
+      </div>
+      <div v-else-if="$store.state.targetDate.length === 0 && $store.state.targetDateDetail === ''">
+        <div class="writing-btn">
+          <span @click="openCreateModal" class="btn">
+            오늘의 감정 기록하기 <span class="pencil"><i class="fas fa-pencil-alt"></i></span>
+          </span>
+        </div>
+      </div>
+
+      <div
+        class="writing-btn"
+        v-if="
+          ($store.state.targetDate[0] < year && $store.state.targetDateDetail === '') ||
+            ($store.state.targetDate[0] === year &&
+              $store.state.targetDate[1] < month &&
+              $store.state.targetDateDetail == '') ||
+            ($store.state.targetDate[0] === year &&
+              $store.state.targetDate[1] === month &&
+              $store.state.targetDate[2] < today &&
+              $store.state.targetDateDetail == '')
+        "
+      >
+        기록된 감정이 없어요 ㅠㅠ
+      </div>
+      <div
+        class="writing-btn"
+        v-else-if="
+          ($store.state.targetDate[0] >= year &&
+            $store.state.targetDate[1] > month &&
+            $store.state.targetDateDetail == '') ||
+            ($store.state.targetDate[0] === year &&
+              $store.state.targetDate[1] === month &&
+              $store.state.targetDate[2] > today)
+        "
+      >
+        기록될 날을 기다리고 있어요!
       </div>
     </div>
   </div>
@@ -45,9 +84,6 @@
 
 <script>
 export default {
-  props: {
-    getTargetDate: Array,
-  },
   data() {
     return {
       year: 0,
@@ -120,11 +156,15 @@ export default {
   },
   methods: {
     openUpdateModal() {
-      this.$emit('open-modal', this.modal);
+      this.$store.commit('getModalStatus', true);
+      // this.$emit('open-modal', this.modal);
       this.$store.commit('getDiaryModalStatus', 'update');
+      this.$store.commit('getEmotionIndex', this.$store.state.targetDateDetail['feeling']);
+      let a = Number(this.$store.state.targetDateDetail['imageUrl'].slice(0, 2));
+      this.$store.commit('getStickerIndex', a);
     },
     openCreateModal() {
-      this.$emit('open-modal', this.modal);
+      this.$store.commit('getModalStatus', true);
       this.$store.commit('getDiaryModalStatus', 'create');
     },
   },
@@ -220,5 +260,31 @@ export default {
   text-align: center;
   text-align: justify;
   font-size: 32px;
+}
+
+.writing-btn {
+  height: 25vh;
+  font-size: 27px;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.btn {
+  opacity: 0.8;
+  cursor: pointer;
+  transition: 0.1s ease-in;
+  display: flex;
+}
+
+.pencil {
+  font-size: 15px;
+  margin-top: 5px;
+  margin-left: 6px;
+}
+.btn:hover {
+  opacity: 1;
+  color: #fff;
 }
 </style>

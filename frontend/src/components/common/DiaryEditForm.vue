@@ -1,11 +1,13 @@
 <template>
   <div class="writing-diary-container">
     <div class="date-container">
-      <div v-if="getTargetDate.length === 0">
+      <div v-if="$store.state.targetDate.length === 0">
         <p>{{ month }}월 {{ today }}일 {{ days[day] }}요일</p>
       </div>
       <div v-else>
-        <p>{{ getTargetDate[1] }}월 {{ getTargetDate[2] }}일 {{ getTargetDate[3] }}요일</p>
+        <p>
+          {{ $store.state.targetDate[1] }}월 {{ $store.state.targetDate[2] }}일 {{ $store.state.targetDate[3] }}요일
+        </p>
       </div>
     </div>
     <p class="title">오늘의 기분</p>
@@ -33,12 +35,9 @@
 <script>
 import SelectFeelings from '@/components/feeling-record/SelectFeelings';
 import SelectStickers from '@/components/feeling-record/SelectStickers';
-import { createEmotion, updateEmotion, deleteEmotionDetail } from '@/api/emotions';
+import { createEmotion, updateEmotion, deleteEmotionDetail, getEmotionDetail } from '@/api/emotions';
 
 export default {
-  props: {
-    getTargetDate: Array,
-  },
   components: {
     SelectFeelings,
     SelectStickers,
@@ -71,40 +70,57 @@ export default {
       }
     }
   },
+  computed: {
+    checkForm() {
+      return this.content !== '' && this.$store.state.emotionIndex !== 0 && this.$store.state.selectedSticker !== '';
+    },
+  },
   methods: {
     async createDiary() {
-      try {
-        await createEmotion({
-          content: this.content,
-          feeling: this.$store.state.emotionIndex,
-          imageUrl: this.$store.state.selectedSticker,
-        });
-        alert('성공');
-      } catch (error) {
-        console.log(error);
+      if (this.checkForm) {
+        try {
+          await createEmotion({
+            content: this.content,
+            feeling: this.$store.state.emotionIndex,
+            imageUrl: this.$store.state.selectedSticker,
+          });
+          alert('성공');
+          this.$store.commit('getModalStatus', false);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        alert('모든 항목을 입력해주세요');
       }
     },
     async updateDiary() {
-      try {
-        const id = this.$store.state.targetDateId;
-        this.checkUpdateForm();
-        await updateEmotion(id, {
-          content: this.content,
-          feeling: this.feeling,
-          imageUrl: this.imageUrl,
-        });
-        alert('수정 성공');
-      } catch (error) {
-        console.log(error);
+      if (this.checkForm) {
+        try {
+          const id = this.$store.state.targetDateId;
+          this.checkUpdateForm();
+          await updateEmotion(id, {
+            content: this.content,
+            feeling: this.feeling,
+            imageUrl: this.imageUrl,
+          });
+          alert('수정 성공');
+          this.$store.commit('getModalStatus', false);
+          this.$store.commit('getCalendarRefreshStatus', true);
+          this.loadDiaryDetail();
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        alert('모든 항목을 입력해주세요');
       }
     },
     checkUpdateForm() {
-      if (this.$store.state.emotionIndex) {
+      if (this.$store.state.emotionIndex !== 0) {
         this.feeling = this.$store.state.emotionIndex;
       } else {
         this.feeling = this.$store.state.targetDateDetail['feeling'];
       }
-      if (this.$store.state.selectedSticker) {
+      if (this.$store.state.selectedSticker !== '') {
         this.imageUrl = this.$store.state.selectedSticker;
       } else {
         this.imageUrl = this.$store.state.targetDateDetail['imageUrl'];
@@ -117,6 +133,19 @@ export default {
         alert('삭제 성공');
       } catch (error) {
         console.log(error);
+      }
+    },
+    async loadDiaryDetail() {
+      const id = this.$store.state.targetDateId;
+      if (id > 0) {
+        try {
+          const { data } = await getEmotionDetail(id);
+          this.$store.commit('getTargetDateDetail', data);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        this.$store.commit('getTargetDateDetail', '');
       }
     },
   },

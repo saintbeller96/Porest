@@ -29,6 +29,7 @@ export default {
   getTargetDateDetail(state, targetDateDetail) {
     state.targetDateDetail = targetDateDetail;
   },
+  // 스티커 번호
   getStickerIndex(state, stickerindex) {
     state.stickerindex = stickerindex;
   },
@@ -41,7 +42,15 @@ export default {
   getDiaryModalStatus(state, diaryModalStatus) {
     state.diaryModalStatus = diaryModalStatus;
   },
-  // getTodaysDiaryId(state, todaysDiaryId) {
-  //   state.todaysDiaryId = todaysDiaryId;
-  // },
+
+  // --- //
+  getTargetDate(state, targetDate) {
+    state.targetDate = targetDate;
+  },
+  getModalStatus(state, modalControl) {
+    state.modalControl = modalControl;
+  },
+  getCalendarRefreshStatus(state, refreshCalendar) {
+    state.refreshCalendar = refreshCalendar;
+  },
 };

@@ -2,17 +2,17 @@
   <div class="feeling-record-background">
     <div class="wrapper" @click="move">
       <div class="calendar-area box fade-in">
-        <calendar @get-target-date="getDate"></calendar>
+        <calendar></calendar>
       </div>
       <div class="diary-area box fade-in">
-        <diary :getTargetDate="targetDate" @open-modal="openModal"> </diary>
+        <diary> </diary>
       </div>
-      <writing-modal v-if="isModalViewed" @close-modal="isModalViewed = false" class="modal">
+      <writing-modal v-if="$store.state.modalControl" class="modal">
         <div v-if="$store.state.diaryModalStatus === 'create'">
-          <create-diary :getTargetDate="targetDate"></create-diary>
+          <create-diary></create-diary>
         </div>
         <div v-else-if="$store.state.diaryModalStatus === 'update'">
-          <update-diary :getTargetDate="targetDate"></update-diary>
+          <update-diary></update-diary>
         </div>
       </writing-modal>
     </div>
@@ -52,23 +52,30 @@ export default {
   },
   data() {
     return {
-      targetDate: [],
-      isModalViewed: '',
+      days: ['일', '월', '화', '수', '목', '금', '토'],
     };
   },
   methods: {
-    getDate(date) {
-      this.targetDate = date;
-    },
-    openModal(modal) {
-      this.isModalViewed = modal;
-    },
     move() {
+      // if (this.$store.state.targetDate.length === 0) {
+      //   const date = new Date();
+      //   let year = date.getFullYear();
+      //   let month = date.getMonth() + 1;
+      //   let today = date.getDate();
+      //   let day = date.getDay();
+      //   this.$store.commit('getTargetDate', [year, month, today, this.days[day]]);
+      // }
       const calendarArea = document.querySelector('.calendar-area');
       const diaryArea = document.querySelector('.diary-area');
       calendarArea.classList.add('show');
       diaryArea.classList.add('show');
     },
+  },
+  created() {
+    this.$store.dispatch('LOGIN', {
+      email: 'najse77@naver.com',
+      password: 'lemon1234',
+    });
   },
 };
 </script>
