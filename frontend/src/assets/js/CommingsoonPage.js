@@ -233,7 +233,7 @@ export const init = () => {
   let Tree = function() {
     this.mesh = new THREE.Object3D();
 
-    var matTreeLeaves = new THREE.MeshPhongMaterial({ color: Colors.green, shading: THREE.FlatShading });
+    var matTreeLeaves = new THREE.MeshPhongMaterial({ color: Colors.green, flatShading: THREE.FlatShading });
 
     var geonTreeBase = new THREE.BoxGeometry(10, 20, 10);
     var matTreeBase = new THREE.MeshBasicMaterial({ color: Colors.brown });
@@ -268,14 +268,14 @@ export const init = () => {
     this.mesh = new THREE.Object3D();
 
     var geomStem = new THREE.BoxGeometry(5, 50, 5, 1, 1, 1);
-    var matStem = new THREE.MeshPhongMaterial({ color: Colors.green, shading: THREE.FlatShading });
+    var matStem = new THREE.MeshPhongMaterial({ color: Colors.green, flatShading: THREE.FlatShading });
     var stem = new THREE.Mesh(geomStem, matStem);
     stem.castShadow = false;
     stem.receiveShadow = true;
     this.mesh.add(stem);
 
     var geomPetalCore = new THREE.BoxGeometry(10, 10, 10, 1, 1, 1);
-    var matPetalCore = new THREE.MeshPhongMaterial({ color: Colors.yellow, shading: THREE.FlatShading });
+    var matPetalCore = new THREE.MeshPhongMaterial({ color: Colors.yellow, flatShading: THREE.FlatShading });
     let petalCore = new THREE.Mesh(geomPetalCore, matPetalCore);
     petalCore.castShadow = false;
     petalCore.receiveShadow = true;
@@ -372,7 +372,7 @@ export const init = () => {
 
     // Create the cabin
     var geomCockpit = new THREE.BoxGeometry(80, 50, 50, 1, 1, 1);
-    var matCockpit = new THREE.MeshPhongMaterial({ color: Colors.red, shading: THREE.FlatShading });
+    var matCockpit = new THREE.MeshPhongMaterial({ color: Colors.red, flatShading: THREE.FlatShading });
     geomCockpit.vertices[4].y -= 10;
     geomCockpit.vertices[4].z += 20;
     geomCockpit.vertices[5].y -= 10;
@@ -388,7 +388,7 @@ export const init = () => {
 
     // Create the engine
     var geomEngine = new THREE.BoxGeometry(20, 50, 50, 1, 1, 1);
-    var matEngine = new THREE.MeshPhongMaterial({ color: Colors.white, shading: THREE.FlatShading });
+    var matEngine = new THREE.MeshPhongMaterial({ color: Colors.white, flatShading: THREE.FlatShading });
     var engine = new THREE.Mesh(geomEngine, matEngine);
     engine.position.x = 40;
     engine.castShadow = true;
@@ -397,7 +397,7 @@ export const init = () => {
 
     // Create the tail
     var geomTailPlane = new THREE.BoxGeometry(15, 20, 5, 1, 1, 1);
-    var matTailPlane = new THREE.MeshPhongMaterial({ color: Colors.red, shading: THREE.FlatShading });
+    var matTailPlane = new THREE.MeshPhongMaterial({ color: Colors.red, flatShading: THREE.FlatShading });
     var tailPlane = new THREE.Mesh(geomTailPlane, matTailPlane);
     tailPlane.position.set(-35, 25, 0);
     tailPlane.castShadow = true;
@@ -406,7 +406,7 @@ export const init = () => {
 
     // Create the wing
     var geomSideWing = new THREE.BoxGeometry(40, 4, 150, 1, 1, 1);
-    var matSideWing = new THREE.MeshPhongMaterial({ color: Colors.red, shading: THREE.FlatShading });
+    var matSideWing = new THREE.MeshPhongMaterial({ color: Colors.red, flatShading: THREE.FlatShading });
 
     var sideWingTop = new THREE.Mesh(geomSideWing, matSideWing);
     var sideWingBottom = new THREE.Mesh(geomSideWing, matSideWing);
@@ -444,14 +444,14 @@ export const init = () => {
     geomPropeller.vertices[6].z += 5;
     geomPropeller.vertices[7].y += 5;
     geomPropeller.vertices[7].z -= 5;
-    var matPropeller = new THREE.MeshPhongMaterial({ color: Colors.brown, shading: THREE.FlatShading });
+    var matPropeller = new THREE.MeshPhongMaterial({ color: Colors.brown, flatShading: THREE.FlatShading });
     this.propeller = new THREE.Mesh(geomPropeller, matPropeller);
     this.propeller.castShadow = true;
     this.propeller.receiveShadow = true;
 
     var geomBlade1 = new THREE.BoxGeometry(1, 100, 10, 1, 1, 1);
     var geomBlade2 = new THREE.BoxGeometry(1, 10, 100, 1, 1, 1);
-    var matBlade = new THREE.MeshPhongMaterial({ color: Colors.brownDark, shading: THREE.FlatShading });
+    var matBlade = new THREE.MeshPhongMaterial({ color: Colors.brownDark, flatShading: THREE.FlatShading });
 
     var blade1 = new THREE.Mesh(geomBlade1, matBlade);
     blade1.position.set(8, 0, 0);
@@ -467,18 +467,18 @@ export const init = () => {
     this.mesh.add(this.propeller);
 
     var wheelProtecGeom = new THREE.BoxGeometry(30, 15, 10, 1, 1, 1);
-    var wheelProtecMat = new THREE.MeshPhongMaterial({ color: Colors.white, shading: THREE.FlatShading });
+    var wheelProtecMat = new THREE.MeshPhongMaterial({ color: Colors.white, flatShading: THREE.FlatShading });
     var wheelProtecR = new THREE.Mesh(wheelProtecGeom, wheelProtecMat);
     wheelProtecR.position.set(25, -20, 25);
     this.mesh.add(wheelProtecR);
 
     var wheelTireGeom = new THREE.BoxGeometry(24, 24, 4);
-    var wheelTireMat = new THREE.MeshPhongMaterial({ color: Colors.brownDark, shading: THREE.FlatShading });
+    var wheelTireMat = new THREE.MeshPhongMaterial({ color: Colors.brownDark, flatShading: THREE.FlatShading });
     var wheelTireR = new THREE.Mesh(wheelTireGeom, wheelTireMat);
     wheelTireR.position.set(25, -28, 25);
 
     var wheelAxisGeom = new THREE.BoxGeometry(10, 10, 6);
-    var wheelAxisMat = new THREE.MeshPhongMaterial({ color: Colors.brown, shading: THREE.FlatShading });
+    var wheelAxisMat = new THREE.MeshPhongMaterial({ color: Colors.brown, flatShading: THREE.FlatShading });
     var wheelAxis = new THREE.Mesh(wheelAxisGeom, wheelAxisMat);
     wheelTireR.add(wheelAxis);
 
@@ -499,7 +499,7 @@ export const init = () => {
 
     var suspensionGeom = new THREE.BoxGeometry(4, 20, 4);
     suspensionGeom.applyMatrix(new THREE.Matrix4().makeTranslation(0, 10, 0));
-    var suspensionMat = new THREE.MeshPhongMaterial({ color: Colors.red, shading: THREE.FlatShading });
+    var suspensionMat = new THREE.MeshPhongMaterial({ color: Colors.red, flatShading: THREE.FlatShading });
     var suspension = new THREE.Mesh(suspensionGeom, suspensionMat);
     suspension.position.set(-35, -5, 0);
     suspension.rotation.z = -0.3;
@@ -509,7 +509,7 @@ export const init = () => {
   var Fox = function() {
     this.mesh = new THREE.Object3D();
 
-    var redFurMat = new THREE.MeshPhongMaterial({ color: Colors.red, shading: THREE.FlatShading });
+    var redFurMat = new THREE.MeshPhongMaterial({ color: Colors.red, flatShading: THREE.FlatShading });
 
     // Create the Body
     var geomBody = new THREE.BoxGeometry(100, 50, 50, 1, 1, 1);
@@ -551,7 +551,7 @@ export const init = () => {
 
     // Create the Nose
     var geomNose = new THREE.BoxGeometry(10, 15, 20, 1, 1, 1);
-    var matNose = new THREE.MeshPhongMaterial({ color: Colors.brown, shading: THREE.FlatShading });
+    var matNose = new THREE.MeshPhongMaterial({ color: Colors.brown, flatShading: THREE.FlatShading });
     var nose = new THREE.Mesh(geomNose, matNose);
     nose.position.set(55, 0, 0);
     this.head.add(nose);
@@ -569,7 +569,7 @@ export const init = () => {
 
     // Create the Ear Tips
     var geomEarTipL = new THREE.BoxGeometry(10, 10, 20, 1, 1, 1);
-    var matEarTip = new THREE.MeshPhongMaterial({ color: Colors.white, shading: THREE.FlatShading });
+    var matEarTip = new THREE.MeshPhongMaterial({ color: Colors.white, flatShading: THREE.FlatShading });
     var earTipL = new THREE.Mesh(geomEarTipL, matEarTip);
     earTipL.position.set(0, 25, 0);
     earL.add(earTipL);
@@ -597,7 +597,7 @@ export const init = () => {
 
     // Create the tail Tip
     var geomTailTip = new THREE.BoxGeometry(20, 40, 40, 1, 1, 1);
-    var matTailTip = new THREE.MeshPhongMaterial({ color: Colors.white, shading: THREE.FlatShading });
+    var matTailTip = new THREE.MeshPhongMaterial({ color: Colors.white, flatShading: THREE.FlatShading });
     var tailTip = new THREE.Mesh(geomTailTip, matTailTip);
     tailTip.position.set(80, 0, 0);
     tailTip.castShadow = true;
@@ -617,7 +617,7 @@ export const init = () => {
 
     // Create the feet
     var geomFeet = new THREE.BoxGeometry(20, 20, 20, 1, 1, 1);
-    var matFeet = new THREE.MeshPhongMaterial({ color: Colors.white, shading: THREE.FlatShading });
+    var matFeet = new THREE.MeshPhongMaterial({ color: Colors.white, flatShading: THREE.FlatShading });
     var feet = new THREE.Mesh(geomFeet, matFeet);
     feet.position.set(0, 0, 0);
     feet.castShadow = true;

@@ -44,6 +44,13 @@ public class Letter {
 
     public Letter(){}
 
+    public String getTitle(){
+        return this.form.getTitle();
+    }
+    public String getContent(){
+        return this.form.getContent();
+    }
+
     @Builder
     public Letter(Long writerId, Letter parentLetter, String title, String content, LetterStatus status) {
         this.writerId = writerId;

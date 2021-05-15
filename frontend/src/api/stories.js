@@ -7,7 +7,10 @@ const getMyStories = () =>
 
 const writeStory = (storyData) => instanceAuth.post("/stories", storyData);
 
-const getStoryOfAllLetters = (storyId) => instanceAuth.get(`/stories/${storyId}`);
+const getStoryOfAllLetters = (storyId) =>
+  instanceAuth.get(`/stories/${storyId}/counsels`).then((res) => {
+    return res.data;
+  });
 
 const selectStory = (storyId) =>
   instanceAuth.post(`/stories/${storyId}`).then((res) => {

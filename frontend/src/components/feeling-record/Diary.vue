@@ -30,10 +30,11 @@
 
       <div
         v-if="
-          getTargetDate[0] === year &&
+          (getTargetDate[0] === year &&
             getTargetDate[1] === month &&
             getTargetDate[2] === today &&
-            !$store.state.targetDateDetail
+            !$store.state.targetDateDetail) ||
+            (getTargetDate.length === 0 && !$store.state.targetDateDetail)
         "
       >
         <button @click="openCreateModal">일기 쓰기</button>
@@ -174,6 +175,7 @@ export default {
   width: 1.6vw;
   margin-left: 0.5vw;
 }
+
 .setting-btn {
   color: #635ac1;
   /* color: #fff; */
@@ -183,6 +185,11 @@ export default {
   margin-top: -10px;
   margin-right: -10px;
   cursor: pointer;
+}
+
+.setting-btn:hover {
+  opacity: 0.8;
+  color: #fff;
 }
 
 .chosen-sticker {

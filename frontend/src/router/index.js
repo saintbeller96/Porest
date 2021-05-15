@@ -20,14 +20,19 @@ const routes = [
     component: () => import('@/views/main/MainIslandPage.vue'),
   },
   {
-    path: '/login',
+    path: '/log/login',
     name: 'Login',
     component: () => import('@/views/auth/LoginPage.vue'),
   },
   {
-    path: '/signup',
+    path: '/sing/signup',
     name: 'Signup',
     component: () => import('@/views/auth/SignupPage.vue'),
+  },
+  {
+    path: '/int/intro',
+    name: 'Intro',
+    component: () => import('@/views/main/IntroPage.vue'),
   },
   {
     path: '/find-password',
@@ -119,6 +124,11 @@ const routes = [
     path: '/joy/vr',
     name: 'VrRoom',
     component: () => import('@/views/joy/VrRoomPage.vue'),
+  },
+  {
+    path: '/star3d',
+    name: 'Star3D',
+    component: () => import('@/components/common/Star3D.vue'),
   },
 ];
 

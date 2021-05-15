@@ -29,10 +29,6 @@ public class Story {
     @Column(name = "writer_nickname")
     private String writerNickName;
 
-    @Column(name = "is_opened")
-    @ColumnDefault("false")
-    private Boolean isOpened;
-
     @Column(name = "picked")
     @ColumnDefault("0")
     private int picked;
@@ -54,11 +50,10 @@ public class Story {
     }
 
     @Builder
-    public Story(Long writerId, String title, String content, Boolean isOpened) {
+    public Story(Long writerId, String title, String content) {
         this.writerId = writerId;
         this.writerNickName = NicknameGenerator.generateNegative();
         this.form = new Form(title, content);
-        this.isOpened = isOpened;
     }
 
     public void addPicked() {

@@ -162,6 +162,24 @@ export default {
         this.$store.commit('getTargetDateId', 0);
       }
     },
+    // 달력 이모티콘 표시를 위한 dates2 생성
+    getFeelings() {
+      this.dates2 = this.dates.map(v => v.slice());
+      for (let a = 0; a < this.dates2.length; a++) {
+        for (let b = 0; b < this.dates2[a].length; b++) {
+          if ((a === 0 && this.dates2[a][b] > 10) || ((a === 4 || a === 5) && this.dates2[a][b] < 10)) {
+            continue;
+          } else {
+            for (let c = 0; c < this.emotionList.length; c++) {
+              if (this.dates2[a][b] === this.emotionList[c]['day']) {
+                let feelNum = this.emotionList[c]['feeling'] - 1;
+                this.dates2[a][b] = String(feelNum) + '!';
+              }
+            }
+          }
+        }
+      }
+    },
     async loadEmotionRecord() {
       try {
         let { data } = await getEmotionsOfRecord(this.month, this.year);
@@ -190,23 +208,6 @@ export default {
         }
       } else {
         this.$store.commit('getTargetDateDetail', '');
-      }
-    },
-    getFeelings() {
-      this.dates2 = this.dates.map(v => v.slice());
-      for (let a = 0; a < this.dates2.length; a++) {
-        for (let b = 0; b < this.dates2[a].length; b++) {
-          if ((a === 0 && this.dates2[a][b] > 10) || ((a === 4 || a === 5) && this.dates2[a][b] < 10)) {
-            continue;
-          } else {
-            for (let c = 0; c < this.emotionList.length; c++) {
-              if (this.dates2[a][b] === this.emotionList[c]['day']) {
-                let feelNum = this.emotionList[c]['feeling'] - 1;
-                this.dates2[a][b] = String(feelNum) + '!';
-              }
-            }
-          }
-        }
       }
     },
   },

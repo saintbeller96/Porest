@@ -4,13 +4,15 @@ import com.hanmaum.counseling.domain.post.entity.Counsel;
 import com.hanmaum.counseling.domain.post.entity.Story;
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDateTime;
 
 @Getter
 @ToString
-public class UserStoryInfoDto {
+@NoArgsConstructor
+public class UserStoryStateDto {
     private Long storyId;
     private String title;
     private LocalDateTime createdAt;
@@ -18,7 +20,7 @@ public class UserStoryInfoDto {
     private String nickname;
 
     @Builder
-    public UserStoryInfoDto(Long storyId, String title, LocalDateTime createdAt, int numOfNewReply, String nickname) {
+    public UserStoryStateDto(Long storyId, String title, LocalDateTime createdAt, int numOfNewReply, String nickname) {
         this.storyId = storyId;
         this.title = title;
         this.createdAt = createdAt;
@@ -26,8 +28,8 @@ public class UserStoryInfoDto {
         this.nickname = nickname;
     }
 
-    public static UserStoryInfoDto getMyStoryInfo(Story story, int numOfNewReply){
-        return UserStoryInfoDto.builder()
+    public static UserStoryStateDto getMyStoryInfo(Story story, int numOfNewReply){
+        return UserStoryStateDto.builder()
                 .storyId(story.getId())
                 .title(story.getForm().getTitle())
                 .createdAt(story.getCreatedAt())
@@ -35,8 +37,8 @@ public class UserStoryInfoDto {
                 .build();
     }
 
-    public static UserStoryInfoDto getMyCounselInfo(Story story, Counsel counsel, int numOfNewReply){
-        return UserStoryInfoDto.builder()
+    public static UserStoryStateDto getMyCounselInfo(Story story, Counsel counsel, int numOfNewReply){
+        return UserStoryStateDto.builder()
                 .storyId(story.getId())
                 .title(story.getForm().getTitle())
                 .createdAt(story.getCreatedAt())

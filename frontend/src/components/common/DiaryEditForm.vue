@@ -74,9 +74,6 @@ export default {
   methods: {
     async createDiary() {
       try {
-        console.log(this.content);
-        console.log(this.$store.state.emotionIndex);
-        console.log(this.$store.state.selectedSticker);
         await createEmotion({
           content: this.content,
           feeling: this.$store.state.emotionIndex,

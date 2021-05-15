@@ -1,20 +1,18 @@
 package com.hanmaum.counseling.domain.post.controller;
 
 import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
-import com.hanmaum.counseling.domain.post.dto.FormDto;
-import com.hanmaum.counseling.domain.post.service.LetterService;
+import com.hanmaum.counseling.domain.post.dto.EvaluateDto;
+import com.hanmaum.counseling.domain.post.dto.UserCounselStateDto;
 import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.security.CustomUserDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
 import java.util.List;
 
 @Api(tags = {"Counsels"})
@@ -22,11 +20,10 @@ import java.util.List;
 @RequestMapping("/counsels")
 @RequiredArgsConstructor
 public class CounselController {
-    private final LetterService letterService;
     private final CounselService counselService;
 
-    @ApiOperation("현재 사용자의 모든 상담 내역을 반환")
-    @GetMapping("")
+    @ApiOperation("현재 사용자의 모든(진행 끝난 것도 포함) 상담 내역을 반환")
+    @GetMapping("/all")
     public ResponseEntity<List<DetailCounselDto>> getDetailCounsels(Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
         List<DetailCounselDto> result = counselService.getDetailCounsels(userId);
@@ -41,11 +38,21 @@ public class CounselController {
         return ResponseEntity.ok(detailCounsel);
     }
 
-    @GetMapping("/counsellors")
-    public ResponseEntity<?> getCounsellors(){
-
-        return ResponseEntity.ok("");
+    @ApiOperation("현재 사용자가 진행중인 상담 내역 반환")
+    @GetMapping("")
+    public ResponseEntity<List<UserCounselStateDto>> getCounselList(Authentication auth){
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        List<UserCounselStateDto> result = counselService.getCounselStateOfUser(userId);
+        return ResponseEntity.ok(result);
     }
-    //Todo 1. 상담 취소, 2. 상담 종료
 
+    @ApiOperation("상담 완료")
+    @PostMapping("/{counselId}/finish")
+    public ResponseEntity<String> finishCounsel(@PathVariable("counselId") Long counselId,
+                                                @RequestBody @Valid EvaluateDto evaluateDto,
+                                                Authentication auth){
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        counselService.finishCounsel(evaluateDto, counselId, userId);
+        return ResponseEntity.ok("finish");
+    }
 }

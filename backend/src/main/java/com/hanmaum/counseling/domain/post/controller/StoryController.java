@@ -25,18 +25,21 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class StoryController {
     private final StoryService storyService;
-    private final CounselService counselService;
 
-    @ApiOperation("유저의 사연/유저가 답변한 사연 가져오기")
+    @ApiOperation("유저의 사연 목록 가져오기")
     @GetMapping("")
-    public ResponseEntity<Map<String, List<UserStoryInfoDto>>> putStory(Authentication auth){
+    public ResponseEntity<List<UserStoryStateDto>> getStories(Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        List<UserStoryInfoDto> s = storyService.getUserStoryInfo(userId);
-        List<UserStoryInfoDto> c = counselService.getUserCounselInfo(userId);
-        Map<String, List<UserStoryInfoDto>> response = new ConcurrentHashMap<>();
-        response.put("my-letter-reply", s);
-        response.put("other-letter-reply", c);
-        return ResponseEntity.ok(response);
+        List<UserStoryStateDto> result = storyService.getUserStoryState(userId);
+        return ResponseEntity.ok(result);
+    }
+
+    @ApiOperation("사연에 대해 진행 중인 상담 목록 가져오기")
+    @GetMapping("/{storyId}/counsels")
+    public ResponseEntity<List<UserCounselStateDto>> getStory(@PathVariable("storyId") Long storyId, Authentication auth){
+        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+        List<UserCounselStateDto> result = storyService.getCounselStateOfUserWithStory(storyId, userId);
+        return ResponseEntity.ok(result);
     }
 
     @ApiOperation("사연 등록")
@@ -55,7 +58,7 @@ public class StoryController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation("사연 선택")
+    @ApiOperation("후보 사연들 중 사연 선택")
     @PostMapping("/{storyId}")
     public ResponseEntity<SimpleCounselDto> pickStory(@PathVariable("storyId") Long storyId, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
@@ -63,13 +66,12 @@ public class StoryController {
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation("사연과 관련된 모든 편지-답장을 가져옴")
-    @GetMapping("/{storyId}")
-    public ResponseEntity<List<DetailCounselDto>> getStory(@PathVariable("storyId") Long storyId, Authentication auth){
+    @ApiOperation("사연 삭제")
+    @DeleteMapping("/{storyId}")
+    public ResponseEntity<String> deleteStory(@PathVariable("storyId") Long storyId, Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        List<DetailCounselDto> result = storyService.getStory(storyId, userId);
-        return ResponseEntity.ok(result);
+        storyService.deleteStory(storyId, userId);
+        return ResponseEntity.noContent().build();
     }
-
-    //Todo 사연 삭제, 사연 공개/비공개 설정
+    //Todo 사연 공개/비공개 설정
 }
