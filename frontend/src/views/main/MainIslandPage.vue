@@ -1,6 +1,6 @@
 <template>
   <div class="mainisland">
-    <div class="white-background"></div>
+    <!-- <div class="white-background"></div> -->
     <Star class="star"></Star>
     <div class="main_wrapper">
       <div class="post_ground_wrapper">
@@ -32,7 +32,7 @@
       </div>
 
       <div class="video_ground_wrapper">
-        <div class="video_ground_container">
+        <div class="video_ground_container" @click="goToAllRooms">
           <div class="pointer-video"></div>
 
           <div class="video_island">
@@ -70,22 +70,22 @@ export default {
   },
   methods: {
     goToMailbox() {
-      this.$router.push({ name: 'Mailbox' });
+      this.$router.push({ name: 'MailBoxIntro' });
     },
     goToFeelingRecord() {
       this.$router.push({ name: 'FeelingRecord' });
       // console.log('!!');
     },
+    goToAllRooms() {
+      this.$router.push({ name: 'AllRoom' });
+    },
   },
   mounted() {
     const mainislandWrapper = document.querySelector('.main_wrapper');
-    const whiteBg = document.querySelector('.white-background');
-    setTimeout(() => {
-      mainislandWrapper.classList.add('show');
-      setTimeout(() => {
-        whiteBg.classList.add('white-hide');
-      }, 300);
-    }, 0);
+    const mainisland = document.querySelector('.mainisland');
+    // const whiteBg = document.querySelector('.white-background');
+    mainisland.classList.add('show');
+    mainislandWrapper.classList.add('show');
   },
 };
 </script>

@@ -13,13 +13,13 @@ import {
 export default {
   async LOGIN({ commit }, userData) {
     const { data } = await loginUser(userData);
-    var decoded = jwt_decode(data.token);
-    commit("setUserId", decoded.id);
-    commit("setUsername", decoded.nickname);
-    commit("setUserEmail", decoded.email);
-    commit("setToken", "Bearer " + data.token);
-    commit("setImg", decoded.profile_img);
-    commit("setTemperature", decoded.temperature);
+    let decoded = jwt_decode(data.token);
+    commit('setUserId', decoded.id);
+    commit('setUsername', decoded.nickname);
+    commit('setUserEmail', decoded.email);
+    commit('setToken', 'Bearer ' + data.token);
+    commit('setImg', decoded.profile_img);
+    commit('setTemperature', decoded.temperature);
 
     // 쿠키에 저장
     saveUserIdToCookie(decoded.id);
@@ -34,20 +34,20 @@ export default {
   },
 
   async LOGOUT({ commit }) {
-    commit("setUserId", "");
-    commit("setUsername", "");
-    commit("setUserEmail", "");
-    commit("setToken", "");
-    commit("setImg", "");
-    commit("setTemperature", "");
-    commit("setUserUid", "");
-    saveUserIdToCookie("");
-    saveUserNameToCookie("");
-    saveUserEmailToCookie("");
-    saveAuthToCookie("");
-    saveUserImgFromCookie("");
-    saveUserTemperatureFromCookie("");
-    saveUserUidToCookie("");
+    commit('setUserId', '');
+    commit('setUsername', '');
+    commit('setUserEmail', '');
+    commit('setToken', '');
+    commit('setImg', '');
+    commit('setTemperature', '');
+    commit('setUserUid', '');
+    saveUserIdToCookie('');
+    saveUserNameToCookie('');
+    saveUserEmailToCookie('');
+    saveAuthToCookie('');
+    saveUserImgFromCookie('');
+    saveUserTemperatureFromCookie('');
+    saveUserUidToCookie('null');
   },
 
   saveuUserUid({ commit }, payload) {

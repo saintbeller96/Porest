@@ -20,19 +20,19 @@ const routes = [
     component: () => import("@/views/main/MainIslandPage.vue"),
   },
   {
-    path: "/login",
-    name: "Login",
-    component: () => import("@/views/auth/LoginPage.vue"),
+    path: '/log/login',
+    name: 'Login',
+    component: () => import('@/views/auth/LoginPage.vue'),
   },
   {
-    path: "/signup",
-    name: "Signup",
-    component: () => import("@/views/auth/SignupPage.vue"),
+    path: '/sing/signup',
+    name: 'Signup',
+    component: () => import('@/views/auth/SignupPage.vue'),
   },
   {
-    path: "/intro",
-    name: "Intro",
-    component: () => import("@/views/main/IntroPage.vue"),
+    path: '/int/intro',
+    name: 'Intro',
+    component: () => import('@/views/main/IntroPage.vue'),
   },
   {
     path: "/find-password",
@@ -45,9 +45,14 @@ const routes = [
     component: () => import("@/views/test/Test.vue"),
   },
   {
-    path: "/mailbox",
-    name: "Mailbox",
-    component: () => import("@/views/mailbox/MailboxPage.vue"),
+    path: '/mailboxplane',
+    name: 'MailboxPlane',
+    component: () => import('@/views/mailbox/MailboxPlanePage.vue'),
+  },
+  {
+    path: '/mailbox',
+    name: 'Mailbox',
+    component: () => import('@/views/mailbox/MailboxPage.vue'),
   },
   {
     path: "/mailbox/letters",
@@ -112,14 +117,9 @@ const routes = [
     component: () => import("@/views/feeling-record/FeelingRecordPage.vue"),
   },
   {
-    path: "/feeling-record/dairy",
-    name: "Dairy",
-    component: () => import("@/views/feeling-record/DairyPage.vue"),
-  },
-  {
-    path: "/drawing",
-    name: "Drawing",
-    component: () => import("@/views/joy/DrawingPage.vue"),
+    path: '/drawing',
+    name: 'Drawing',
+    component: () => import('@/views/joy/DrawingPage.vue'),
   },
   {
     path: "/all/rooms",
@@ -135,6 +135,11 @@ const routes = [
     path: "/star3d",
     name: "Star3D",
     component: () => import("@/components/common/Star3D.vue"),
+  },
+  {
+    path: '/mailbox/intro',
+    name: 'MailBoxIntro',
+    component: () => import('@/views/mailbox/MailBoxIntro.vue'),
   },
 ];
 

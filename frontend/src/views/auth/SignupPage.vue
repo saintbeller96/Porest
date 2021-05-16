@@ -1,13 +1,13 @@
 <template>
   <div class="home-wrapper">
-    <auth-form></auth-form>
+    <!-- <auth-form></auth-form> -->
     <section>
       <div class="box">
-        <div class="square" style="--i:0;"></div>
+        <!-- <div class="square" style="--i:0;"></div>
         <div class="square" style="--i:1;"></div>
         <div class="square" style="--i:2;"></div>
         <div class="square" style="--i:3;"></div>
-        <div class="square" style="--i:4;"></div>
+        <div class="square" style="--i:4;"></div> -->
         <div class="container">
           <div class="form">
             <form @submit.prevent>
@@ -103,16 +103,19 @@
         </div>
       </div>
     </section>
+    <div id="canvas"></div>
   </div>
 </template>
 
 <script>
-import { signupUser, emailCheck, emailVerify, verifyCheck } from "@/api/auth";
-import FireBase from "firebase/app";
-import "firebase/auth";
-import { validateEmail, validatePwd } from "@/utils/validation";
-import AuthForm from "@/components/auth/AuthForm";
-import RegisterTerms from "@/components/auth/RegisterTerms";
+import { signupUser, emailCheck, emailVerify, verifyCheck } from '@/api/auth';
+import { startAnimation } from '@/assets/js/main/IntroPage.js';
+
+import FireBase from 'firebase/app';
+import 'firebase/auth';
+import { validateEmail, validatePwd } from '@/utils/validation';
+import AuthForm from '@/components/auth/AuthForm';
+import RegisterTerms from '@/components/auth/RegisterTerms';
 export default {
   components: {
     AuthForm,
@@ -120,11 +123,11 @@ export default {
   },
   data() {
     return {
-      email: "",
-      nickname: "",
-      password1: "",
-      password2: "",
-      code: "",
+      email: '',
+      nickname: '',
+      password1: '',
+      password2: '',
+      code: '',
       terms: false,
       emailRedundancy: false,
       verify: false,
@@ -132,13 +135,13 @@ export default {
   },
   computed: {
     isValidEmail() {
-      return this.email === "" || validateEmail(this.email);
+      return this.email === '' || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password1 === "" || validatePwd(this.password1);
+      return this.password1 === '' || validatePwd(this.password1);
     },
     isValidPwdConfirm() {
-      return this.password2 === "" || this.password1 === this.password2;
+      return this.password2 === '' || this.password1 === this.password2;
     },
     isTermsChecked() {
       return this.terms === true;
@@ -148,7 +151,7 @@ export default {
         validateEmail(this.email) &&
         validatePwd(this.password1) &&
         this.password1 === this.password2 &&
-        this.username !== "" &&
+        this.username !== '' &&
         this.terms === true &&
         this.emailRedundancy
       );
@@ -156,7 +159,7 @@ export default {
   },
   methods: {
     goToLogin() {
-      this.$router.push({ name: "Login" });
+      this.$router.push({ name: 'Login' });
     },
     checkTerms() {
       this.terms = !this.terms;
@@ -189,35 +192,34 @@ export default {
             password: this.password1,
             code: this.code,
           });
-          await this.$store.dispatch("LOGIN", {
+          await this.$store.dispatch('LOGIN', {
             email: this.email,
             password: this.password1,
           });
-          FireBase.auth()
+          await FireBase.auth()
             .createUserWithEmailAndPassword(this.email, this.password1)
             .then(
-              (userCred) => {
+              userCred => {
                 return userCred.user
                   .updateProfile({
                     nickname: this.nickname,
                   })
                   .then(() => {
-                    this.$router.push("/home");
+                    this.$router.push('/log/login');
                   });
               },
-              (error) => (this.error = error.message)
+              error => (this.error = error.message),
             );
-          this.$router.push("/main");
         } catch (error) {
           alert(error);
         }
       } else {
-        alert("모든 항목을 입력해주세요.");
+        alert('모든 항목을 입력해주세요.');
       }
     },
     async checkEmail() {
       if (this.email.length < 1 || !this.isValidEmail) {
-        alert("사용하실 이메일 주소를 올바르게 입력해주세요.");
+        alert('사용하실 이메일 주소를 올바르게 입력해주세요.');
       } else {
         try {
           let { data } = await emailCheck({
@@ -225,7 +227,7 @@ export default {
           });
           this.emailRedundancy = data.redundancy;
           if (!this.emailRedundancy) {
-            alert("이미 존재하는 이메일 주소입니다.");
+            alert('이미 존재하는 이메일 주소입니다.');
           } else {
             await emailVerify({ email: this.email });
           }
@@ -242,6 +244,9 @@ export default {
       });
     },
   },
+  mounted() {
+    startAnimation();
+  },
 };
 </script>
 
@@ -250,10 +255,12 @@ export default {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url("../../assets/image/sky3.png");
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+
+  /* background-image: url('../../assets/image/sky3.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 }
 
 section {
@@ -263,7 +270,7 @@ section {
   min-height: 100vh;
 }
 
-.box {
+/* .box {
   position: relative;
 }
 
@@ -322,7 +329,7 @@ section {
   left: 140px;
   width: 60px;
   height: 60px;
-}
+} */
 .container {
   position: relative;
   min-width: 27vw;
@@ -462,5 +469,15 @@ section {
   font-size: 15px;
   margin-left: 5px;
   cursor: pointer;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
 }
 </style>

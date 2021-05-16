@@ -6,16 +6,55 @@
     </header>
     <table>
       <thead>
-        <th v-for="day in days" :key="day">{{ day }}</th>
+        <th v-for="(day, idx) in days" :key="idx">
+          <div v-if="idx === 0" class="sunday">{{ day }}</div>
+          <div v-else-if="idx === 6" class="saturday">{{ day }}</div>
+          <div v-else>{{ day }}</div>
+        </th>
       </thead>
-      <tbody>
-        <tr v-for="(date, idx) in dates" :key="idx">
-          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, day, idx)" class="dates">
-            <p v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+      <tbody v-if="$store.state.thisMonthWithEmoji.length > 0">
+        <tr v-for="(date, idx) in $store.state.thisMonthWithEmoji" :key="idx">
+          <td
+            v-for="(day, index) in date"
+            :key="index"
+            @click="[getTargetDate(year, month, idx, index), clickEffect(idx, index)]"
+            class="dates"
+            :class="`item${idx}${index}`"
+          >
+            <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
               {{ day }}
-            </p>
-            <p v-else-if="today === day && presentYear === year && presentMonth === month" class="today">{{ day }}</p>
-            <p v-else>{{ day }}</p>
+            </div>
+            <div v-else-if="day === today && presentMonth === month && presentYear === year" class="today">
+              {{ day }}
+            </div>
+            <div v-else-if="day > 0 || day < 32">
+              {{ day }}
+            </div>
+            <div v-else>
+              <!-- 이모티콘은 문자열로 분류되어 남게 -->
+              <img :src="todaysFeelingImg[day[0]]" class="image" />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr v-for="(date, idx) in dates" :key="idx">
+          <td
+            v-for="(day, index) in date"
+            :key="index"
+            @click="[getTargetDate(year, month, idx, index), clickEffect(idx, index, day)]"
+            class="dates"
+            :class="`item${idx}${index}`"
+          >
+            <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+              {{ day }}
+            </div>
+            <div v-else-if="day === today && presentMonth === month && presentYear === year" class="today">
+              {{ day }}
+            </div>
+            <div v-else-if="day > 0 || day < 32">
+              {{ day }}
+            </div>
           </td>
         </tr>
       </tbody>
@@ -24,12 +63,14 @@
 </template>
 
 <script>
-import '@/assets/css/Calendar.css';
+import '@/assets/css/feelingRecord/Calendar.css';
+import { getEmotionsOfRecord, getEmotionDetail } from '@/api/emotions';
 export default {
   data() {
     return {
-      days: ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'],
+      days: ['일', '월', '화', '수', '목', '금', '토'],
       dates: [],
+      dates2: [],
       presentYear: 0,
       presentMonth: 0,
       lastMonthBegin: 0,
@@ -39,6 +80,15 @@ export default {
       today: 0,
       now: 0,
       targetDate: [],
+      emotionList: [],
+      todaysFeelingImg: [
+        require('../../assets/image/feeling/1.png'),
+        require('../../assets/image/feeling/2.png'),
+        require('../../assets/image/feeling/3.png'),
+        require('../../assets/image/feeling/4.png'),
+        require('../../assets/image/feeling/5.png'),
+      ],
+      check: [],
     };
   },
   created() {
@@ -67,6 +117,8 @@ export default {
       }
       const [monthFirstDay, monthLastDate, lastMonthLastDate] = this.getFirstDayLastDate(this.year, this.month);
       this.dates = this.getMonthOfDays(monthFirstDay, monthLastDate, lastMonthLastDate);
+      this.$store.commit('getThisMonth', this.dates);
+      this.loadEmotionRecord();
     },
     getFirstDayLastDate(year, month) {
       const firstDay = new Date(year, month - 1, 1).getDay(); // 이번 달 시작 요일
@@ -115,14 +167,111 @@ export default {
       this.nextMonthBegin = weekOfDays[0];
       return dates;
     },
-    getTargetDate(year, month, day, idx) {
-      if (idx === 0 && day > 20) {
+    getTargetDate(year, month, idx, index) {
+      let day2 = this.dates[idx][index];
+      if (idx === 0 && day2 > 20) {
         month -= 1;
-      } else if ((idx === 4 || idx === 5) && day < 10) {
+      } else if ((idx === 4 || idx === 5) && day2 < 10) {
         month += 1;
       }
-      this.targetDate = [year, month, day];
-      this.$emit('get-target-date', this.targetDate);
+      this.targetDate = [year, month, day2, this.days[index]];
+      this.$store.commit('getTargetDate', [year, month, day2, this.days[index]]);
+      this.getTargetId(day2);
+      this.loadDiaryDetail(year, month, day2);
+    },
+    followTargetDate() {},
+    getTargetId(day) {
+      if (this.emotionList) {
+        for (let i = 0; i < this.emotionList.length; i++) {
+          if (this.emotionList[i].day === day) {
+            this.$store.commit('getTargetDateId', this.emotionList[i].emotionId);
+            break;
+          } else {
+            this.$store.commit('getTargetDateId', 0);
+          }
+        }
+      } else {
+        this.$store.commit('getTargetDateId', 0);
+      }
+    },
+    // 달력 이모티콘 표시를 위한 dates2 생성
+    getFeelings() {
+      this.dates2 = this.dates.map(v => v.slice());
+      for (let a = 0; a < this.dates2.length; a++) {
+        for (let b = 0; b < this.dates2[a].length; b++) {
+          if ((a === 0 && this.dates2[a][b] > 10) || ((a === 4 || a === 5) && this.dates2[a][b] < 10)) {
+            continue;
+          } else {
+            for (let c = 0; c < this.emotionList.length; c++) {
+              if (this.dates2[a][b] === this.emotionList[c]['day']) {
+                let feelNum = this.emotionList[c]['feeling'] - 1;
+                this.dates2[a][b] = String(feelNum) + '!';
+              }
+            }
+          }
+        }
+      }
+      this.$store.commit('getThisMonthEmoji', this.dates2);
+    },
+    async loadEmotionRecord() {
+      try {
+        let { data } = await getEmotionsOfRecord(this.month, this.year);
+        this.emotionList = data;
+        this.$store.commit('getThisMonthFeelings', this.emotionList);
+
+        // 페이지 로드시 미리 오늘 날짜 기준 디테일이 들어오게 하기
+        for (let i = 0; i < this.emotionList.length; i++) {
+          if (this.emotionList[i].day === this.today) {
+            this.$store.commit('getTargetDateId', this.emotionList[i].emotionId);
+            this.loadDiaryDetail(this.presentYear, this.presentMonth, this.today);
+          }
+        }
+        this.getFeelings();
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async loadDiaryDetail(year, month, day) {
+      const id = this.$store.state.targetDateId;
+      if (id > 0) {
+        try {
+          const { data } = await getEmotionDetail(id);
+          let targetMonth = Number(data.createdAt.slice(5, 7));
+          let targetYear = Number(data.createdAt.slice(0, 4));
+          let targetDay = Number(data.createdAt.slice(8, 10));
+
+          if (year === targetYear && month === targetMonth && day === targetDay) {
+            this.$store.commit('getTargetDateDetail', data);
+          } else {
+            this.$store.commit('getTargetDateDetail', '');
+            this.$store.commit('getStickerIndex', 0);
+          }
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        this.$store.commit('getTargetDateDetail', '');
+      }
+    },
+    // 특정 날짜 클릭 시 녹색 표시
+    clickEffect(idx, index) {
+      if (this.check.length === 0) {
+        this.check.push([idx, index]);
+        const selected = document.querySelector(`.item${idx}${index}`);
+        selected.classList.toggle('selected');
+      } else {
+        let a = this.check.pop();
+        const selected1 = document.querySelector(`.item${a[0]}${a[1]}`);
+        const selected2 = document.querySelector(`.item${idx}${index}`);
+        if (a === [idx, index]) {
+          selected1.classList.toggle('selected');
+          // selected2.classList.toggle('selected');
+        } else if (a !== [idx, index]) {
+          this.check.push([idx, index]);
+          selected1.classList.toggle('selected');
+          selected2.classList.toggle('selected');
+        }
+      }
     },
   },
 };

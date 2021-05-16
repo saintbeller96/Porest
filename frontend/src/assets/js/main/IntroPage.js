@@ -1,9 +1,7 @@
-import router from '@/router/index.js';
-
 let camera, scene, renderer, particles, particle, material, particleCount, points, texture;
 let xSpeed, ySpeed;
 xSpeed = 0.0;
-ySpeed = 0.001;
+ySpeed = 0.00001;
 let winWidth, winHeight;
 winWidth = window.innerWidth;
 winHeight = window.innerHeight;
@@ -12,7 +10,6 @@ export const startAnimation = () => {
   init();
   animate();
   window.addEventListener('resize', onWindowResize, false);
-  typing();
 };
 
 function init() {
@@ -28,7 +25,7 @@ function init() {
 
   material = new THREE.PointsMaterial({
     color: 0xffffff,
-    size: 1.3,
+    size: 0.9,
     map: sprite,
 
     transparent: true,
@@ -65,13 +62,11 @@ function animate() {
   var i = particleCount;
   while (i--) {
     var particle = particles.vertices[i];
-
     if (particle.y > 1000) {
       particle.y = -1000;
       particle.velocity.y = Math.random();
     }
     particle.velocity.y += Math.random() * ySpeed;
-
     particle.add(particle.velocity);
   }
   points.geometry.verticesNeedUpdate = true;
@@ -88,66 +83,4 @@ function onWindowResize() {
   camera.aspect = window.innerWidth / window.innerHeight;
   camera.updateProjectionMatrix();
   renderer.setSize(window.innerWidth, window.innerHeight);
-}
-
-function typing() {
-  let index = 0;
-  // let txt = ['당신의 오늘 하루는', '무수히 빛나는 별보다', '더 빛나고 아름답습니다'];
-  let txt = '당신의 오늘 하루는 무수히 빛나는 별보다 더 빛나고 아름답습니다.';
-  let speed = 210;
-  let count = 0;
-  let currentText = '';
-  let letter = '';
-  const typeBoard = document.querySelector('.type');
-  const audio = document.querySelector('#typing');
-
-  // document.body.addEventListener('mouseon', () => {
-  //   if (count === 0) {
-  //     audio.loop = false;
-  //     audio.volume = 0.3;
-  //     audio.play();
-
-  //     count++;
-  //   }
-  // });
-
-  const audioTag = document.querySelector('audio');
-  const whiteShow = document.querySelector('.white-show');
-  const entrance = document.querySelector('.entrance');
-  entrance.addEventListener('click', () => {
-    entrance.classList.add('hide');
-    setTimeout(() => {
-      // audioTag.play();
-      type();
-    }, 1000);
-  });
-
-  async function type() {
-    // if (count === 3) {
-    //   return;
-    // }
-    if (index === txt.length) {
-      // count = 0;
-      setTimeout(() => {
-        whiteShow.classList.add('active');
-        setTimeout(() => {
-          router.push('/main/mainisland');
-        }, 450);
-      }, 1000);
-    }
-    // currentText = txt[count];
-    currentText = txt;
-    letter = currentText.slice(0, ++index);
-    typeBoard.textContent = letter;
-    // if (letter.length === currentText.length) {
-    //   count++;
-    //   index = 0;
-    //   await setTimeout(() => {
-    //     type();
-    //     audioTag.play();
-    //   }, 1000);
-    // } else {
-    await setTimeout(type, 180);
-    // }
-  }
 }
