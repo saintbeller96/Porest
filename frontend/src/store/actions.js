@@ -1,5 +1,5 @@
-import { loginUser } from '@/api/auth';
-import jwt_decode from 'jwt-decode';
+import { loginUser } from "@/api/auth";
+import jwt_decode from "jwt-decode";
 import {
   saveAuthToCookie,
   saveUserIdToCookie,
@@ -8,7 +8,7 @@ import {
   saveUserImgFromCookie,
   saveUserTemperatureFromCookie,
   saveUserUidToCookie,
-} from '@/utils/cookies';
+} from "@/utils/cookies";
 
 export default {
   async LOGIN({ commit }, userData) {
@@ -25,7 +25,7 @@ export default {
     saveUserIdToCookie(decoded.id);
     saveUserNameToCookie(decoded.nickname);
     saveUserEmailToCookie(decoded.email);
-    saveAuthToCookie('Bearer ' + data.token);
+    saveAuthToCookie("Bearer " + data.token);
     saveUserImgFromCookie(decoded.profile_img);
     saveUserTemperatureFromCookie(decoded.temperature);
     return data;
@@ -51,8 +51,13 @@ export default {
   },
 
   saveuUserUid({ commit }, payload) {
-    console.log('this is actions payload', payload.firebaseData.uid);
-    commit('setUserUid', payload.firebaseData.uid);
+    console.log("this is actions payload", payload.firebaseData.uid);
+    commit("setUserUid", payload.firebaseData.uid);
     saveUserUidToCookie(payload.firebaseData.uid);
+  },
+
+  saveSelectedCounselId({ commit }, counselId) {
+    console.log("선택한 counselId 변경 : ", counselId);
+    commit("setCounselId", counselId);
   },
 };
