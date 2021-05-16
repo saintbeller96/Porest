@@ -12,7 +12,7 @@
           <div v-else>{{ day }}</div>
         </th>
       </thead>
-      <tbody>
+      <tbody v-if="$store.state.thisMonthWithEmoji.length > 0">
         <tr v-for="(date, idx) in $store.state.thisMonthWithEmoji" :key="idx">
           <td
             v-for="(day, index) in date"
@@ -33,6 +33,27 @@
             <div v-else>
               <!-- 이모티콘은 문자열로 분류되어 남게 -->
               <img :src="todaysFeelingImg[day[0]]" class="image" />
+            </div>
+          </td>
+        </tr>
+      </tbody>
+      <tbody v-else>
+        <tr v-for="(date, idx) in dates" :key="idx">
+          <td
+            v-for="(day, index) in date"
+            :key="index"
+            @click="[getTargetDate(year, month, idx, index), clickEffect(idx, index, day)]"
+            class="dates"
+            :class="`item${idx}${index}`"
+          >
+            <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+              {{ day }}
+            </div>
+            <div v-else-if="day === today && presentMonth === month && presentYear === year" class="today">
+              {{ day }}
+            </div>
+            <div v-else-if="day > 0 || day < 32">
+              {{ day }}
             </div>
           </td>
         </tr>
@@ -158,6 +179,7 @@ export default {
       this.getTargetId(day2);
       this.loadDiaryDetail(year, month, day2);
     },
+    followTargetDate() {},
     getTargetId(day) {
       if (this.emotionList) {
         for (let i = 0; i < this.emotionList.length; i++) {
@@ -231,6 +253,7 @@ export default {
         this.$store.commit('getTargetDateDetail', '');
       }
     },
+    // 특정 날짜 클릭 시 녹색 표시
     clickEffect(idx, index) {
       if (this.check.length === 0) {
         this.check.push([idx, index]);
@@ -241,7 +264,8 @@ export default {
         const selected1 = document.querySelector(`.item${a[0]}${a[1]}`);
         const selected2 = document.querySelector(`.item${idx}${index}`);
         if (a === [idx, index]) {
-          selected2.classList.toggle('selected');
+          selected1.classList.toggle('selected');
+          // selected2.classList.toggle('selected');
         } else if (a !== [idx, index]) {
           this.check.push([idx, index]);
           selected1.classList.toggle('selected');

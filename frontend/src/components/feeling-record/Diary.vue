@@ -56,11 +56,11 @@
           ($store.state.targetDate[0] < year && $store.state.targetDateDetail === '') ||
             ($store.state.targetDate[0] === year &&
               $store.state.targetDate[1] < month &&
-              $store.state.targetDateDetail == '') ||
+              $store.state.targetDateDetail === '') ||
             ($store.state.targetDate[0] === year &&
               $store.state.targetDate[1] === month &&
               $store.state.targetDate[2] < today &&
-              $store.state.targetDateDetail == '')
+              $store.state.targetDateDetail === '')
         "
       >
         기록된 감정이 없어요 ㅠㅠ
@@ -70,7 +70,7 @@
         v-else-if="
           ($store.state.targetDate[0] >= year &&
             $store.state.targetDate[1] > month &&
-            $store.state.targetDateDetail == '') ||
+            $store.state.targetDateDetail === '') ||
             ($store.state.targetDate[0] === year &&
               $store.state.targetDate[1] === month &&
               $store.state.targetDate[2] > today)
@@ -157,11 +157,11 @@ export default {
   methods: {
     openUpdateModal() {
       this.$store.commit('getModalStatus', true);
-      // this.$emit('open-modal', this.modal);
       this.$store.commit('getDiaryModalStatus', 'update');
       this.$store.commit('getEmotionIndex', this.$store.state.targetDateDetail['feeling']);
       let a = Number(this.$store.state.targetDateDetail['imageUrl'].slice(0, 2));
       this.$store.commit('getStickerIndex', a);
+      this.$store.commit('getSelectedSticker', this.$store.state.targetDateDetail['imageUrl']);
     },
     openCreateModal() {
       this.$store.commit('getModalStatus', true);
@@ -192,7 +192,7 @@ export default {
 .dairy-container {
   width: 26vw;
   height: 61vh;
-  background: rgba(255, 255, 255, 0.38);
+  background: rgba(255, 255, 255, 0.3);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
   border-top: 1px solid rgba(255, 255, 255, 0.5);
   border-left: 1px solid rgba(255, 255, 255, 0.5);
@@ -203,6 +203,7 @@ export default {
   justify-content: center;
   padding: 6vh;
   font-family: 'UhBeemysen';
+  overflow: hidden;
 }
 
 .date-container {
@@ -260,6 +261,17 @@ export default {
   text-align: center;
   text-align: justify;
   font-size: 32px;
+  overflow-y: scroll;
+}
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+::-webkit-scrollbar-corner {
+}
+::-webkit-scrollbar-thumb {
+  background-color: #e2deff;
+  border-radius: 6px;
+  opacity: 0.1;
 }
 
 .writing-btn {
