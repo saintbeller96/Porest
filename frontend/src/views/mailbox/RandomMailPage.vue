@@ -4,15 +4,15 @@
 
     <Star class="star"></Star>
     <canvas class="fireworks"></canvas>
+    <div class="post_box_svg" @click="postClick"></div>
     <div class="random-ball-wrapper" @click="pop">
-      <div class="random_ball" @click="pop"></div>
+      <object :data="post_box_svg" type="image/svg+xml"></object>
+      <!-- <div class="random_ball" @click="pop"></div> -->
     </div>
     <div class="big">
       <div></div>
       <div></div>
       <div></div>
-      <!-- <div></div> -->
-      <!-- <div></div> -->
     </div>
     <div class="mystery">
       <div></div>
@@ -49,6 +49,7 @@ export default {
     return {
       randomMails: [1, 2, 3, 4, 5, 6],
       stories: [],
+      post_box_svg: require('../../assets/svg/postbox_1.svg'),
     };
   },
   components: {
@@ -71,9 +72,12 @@ export default {
         fireworks();
       }, 3000);
     },
+    postClick(e) {
+      console.log(e.target);
+    },
   },
   mounted() {
-    this.getRandomStories();
+    // this.getRandomStories();
     // startAnimation();
   },
 };
