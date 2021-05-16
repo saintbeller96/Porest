@@ -19,12 +19,8 @@
           <div class="letter_paper">
             <div class="letter_form_wrapper">
               <div class="paper">
-                <div class="paper_header">제목 : 저도 같은 경험을 한적이 있습니다.</div>
-                <div class="paper_content">
-                  Lorem, ipsum dolor sit amet consectetur adipisicing elit. Libero commodi architecto labore optio aut
-                  cumque dolorem praesentium eaque aperiam obcaecati modi voluptates aliquid, iusto in expedita
-                  voluptatum voluptas dolore. Reiciendis. Lorem, ipsum dolor sit amet consectetur adipisicing elit.
-                </div>
+                <div class="paper_header" v-text="selectedCounsel.detail[0].reply.title"></div>
+                <div class="paper_content" v-text="selectedCounsel.detail[0].reply.content"></div>
                 <div class="paper_footer">
                   <div class="ban_btn">신고</div>
                 </div>
@@ -32,13 +28,14 @@
             </div>
             <div class="letter_form_wrapper">
               <div class="paper">
-                <div class="paper_header">제목 작성하기 <input type="text" /></div>
+                <div class="paper_header">제목 작성하기 <input type="text" v-model="reply.content" /></div>
                 <div class="paper_content">
                   내용 작성하기
                   <textarea name="" id=""></textarea>
                 </div>
                 <div class="paper_footer">
-                  <div class="ban_btn">답장 보내기</div>
+                  <!-- 벤 버튼인데 답장 보내기..라고 써있어요ㅠㅠ! -->
+                  <div class="ban_btn" @click="ReplyForm">답장 보내기</div>
                 </div>
               </div>
             </div>
@@ -70,19 +67,41 @@
 </template>
 
 <script>
-import { getMyStories } from '@/api/stories';
-import MyCounselList from '@/components/mail/MyCounselList.vue';
-import MyStoryList from '@/components/mail/MyStoryList.vue';
-import AllLetters from '@/components/mail/AllLetters.vue';
-import Star from '@/components/common/Star.vue';
+import { writeStory } from "@/api/stories";
+import { getCounsel } from "@/api/counsels";
+import MyCounselList from "@/components/mail/MyCounselList.vue";
+import MyStoryList from "@/components/mail/MyStoryList.vue";
+import AllLetters from "@/components/mail/AllLetters.vue";
+import Star from "@/components/common/Star.vue";
 
 export default {
-  name: 'MyReceivedMailPage',
+  name: "MyReceivedMailPage",
   data() {
     return {
       stories: null,
       viewStoryState: true,
       openAllLetters: false,
+      reply: {
+        title: "",
+        content: "",
+      },
+
+      selectedCounsel: {
+        detail: [
+          {
+            letter: {
+              title: "",
+              content: "",
+              createAt: "",
+            },
+            reply: {
+              title: "",
+              content: "",
+              createAt: "",
+            },
+          },
+        ],
+      },
     };
   },
   components: {
@@ -93,10 +112,7 @@ export default {
   },
   methods: {
     goToLetterReply() {
-      this.$router.push({ name: 'LetterReply' });
-    },
-    async getMyStories() {
-      this.stories = await getMyStories();
+      this.$router.push({ name: "LetterReply" });
     },
     openUserBoard(value) {
       this.viewStoryState = value;
@@ -107,9 +123,18 @@ export default {
     exitAll() {
       this.openAllLetters = false;
     },
+    async ReplyForm() {
+      //리플라이 null 예외처리 해야함
+      //여기에 들어가야 하는 것은 답장(letter)인데 api 수정 부탁해야함
+    },
   },
   mounted() {
     console.log(this.stories);
+  },
+  watch: {
+    "$store.state.counselId": async function() {
+      this.selectedCounsel = await getCounsel(this.$store.state.counselId);
+    },
   },
 };
 </script>

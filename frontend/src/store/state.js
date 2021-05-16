@@ -16,4 +16,7 @@ export default {
   token: getAuthFromCookie() ? `${getAuthFromCookie()}` : "",
   profileImg: getUserImgFromCookie() || "",
   temperature: getUserTemperatureFromCookie() || "",
+
+  //MyreceivedMail에서 사용
+  counselId: null,
 };

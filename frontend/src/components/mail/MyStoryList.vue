@@ -13,12 +13,7 @@
 
         <!-- reply -->
         <ul class="reply_users" v-if="openUsersState == index">
-          <li
-            class="reply_user"
-            v-for="(reply, index) in replies"
-            :key="index"
-            @click="openStory(story.storyId, reply.counselId, reply.numOfReplies)"
-          >
+          <li class="reply_user" v-for="(reply, index) in replies" :key="index" @click="openStory(reply.counselId)">
             <div class="reply_user_header">
               <h1 v-text="reply.writerNickname"></h1>
               <div class="date" v-text="setDate(reply.updatedAt)"></div>
@@ -33,7 +28,7 @@
 
 <script>
 import { getMyStories, getStoryOfAllLetters } from "@/api/stories";
-import { getCounsel } from "@/api/counsels";
+import { readLetter } from "@/api/letters";
 export default {
   name: "Mystroylist",
   data() {
@@ -82,9 +77,12 @@ export default {
       }
     },
 
-    //스토리 열기를 누르고 목록 중 하나를 클릭하면 오른쪽에 띄우자
-    openStory(storyId, counselId, numOfNewReply) {
-      getCounsel(counselId);
+    //답장을 해준 다른 사람과의 story를 클릭했을 때
+    async openStory(counselId) {
+      // this.counselList = await getCounsel(counselId);
+      await this.$store.dispatch("saveSelectedCounselId", counselId);
+      //read처리 들어가야할 곳
+      //await readLetter({counselId, letterId});
     },
   },
   mounted() {

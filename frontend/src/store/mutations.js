@@ -20,4 +20,7 @@ export default {
   setTemperature(state, temperature) {
     state.temperature = temperature;
   },
+  setCounselId(state, counselId) {
+    state.counselId = counselId;
+  },
 };
