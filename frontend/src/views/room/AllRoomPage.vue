@@ -5,8 +5,7 @@
     <div class="list-pop-up">
       <div class="list-pop-up-inner-wrapper">
         <div class="room-card">
-          <div class="room-card-front"
-          >
+          <div class="room-card-front">
             front
             <div class="category-name"></div>
             <div class="create-chat-room">상담소 열기</div>
