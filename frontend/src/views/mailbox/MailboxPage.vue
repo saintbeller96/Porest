@@ -26,13 +26,13 @@
 export default {
   methods: {
     goToStoryLetterPage() {
-      this.$router.push({ name: "WriteStory" });
+      this.$router.push({ name: 'WriteLetter' });
     },
     goToRandomMail() {
-      this.$router.push({ name: "RandomMail" });
+      this.$router.push({ name: 'RandomMail' });
     },
     goToMyReceivedMail() {
-      this.$router.push({ name: "MyReceivedMail" });
+      this.$router.push({ name: 'MyReceivedMail' });
     },
   },
 };
