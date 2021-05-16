@@ -60,7 +60,7 @@ export default {
   width: 3rem;
   height: 3rem;
   top: 1rem;
-  right: 1rem;
+  left: 1rem;
   z-index: 200;
   color: white;
 }

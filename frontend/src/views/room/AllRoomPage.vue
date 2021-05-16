@@ -1,11 +1,15 @@
 <template>
   <div class="rooms-wrapepr">
+    <div class="intro_title">
+      당신은 오늘 어떤 마음 속 이야기를 나누고 싶나요?
+    </div>
     <div class="background-image"></div>
     <Star></Star>
     <div class="list-pop-up">
       <div class="list-pop-up-inner-wrapper">
         <div class="room-card">
           <div class="room-card-front">
+            <!-- <img src="" class="front-card-img" alt=""> -->
             front
             <div class="category-name"></div>
             <div class="create-chat-room">상담소 열기</div>
@@ -80,7 +84,7 @@
         <div class="card">
           <div class="card-flip">
             <div class="card-inner">
-              <h2>학교 생활</h2>
+              <img src="@/assets/svg/tarot1.svg" alt="" />
             </div>
             <div class="card-outer" data-value="1">
               <span class="symbol-1"></span>
@@ -90,7 +94,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot3.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="2">
               <span class="symbol-1"></span>
               <h2>직장생활</h2>
@@ -99,7 +105,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot4.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="3">
               <span class="symbol-1"></span>
               <h2>학업 및 진로</h2>
@@ -108,7 +116,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot5.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="4">
               <span class="symbol-1"></span>
               <h2>자녀양육</h2>
@@ -117,7 +127,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot6.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="5">
               <span class="symbol-1"></span>
               <h2>대인관계</h2>
@@ -126,7 +138,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot7.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="6">
               <span class="symbol-1"></span>
               <h2>심리 및 정서</h2>
@@ -135,7 +149,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot8.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="7">
               <span class="symbol-1"></span>
               <h2>연애</h2>
@@ -144,7 +160,9 @@
         </div>
         <div class="card">
           <div class="card-flip">
-            <div class="card-inner"></div>
+            <div class="card-inner">
+              <img src="@/assets/svg/tarot9.svg" alt="" />
+            </div>
             <div class="card-outer" data-value="8">
               <span class="symbol-1"></span>
               <h2>취업</h2>
@@ -153,8 +171,8 @@
         </div>
       </div>
     </div>
-    <div class="prev-button button">prev</div>
-    <div class="next-button button">next</div>
+    <div class="prev-button button">이전</div>
+    <div class="next-button button">다음</div>
     <approve
       class="aprrove-pop-up"
       v-if="approveState"
