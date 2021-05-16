@@ -13,8 +13,14 @@
         </th>
       </thead>
       <tbody>
-        <tr v-for="(date, idx) in dates2" :key="idx">
-          <td v-for="(day, index) in date" :key="index" @click="getTargetDate(year, month, idx, index)" class="dates">
+        <tr v-for="(date, idx) in $store.state.thisMonthWithEmoji" :key="idx">
+          <td
+            v-for="(day, index) in date"
+            :key="index"
+            @click="[getTargetDate(year, month, idx, index), clickEffect(idx, index)]"
+            class="dates"
+            :class="`item${idx}${index}`"
+          >
             <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
               {{ day }}
             </div>
@@ -61,7 +67,7 @@ export default {
         require('../../assets/image/feeling/4.png'),
         require('../../assets/image/feeling/5.png'),
       ],
-      reRender: this.$store.getters.getRefreshCalendar,
+      check: [],
     };
   },
   created() {
@@ -90,6 +96,7 @@ export default {
       }
       const [monthFirstDay, monthLastDate, lastMonthLastDate] = this.getFirstDayLastDate(this.year, this.month);
       this.dates = this.getMonthOfDays(monthFirstDay, monthLastDate, lastMonthLastDate);
+      this.$store.commit('getThisMonth', this.dates);
       this.loadEmotionRecord();
     },
     getFirstDayLastDate(year, month) {
@@ -182,6 +189,7 @@ export default {
           }
         }
       }
+      this.$store.commit('getThisMonthEmoji', this.dates2);
     },
     async loadEmotionRecord() {
       try {
@@ -223,15 +231,25 @@ export default {
         this.$store.commit('getTargetDateDetail', '');
       }
     },
+    clickEffect(idx, index) {
+      if (this.check.length === 0) {
+        this.check.push([idx, index]);
+        const selected = document.querySelector(`.item${idx}${index}`);
+        selected.classList.toggle('selected');
+      } else {
+        let a = this.check.pop();
+        const selected1 = document.querySelector(`.item${a[0]}${a[1]}`);
+        const selected2 = document.querySelector(`.item${idx}${index}`);
+        if (a === [idx, index]) {
+          selected2.classList.toggle('selected');
+        } else if (a !== [idx, index]) {
+          this.check.push([idx, index]);
+          selected1.classList.toggle('selected');
+          selected2.classList.toggle('selected');
+        }
+      }
+    },
   },
-  // beforeUpdate() {
-  //   console.log('!!!');
-  //   if (this.$store.getters.getRefreshCalendar === true) {
-  //     console.log('update!!!');
-  //     this.loadEmotionRecord();
-  //     this.$store.commit('getCalendarRefreshStatus', false);
-  //   }
-  // },
 };
 </script>
 

@@ -17,9 +17,9 @@
 </template>
 
 <script>
-import Vue from 'vue';
+// import Vue from 'vue';
 // import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-import 'swiper/swiper-bundle.css';
+// import 'swiper/swiper-bundle.css';
 
 export default {
   // components: {

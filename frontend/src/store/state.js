@@ -28,4 +28,6 @@ export default {
   targetDate: [], // 캘린더에서 선택한 날짜
   modalControl: false,
   refreshCalendar: false,
+  thisMonth: [],
+  thisMonthWithEmoji: [],
 };

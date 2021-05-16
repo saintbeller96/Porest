@@ -70,6 +70,12 @@ table td {
     cursor: pointer;
 }
 
+.dates:hover {
+    transform: scale(1.1);
+    color: #35ae6d;
+    font-weight: bold;
+}
+
 .today {
     color: navy;
     border-radius: 50%;
@@ -83,4 +89,12 @@ table td {
 
 .image {
     width: 1.5vw;
+}
+
+.selected {
+    /* background-color: blue;
+    border-radius: 50%; */
+    transform: scale(1.15);
+    color: #35ae6d;
+    font-weight: bold;
 }

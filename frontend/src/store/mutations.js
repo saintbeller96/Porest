@@ -53,4 +53,10 @@ export default {
   getCalendarRefreshStatus(state, refreshCalendar) {
     state.refreshCalendar = refreshCalendar;
   },
+  getThisMonth(state, thisMonth) {
+    state.thisMonth = thisMonth;
+  },
+  getThisMonthEmoji(state, thisMonthWithEmoji) {
+    state.thisMonthWithEmoji = thisMonthWithEmoji;
+  },
 };
