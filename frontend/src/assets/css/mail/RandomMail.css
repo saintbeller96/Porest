@@ -55,18 +55,23 @@
 
 .random-ball-wrapper {
   opacity: 0.8;
-  width: 10.5rem;
-  height: 10.5rem;
+  width: 6.5rem;
+  height: 6.5rem;
   position: absolute;
   z-index: 33;
-  top: 50%;
-  left: 50%;
+  top: calc(50% - 6.5rem);
+  left: calc(50% - 6.5rem);
   cursor: pointer;
-  transform-style: preserve-3d;
-  transform: translate(-50%,-50%);
+  /* transform-style: preserve-3d; */
+  /* transform: translate(-50%,-50%); */
+  /* background-color: #00dbde; */
+  /* transform-origin: center center ; */
+  animation: 1s shake infinite alternate linear;
 }
 
-.random-ball-wrapper object {
+.random-ball-wrapper object{
+  /* transform: translate(-50%,-50%); */
+
   pointer-events: none;
 }
 
@@ -74,17 +79,24 @@
   z-index: 0;
   animation: pop 2s forwards;
 }
-@keyframes pop {
-  0% {   transform:  translate(-50%,-50%) scale(0);}
-  20% {  transform:  translate(-50%,-50%) scale(2.5);}
-  50% {  transform:  translate(-50%,-50%) scale(0.5);}
-  90% {  transform:  translate(-50%,-50%) scale(4.5);}
-  100% { transform:  translate(-50%,-50%) scale(0);}
+@keyframes shake {
+  0% {   transform: rotate(0deg);}
+  20% {  transform:  rotate(5deg) }
+  50% {  transform:  rotate(0deg)}
+  90% {  transform:  rotate(5deg)}
+  100% { transform:  rotate(0deg)}
 }
 
-.random_ball {
+@keyframes pop {
+  0% {   transform:  scale(0);}
+  20% {  transform:  scale(1.5);}
+  50% {  transform:  scale(0.5);}
+  90% {  transform:  scale(2.5);}
+  100% { transform:  scale(0);}
+}
+
+/* .random_ball {
   pointer-events: none;
-  /* transform: translate(-50%,-50%); */ 
   width: 100%;
   height: 100%;
   border-radius: 54% 46% 42% 58% / 60% 58% 42% 40%;
@@ -95,7 +107,6 @@
   background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
   background-image: linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%);
   background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
-  /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);  */
 
 }
 
@@ -109,9 +120,7 @@
   }
   60%{ border-radius: 60% 40% 57% 43% / 47% 62% 38% 53%;}
  80%{border-radius: 60% 40% 32% 68% / 48% 36% 74% 62%}
-
-
-}
+} */
 
 .big,.mystery {
   position:absolute;
@@ -173,45 +182,45 @@
   left: calc((50% - 5rem));
   width: 10rem;
   height: 10rem;
-  background-color: #fff;
   border-radius: 100%;
   transform: scale(0);
+  z-index: 100;
+  cursor: pointer;
 }
 
+.mystery.show {
+  z-index: 100;
+
+}
 .mystery.show div:nth-child(1){
-  background-color: #66a6ff;
   left: calc(30% - 5rem);
   top: calc(35% - 5rem);
+  
   animation: big .3s 3s forwards;
 }
 
 .mystery.show div:nth-child(3){
-  background-color: #66a6ff;
   top: calc(15% - 5rem);
   left: calc(50% - 5rem);
   animation: big .3s 3.3s forwards;
 }
 .mystery.show div:nth-child(4){
-  background-color: #66a6ff;
   top: calc(35% - 5rem);
   left: calc(70% - 5rem);
   animation: big .3s 3.6s forwards;
 }
 .mystery.show div:nth-child(5){
-  background-color: #66a6ff;
   top: calc(65% - 5rem);
   left: calc(70% - 5rem);
   animation: big .3s 3.9s forwards;
 }
 .mystery.show div:nth-child(6){
-  background-color: #66a6ff;
   top: calc(85% - 5rem);
   left: calc(50% - 5rem);
   animation: big .3s 4.2s forwards;
 }
 
 .mystery.show div:nth-child(2){
-  background-color: #66a6ff;
   top: calc(65% - 5rem);
   left: calc(30% - 5rem);
   animation: big .3s 4.5s forwards;

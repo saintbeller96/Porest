@@ -47,7 +47,7 @@ export default {
     saveAuthToCookie('');
     saveUserImgFromCookie('');
     saveUserTemperatureFromCookie('');
-    saveUserUidToCookie('');
+    saveUserUidToCookie('null');
   },
 
   saveuUserUid({ commit }, payload) {

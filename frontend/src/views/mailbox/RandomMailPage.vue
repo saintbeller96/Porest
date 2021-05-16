@@ -4,7 +4,7 @@
 
     <Star class="star"></Star>
     <canvas class="fireworks"></canvas>
-    <div class="post_box_svg" @click="postClick"></div>
+    <!-- <div class="post_box_svg" @click="postClick"></div> -->
     <div class="random-ball-wrapper" @click="pop">
       <object :data="post_box_svg" type="image/svg+xml"></object>
       <!-- <div class="random_ball" @click="pop"></div> -->
@@ -15,26 +15,10 @@
       <div></div>
     </div>
     <div class="mystery">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-    <!-- <section>
-      <div class="card">
-        <div class="wrapper">
-          <div class="box" v-for="(story, index) in stories" :key="index">
-            <div class="box-container">
-              <h2>{{ story.detail.title }}</h2>
-              <p>{{ story.detail.content }}</p>
-              <div @click="goToRootMailReply(story.storyId)">읽으러 가기</div>
-            </div>
-          </div>
-        </div>
+      <div v-for="(story, index) in stories" :key="index" @click="goToRootMailReply(story.storyId)">
+        <img src="../../assets/image/letter_1.png" alt="" />
       </div>
-    </section> -->
+    </div>
   </div>
 </template>
 
@@ -77,7 +61,7 @@ export default {
     },
   },
   mounted() {
-    // this.getRandomStories();
+    this.getRandomStories();
     // startAnimation();
   },
 };
