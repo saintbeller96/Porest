@@ -111,11 +111,6 @@ const routes = [
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
   },
   {
-    path: '/feeling-record/dairy',
-    name: 'Dairy',
-    component: () => import('@/views/feeling-record/DairyPage.vue'),
-  },
-  {
     path: '/drawing',
     name: 'Drawing',
     component: () => import('@/views/joy/DrawingPage.vue'),
