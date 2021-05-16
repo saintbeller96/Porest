@@ -9,4 +9,10 @@ export default {
   getRefreshCalendar(state) {
     return state.refreshCalendar;
   },
+  getUpdateFeeling(state) {
+    return state.emotionIndex;
+  },
+  getUpdateEmotion(state) {
+    return state.selectedSticker;
+  },
 };
