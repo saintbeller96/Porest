@@ -1,0 +1,199 @@
+/* two seats on each side for free space */
+body {
+/*  background: #afaaaa;*/
+  margin: 0;
+  padding:0;
+  overflow: hidden;
+/*  background-image:url('/letterbg.jpg');*/
+  background-size: cover;
+  width: 100vw;
+  height: 100vh;
+}
+
+.post_main_wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
+  perspective: 5000px;
+}
+
+/*
+.scroller {
+  height: 100%;
+  transform-style: preserve-3d;
+}
+*/
+
+.post_main {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 100vw;
+  height: 100vh;
+  margin: -50vh 0 0 -50vw;
+  pointer-events: none;
+  opacity: 0;
+  transform-style: preserve-3d;
+  z-index: -1;
+}
+
+.post_main_container {
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.post_main_wall {
+  position: absolute;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transform-style: preserve-3d;
+}
+
+.post_wall_left,
+.post_wall_right {
+  width: 5000px;
+  height: 200vh;
+  background: #292929;
+/*  	background: #dbdbdb;*/
+}
+
+.post_wall_back {
+  width: 200vw;
+  height: 200vh;
+  background: #313131;
+  box-shadow: 0 0 0 2px #313131;
+/*
+  background: #e9e9e9;
+	box-shadow: 0 0 0 2px #e9e9e9;
+*/
+  transform: translate3d(-50vw, -100vh, -5000px) rotate3d(1, 0, 0, 0.1deg) rotate3d(1, 0, 0, 0deg);
+}
+
+.post_wall_right {
+  right: 0;
+  justify-content: flex-end;
+  transform: rotate3d(0, 1, 0, -94deg) translate3d(0,-100vh,0);
+  transform-origin: 100% 50%;
+}
+
+.post_wall_left {
+  justify-content: flex-start;
+  transform: rotate3d(0, 1, 0, 94deg) translate3d(0,-100vh,0);
+  transform-origin: 0 50%;
+}
+
+.post_wall_bottom {
+  width: 200vw;
+  height: 5000px;
+  background: #4e4e4e;
+/*  background: #d0d0d0;*/
+  transform: rotate3d(1, 0, 0, 90deg) translate3d(-50vw, -5000px, 0);
+  transform-origin: 50% 0%;
+  top: 100%;
+}
+
+
+
+
+
+
+
+
+#container-1{
+    width: 1600px;
+    height: 780px;
+    max-width: 100%;
+    position:relative;
+    margin: 0 auto;
+    
+}
+
+
+#plane{
+    transform: translate(200px,300px);
+    transform-origin: 50% 50% 0;
+}
+
+
+.change{
+  animation-name: change;
+  animation-duration: 1s;
+  animation-fill-mode: forwards;
+}
+
+
+@keyframes change{
+  from {fill:#eeeeee; stroke:#dddddd}
+  to {fill:#fff; stroke:#fff}
+}
+
+
+.change2{
+  animation-name: change2;
+}
+
+
+/*
+.top_left_wing{
+  animation-direction: 5s;
+  transition-delay: 6s;
+}
+*/
+/*
+
+
+#plane.rotate {
+    animation: rotate-plane 0.5s linear;
+    animation-fill-mode: forwards;  
+}
+
+
+#plane.rotate.fly {   
+    animation: fly-plane 2s linear;
+}
+
+
+@keyframes rotate-plane {
+    from {
+        transform: translate(200px,300px) rotateX(0deg) rotateY(0deg) rotateZ(0deg);
+    }
+    to {
+        transform: translate(200px,300px) rotateX(-45deg) rotateY(30deg) rotateZ(45deg);
+    }
+}
+
+@keyframes fly-plane {
+    from {
+        transform: translate(200px,300px) scale(1) rotateX(-45deg) rotateY(30deg) rotateZ(45deg)
+    }
+    to {
+        transform: translate(2000px,-100px) scale(0.2) rotateX(-60deg) rotateY(30deg) rotateZ(60deg)
+    }   
+}
+*/
+
+.box{
+  background-color:aqua; 
+  top:600px;
+  width: 160px;
+  z-index: 10000;
+  
+}
+
+.planesvg{
+  motion-path: path("M18.45,58.46s52.87-70.07,101.25-.75,101.75-6.23,101.75-6.23S246.38,5.59,165.33,9.08s-15,71.57-94.51,74.56S18.45,58.46,18.45,58.46Z");
+    offset-path: path("M18.45,58.46s52.87-70.07,101.25-.75,101.75-6.23,101.75-6.23S246.38,5.59,165.33,9.08s-15,71.57-94.51,74.56S18.45,58.46,18.45,58.46Z");
+    motion-path: path("M.44,111.48a206.19,206.19,0,0,1,171-110A344.38,344.38,0,0,1,263.94,7s80.31,13.87,121.75,49.5A113.43,113.43,0,0,1,397.94,69c2.83,3.45,10.19,12.43,14,23a52.85,52.85,0,0,1,3,20.46A62.32,62.32,0,0,1,404.34,144a166.83,166.83,0,0,1-25.4,30c-40.4,37.57-88,43.87-106,46-41.53,4.91-73.51-4.35-89-9a238.34,238.34,0,0,1-74.45-37.71A77.65,77.65,0,0,1,98.43,163.2C86.58,150.12,64.72,121.37,70.94,91c9.93-48.52,84.16-66.06,129-64,43.05,2,74.78,22.7,89,32,33.19,21.68,49.53,46.55,53,52,7.57,11.85,17.21,27.33,20,50,2.9,23.56-3.41,41.84-6,50a105.49,105.49,0,0,1-25,42c-29.05,29.68-66.63,31.75-76,32a122.19,122.19,0,0,1-80-29");
+    offset-path: path("M.44,111.48a206.19,206.19,0,0,1,171-110A344.38,344.38,0,0,1,263.94,7s80.31,13.87,121.75,49.5A113.43,113.43,0,0,1,397.94,69c2.83,3.45,10.19,12.43,14,23a52.85,52.85,0,0,1,3,20.46A62.32,62.32,0,0,1,404.34,144a166.83,166.83,0,0,1-25.4,30c-40.4,37.57-88,43.87-106,46-41.53,4.91-73.51-4.35-89-9a238.34,238.34,0,0,1-74.45-37.71A77.65,77.65,0,0,1,98.43,163.2C86.58,150.12,64.72,121.37,70.94,91c9.93-48.52,84.16-66.06,129-64,43.05,2,74.78,22.7,89,32,33.19,21.68,49.53,46.55,53,52,7.57,11.85,17.21,27.33,20,50,2.9,23.56-3.41,41.84-6,50a105.49,105.49,0,0,1-25,42c-29.05,29.68-66.63,31.75-76,32a122.19,122.19,0,0,1-80-29");
+    transform: rotate(160deg) ;
+    motion-rotation: reverse;
+  animation: move 3500ms forwards linear ;
+}
+
+
+
+
+
+

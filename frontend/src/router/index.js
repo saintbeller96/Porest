@@ -45,6 +45,11 @@ const routes = [
     component: () => import('@/views/test/Test.vue'),
   },
   {
+    path: '/mailboxplane',
+    name: 'MailboxPlane',
+    component: () => import('@/views/mailbox/MailboxPlanePage.vue'),
+  },
+  {
     path: '/mailbox',
     name: 'Mailbox',
     component: () => import('@/views/mailbox/MailboxPage.vue'),
