@@ -26,7 +26,7 @@ export default {
   methods: {
     logout() {
       // :TODO 삭제요청
-      console.log(this.$router.history.current.name);
+      console.log('logout', this.$router.history.current.name);
       this.$store.dispatch('LOGOUT');
       FireBase.auth()
         .signOut()
@@ -34,7 +34,7 @@ export default {
           console.log('logout');
           this.user = null;
           if (this.$router.history.current.name != 'Login') {
-            this.$router.push('/login');
+            this.$router.push('/log/login');
           }
         });
     },
@@ -44,7 +44,7 @@ export default {
       if (user) {
         console.log('user login request');
         this.user = user;
-        if (this.$store.state.uid == '') {
+        if (this.$store.state.uid == '' || this.$store.state.uid == 'null') {
           this.$store.dispatch('saveuUserUid', { firebaseData: this.user });
         }
       }

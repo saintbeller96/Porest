@@ -196,7 +196,7 @@ export default {
             email: this.email,
             password: this.password1,
           });
-          FireBase.auth()
+          await FireBase.auth()
             .createUserWithEmailAndPassword(this.email, this.password1)
             .then(
               userCred => {
@@ -205,12 +205,11 @@ export default {
                     nickname: this.nickname,
                   })
                   .then(() => {
-                    this.$router.push('/home');
+                    this.$router.push('/log/login');
                   });
               },
               error => (this.error = error.message),
             );
-          this.$router.push('/main');
         } catch (error) {
           alert(error);
         }
