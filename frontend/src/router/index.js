@@ -20,17 +20,17 @@ const routes = [
     component: () => import('@/views/main/MainIslandPage.vue'),
   },
   {
-    path: '/login',
+    path: '/log/login',
     name: 'Login',
     component: () => import('@/views/auth/LoginPage.vue'),
   },
   {
-    path: '/signup',
+    path: '/sing/signup',
     name: 'Signup',
     component: () => import('@/views/auth/SignupPage.vue'),
   },
   {
-    path: '/intro',
+    path: '/int/intro',
     name: 'Intro',
     component: () => import('@/views/main/IntroPage.vue'),
   },
@@ -114,11 +114,6 @@ const routes = [
     path: '/feeling-record',
     name: 'FeelingRecord',
     component: () => import('@/views/feeling-record/FeelingRecordPage.vue'),
-  },
-  {
-    path: '/feeling-record/dairy',
-    name: 'Dairy',
-    component: () => import('@/views/feeling-record/DairyPage.vue'),
   },
   {
     path: '/drawing',

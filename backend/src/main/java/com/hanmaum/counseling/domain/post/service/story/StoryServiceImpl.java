@@ -24,7 +24,6 @@ public class StoryServiceImpl implements StoryService{
     @Override
     public Long putStory(FormDto formDto, Long userId) {
         Story story = Story.builder()
-                .isOpened(false)
                 .title(formDto.getTitle())
                 .content(formDto.getContent())
                 .writerId(userId)
@@ -69,6 +68,7 @@ public class StoryServiceImpl implements StoryService{
         for(Counsel counsel : story.getCounsels()){
             int len = counsel.getLetters().size();
             Letter lastLetter = counsel.getLetters().get(len-1);
+
             if(lastLetter.getWriterId()!=story.getWriterId() && lastLetter.getStatus() == LetterStatus.WAIT){
                 cnt++;
             }
@@ -107,14 +107,14 @@ public class StoryServiceImpl implements StoryService{
         //상담사가 해준 마지막 답장을 last에 저장
         //해당 답장이 읽지 않은 상태이면 num 증가
         for(Letter letter : letters){
-            if(last.getWriterId() == counsel.getCounsellorId()){
+            if(letter.getWriterId() == counsel.getCounsellorId()){
                 last = letter;
                 if(last.getStatus() == LetterStatus.WAIT){
                     num++;
                 }
             }
         }
-        return new UserCounselStateDto(counsel.getId(), counsel.getCounsellorNickname(), last.getTitle(), num);
+        return new UserCounselStateDto(counsel.getId(), counsel.getCounsellorNickname(), last.getTitle(), num, last.getCreatedAt());
     }
 
     @Override

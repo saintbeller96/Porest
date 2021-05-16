@@ -13,7 +13,7 @@ import {
 export default {
   async LOGIN({ commit }, userData) {
     const { data } = await loginUser(userData);
-    var decoded = jwt_decode(data.token);
+    let decoded = jwt_decode(data.token);
     commit('setUserId', decoded.id);
     commit('setUsername', decoded.nickname);
     commit('setUserEmail', decoded.email);

@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.domain.post.controller;
 
 import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
+import com.hanmaum.counseling.domain.post.dto.EvaluateDto;
 import com.hanmaum.counseling.domain.post.dto.UserCounselStateDto;
 import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
 import com.hanmaum.counseling.security.CustomUserDetails;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = {"Counsels"})
@@ -46,9 +48,11 @@ public class CounselController {
 
     @ApiOperation("상담 완료")
     @PostMapping("/{counselId}/finish")
-    public ResponseEntity<String> finishCounsel(@PathVariable("counselId") Long counselId, Authentication auth){
+    public ResponseEntity<String> finishCounsel(@PathVariable("counselId") Long counselId,
+                                                @RequestBody @Valid EvaluateDto evaluateDto,
+                                                Authentication auth){
         Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
-        counselService.finishCounsel(counselId, userId);
+        counselService.finishCounsel(evaluateDto, counselId, userId);
         return ResponseEntity.ok("finish");
     }
 }

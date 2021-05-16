@@ -1,9 +1,8 @@
 package com.hanmaum.counseling.domain.post.service.counsel;
 
-import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
-import com.hanmaum.counseling.domain.post.dto.LetterReplyDto;
-import com.hanmaum.counseling.domain.post.dto.UserCounselStateDto;
-import com.hanmaum.counseling.domain.post.dto.UserStoryStateDto;
+import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.post.dto.*;
 import com.hanmaum.counseling.domain.post.entity.*;
 import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
 import lombok.RequiredArgsConstructor;
@@ -19,6 +18,7 @@ import java.util.stream.Collectors;
 public class CounselServiceImpl implements CounselService{
 
     private final CounselRepository counselRepository;
+    private final UserRepository userRepository;
 
     @Override
     @Transactional(readOnly = true)
@@ -88,15 +88,20 @@ public class CounselServiceImpl implements CounselService{
                 }
             }
         }
-        return new UserCounselStateDto(counsel.getId(), counsel.getStory().getWriterNickName(), last.getTitle(), num);
+        return new UserCounselStateDto(counsel.getId(), counsel.getStory().getWriterNickName(), last.getTitle(), num, last.getCreatedAt());
     }
 
     @Override
     @Transactional
-    public Long finishCounsel(Long counselId, Long userId) {
+    public Long finishCounsel(EvaluateDto evaluate, Long counselId, Long userId) {
         Counsel counsel = getCounsel(counselId);
         validateUser(userId, counsel);
+        User counsellor = userRepository.findById(counsel.getCounsellorId())
+                .orElseThrow(IllegalStateException::new);
+
+        counsellor.setTemperature(counsellor.getTemperature() + evaluate.getEvaluate().getScore());
         counsel.setStatus(CounselStatus.END);
+        counsel.setOpenStatus(evaluate.isOpen());
         return counselId;
     }
 

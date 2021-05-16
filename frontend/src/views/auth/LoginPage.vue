@@ -1,13 +1,16 @@
 <template>
   <div class="home-wrapper">
-    <auth-form></auth-form>
+    <!-- <auth-form></auth-form> -->
+    <div class="letter">
+      <div class="type"></div>
+    </div>
     <section>
       <div class="box">
-        <div class="square" style="--i:0;"></div>
+        <!-- <div class="square" style="--i:0;"></div>
         <div class="square" style="--i:1;"></div>
         <div class="square" style="--i:2;"></div>
         <div class="square" style="--i:3;"></div>
-        <div class="square" style="--i:4;"></div>
+        <div class="square" style="--i:4;"></div> -->
         <div class="container">
           <div class="form">
             <form @submit.prevent>
@@ -48,31 +51,37 @@
         </div>
       </div>
     </section>
+    <div class="white-show"></div>
+
+    <div id="canvas"></div>
   </div>
 </template>
 
 <script>
-import { validateEmail, validatePwd } from "@/utils/validation";
-import FireBase from "firebase/app";
-import "firebase/auth";
-import AuthForm from "@/components/auth/AuthForm";
+import { validateEmail, validatePwd } from '@/utils/validation';
+import { startAnimation } from '@/assets/js/main/IntroPage.js';
+import FireBase from 'firebase/app';
+import 'firebase/auth';
+import AuthForm from '@/components/auth/AuthForm';
+import { typing } from '@/assets/js/main/typing.js';
+
 export default {
   components: {
     AuthForm,
   },
   data() {
     return {
-      email: "",
-      nickname: "",
-      password: "",
+      email: '',
+      nickname: '',
+      password: '',
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === "" || validateEmail(this.email);
+      return this.email === '' || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password === "" || validatePwd(this.password);
+      return this.password === '' || validatePwd(this.password);
     },
     checkForm() {
       return validateEmail(this.email) && validatePwd(this.password);
@@ -80,7 +89,7 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     // register() {
     //   if (!this.error) {
@@ -101,48 +110,68 @@ export default {
     //   }
     // },
     goToFindPassword() {
-      this.$router.push({ name: "FindPassword" });
+      this.$router.push({ name: 'FindPassword' });
     },
     async submitForm() {
-      console.log("login");
+      console.log('login');
       try {
-        await this.$store.dispatch("LOGIN", {
+        await this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.password,
         });
-        console.log("이동");
+        console.log('이동');
         this.fireBaseLogin();
-        this.$router.push("/main");
+        setTimeout(() => {
+          const whiteShow = document.querySelector('.white-show');
+          whiteShow.classList.add('active');
+        }, 1000);
+        this.$router.push({ name: 'Intro' });
       } catch (error) {
-        alert("이메일이나 비밀번호를 다시 확인해주세요.");
+        alert('이메일이나 비밀번호를 다시 확인해주세요.');
       }
     },
     fireBaseLogin() {
-      console.log("login");
+      console.log('login');
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          (response) => {
-            console.log("response status", response);
+          response => {
+            console.log('response status', response);
           },
-          (error) => (this.error = error.message)
+          error => (this.error = error.message),
         );
     },
+  },
+  mounted() {
+    startAnimation();
+    typing();
   },
 };
 </script>
 
 <style scoped>
 .home-wrapper {
+  margin: 0;
+  padding: 0;
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url("../../assets/image/sky3.png");
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+
+  /* background-image: url('../../assets/image/sky3.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 }
-
+.type {
+  width: 100%;
+  position: absolute;
+  font-size: 2rem;
+  top: 15%;
+  left: 50%;
+  color: #fff;
+  transform: perspective(1200px) translate3d(-50%, 0, -200px);
+}
 section {
   display: flex;
   justify-content: center;
@@ -150,7 +179,7 @@ section {
   min-height: 100vh;
 }
 
-.box {
+/* .box {
   position: relative;
 }
 
@@ -166,9 +195,9 @@ section {
   border-radius: 100%;
   animation: move 10s linear infinite;
   animation-delay: calc(-1s * var(--i));
-}
+} */
 
-@keyframes move {
+/* @keyframes move {
   0%,
   100% {
     transform: translateY(-40px);
@@ -176,9 +205,9 @@ section {
   50% {
     transform: translateY(40px);
   }
-}
+} */
 
-.box .square:nth-child(1) {
+/* .box .square:nth-child(1) {
   top: -50px;
   right: -60px;
   width: 100px;
@@ -209,17 +238,17 @@ section {
   left: 140px;
   width: 60px;
   height: 60px;
-}
+} */
 .container {
   position: relative;
-  min-width: 27vw;
+  min-width: 25vw;
   /* max-width: 27vw; */
-  min-height: 350px;
+  min-height: 450px;
   border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
-  backdrop-filter: blur(5px);
+  backdrop-filter: blur(15px);
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
   border: 1px solid rgba(255, 255, 255, 0.5);
@@ -320,5 +349,43 @@ section {
   color: #fff;
   font-size: 10px;
   cursor: pointer;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+.white-show {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  z-index: -1;
+  width: 0%;
+  height: 0%;
+  border-radius: 100%;
+  transform: translate3d(-50%, -50%, 1000px);
+  /* transform-origin: 50% 50%; */
+  background-color: #fff;
+}
+
+.active {
+  animation: 0.45s fade forwards ease-in;
+}
+
+@keyframes fade {
+  100% {
+    width: 1000%;
+    height: 2000%;
+    opacity: 1;
+    z-index: 30;
+    transform: translate3d(-50%, -50%, -1000px);
+  }
 }
 </style>

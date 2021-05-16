@@ -46,8 +46,8 @@ public class AccountService {
                 .email(request.getEmail())
                 .nickname(request.getNickname())
                 .password(passwordEncoder.encode(request.getPassword()))
+                .temperature(36)
                 .profileImgNumber(1L)
-                .temperature(36L)
                 .role(RoleType.ROLE_USER)
                 .build();
 
@@ -147,7 +147,7 @@ public class AccountService {
             emailUtil.sendMail(email,"POREST의 임시 비밀번호 메일입니다.", temporaryPassword);
         }
         else{
-            result.put("message","입력하신 정보가 옮바르지 않습니다.");
+            result.put("message","입력하신 정보가 올바르지 않습니다.");
         }
         return isExist ? ResponseEntity.ok().build() : ResponseEntity.badRequest().body(result);
     }

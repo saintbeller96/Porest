@@ -4,7 +4,7 @@
       <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
       <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
 
-      <!-- <div to="#" @click="logout">로그 아웃</div> -->
+      <div class="logout" @click="logout">로그 아웃</div>
     </div>
     <router-view :user="user" />
   </div>
@@ -55,6 +55,15 @@ export default {
 
 <style src="@/assets/css/common/reset.css"></style>
 <style>
+.logout {
+  position: fixed;
+  width: 3rem;
+  height: 3rem;
+  top: 1rem;
+  right: 1rem;
+  z-index: 200;
+  color: white;
+}
 @import '../node_modules/@syncfusion/ej2-base/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-buttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-popups/styles/material.css';

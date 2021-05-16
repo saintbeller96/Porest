@@ -451,7 +451,6 @@ textarea::placeholder {
 ::-webkit-scrollbar-thumb {
   background-color:#fff;
   border-radius: 6px;
-  
 }
 .card-main-wrapper {
   position: absolute;
