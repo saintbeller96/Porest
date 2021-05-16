@@ -135,6 +135,11 @@ const routes = [
     name: 'Star3D',
     component: () => import('@/components/common/Star3D.vue'),
   },
+  {
+    path: '/mailbox/intro',
+    name: 'MailBoxIntro',
+    component: () => import('@/views/mailbox/MailBoxIntro.vue'),
+  },
 ];
 
 const router = new VueRouter({

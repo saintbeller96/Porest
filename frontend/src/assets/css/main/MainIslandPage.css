@@ -16,14 +16,19 @@
   }
   
   .mainisland.show  {
-    animation: min .7s forwards linear;
+    animation: min .3s forwards linear;
   }
 
   @keyframes min {
     0%{
-      background-size: 3000px 3000px;
+      background-size: 2500px 2500px;
+      background-size: cover;
+
     }
-    50% {background-size: 2000px 2000px;}
+    50% {
+      background-size: 2000px 2000px;
+      background-size: cover;
+    }
     100% {
       background-size: cover;
     }
@@ -134,7 +139,7 @@
     }
   } */
   .post_ground_container:hover .paper-plane {
-    animation: move 3500ms forwards linear ;
+    animation: move 1500ms forwards linear ;
   }
   /* .post_ground_container:hover .paper-plane-2 {
     animation: sweep 6s linear infinite;

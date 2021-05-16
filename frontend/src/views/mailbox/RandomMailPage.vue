@@ -12,7 +12,7 @@
     <div class="big">
       <div></div>
       <div></div>
-      <div></div>
+      <!-- <div></div> -->
     </div>
     <div class="mystery">
       <div v-for="(story, index) in stories" :key="index" @click="goToRootMailReply(story.storyId)">

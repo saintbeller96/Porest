@@ -32,7 +32,7 @@
       </div>
 
       <div class="video_ground_wrapper">
-        <div class="video_ground_container">
+        <div class="video_ground_container" @click="goToAllRooms">
           <div class="pointer-video"></div>
 
           <div class="video_island">
@@ -70,11 +70,14 @@ export default {
   },
   methods: {
     goToMailbox() {
-      this.$router.push({ name: 'Mailbox' });
+      this.$router.push({ name: 'MailBoxIntro' });
     },
     goToFeelingRecord() {
       this.$router.push({ name: 'FeelingRecord' });
       // console.log('!!');
+    },
+    goToAllRooms() {
+      this.$router.push({ name: 'AllRoom' });
     },
   },
   mounted() {

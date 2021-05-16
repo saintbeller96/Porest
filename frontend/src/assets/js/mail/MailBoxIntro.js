@@ -1,12 +1,4 @@
-//$().ready(function() {
-//   rotate_and_fly();
-//});
-
-document.addEventListener('DOMContentLoaded', function() {
-  setTimeout(rotate_and_fly, 1000);
-});
-
-const rotate_and_fly = () => {
+export const rotate_and_fly = () => {
   //var left_inside_wing2 = document.querySelector('.left_inside_wing');
 
   var left_inside_wing = Snap('#left_inside_wing');

@@ -144,9 +144,6 @@
 .big.show div:nth-child(1) {
   background: #fffcee; animation: big .5s 2s forwards;
   background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
-  /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);  */
-
-
 }
 .big.show div:nth-child(2) {
   background: #66a6ff; animation: big .5s 2.5s forwards;
@@ -155,20 +152,7 @@
   background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
 
 }
-.big.show div:nth-child(3) {
-  /* background: #764ba2;   */
-  animation: big .5s 3s forwards;
-  /* background-image: url('../../image/5262525.jpg'); */
-  /* background-image: linear-gradient(to top, #96fbc4 0%, #f9f586 100%); */
-  /* background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); */
-  background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); 
-  background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
 
-  /* background-position: 50% 50%; */
-  /* background-repeat: no-repeat; */
-  /* background-size: cover; */
-
-}
 
 
 @keyframes big {
