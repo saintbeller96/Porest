@@ -55,6 +55,8 @@ export default {
       today: 0,
       days: ['일', '월', '화', '수', '목', '금', '토'],
       content: '',
+      feeling: 0,
+      imageUrl: '',
     };
   },
   created() {
@@ -90,9 +92,13 @@ export default {
             feeling: this.$store.state.emotionIndex,
             imageUrl: this.$store.state.selectedSticker,
           });
-          this.loadDiaryDetail(this.$store.state.targetDateId);
+          this.$store.commit('getTargetDateDetail', {
+            content: this.content,
+            feeling: this.$store.state.emotionIndex,
+            imageUrl: this.$store.state.selectedSticker,
+          });
           this.loadDiaryCalendar();
-          alert('성공');
+          alert('생성이 완료됐습니다.');
           this.$store.commit('getModalStatus', false);
         } catch (error) {
           console.log(error);
@@ -102,35 +108,35 @@ export default {
       }
     },
     async updateDiary() {
-      // if (this.checkForm) {
-      try {
-        const id = this.$store.state.targetDateId;
-        this.checkUpdateForm();
-        await updateEmotion(id, {
-          content: this.content,
-          feeling: this.feeling,
-          imageUrl: this.imageUrl,
-        });
-        this.loadDiaryDetail(this.$store.state.targetDateId);
-        this.loadDiaryCalendar();
-        alert('수정 성공');
-        this.$store.commit('getModalStatus', false);
-        this.$store.commit('getCalendarRefreshStatus', true);
-      } catch (error) {
-        console.log(error);
+      // this.checkUpdateForm();
+      if (this.checkForm) {
+        try {
+          const id = this.$store.state.targetDateId;
+          await updateEmotion(id, {
+            content: this.content,
+            feeling: this.$store.state.emotionIndex,
+            imageUrl: this.$store.state.selectedSticker,
+          });
+          this.loadDiaryDetail(this.$store.state.targetDateId);
+          this.loadDiaryCalendar();
+          alert('수정이 완료되었습니다.');
+          this.$store.commit('getModalStatus', false);
+          this.$store.commit('getCalendarRefreshStatus', true);
+        } catch (error) {
+          console.log(error);
+        }
+      } else {
+        alert('모든 항목을 입력해주세요');
       }
-      // } else {
-      //   alert('모든 항목을 입력해주세요');
-      // }
     },
     checkUpdateForm() {
-      if (this.$store.state.emotionIndex !== 0) {
-        this.feeling = this.$store.state.emotionIndex;
+      if (this.$store.state.emotionIndex === 0) {
+        this.feeling = this.$store.getters.getUpdateFeeling;
       } else {
         this.feeling = this.$store.state.targetDateDetail['feeling'];
       }
-      if (this.$store.state.selectedSticker !== '') {
-        this.imageUrl = this.$store.state.selectedSticker;
+      if (this.$store.state.selectedSticker === '') {
+        this.imageUrl = this.$store.getters.getUpdateEmotion;
       } else {
         this.imageUrl = this.$store.state.targetDateDetail['imageUrl'];
       }
@@ -139,9 +145,13 @@ export default {
       try {
         const id = this.$store.state.targetDateId;
         await deleteEmotionDetail(id);
-        this.$store.commit('getTargetDateDetail', '');
         this.loadDiaryCalendar();
-        alert('삭제 성공');
+        this.$store.commit('getTargetDateDetail', '');
+        this.$store.commit('getSelectedSticker', '');
+        this.$store.commit('getEmotionIndex', 0);
+        this.$store.commit('getStickerIndex', 0);
+        alert('삭제가 완료되었습니다.');
+        this.$store.commit('getModalStatus', false);
       } catch (error) {
         console.log(error);
       }
@@ -161,7 +171,16 @@ export default {
     },
     async loadDiaryCalendar() {
       try {
-        let { data } = await getEmotionsOfRecord(this.$store.state.targetDate[1], this.$store.state.targetDate[0]);
+        let month = 0;
+        let year = 0;
+        if (this.$store.state.targetDate.length > 0) {
+          month = this.$store.state.targetDate[1];
+          year = this.$store.state.targetDate[0];
+        } else {
+          month = this.month;
+          year = this.year;
+        }
+        let { data } = await getEmotionsOfRecord(month, year);
         let emotionList = data;
         // this.$store.commit('getThisMonthFeelings', emotionList);
         let dates2 = this.$store.state.thisMonth.map(v => v.slice());
@@ -278,7 +297,8 @@ export default {
 }
 
 .save-btn {
-  margin-top: 2vh;
+  margin-top: 1.5vh;
+  margin-bottom: 1.1vh;
   margin-right: 0.5vw;
   text-align: right;
 }

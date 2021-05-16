@@ -1,5 +1,8 @@
 <template>
-  <div class="post_plane_main">
+  <div class="mail_box_intro_wrapper">
+    <div class="post_plane_main">
+      <div id="planesvg" class="planesvg"><img src="@/assets/image/plane2.svg" alt="" /></div>
+    </div>
     <div class="post_main_wrapper">
       <div class="post_main post_main_container">
         <div class="post_main_wall post_wall_back"></div>
@@ -7,14 +10,12 @@
         <div class="post_main_wall post_wall_right"></div>
         <div class="post_main_wall post_wall_bottom"></div>
       </div>
-
-      <div id="planesvg" class="planesvg"><img src="@/assets/image/plane2.svg" alt="" /></div>
-
-      <div class="plane_fold">
+      <div class="white_paper"></div>
+      <div id="container-1">
         <svg
-          height="100%"
           version="1.1"
-          width="100%"
+          width="20rem"
+          height="20rem"
           xml:space="preserve"
           xmlns="http://www.w3.org/2000/svg"
           xmlns:xlink="http://www.w3.org/1999/xlink"
@@ -54,12 +55,22 @@
 </template>
 
 <script>
-// import { init } from '@/assets/js/mail/MailboxPlanePage.js';
+import { rotate_and_fly } from '@/assets/js/mail/MailBoxIntro.js';
 export default {
-  mounted() {
-    // init();
+  name: 'Mailboxintro',
+  data() {
+    return {};
   },
+  mounted() {
+    setTimeout(() => {
+      rotate_and_fly();
+      setTimeout(() => {
+        this.$router.push({ name: 'Mailbox' });
+      }, 2700);
+    }, 1500);
+  },
+  methods: {},
 };
 </script>
 
-<style scoped src="@/assets/css/mail/MailboxPlanePage.css"></style>
+<style scoped src="@/assets/css/mail/MailBoxIntro.css"></style>
