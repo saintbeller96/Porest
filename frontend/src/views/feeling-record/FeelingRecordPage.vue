@@ -71,12 +71,12 @@ export default {
       diaryArea.classList.add('show');
     },
   },
-  created() {
-    this.$store.dispatch('LOGIN', {
-      email: 'najse77@naver.com',
-      password: 'lemon1234',
-    });
-  },
+  // created() {
+  //   this.$store.dispatch('LOGIN', {
+  //     email: 'najse77@naver.com',
+  //     password: 'lemon1234',
+  //   });
+  // },
 };
 </script>
 
