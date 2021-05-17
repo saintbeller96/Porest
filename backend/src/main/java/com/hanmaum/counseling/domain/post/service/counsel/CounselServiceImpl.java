@@ -42,9 +42,7 @@ public class CounselServiceImpl implements CounselService{
 
     private DetailCounselDto convertToDetailCounselDto(Counsel counsel) {
         List<Letter> letters = counsel.getLetters();
-        DetailCounselDto result = new DetailCounselDto();
-        result.setCounselId(counsel.getId());
-        result.setCounsellorNickname(counsel.getCounsellorNickname());
+        DetailCounselDto result = new DetailCounselDto(counsel.getId(), counsel.getCounsellorNickname());
         int len = letters.size();
         for(int i = 0; i+1<len; i+=2){
             Letter letter = letters.get(i);
@@ -54,12 +52,7 @@ public class CounselServiceImpl implements CounselService{
         //현재 letters가 홀수이면 마지막 편지는 사연자의 편지
         if(len%2 == 1){
             Letter lastLetter = letters.get(len-1);
-            result.getDetail().add(
-                    LetterReplyDto.builder()
-                    .letterTitle(lastLetter.getTitle())
-                    .letterContent(lastLetter.getContent())
-                    .letterDate(lastLetter.getCreatedAt())
-                    .build());
+            result.getDetail().add(LetterReplyDto.builder().letter(lastLetter).build());
         }
         return result;
     }
