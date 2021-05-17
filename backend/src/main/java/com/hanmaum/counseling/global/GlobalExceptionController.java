@@ -66,13 +66,12 @@ public class GlobalExceptionController {
                 .code(e.toString())
                 .build());
     }
+
     @ExceptionHandler(value = NoSuchElementException.class)
     public ResponseEntity<?> noSuchElementException(NoSuchElementException e){
-        return ResponseEntity.badRequest().body(ErrorResponse.builder()
-                .message("gdgdg")
-                .code(e.toString())
-                .build());
+        return ResponseEntity.notFound().build();
     }
+
     private String mappingErrorMessage(ConstraintViolation<?> cv){
         final String path = cv.getPropertyPath().toString();
         final String property = path.substring(path.lastIndexOf('.') + 1);

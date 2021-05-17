@@ -12,16 +12,16 @@ public class BanReportDetailDto {
     private Long id;
     private UserInfo reporter;
     private UserInfo reportedUser;
-    private DetailCounselDto counsel;
+    private Long counselId;
     private String banReason;
     private LocalDateTime reportedAt;
 
     @Builder
-    public BanReportDetailDto(Long id, UserInfo reporter, UserInfo reportedUser, DetailCounselDto counsel, String banReason, LocalDateTime reportedAt) {
+    public BanReportDetailDto(Long id, UserInfo reporter, UserInfo reportedUser, Long counselId, String banReason, LocalDateTime reportedAt) {
         this.id = id;
         this.reporter = reporter;
         this.reportedUser = reportedUser;
-        this.counsel = counsel;
+        this.counselId = counselId;
         this.banReason = banReason;
         this.reportedAt = reportedAt;
     }

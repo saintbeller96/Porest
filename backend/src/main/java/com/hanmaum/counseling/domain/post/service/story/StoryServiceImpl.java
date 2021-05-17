@@ -82,7 +82,7 @@ public class StoryServiceImpl implements StoryService{
                 .writerId(story.getWriterId())
                 .content(story.getForm().getContent())
                 .title(story.getForm().getTitle())
-                .status(LetterStatus.WAIT)
+                .status(LetterStatus.READ)
                 .build();
         return letter;
     }
