@@ -69,7 +69,6 @@ class BanReportRepositoryImplTest {
         Long storyId = storyService.putStory(new FormDto("첫번째 사연의 제목", "너무 힘들어요, 어떻게 해야 하죠", null), reporter.getId());
         SimpleCounselDto counselDto = storyService.pickStory(storyId, counsellor.getId());
         Long counselId = counselDto.getCounselId();
-        //! 이거 때문에 build 실패해서 수정해놨습니다! - 견2 -
         Long letterId = counselDto.getDetail().getLetterId();
 
         //상담사 편지 작성
@@ -96,26 +95,26 @@ class BanReportRepositoryImplTest {
         Assertions.assertThat(banReport).isEqualTo(save);
     }
 
-    @Test
-    @DisplayName("신고 목록 가져오기")
-    void test() throws Exception{
-        //given
-        User reporter = userRepository.findByEmail("reporter@test.com").get();
-        User counsellor = userRepository.findByEmail("counsellor@test.com").get();
-        List<UserStoryStateDto> c = storyService.getUserStoryState(reporter.getId());
-        Long storyId = c.get(0).getStoryId();
-        List<UserCounselStateDto> d = counselService.getCounselStateOfUser(counsellor.getId());
-        Long counselId = d.get(0).getCounselId();
-
-        BanReport banReport = BanReport.of(new BanReportDto(counselId,"너무 성의가 없네요"), reporter.getId());
-        //when
-        BanReport save = banReportRepository.save(banReport);
-
-        //when
-        Page<BanReportDetailDto> result = banReportRepository.findProceedingReport(PageRequest.of(0, 10));
-
-        //then
-        Assertions.assertThat(result.getContent()).extracting("id").containsExactly(1L);
-        //
-    }
+//    @Test
+//    @DisplayName("신고 목록 가져오기")
+//    void test() throws Exception{
+//        //given
+//        User reporter = userRepository.findByEmail("reporter@test.com").get();
+//        User counsellor = userRepository.findByEmail("counsellor@test.com").get();
+//        List<UserStoryStateDto> c = storyService.getUserStoryState(reporter.getId());
+//        Long storyId = c.get(0).getStoryId();
+//        List<UserCounselStateDto> d = counselService.getCounselStateOfUser(counsellor.getId());
+//        Long counselId = d.get(0).getCounselId();
+//
+//        BanReport banReport = BanReport.of(new BanReportDto(counselId,"너무 성의가 없네요"), reporter.getId());
+//        //when
+//        BanReport save = banReportRepository.save(banReport);
+//
+//        //when
+//        Page<BanReportDetailDto> result = banReportRepository.findProceedingReport(PageRequest.of(0, 10));
+//
+//        //then
+//        Assertions.assertThat(result.getContent()).extracting("id").containsExactly(1L);
+//        //
+//    }
 }
