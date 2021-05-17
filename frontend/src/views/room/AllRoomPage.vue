@@ -12,9 +12,10 @@
           <div class="room-card-front">
             <!-- <img src="" class="front-card-img" alt=""> -->
             <div class="category-name">{{ category_name }}</div>
-            <div class="headling_text">
-              그대는 충분히 반짝거리기에, <br />
-              그대가 주인공인 삶을 살아줬으면 한다.
+            <div class="healing_text">
+              <!-- {{ healingText }} -->
+              <!-- 그대는 충분히 반짝거리기에, <br />
+              그대가 주인공인 삶을 살아줬으면 한다. -->
             </div>
             <div class="create-chat-room">상담소 열기</div>
           </div>
@@ -34,19 +35,20 @@
               </div>
               <h2>얼굴 공개 여부</h2>
               <div class="public-wrapper">
-                <div class="public public-btn" @click="publicState == true">공개</div>
-                <div class="non-public public-btn public-active" @click="publicState == false">비공개</div>
+                <div class="public public-btn" @click="public">공개</div>
+                <div class="non-public public-btn public-active" @click="nonpublic">비공개</div>
               </div>
               <h2>상담 분야 소개</h2>
               <div class="room-category-select">
-                <div class="room-category" data-value="1">학교 생활</div>
-                <div class="room-category" data-value="2">직장 생활</div>
-                <div class="room-category" data-value="4">자녀 양육</div>
-                <div class="room-category" data-value="5">대인 관계</div>
-                <div class="room-category" data-value="7">연애</div>
-                <div class="room-category" data-value="8">취업</div>
-                <div class="room-category" data-value="3">학업 및 진로</div>
-                <div class="room-category" data-value="6">심리 및 정서</div>
+                <div
+                  class="room-category"
+                  data-value="1"
+                  v-for="(tag, index) in categories"
+                  :key="index"
+                  :data-value="index + 1"
+                >
+                  {{ categories[index] }}
+                </div>
               </div>
               <div class="room-create-btn">
                 <div class="create-room-btn public-btn" @click.prevent="checkRoomName">개설하기</div>
@@ -60,12 +62,16 @@
             <div class="room-item" v-for="(room, index) in displayRooms" :key="index">
               <div class="room-item-left">
                 <h1 class="room-name">{{ room.name }}</h1>
-                <p>얼굴 공개 여부 : {{ room.publicState }}</p>
+                <p>얼굴 공개 여부 : {{ room.publicState ? '공개' : '비공개' }}</p>
                 <p>참가자 허용 인원 : {{ room.capacity }} 명</p>
                 <div class="room-category-flag-wrapper">
-                  <span class="room-category-flag" v-for="(tag, index) in room.category" :key="index">{{
-                    categories[tag]
-                  }}</span>
+                  <span
+                    class="room-category-flag"
+                    v-for="(tag, index) in room.category"
+                    :key="index"
+                    :style="{ backgroundColor: tagColors[index] }"
+                    >{{ categories[tag] }}</span
+                  >
                 </div>
                 <div class="room-btn">
                   <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">삭제하기</span>
@@ -79,7 +85,7 @@
             </div>
           </div>
         </div>
-        <div class="room-list-eixt-btn">나가기</div>
+        <div class="room-list-eixt-btn"><i class="fas fa-sign-out-alt"></i></div>
       </div>
     </div>
     <div class="card-main-wrapper">
@@ -92,9 +98,15 @@
                 {{ category }}
               </div>
             </div>
-            <div class="card-outer" :data-value="index + 1" @click="select(index)">
+            <div
+              class="card-outer"
+              :data-value="index + 1"
+              @click="select(index)"
+              :style="{ backgroundColor: tagColors[index] }"
+            >
+              <div class="outer_symbole"></div>
               <span class="symbol-1"></span>
-              <h2>{{ category }}</h2>
+              <h2>입장하기</h2>
             </div>
           </div>
         </div>
@@ -120,7 +132,7 @@
       :roomName="roomName"
       @showApprove="showApprove"
     ></check-in-page>
-    <div class="checkin-exit" @click="exitCheckin">떠나기</div>
+    <div class="checkin-exit" v-if="checkinState && !approveState" @click="exitCheckin">떠나기</div>
   </div>
 </template>
 
@@ -153,8 +165,22 @@ export default {
       category_name: null,
       displayRooms: [],
       login_state: false,
+      selected: null,
+      // tagColors: ['#F9957F', '#ABCFD1', '#D4E6C4', '#FFCFCB', '#ABBEEC', '#F4C464', '#F7D7C2', '#8CC1D3'],
+      tagColors: ['#004e66', '#EE7785', '#fab1ce', '#84B1ED', '#ABBEEC', '#F4C464', '#bf209f', '#8CC1D3'],
       imgUrl: '@/assets/svg/tarot5.svg',
       categories: ['학교 생활', '직장 생활', '학업 및 진로', '자녀 양육', '대인 관계', '심리 및 정서', '연애', '취업'],
+      healingTexts: [
+        '  그대는 충분히 반짝거리기에, <br />그대가 주인공인 삶을 살아줬으면 한다.',
+        '잠들지 않아도 꿈꾸던 널,<br> 잊지 않기를 바란다.',
+        '같은 실수를 두려워하되, 새로운 실수를 <br>두려워하지 마라. 실수는 곧 경험이다.',
+        '자녀들에게는 어머니보다 더 훌륭한 <br> 하늘로부터 받은 선물은 없다.',
+        '당신은 달 같은 존재예요. <br> 세상에 하나뿐인, 사라져서는 안 될 <br> 소중한 존재',
+        '한 겨울에도 움트는 봄이 있는가 하면, <br> 밤의 장작 뒤에도 미소 짓는 새벽이 있다.',
+        '사랑을 이야기하면 사랑을 하게 된다.',
+        '준비와 기회가 조우할 때 일어나는 것, <br> 그것이 바로 행운이다.',
+      ],
+      healingText: '',
     };
   },
   components: {
@@ -180,10 +206,19 @@ export default {
     }
   },
   methods: {
+    public() {
+      this.publicState = true;
+    },
+    nonpublic() {
+      this.publicState = false;
+    },
     moveToBack() {
       this.$router.push({ name: 'MainIsland' });
     },
     select(index) {
+      this.selected = index;
+      const headlingText = document.querySelector('.healing_text');
+      headlingText.innerHTML = this.healingTexts[index];
       console.log(index);
       this.displayRooms = [];
       this.category_name = this.categories[index];
@@ -192,6 +227,7 @@ export default {
           this.displayRooms.unshift(this.rooms[i]);
         }
       }
+      this.displayRooms.reverse();
       console.log(this.displayRooms);
     },
     showApprove() {
@@ -201,9 +237,6 @@ export default {
     exitCheckin() {
       this.checkinState = false;
       this.approveState = false;
-      const checkinExit = document.querySelector('.checkin-exit');
-      checkinExit.classList.remove('checkin-exit-show');
-      console.log(this.checkinState);
     },
     async checkRoomName() {
       if (this.roomName == null || this.roomName == '') {
@@ -247,16 +280,16 @@ export default {
       const docRef = db.collection('users').doc(this.user.uid);
       // let roomData = {
       //   name: this.roomName,
-      //   hostId: this.user.uid,
+      //   hostID: this.user.uid,
       //   capacity: num.innerText,
       //   publicState: this.publicState,
       //   category: this.selectedCategory,
       //   createdDate: `${year}-${month}-${day}, ${hour}:${minute}:${seconds}`,
       //   createdAt: FireBase.firestore.FieldValue.serverTimestamp(),
       // };
-      // this.rooms.unshift(roomData);
+      // this.displayRooms.unshift(roomData);
       docRef.set({ name: this.user.uid });
-
+      console.log('추가할거야', this.publicState);
       docRef
         .collection('rooms')
         .add({
@@ -280,7 +313,14 @@ export default {
         .collection('rooms')
         .doc(roomId)
         .delete();
-      this.rooms.splice(index, 1);
+      console.log(this.displayRooms);
+      this.displayRooms.splice(index, 1);
+      console.log(this.displayRooms);
+      this.rooms.forEach((ele, idx) => {
+        if (ele.id == roomId) {
+          this.rooms.splice(idx, 1);
+        }
+      });
     },
     moveToCheckIn(hostId, roomId, roomName) {
       this.checkinState = true;
@@ -338,9 +378,9 @@ export default {
               this.rooms.sort((a, b) => {
                 a.createdAt > b.createdAt;
               });
-              // this.rooms.re();
-              // this.rooms.sort()
-
+              if (this.selected != null) {
+                this.select(this.selected);
+              }
               console.log(this.rooms, 'sorting');
             });
         });

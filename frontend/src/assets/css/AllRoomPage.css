@@ -25,7 +25,7 @@
 .before i {
   width: 100%;
   height: 100%;
-  font-size: 2rem;
+  font-size: 1.5rem;
   cursor: pointer;
 }
 .intro_title {
@@ -142,7 +142,7 @@
   /* align-items: center */
 }
 
-.headling_text {
+.healing_text {
   width: 100%;
   height: 80%;
   display: flex; 
@@ -241,15 +241,32 @@
   height: 2rem;
   border-radius: 0.5rem;
 }
+
+.count-plus.click, .count-minus.click {
+  animation: .3s click forwards;
+}
+@keyframes click {
+  0%,100%{
+    box-shadow: none;
+    border: none;
+  }
+  50% {
+    border-right: 1px solid rgba(0, 0, 0, 0.3);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    box-shadow: -1px -1px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+}
 .count-num {
   width: 6rem;
   height: 2rem;
+  color: #fff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 1.2rem;
   font-weight: 600;
-  border-bottom: 3px solid #333;
+  border-bottom: 3px solid #fff;
   transition: all 1s;
 }
 .capacity-warning-over,.capacity-warning-less {
@@ -299,6 +316,7 @@ textarea::placeholder {
   min-width: 25%;
   height: 3rem;
   padding: 0.4rem;
+  font-size: 100%;
   /* border: 1px solid ; */
   text-align: center;
   line-height: 2.1rem;
@@ -399,9 +417,19 @@ textarea::placeholder {
   position: fixed;
   top: 1rem;
   right: 1rem;
+  width: 2rem;
+  height: 2rem;
   color: #fff;
   font-weight: 600;
 }
+.room-list-eixt-btn .fas {
+  width: 2rem;
+  height: 2rem;
+  color: #fff;
+  cursor: pointer;
+  z-index: 100;
+}
+
 .list-pop-up-show{
   /* opacity: 1; */
   transform: translateY(0vh);
@@ -655,8 +683,8 @@ textarea::placeholder {
   height: 1rem;
   border-radius: 100%;
   background-color:rgba(255,255,255,0.6);
-
 }
+
 .symbole::after {
   position: absolute;
   bottom: 1rem;
@@ -706,7 +734,23 @@ textarea::placeholder {
   background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 } */
 
-
+.outer_symbole{
+  pointer-events: none;
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+.outer_symbole::after{
+  position: absolute;
+  content: "";
+  top: 39%;
+  left: 50%;
+  z-index: 20;
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  background-color: rgba(255,255,255,0.9);
+}
 .card-outer .symbol-1 {
   position: absolute;
   display: inline-block;
@@ -721,24 +765,11 @@ textarea::placeholder {
   border-left-style: ridge;
 }
 
-/* .card-inner .symbol-1::after {
-  position: absolute;
-  content: "";
-  width: 5rem;
-  height: 5rem;
-  top: 30%;
-  left: -0%;
-
-  border-radius: 100%;
-  border-right: 4px solid #fff;
-  border-right-style: ridge;
-} */
-
 
 .card-outer h2 {
   color:#fff;
   position: absolute;
-  bottom: 3%;
+  bottom: 10%;
   left: 50%;
   pointer-events: none;
   transform: translate(-50%,0%);
@@ -787,23 +818,19 @@ textarea::placeholder {
   position: fixed;
   top: 10rem;
   right: 30rem;
-  z-index: -30;
   font-weight: 400;
   font-size: 1.2rem;
-  opacity: 0;
   color: #fff;
   transition: all .5s;
   cursor: pointer;
+  opacity: 1;
+  z-index: 45;
 }
 
 .checkin-exit:hover {
   color: #667eea;
 }
 
-.checkin-exit-show{
-  opacity: 1;
-  z-index: 45;
-}
 
 .check-in-pop-up-show {
   /* opacity: 1; */

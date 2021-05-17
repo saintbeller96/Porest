@@ -58,7 +58,20 @@
   cursor: pointer;
 }
 
-.leave-btn:hover, .join-btn:hover {
+.leave_approve {
+  position: absolute;
+  bottom: 1rem;
+  right: 1rem;
+  width: 4rem;
+  height: 2rem;
+  border-radius: 0.5rem;
+  padding: 0.5rem;
+  background-color: #fff;
+  transition: all 1s;
+  cursor: pointer;
+
+}
+.leave-btn:hover, .join-btn:hover,.leave_approve:hover {
   background-color: #667eea;
 }
 .attendee-list-wrapper {

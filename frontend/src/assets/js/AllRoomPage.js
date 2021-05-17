@@ -152,6 +152,7 @@ export const init = () => {
   const capacityWarningLess = document.querySelector('.capacity-warning-less');
 
   function capacityPlusHandler() {
+    countPlus.classList.add('click');
     if (capacityNumber <= 3) {
       capacityNumber++;
       countNum.innerText = capacityNumber;
@@ -160,8 +161,13 @@ export const init = () => {
     } else {
       capacityWarningOver.classList.add('capacity-warning-show');
     }
+    setTimeout(() => {
+      countPlus.classList.remove('click');
+    }, 300);
   }
   function capacityMinusHandler() {
+    countMinus.classList.add('click');
+
     if (capacityNumber >= 2) {
       capacityNumber--;
       countNum.innerText = capacityNumber;
@@ -170,6 +176,9 @@ export const init = () => {
     } else {
       capacityWarningLess.classList.add('capacity-warning-show');
     }
+    setTimeout(() => {
+      countMinus.classList.remove('click');
+    }, 300);
   }
   function roomCategoryHandler(e) {
     if (e.target.classList.contains('room-category')) {
