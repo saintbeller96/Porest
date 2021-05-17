@@ -4,6 +4,8 @@ import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.ban.entity.Ban;
+import com.hanmaum.counseling.domain.ban.repository.BanRepository;
 import com.hanmaum.counseling.security.JwtProvider;
 import com.hanmaum.counseling.utils.EmailUtil;
 import com.hanmaum.counseling.utils.RedisUtil;
@@ -20,7 +22,9 @@ import javax.mail.MessagingException;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
+import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.NoSuchElementException;
 
@@ -30,8 +34,10 @@ import java.util.NoSuchElementException;
 public class AccountService {
     static final String LOGIN_FAIL = "아이디 비밀번호 확인";
     static final String NOT_FOUND = "없는 유저";
+    static final String BANNED_USER = "사용 정지된 유저";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final BanRepository banRepository;
     private final JwtProvider jwtProvider;
     private final EmailUtil emailUtil;
     private final RedisUtil redisUtil;
@@ -64,7 +70,16 @@ public class AccountService {
     }
 
     public JwtTokenDto findByEmailAndPassword(LoginDto request) throws LoginException {
-      User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new LoginException(LOGIN_FAIL));
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new LoginException(LOGIN_FAIL));
+        //해당 유저가 밴 상태인지 확인
+        List<Ban> bannedList = banRepository.findByUserIdFetch(user.getId());
+        for (Ban ban : bannedList) {
+            //현재 밴이 진행중인지 검증
+            ban.validate(LocalDateTime.now());
+            //검증을 통과했으면 밴 해제
+            ban.releaseBan();
+        }
+
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
             throw new LoginException(LOGIN_FAIL);
         }

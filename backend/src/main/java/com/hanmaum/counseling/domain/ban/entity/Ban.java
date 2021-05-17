@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.ban.entity;
 
+import exception.BannedUserException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -37,6 +38,8 @@ public class Ban {
     @UpdateTimestamp
     private LocalDateTime updatedAt;
 
+    public static long BAN_PERIOD = 7L;
+
     @Builder
     public Ban(Long banUserId, BanReport report, LocalDateTime releaseDate, BanStatus banStatus) {
         this.banUserId = banUserId;
@@ -45,13 +48,13 @@ public class Ban {
         this.banStatus = banStatus;
     }
 
-    private void validate(LocalDateTime now){
+    public void validate(LocalDateTime now){
         if(releaseDate.isAfter(now)){
-            throw new IllegalStateException("해당 계정은 정지된 상태입니다");
+            throw new BannedUserException("해당 계정은 정지된 상태입니다");
         }
     }
-    private void releaseBan(){
+    public void releaseBan(){
         this.banStatus = BanStatus.RELEASED;
     }
-    public static long BAN_PERIOD = 7L;
+
 }

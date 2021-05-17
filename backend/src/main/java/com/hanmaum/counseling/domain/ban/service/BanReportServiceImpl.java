@@ -10,9 +10,14 @@ import com.hanmaum.counseling.domain.ban.repository.BanReportRepository;
 import com.hanmaum.counseling.domain.ban.repository.BanRepository;
 import com.hanmaum.counseling.domain.post.entity.Counsel;
 import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationProvider;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -26,15 +31,17 @@ public class BanReportServiceImpl implements BanReportService{
     private final BanReportRepository banReportRepository;
     private final BanRepository banRepository;
     private final CounselRepository counselRepository;
+    private final SecurityContext securityContext;
 
     @Override
-    public Long reportBan(BanReportDto reportDto, Long reporterId) {
+    public Long reportBan(BanReportDto reportDto) {
+        Long reporterId = getCurrentUserId();
         BanReport report = BanReport.of(reportDto, reporterId);
         return banReportRepository.save(report).getId();
     }
 
     @Override
-    public Long processBanReport(Long banReportId) {
+    public Long processReport(Long banReportId) {
         BanReport banReport = banReportRepository.findById(banReportId).orElseThrow();
         banReport.process();
 
@@ -46,12 +53,11 @@ public class BanReportServiceImpl implements BanReportService{
                 .report(banReport)
                 .releaseDate(LocalDateTime.now().plusDays(Ban.BAN_PERIOD))
                 .build();
-
         return banRepository.save(ban).getId();
     }
 
     @Override
-    public Long cancelBanReport(Long banReportId) {
+    public Long cancelReport(Long banReportId) {
         BanReport banReport = banReportRepository.findById(banReportId).orElseThrow();
         banReport.cancel();
         return banReportId;
@@ -59,6 +65,11 @@ public class BanReportServiceImpl implements BanReportService{
 
     @Override
     public Page<BanReportDetailDto> getProceedingBanReports(Pageable pageable) {
-        return null;
+        return banReportRepository.findProceedingReport(pageable);
+    }
+
+    private Long getCurrentUserId(){
+        Authentication auth = securityContext.getAuthentication();
+        return ((CustomUserDetails)auth.getPrincipal()).getId();
     }
 }

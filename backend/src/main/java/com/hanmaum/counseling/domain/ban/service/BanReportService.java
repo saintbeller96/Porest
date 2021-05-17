@@ -6,8 +6,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
 public interface BanReportService {
-    Long reportBan(BanReportDto report, Long reporterId);
-    Long processBanReport(Long banReportId);
-    Long cancelBanReport(Long banReportId);
+    Long reportBan(BanReportDto report);
+    Long processReport(Long banReportId);
+    Long cancelReport(Long banReportId);
     Page<BanReportDetailDto> getProceedingBanReports(Pageable pageable);
 }
