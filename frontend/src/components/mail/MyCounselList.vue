@@ -1,23 +1,60 @@
 <template>
   <ul class="section_body_story_list send_list">
-    <li class="story_item" v-for="(item, index) in [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]" :key="index">
+    <li class="story_item" v-for="(counsel, index) in counselList" :key="index">
       <div class="story_header">
-        <h1 class="story_title">사연 제목 위치</h1>
-        <div class="header_counsel"><small>작성자</small> 익명의 토끼</div>
+        <h1 class="story_title" v-text="counsel.title"></h1>
+        <div class="header_counsel" v-text="counsel.writerNickname"><small>작성자</small></div>
       </div>
-      <div class="story_body">
+      <!-- <div class="story_body">
         <p>
           내가 보낸 답장에 대한 재답장 제목 위치
         </p>
-      </div>
-      <p class="date">재답장 수신 날짜 예시) 2021. 05. 11</p>
+      </div> -->
+      <p class="date" v-text="setDate(counsel.updatedAt)"></p>
     </li>
   </ul>
 </template>
 
 <script>
+import { getMyCounsels } from "@/api/counsels";
 export default {
-  name: 'Mycounsellist',
+  name: "Mycounsellist",
+  data() {
+    return {
+      counselList: {},
+    };
+  },
+  methods: {
+    async getMyCounsels() {
+      this.counselList = await getMyCounsels();
+      console.log(this.counselList);
+    },
+    setDate(date) {
+      //date.substring(0, 4)   -> 년
+      //date.substring(6, 7)   -> 월
+      //date.substring(8, 10)  -> 일
+      //date.substring(11, 13) -> 시
+      //date.substring(14, 16) -> 분
+      let writeTime = new Date(date);
+      let elapsed = new Date() - writeTime;
+      if ((elapsed = elapsed / 1000) < 60) {
+        return "방금 전";
+      } else if ((elapsed = elapsed / 60) < 60) {
+        return Math.floor(elapsed) + "분 전";
+      } else if ((elapsed = elapsed / 60) < 24) {
+        return Math.floor(elapsed) + "시간 전";
+      } else if ((elapsed /= 24) < 31) {
+        return Math.floor(elapsed) + "일 전";
+      } else if ((elapsed /= 30) < 12) {
+        return Math.floor(elapsed) + "달 전";
+      } else {
+        return Math.floor(elapsed / 12) + "년 전";
+      }
+    },
+  },
+  mounted() {
+    this.getMyCounsels();
+  },
 };
 </script>
 <style scoped>
