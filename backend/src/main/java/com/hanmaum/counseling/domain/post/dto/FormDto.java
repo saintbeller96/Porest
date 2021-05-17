@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.post.dto;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import javax.validation.constraints.NotBlank;
@@ -15,17 +16,15 @@ import java.time.LocalDateTime;
  * 작성자: 김종성
  */
 @Getter
+@NoArgsConstructor
 @ToString
 public class FormDto {
-
     @NotBlank
     private String title;
     @NotBlank
     private String content;
     @PastOrPresent
     private LocalDateTime createAt;
-
-    public FormDto(){};
 
     @Builder
     public FormDto(@NotBlank String title, @NotBlank String content, @PastOrPresent LocalDateTime createAt) {

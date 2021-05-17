@@ -93,10 +93,10 @@ class CounselControllerTest {
         //첫번째 상담사가 첫번째 사연을 선택
         SimpleCounselDto tempDto = storyService.pickStory(storyId, counsellor.getId());
         //사연을 읽음
-        letterService.readLetter(tempDto.getLetterId(), counsellor.getId());
+        letterService.readLetter(tempDto.getDetail().getLetterId(), counsellor.getId());
         //답장
-        Long letterId1 = letterService.writeLetter(new FormDto("첫번째 상담사의 답변입니다", "그러시군요 ㅠㅠ", null),
-                tempDto.getCounselId(), tempDto.getLetterId(), counsellor.getId());
+        Long letterId1 = letterService.writeLetter(new FormDto( "첫번째 상담사의 답변입니다", "그러시군요 ㅠㅠ", null),
+                tempDto.getCounselId(), tempDto.getDetail().getLetterId(), counsellor.getId());
 
         //사연자가 다시 답장
         letterService.readLetter(letterId1, user.getId());
@@ -107,10 +107,10 @@ class CounselControllerTest {
         //두번째 상담사가 첫번째 사연을 선택
         SimpleCounselDto tempDto2 = storyService.pickStory(storyId, counsellor2.getId());
         //사연을 읽음
-        letterService.readLetter(tempDto2.getLetterId(), counsellor2.getId());
+        letterService.readLetter(tempDto2.getDetail().getLetterId(), counsellor2.getId());
         //답장
         Long letterId2 = letterService.writeLetter(new FormDto("두번째 상담사의 답변입니다", "그러시군요 ㅋㅋ", null),
-                tempDto2.getCounselId(), tempDto2.getLetterId(), counsellor2.getId());
+                tempDto2.getCounselId(), tempDto2.getDetail().getLetterId(), counsellor2.getId());
     }
     @AfterEach
     void setDown(){

@@ -156,7 +156,6 @@ class StoryControllerTest {
         //then
         actions.andExpect(status().isOk())
                 .andExpect(jsonPath("$.counselId").isNumber())
-                .andExpect(jsonPath("$.letterId").isNumber())
                 .andExpect(jsonPath("$.detail").isNotEmpty())
                 .andDo(print());
     }
