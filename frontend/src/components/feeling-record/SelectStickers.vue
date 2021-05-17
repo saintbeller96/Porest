@@ -121,6 +121,7 @@ export default {
         let a = this.check.pop();
         const selected1 = document.querySelector(`.item${a}`);
         const selected2 = document.querySelector(`.item${n}`);
+        // console.log(a);
         if (a === n) {
           selected1.classList.toggle('selected');
           this.$store.commit('getSelectedSticker', '');
@@ -131,6 +132,9 @@ export default {
           this.$store.commit('getSelectedSticker', `${index}.png`);
         }
       }
+      console.log(n);
+      // console.log(this.check);
+      // console.log(this.$store.state.selectedSticker);
     },
   },
   mounted() {

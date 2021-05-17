@@ -55,7 +55,7 @@ export default {
 <style scoped>
 @import url('https://fonts.googleapis.com/css2?family=Black+Han+Sans&family=Nanum+Brush+Script&display=swap');
 .active-record-container {
-  height: 42vh;
+  /* height: 42vh;
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
@@ -65,15 +65,15 @@ export default {
   z-index: 12;
   border-radius: 25px;
   margin: auto;
-  position: relative;
+  position: relative; */
 }
 
-.card {
+/* .card {
   display: -webkit-flex;
   display: -moz-flex;
   display: -ms-flex;
   display: -o-flex;
-  /* min-height: 100vh; */
+  min-height: 100vh;
 }
 
 .wrapper {
@@ -122,7 +122,7 @@ export default {
   font-size: 16px;
   border-radius: 50px;
   font-family: 'Black Han Sans', sans-serif;
-}
+} */
 
 /* .wrapper .box:before {
   content: '';

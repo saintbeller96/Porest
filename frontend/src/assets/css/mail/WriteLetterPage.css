@@ -1,4 +1,11 @@
-@import url(https://fonts.googleapis.com/css?family=Allan:700,400);
+/* @import url(https://fonts.googleapis.com/css?family=Allan:700,400); */
+@font-face {
+  font-family: 'UhBeeann';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeann.woff%27') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes new {
   0% { 
     left: 0%;
@@ -99,6 +106,8 @@
   }
 }
 
+
+
 .write-letter-wrapper { 
   width: 100vw;
   height: 100vh;
@@ -111,8 +120,6 @@
   /* background-color: #454545; */
   background-image: url(../../image/sky.jpg);
   background-size: 1950px;
-  
-  
 }
 
 
@@ -129,7 +136,7 @@
   transform-style: preserve-3d;
   transform-origin: right center;
   transition: transform 1s ease;
-  font-family: "Allan", sans-serif;
+  font-family: 'UhBeeann';
   color: #1F1F1F;
   
 }
@@ -286,6 +293,7 @@
   transition: all 0.1s linear;
   color:  white ;
   background-color:transparent;
+  font-family: 'UhBeeann';
 }
 .envelope .back .letter label.show {
   opacity: 1;
@@ -310,7 +318,7 @@
   outline: none;
 }
 .envelope .back .letter input, .envelope .back .letter textarea {
-  font-family: "Allan", sans-serif;
+  font-family: 'UhBeeann';
   font-size: 20px;
 }
 .envelope .back .letter input[type='text'] {
@@ -367,7 +375,7 @@
   z-index: 1;
   color: #1F1F1F;
   opacity: 0;
-  font-family: "Allan", sans-serif;
+  font-family: 'UhBeeann';
   font-weight: bold;
   width: 100%;
   height: 100%;
@@ -395,7 +403,7 @@
 .notification p:first-child:before {
   display: inline-block;
   content: ":)";
-  font-family: "Arial", sans-serif;
+  font-family: 'UhBeeann';
   font-size: 120px;
   width: 100%;
   margin-right: -20px;
@@ -411,7 +419,7 @@
 }
 .notification p:last-child:before {
   display: inline-block;
-  font-family: "Arial", sans-serif;
+  font-family: 'UhBeeann';
   color: #98e8e8;
   content: "+";
   height: 45px;

@@ -257,19 +257,19 @@ export default {
     clickEffect(idx, index) {
       if (this.check.length === 0) {
         this.check.push([idx, index]);
-        const selected = document.querySelector(`.item${idx}${index}`);
-        selected.classList.toggle('selected');
+        const selectCalendar = document.querySelector(`.item${idx}${index}`);
+        selectCalendar.classList.toggle('select_calendar');
       } else {
         let a = this.check.pop();
-        const selected1 = document.querySelector(`.item${a[0]}${a[1]}`);
-        const selected2 = document.querySelector(`.item${idx}${index}`);
+        const selectCalendar1 = document.querySelector(`.item${a[0]}${a[1]}`);
+        const selectCalendar2 = document.querySelector(`.item${idx}${index}`);
         if (a === [idx, index]) {
-          selected1.classList.toggle('selected');
+          selectCalendar1.classList.toggle('select_calendar');
           // selected2.classList.toggle('selected');
         } else if (a !== [idx, index]) {
           this.check.push([idx, index]);
-          selected1.classList.toggle('selected');
-          selected2.classList.toggle('selected');
+          selectCalendar1.classList.toggle('select_calendar');
+          selectCalendar2.classList.toggle('select_calendar');
         }
       }
     },
