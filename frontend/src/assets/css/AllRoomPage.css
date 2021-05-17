@@ -551,9 +551,7 @@ textarea::placeholder {
   width:12px;
   height: 8px;
 }
-::-webkit-scrollbar-corner {
 
-}
 ::-webkit-scrollbar-thumb {
   background-color:#fff;
   border-radius: 6px;

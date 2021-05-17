@@ -1,6 +1,8 @@
 <template>
   <div class="rooms-wrapepr">
-    <div class="before"><i class="fas fa-arrow-left" @click="moveToBack"></i></div>
+    <div class="before">
+      <i class="fas fa-arrow-left" @click="moveToBack"></i>
+    </div>
     <div class="intro_title">
       당신은 오늘 어떤 마음 속 이야기를 나누고 싶나요?
     </div>
@@ -22,7 +24,11 @@
           <div class="room-card-back">
             <h1>상담소 열기</h1>
             <form @submit.prevent>
-              <input type="text" placeholder="상담소 이름을 적어주세요" v-model="roomName" />
+              <input
+                type="text"
+                placeholder="상담소 이름을 적어주세요"
+                v-model="roomName"
+              />
               <div class="capacity-wrapper">
                 <h2>참가 허용 인원</h2>
                 <div class="capacity-count">
@@ -30,13 +36,22 @@
                   <div class="count-num">1</div>
                   <div class="count-btn count-minus">빼기</div>
                 </div>
-                <p class="capacity-warning-over">최대 인원은 4명 이하 입니다.</p>
-                <p class="capacity-warning-less">최초 인원은 1명 이상 입니다.</p>
+                <p class="capacity-warning-over">
+                  최대 인원은 4명 이하 입니다.
+                </p>
+                <p class="capacity-warning-less">
+                  최초 인원은 1명 이상 입니다.
+                </p>
               </div>
               <h2>얼굴 공개 여부</h2>
               <div class="public-wrapper">
                 <div class="public public-btn" @click="public">공개</div>
-                <div class="non-public public-btn public-active" @click="nonpublic">비공개</div>
+                <div
+                  class="non-public public-btn public-active"
+                  @click="nonpublic"
+                >
+                  비공개
+                </div>
               </div>
               <h2>상담 분야 소개</h2>
               <div class="room-category-select">
@@ -51,7 +66,12 @@
                 </div>
               </div>
               <div class="room-create-btn">
-                <div class="create-room-btn public-btn" @click.prevent="checkRoomName">개설하기</div>
+                <div
+                  class="create-room-btn public-btn"
+                  @click.prevent="checkRoomName"
+                >
+                  개설하기
+                </div>
                 <div class="exit-room-create public-btn">취소</div>
               </div>
             </form>
@@ -59,10 +79,16 @@
         </div>
         <div class="room-list">
           <div class="room-list-wrapper">
-            <div class="room-item" v-for="(room, index) in displayRooms" :key="index">
+            <div
+              class="room-item"
+              v-for="(room, index) in displayRooms"
+              :key="index"
+            >
               <div class="room-item-left">
                 <h1 class="room-name">{{ room.name }}</h1>
-                <p>얼굴 공개 여부 : {{ room.publicState ? '공개' : '비공개' }}</p>
+                <p>
+                  얼굴 공개 여부 : {{ room.publicState ? '공개' : '비공개' }}
+                </p>
                 <p>참가자 허용 인원 : {{ room.capacity }} 명</p>
                 <div class="room-category-flag-wrapper">
                   <span
@@ -74,18 +100,27 @@
                   >
                 </div>
                 <div class="room-btn">
-                  <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">삭제하기</span>
+                  <span
+                    v-if="uid === room.hostID"
+                    @click="deleteRoom(room.id, index)"
+                    >삭제하기</span
+                  >
                 </div>
               </div>
               <div class="room-item-right">
-                <div class="enter-room-btn" @click="moveToCheckIn(room.hostID, room.id, room.name)">
+                <div
+                  class="enter-room-btn"
+                  @click="moveToCheckIn(room.hostID, room.id, room.name)"
+                >
                   <span>입장</span><span>하기</span>
                 </div>
               </div>
             </div>
           </div>
         </div>
-        <div class="room-list-eixt-btn"><i class="fas fa-sign-out-alt"></i></div>
+        <div class="room-list-eixt-btn">
+          <i class="fas fa-sign-out-alt"></i>
+        </div>
       </div>
     </div>
     <div class="card-main-wrapper">
@@ -132,7 +167,13 @@
       :roomName="roomName"
       @showApprove="showApprove"
     ></check-in-page>
-    <div class="checkin-exit" v-if="checkinState && !approveState" @click="exitCheckin">떠나기</div>
+    <div
+      class="checkin-exit"
+      v-if="checkinState && !approveState"
+      @click="exitCheckin"
+    >
+      떠나기
+    </div>
   </div>
 </template>
 
@@ -167,9 +208,27 @@ export default {
       login_state: false,
       selected: null,
       // tagColors: ['#F9957F', '#ABCFD1', '#D4E6C4', '#FFCFCB', '#ABBEEC', '#F4C464', '#F7D7C2', '#8CC1D3'],
-      tagColors: ['#004e66', '#EE7785', '#fab1ce', '#84B1ED', '#ABBEEC', '#F4C464', '#bf209f', '#8CC1D3'],
+      tagColors: [
+        '#004e66',
+        '#EE7785',
+        '#fab1ce',
+        '#84B1ED',
+        '#ABBEEC',
+        '#F4C464',
+        '#bf209f',
+        '#8CC1D3',
+      ],
       imgUrl: '@/assets/svg/tarot5.svg',
-      categories: ['학교 생활', '직장 생활', '학업 및 진로', '자녀 양육', '대인 관계', '심리 및 정서', '연애', '취업'],
+      categories: [
+        '학교 생활',
+        '직장 생활',
+        '학업 및 진로',
+        '자녀 양육',
+        '대인 관계',
+        '심리 및 정서',
+        '연애',
+        '취업',
+      ],
       healingTexts: [
         '  그대는 충분히 반짝거리기에, <br />그대가 주인공인 삶을 살아줬으면 한다.',
         '잠들지 않아도 꿈꾸던 널,<br> 잊지 않기를 바란다.',

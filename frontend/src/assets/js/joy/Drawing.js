@@ -1,11 +1,12 @@
 let colorCode = '#ffffff';
 let colorChanged = false;
+let resotre_array = [];
+
 export const init = () => {
   const canvas = document.querySelector('#drawing-canvas');
   const cntx = canvas.getContext('2d');
   const painting = document.querySelector('#content');
   const paintStyle = getComputedStyle(painting);
-  let resotre_array = [];
   let index = -1;
 
   canvas.width = parseInt(paintStyle.getPropertyValue('width'));
@@ -106,5 +107,5 @@ export const init = () => {
 export const colorValue = value => {
   colorCode = value;
   colorChanged = true;
-  init();
+  // init();
 };
