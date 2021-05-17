@@ -1,7 +1,9 @@
 <template>
   <div class="mail_box_main_wrapper">
     <div class="backarrow_wrapper">
-      <i class="backarrow fas fa-arrow-left"></i>
+      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
+    </div>
+    <div class="mailbox_main_title">
       <div class="mailbox_name">민지의 우체통</div>
       <div class="mailbox_title">심리 상담은 자격증이 있어야 되지만, 고민 대화는 따뜻한 마음씨만 있으면 됩니다.</div>
     </div>
@@ -47,6 +49,9 @@
 <script>
 export default {
   methods: {
+    moveToBack() {
+      this.$router.push({ name: 'MainIsland' });
+    },
     goToStoryLetterPage(e) {
       console.log(e.target);
       e.target.classList.add('click1');

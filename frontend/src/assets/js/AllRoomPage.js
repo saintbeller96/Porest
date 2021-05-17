@@ -18,6 +18,8 @@ export const init = () => {
   const roomCategorySelect = document.querySelector('.room-category-select');
   const roomCategory = document.querySelectorAll('.room-category');
   const categoryName = document.querySelector('.category-name');
+  const introTitle = document.querySelector('.intro_title');
+  const frontImg = document.querySelector('.front-card-img');
   const categories = [
     '학교 생활',
     '직장 생활',
@@ -76,18 +78,21 @@ export const init = () => {
     if (e.target.classList.contains('card-outer')) {
       let selectCard = e.target;
       let selectCardId = parseInt(e.target.dataset.value, 10) - 1;
-      categoryName.dataset.value = selectCardId;
-      categoryName.innerText = `${categories[selectCardId]}`;
+      // categoryName.dataset.value = selectCardId;
+      // categoryName.innerText = `${categories[selectCardId]}`;
       roomCategory.forEach(ele => {
         if (ele.dataset.value == selectCardId + 1) {
           ele.classList.add('room-category-selected');
         }
       });
+      introTitle.classList.add('show');
       cardWrapper.classList.add('bottom');
       listPopUp.classList.add('list-pop-up-show');
       selectCard.classList.add('card-show');
       prev.classList.add('button-hide');
       next.classList.add('button-hide');
+      // frontImg.src = '../svg/tarot3.svg';
+      // createRoomFront.style.background = "url('../../assets/svg/video_final.svg')";
       // let diffrent = Math.abs(currentCard - selectCardId);
       // console.log(currentCard, selectCardId);
       // if (diffrent >= 4) {
@@ -109,6 +114,7 @@ export const init = () => {
     next.classList.remove('button-hide');
     createRoomBack.classList.remove('room-card-back-fade');
     createRoomFront.classList.remove('room-card-front-fade');
+    introTitle.classList.remove('show');
     roomCategory.forEach(ele => {
       ele.classList.remove('room-category-selected');
     });
@@ -146,6 +152,7 @@ export const init = () => {
   const capacityWarningLess = document.querySelector('.capacity-warning-less');
 
   function capacityPlusHandler() {
+    countPlus.classList.add('click');
     if (capacityNumber <= 3) {
       capacityNumber++;
       countNum.innerText = capacityNumber;
@@ -154,8 +161,13 @@ export const init = () => {
     } else {
       capacityWarningOver.classList.add('capacity-warning-show');
     }
+    setTimeout(() => {
+      countPlus.classList.remove('click');
+    }, 300);
   }
   function capacityMinusHandler() {
+    countMinus.classList.add('click');
+
     if (capacityNumber >= 2) {
       capacityNumber--;
       countNum.innerText = capacityNumber;
@@ -164,6 +176,9 @@ export const init = () => {
     } else {
       capacityWarningLess.classList.add('capacity-warning-show');
     }
+    setTimeout(() => {
+      countMinus.classList.remove('click');
+    }, 300);
   }
   function roomCategoryHandler(e) {
     if (e.target.classList.contains('room-category')) {
