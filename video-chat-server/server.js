@@ -78,7 +78,7 @@ app.post('/ar',(req,res)=>{
   res.redirect(`video_chat/room/ar/${req.body.roomId}`);
 })
 
-app.get("/secret", (req, res) => {
+app.post("/secret", (req, res) => {
   res.redirect(`video_chat/room/secret/${uuidV4()}`);
 });
 
