@@ -19,7 +19,7 @@
       </div>
       <div class="attendee-list-wrapper" v-if="(user && user.uid == hostId) || attendeeApproved">
         <div class="attendee-attend">
-          <h4 class="">참가자</h4>
+          <h4 class="">* 참가자</h4>
           <ul class="">
             <li v-for="(attendee, index) in attendeesApprovedArr" :key="attendee.id">
               <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
@@ -37,7 +37,7 @@
           </ul>
         </div>
         <div v-if="user && user.uid == hostId" class="attendee-wait">
-          <h4 class="">참가 대기자</h4>
+          <h4 class="">* 참가 대기자</h4>
           <ul class="">
             <li class="" v-for="(attendee, index) in attendeesPendingArr" :key="attendee.id">
               <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
@@ -140,18 +140,8 @@ export default {
       form.roomId.value = this.roomId;
       form.userId.value = this.user.uid;
       form.roomName.value = this.roomName;
-      // this.$refs.webrtc.join();
-      // this.attendeeJoined = true;
-      // this.$router.push('http://localhost:3000/ar', { data: { Uid: this.user.uid, who: 'host' } });
-      // window.location = 'http://localhost:3000/ar';
       window.open('', 'pop');
       form.submit();
-      // this.$router.push({
-      //   path: '/github',
-      //   beforeEnter() {
-      //     window.location.href = 'http://localhost:3000/ar';
-      //   },
-      // });
     },
     doLeave(uid) {
       console.log(uid, '삭제해야한다');
