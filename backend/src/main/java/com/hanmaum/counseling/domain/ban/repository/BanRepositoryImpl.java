@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.domain.ban.repository;
 
 import com.hanmaum.counseling.domain.ban.entity.Ban;
+import com.hanmaum.counseling.domain.ban.entity.BanStatus;
 import com.hanmaum.counseling.domain.ban.entity.QBan;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +33,18 @@ public class BanRepositoryImpl implements BanRepositoryCustom{
         return queryFactory
                 .selectFrom(ban)
                 .join(banReport).fetchJoin()
-                .where(ban.banUserId.eq(userId))
+                .where(ban.banUserId.eq(userId), ban.banStatus.eq(BanStatus.BANNED))
                 .fetch();
+    }
+
+    @Override
+    public Boolean existsBannedUser(Long userId) {
+        Integer result = queryFactory
+                .selectOne()
+                .from(ban)
+                .where(ban.banUserId.eq(userId), ban.banStatus.eq(BanStatus.BANNED))
+                .limit(1)
+                .fetchFirst();
+        return result != null;
     }
 }

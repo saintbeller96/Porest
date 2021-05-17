@@ -23,7 +23,8 @@
       </div>
 
       <div class="chat_ground_wrapper">
-        <div class="chat_ground_container">
+        <div class="chat_ground_container" @click="goToGurumi">
+          <form class="gurumi" @submit.prevent></form>
           <div class="pointer-chat"></div>
           <div class="chat_island">
             <object :data="chat_island" type="image/svg+xml"></object>
@@ -69,6 +70,14 @@ export default {
     Star,
   },
   methods: {
+    goToGurumi() {
+      const form = document.querySelector('.gurumi');
+      form.action = 'http://localhost:3000/secret';
+      form.method = 'POST';
+      form.target = 'pop';
+      window.open('', 'pop');
+      form.submit();
+    },
     goToMailbox() {
       this.$router.push({ name: 'MailBoxIntro' });
     },
