@@ -1,5 +1,6 @@
 <template>
   <div class="rooms-wrapepr">
+    <div class="before"><i class="fas fa-arrow-left" @click="moveToBack"></i></div>
     <div class="intro_title">
       당신은 오늘 어떤 마음 속 이야기를 나누고 싶나요?
     </div>
@@ -10,8 +11,11 @@
         <div class="room-card">
           <div class="room-card-front">
             <!-- <img src="" class="front-card-img" alt=""> -->
-            front
-            <div class="category-name"></div>
+            <div class="category-name">{{ category_name }}</div>
+            <div class="headling_text">
+              그대는 충분히 반짝거리기에, <br />
+              그대가 주인공인 삶을 살아줬으면 한다.
+            </div>
             <div class="create-chat-room">상담소 열기</div>
           </div>
           <div class="room-card-back">
@@ -53,7 +57,7 @@
         </div>
         <div class="room-list">
           <div class="room-list-wrapper">
-            <div class="room-item" v-for="(room, index) in rooms" :key="index">
+            <div class="room-item" v-for="(room, index) in displayRooms" :key="index">
               <div class="room-item-left">
                 <h1 class="room-name">{{ room.name }}</h1>
                 <p>얼굴 공개 여부 : {{ room.publicState }}</p>
@@ -75,97 +79,22 @@
             </div>
           </div>
         </div>
-        <div class="room-list-eixt-btn">떠나기</div>
+        <div class="room-list-eixt-btn">나가기</div>
       </div>
     </div>
     <div class="card-main-wrapper">
       <div class="card-main-board"></div>
       <div class="card-inner-wrapper">
-        <div class="card">
+        <div class="card" v-for="(category, index) in categories" :key="index">
           <div class="card-flip">
             <div class="card-inner">
-              <img src="@/assets/svg/tarot1.svg" alt="" />
+              <div class="symbole">
+                {{ category }}
+              </div>
             </div>
-            <div class="card-outer" data-value="1">
+            <div class="card-outer" :data-value="index + 1" @click="select(index)">
               <span class="symbol-1"></span>
-              <h2>학교 생활</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot3.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="2">
-              <span class="symbol-1"></span>
-              <h2>직장생활</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot4.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="3">
-              <span class="symbol-1"></span>
-              <h2>학업 및 진로</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot5.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="4">
-              <span class="symbol-1"></span>
-              <h2>자녀양육</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot6.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="5">
-              <span class="symbol-1"></span>
-              <h2>대인관계</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot7.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="6">
-              <span class="symbol-1"></span>
-              <h2>심리 및 정서</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot8.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="7">
-              <span class="symbol-1"></span>
-              <h2>연애</h2>
-            </div>
-          </div>
-        </div>
-        <div class="card">
-          <div class="card-flip">
-            <div class="card-inner">
-              <img src="@/assets/svg/tarot9.svg" alt="" />
-            </div>
-            <div class="card-outer" data-value="8">
-              <span class="symbol-1"></span>
-              <h2>취업</h2>
+              <h2>{{ category }}</h2>
             </div>
           </div>
         </div>
@@ -221,7 +150,11 @@ export default {
       hostId: null,
       checkinState: false,
       approveState: false,
-      categories: ['학교 생활', '직장 생활', '학업 및 진로', '자녀 양육', '대인 관계', '심리 및 정서', '연애', '기타'],
+      category_name: null,
+      displayRooms: [],
+      login_state: false,
+      imgUrl: '@/assets/svg/tarot5.svg',
+      categories: ['학교 생활', '직장 생활', '학업 및 진로', '자녀 양육', '대인 관계', '심리 및 정서', '연애', '취업'],
     };
   },
   components: {
@@ -230,6 +163,15 @@ export default {
     Star,
   },
   props: ['user'],
+  created() {
+    console.log(document.cookie);
+    console.log(this.$store.getters.getAuthToken);
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
+  },
   async mounted() {
     init();
     if (this.rooms.length == 0) {
@@ -238,6 +180,20 @@ export default {
     }
   },
   methods: {
+    moveToBack() {
+      this.$router.push({ name: 'MainIsland' });
+    },
+    select(index) {
+      console.log(index);
+      this.displayRooms = [];
+      this.category_name = this.categories[index];
+      for (let i = 0; i < this.rooms.length; i++) {
+        if (this.rooms[i].category.includes(index)) {
+          this.displayRooms.unshift(this.rooms[i]);
+        }
+      }
+      console.log(this.displayRooms);
+    },
     showApprove() {
       console.log('approve');
       this.approveState = true;
@@ -289,7 +245,16 @@ export default {
       this.addState = true;
       console.log('추가할거야', this.roomName, this.rooms);
       const docRef = db.collection('users').doc(this.user.uid);
-
+      // let roomData = {
+      //   name: this.roomName,
+      //   hostId: this.user.uid,
+      //   capacity: num.innerText,
+      //   publicState: this.publicState,
+      //   category: this.selectedCategory,
+      //   createdDate: `${year}-${month}-${day}, ${hour}:${minute}:${seconds}`,
+      //   createdAt: FireBase.firestore.FieldValue.serverTimestamp(),
+      // };
+      // this.rooms.unshift(roomData);
       docRef.set({ name: this.user.uid });
 
       docRef
@@ -305,6 +270,7 @@ export default {
         })
         .then(() => {
           this.roomName = '';
+          this.loadData();
         });
     },
     deleteRoom(roomId, index) {

@@ -12,7 +12,22 @@
   position: relative;
   /* animation: flow 20s infinite; */
 }
+.before {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  width: 2rem;
+  height: 2rem;
+  color: #fff;
+  z-index: 100;
+}
 
+.before i {
+  width: 100%;
+  height: 100%;
+  font-size: 2rem;
+  cursor: pointer;
+}
 .intro_title {
   position: absolute;
   opacity: 1;
@@ -22,6 +37,7 @@
   font-weight: 600;
   height: 2rem;
   transform: translate(-50%,0);
+  color: #fff;
   z-index: 40;
   transition: all .7s;
 }
@@ -37,6 +53,7 @@
   width: 300%;
   height:300%;
   background-image: url('../image/sky.jpg');
+  
   background-repeat:repeat-x;
   /* animation:  flow 200s infinite alternate; */
 }
@@ -87,17 +104,23 @@
   left: 0;
   border-radius: 1rem;
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: center;
+  
 
   /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
-  background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);
+  /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); */
 
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
   backface-visibility: hidden;
-  /* border: 1px solid rgba(255, 255, 255, 0.5); */
+  border: 1px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
   transform: perspective(1200px) rotateY(0deg);
   transition: all 1s;
+  cursor: pointer;
 }
 .room-card-front {
   /* background-image: url('../svg/tarot9.svg'); */
@@ -105,10 +128,33 @@
   background-repeat: no-repeat;
   background-size: contain;
 }
-
-.room-card-front img {
+.category-name {
   width: 100%;
-  height: 100%;
+  height: 10%;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: rgba(255,255,255,0.7);
+
+  /* writing-mode: vertical-lr; */
+  text-align: left;
+  /* display: flex; */
+  /* justify-content: center; */
+  /* align-items: center */
+}
+
+.headling_text {
+  width: 100%;
+  height: 80%;
+  display: flex; 
+  color: #fff;
+  font-size: 1.5rem;
+  line-height: 3rem;
+  letter-spacing: 5px;
+  text-align: justify;
+  writing-mode: vertical-lr;
+  /* writing-mode: sideways-lr; */
+  justify-content: center;
+  align-items: center;
 }
 .create-chat-room {
   position: fixed;
@@ -116,7 +162,7 @@
   bottom: 5%;
   font-size: 1.3rem;
   font-weight:600;
-  color: #333;
+  color: rgba(255,255,255,0.7);
   transform: translate(-50%,0);
 }
 
@@ -246,6 +292,8 @@ textarea::placeholder {
   flex-wrap: wrap;
   justify-content: center;
   align-items: center;
+  display: grid;
+  grid-template-columns: repeat(3,1fr);
 }
 .room-category {
   min-width: 25%;
@@ -558,22 +606,67 @@ textarea::placeholder {
   display: flex;
   justify-content: center;
   align-items: center;
-  padding: 1rem;
+  padding: 0.3rem;
   /* border:1px solid #fff; */
 
-  background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);
+  /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); */
 
-  /* background-image: none; */
+  background-image: none;
   box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
   backdrop-filter: blur(15px);
+  background-color: rgba(255,255,255,0.2);
+  /* background-image: linear-gradient(to top, #feada6 0%, #f5efef 100%); */
+  /* background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);    */
+
   /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); */
   /* background-color: rgba(0, 0, 0, 0.8); */
-  /* pointer-events: none; */
+  pointer-events: none;
   /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
 
   transform:perspective(800px) rotateY(0deg);
   transition: all 1s;
   backface-visibility: hidden;
+}
+
+.symbole{
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-position: 50% 50%;
+  background-size: contain;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #fff;
+  writing-mode: vertical-lr;
+  letter-spacing: 0.5rem;
+  position: relative;
+  border: 1px solid rgba(255,255,255,0.5);
+}
+.symbole::before {
+  position: absolute;
+  content: "";
+  top: 1rem;
+  left: 1rem;  
+  width: 1rem;
+  height: 1rem;
+  border-radius: 100%;
+  background-color:rgba(255,255,255,0.6);
+
+}
+.symbole::after {
+  position: absolute;
+  bottom: 1rem;
+  content: "";
+  right: 0rem;  
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 100%;
+  border-left: 2px solid rgba(255,255,255,0.6);
+  /* background-color:rgba(255,255,255,0.6); */
 }
 
 .card-outer  {
@@ -596,6 +689,7 @@ textarea::placeholder {
   transition: all 1s;
   transform: perspective(800px) rotateY(180deg);
   backface-visibility: hidden;
+  cursor: pointer;
 
 }
 
@@ -662,11 +756,14 @@ textarea::placeholder {
 .prev-button {
   top:90%;
   left:45%;
+  cursor: pointer;
   transform:translate(-45%,-50%);
 }
 .next-button {
   top:90%;
   left:55%;
+  cursor: pointer;
+
   transform:translate(-55%,-50%);
 }
 .button-hide {

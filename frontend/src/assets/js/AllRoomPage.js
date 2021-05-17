@@ -78,8 +78,8 @@ export const init = () => {
     if (e.target.classList.contains('card-outer')) {
       let selectCard = e.target;
       let selectCardId = parseInt(e.target.dataset.value, 10) - 1;
-      categoryName.dataset.value = selectCardId;
-      categoryName.innerText = `${categories[selectCardId]}`;
+      // categoryName.dataset.value = selectCardId;
+      // categoryName.innerText = `${categories[selectCardId]}`;
       roomCategory.forEach(ele => {
         if (ele.dataset.value == selectCardId + 1) {
           ele.classList.add('room-category-selected');
@@ -91,9 +91,6 @@ export const init = () => {
       selectCard.classList.add('card-show');
       prev.classList.add('button-hide');
       next.classList.add('button-hide');
-      const obj = document.createElement('img');
-      obj.src = '@/assets/svg/tarot1.svg';
-      createRoomFront.appendChild(obj);
       // frontImg.src = '../svg/tarot3.svg';
       // createRoomFront.style.background = "url('../../assets/svg/video_final.svg')";
       // let diffrent = Math.abs(currentCard - selectCardId);

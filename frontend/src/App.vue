@@ -59,8 +59,8 @@ export default {
   position: fixed;
   width: 3rem;
   height: 3rem;
-  top: 1rem;
-  left: 1rem;
+  bottom: 1rem;
+  right: 1rem;
   z-index: 200;
   color: white;
 }
