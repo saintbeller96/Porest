@@ -1,4 +1,10 @@
 @import url(https://fonts.googleapis.com/css?family=Allan:700,400);
+@font-face {
+  font-family: 'Love_son';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_07@1.0/Love_son.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
 @keyframes new {
   0% { 
     left: 0%;
@@ -91,11 +97,11 @@
 @keyframes letter-in {
   0% {
     transform: translate3d(0, -733.3333333333px, 0);
-    box-shadow: inset 0 0px 30px -5px #6A5ACD, 0 0 20px -5px;
+    box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px;
   }
   100% {
     transform: translate3d(0, 0, 0);
-    box-shadow: inset 0 0px 30px -5px #8572EE, 0 0 10px -5px;
+    box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px;
   }
 }
 
@@ -129,7 +135,7 @@
   transform-style: preserve-3d;
   transform-origin: right center;
   transition: transform 1s ease;
-  font-family: "Allan", sans-serif;
+  font-family: 'Love_son';
   color: #1F1F1F;
   
 }
@@ -138,9 +144,9 @@
   width: 100%;
   height: 100%;
   
-  background-color:#B4B4FF;;
+  background-color: #EDEDBF;
   border-radius: 5px;
-  box-shadow: inset 0 0 30px -5px #8282FF, 0 0 20px -5px;
+  box-shadow: inset 0 0 30px -5px #a87e50, 0 0 20px -5px;
 }
 .envelope .front {
   backface-visibility: hidden;
@@ -160,7 +166,7 @@
   right: 10px;
   top: 10px;
   padding: 10px;
-  background: radial-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 4px, white 4px, white);
+  background: radial-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 4px, #f6f6df 4px, #f6f6df);
   background-size: 20px 20px;
   background-position: -10px -10px;
 }
@@ -169,7 +175,7 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: #FFDCFF;
+  background-color: #F2F2CF;
   border-radius: 2px;
 }
 .envelope .front .mailme {
@@ -202,8 +208,8 @@
 .envelope .back .flap:before {
   content: "";
   position: absolute;
-  background-color: #B4B4FF;
-  box-shadow: inset 0 0 30px -7px #8282FF;
+  background-color: #EDEDBF;
+  box-shadow: inset 0 0 30px -7px #a87e50;
 }
 .envelope .back .top-flap:before, .envelope .back .bottom-flap:before {
   width: calc(550px / 1.414);
@@ -265,11 +271,11 @@
   left: 10px;
   width: 530px;
   height: 346.6666666667px;
-  background-color:#DCEBFF;
+  background-color: #F2F2CF;
   border-radius: 5px;
   padding: 0 30px;
   box-sizing: border-box;
-  box-shadow: inset 0 0px 30px -5px #8282FF, 0 0 10px -5px;
+  box-shadow: inset 0 0px 30px -5px #B08C5B, 0 0 10px -5px;
 }
 
 
@@ -284,7 +290,7 @@
   opacity: 0;
   top: -15px;
   transition: all 0.1s linear;
-  color:  white ;
+  color: #ADADAD;
   background-color:transparent;
 }
 .envelope .back .letter label.show {
@@ -295,7 +301,7 @@
   color: inherit;
 }
 .envelope .back .letter ::placeholder {
-  color: white;
+  color: #ADADAD;
 }
 .envelope .back .letter input[type='text'], .envelope .back .letter textarea {
   border: none;
@@ -303,14 +309,14 @@
   width: 100%;
   padding: 5px;
   margin: 0;
-  background-color: #DCEBFF;
+  background-color: #F6F6DF;
 
 }
 .envelope .back .letter input:focus, .envelope .back .letter textarea:focus {
   outline: none;
 }
 .envelope .back .letter input, .envelope .back .letter textarea {
-  font-family: "Allan", sans-serif;
+  font-family: 'Love_son';
   font-size: 20px;
 }
 .envelope .back .letter input[type='text'] {
@@ -322,7 +328,7 @@
   border: none;
   border-radius: 2px;
   padding: 5px 20px;
-  background-color:#DCEBFF;
+  background-color: #e7e1bc;
   border-radius: 5px;
   box-sizing: border-box;
   margin: 0;
@@ -330,8 +336,8 @@
   transition: all 0.1s linear;
 }
 .envelope .back .letter input[type='submit']:hover {
-  background-color: #8282FF;
-  color: whi;
+  background-color: #DCD0AA;
+  /* color: whi; */
 }
 .envelope .back .letter textarea {
   resize: none;
@@ -367,7 +373,7 @@
   z-index: 1;
   color: #1F1F1F;
   opacity: 0;
-  font-family: "Allan", sans-serif;
+  font-family: 'Love_son';
   font-weight: bold;
   width: 100%;
   height: 100%;
@@ -395,7 +401,7 @@
 .notification p:first-child:before {
   display: inline-block;
   content: ":)";
-  font-family: "Arial", sans-serif;
+  font-family: 'Love_son';
   font-size: 120px;
   width: 100%;
   margin-right: -20px;
@@ -411,7 +417,7 @@
 }
 .notification p:last-child:before {
   display: inline-block;
-  font-family: "Arial", sans-serif;
+  font-family: 'Love_son';
   color: #98e8e8;
   content: "+";
   height: 45px;

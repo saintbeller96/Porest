@@ -1,6 +1,6 @@
 <template>
   <div class="mail_box_main_wrapper">
-    <div class="title">민지의 우체통</div>
+    <div class="title">심리 상담은 자격증이 있어야 되지만, 고민 대화는 따뜻한 마음씨만 있으면 됩니다.</div>
     <div class="postmenu_wrapper">
       <div class="postmenu1" @click="goToStoryLetterPage">
         <div class="postmenu1_content">
