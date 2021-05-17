@@ -59,4 +59,7 @@ export default {
   getThisMonthEmoji(state, thisMonthWithEmoji) {
     state.thisMonthWithEmoji = thisMonthWithEmoji;
   },
+  setCounselId(state, counselId) {
+    state.counselId = counselId;
+  }
 };
