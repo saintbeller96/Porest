@@ -105,7 +105,7 @@ public class CounselServiceImpl implements CounselService{
 
     private void validateUser(Long userId, Counsel counsel){
         if(userId != counsel.getStory().getWriterId()){
-            throw new IllegalStateException("This user cannot modify this counsel");
+            throw new IllegalStateException("This user cannot modify this counsel.");
         }
     }
 }

@@ -1,5 +1,9 @@
 package com.hanmaum.counseling.config;
 
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiParam;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.core.Authentication;
@@ -38,5 +42,20 @@ public class SwaggerConfig {
                 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any())
                 .build();
+    }
+
+    @ApiModel
+    @Getter
+    @Setter
+    static class Page{
+        @ApiParam(value="페이지 번호(0~N)", example = "0")
+        private Integer page;
+
+        @ApiParam(value="한 페이지에서 받을 크기(min = 1)", example = "10")
+        private Integer size;
+
+        @ApiParam(value="정렬")
+        private List<String> sort;
+
     }
 }

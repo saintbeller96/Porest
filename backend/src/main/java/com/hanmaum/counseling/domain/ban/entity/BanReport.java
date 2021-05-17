@@ -1,12 +1,11 @@
 package com.hanmaum.counseling.domain.ban.entity;
 
 import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.ban.dto.BanReportDto;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
-import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
-import org.springframework.boot.context.properties.bind.DefaultValue;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -30,17 +29,33 @@ public class BanReport {
 
     @Enumerated(EnumType.STRING)
     @Column(name = "ban_report_status")
-    private BanStatus banReportStatus;
+    private BanReportStatus banReportStatus;
 
     @CreationTimestamp
     private LocalDateTime createdAt;
 
     @Builder
-    public BanReport(Long reporterId, Long counselId, String banReason, BanStatus banReportStatus, LocalDateTime createdAt) {
+    public BanReport(Long reporterId, Long counselId, String banReason, BanReportStatus banReportStatus) {
         this.reporterId = reporterId;
         this.counselId = counselId;
         this.banReason = banReason;
         this.banReportStatus = banReportStatus;
-        this.createdAt = createdAt;
+    }
+
+    public static BanReport of(BanReportDto dto, Long reporterId){
+        return BanReport.builder()
+                .reporterId(reporterId)
+                .counselId(dto.getCounselId())
+                .banReason(dto.getBanReason())
+                .banReportStatus(BanReportStatus.PROCEEDING)
+                .build();
+    }
+
+    public void process(){
+        this.banReportStatus = BanReportStatus.PROCESSED;
+    }
+
+    public void cancel(){
+        this.banReportStatus = BanReportStatus.CANCEL;
     }
 }

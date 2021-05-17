@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.global;
 
 import com.hanmaum.counseling.error.ErrorResponse;
+import exception.BannedUserException;
 import exception.UserNotFoundException;
 import exception.WrongPasswordException;
 import lombok.extern.slf4j.Slf4j;
@@ -66,13 +67,17 @@ public class GlobalExceptionController {
                 .code(e.toString())
                 .build());
     }
+
     @ExceptionHandler(value = NoSuchElementException.class)
     public ResponseEntity<?> noSuchElementException(NoSuchElementException e){
-        return ResponseEntity.badRequest().body(ErrorResponse.builder()
-                .message("gdgdg")
-                .code(e.toString())
-                .build());
+        return ResponseEntity
+                .status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.builder()
+                        .message(e.getMessage())
+                        .code(e.toString()).
+                                build());
     }
+
     private String mappingErrorMessage(ConstraintViolation<?> cv){
         final String path = cv.getPropertyPath().toString();
         final String property = path.substring(path.lastIndexOf('.') + 1);
@@ -87,6 +92,15 @@ public class GlobalExceptionController {
                         .message(e.getMessage())
                         .code(e.toString()).
                                 build());
+    }
+
+    @ExceptionHandler(BannedUserException.class)
+    public ResponseEntity<ErrorResponse> handleBannedUserException(BannedUserException e){
+        return ResponseEntity
+                .status(HttpStatus.FORBIDDEN)
+                .body(ErrorResponse.builder()
+                        .message(e.getMessage())
+                        .code(e.toString()).build());
     }
 
     //나머지 예외는 서버 에러로 처리
