@@ -1,6 +1,7 @@
 <template>
   <div class="active-record-container">
-    <button
+    편지 작성 내역
+    <!-- <button
       v-for="(tab, index) in tabs"
       :key="index"
       :class="{ active: currentTab === index }"
@@ -37,7 +38,7 @@
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </template>
 
@@ -66,6 +67,12 @@ export default {
   border-radius: 25px;
   margin: auto;
   position: relative; */
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
 /* .card {
@@ -137,7 +144,7 @@ export default {
   transition-duration: 500ms;
 } */
 
-.wrapper .box:hover {
+/* .wrapper .box:hover {
   transform: translateY(-5%);
-}
+} */
 </style>

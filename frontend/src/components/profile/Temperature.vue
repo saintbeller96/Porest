@@ -1,56 +1,81 @@
 <template>
-  <body>
-    <div class="wrapper">
-      <div id="termometer">
-        <div id="temperature" style="height:0" data-value="0°C"></div>
-        <div id="graduations"></div>
-      </div>
-      <button @click="setTemperature">check</button>
-
-      <div id="playground">
-        <div id="range">
-          <input id="minTemp" type="text" value="0" />
-          <input type="range" min="0" max="100" value="80" />
-          <input id="maxTemp" type="text" value="100" />
-        </div>
-        <p id="unit">Celcius C°</p>
-      </div>
+  <div class="body">
+    <div class="percent-count text" id="percentCount"></div>
+    <div class="progress-bar">
+      <div class="progress" id="progress"></div>
     </div>
-  </body>
+    <!-- <h1 class="text">Hello</h1> -->
+  </div>
 </template>
 
 <script>
-import { init } from '@/assets/js/Temperature.js';
-import '../../assets/css/Temperature.css';
 export default {
-  data() {
-    return {
-      temperature: 50,
-    };
-  },
   mounted() {
-    init();
+    this.progress();
   },
   methods: {
-    changeTemperature() {},
-    setTemperature() {
-      const units = {
-        Celcius: '°C',
-        Fahrenheit: '°F',
-      };
+    progress() {
+      let prg = document.getElementById('progress');
+      let percent = document.getElementById('percentCount');
+      let counter = 1;
+      let progress = 1;
+      let id = setInterval(frame, 40);
+      let temperature = this.$store.state.temperature;
 
-      const config = {
-        minTemp: 0,
-        maxTemp: 100,
-        unit: 'Celcius',
-      };
-      const range = this.temperature;
-      const temperature = document.getElementById('temperature');
-      temperature.style.height = ((range.value - config.minTemp) / (config.maxTemp - config.minTemp)) * 100 + '%';
-      temperature.dataset.value = range.value + units[config.unit];
+      function frame() {
+        if (counter == temperature) {
+          clearInterval(id);
+        } else {
+          progress += 1;
+          counter += 1;
+          prg.style.width = progress + '%';
+          percent.innerHTML = counter + '°C';
+        }
+      }
     },
   },
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+* {
+  box-sizing: border-box;
+}
+
+.percent-count {
+  font-size: 15px;
+  text-align: center;
+}
+
+.progress-bar {
+  width: 10vw;
+  height: 2.7vh;
+  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+  margin: 2vh auto;
+  padding: 0.4vh;
+  border-radius: 13px;
+  opacity: 0.8;
+}
+
+/*  */
+.progress {
+  width: 10vw;
+  height: 2vh;
+  border-radius: 10px;
+  background-image: linear-gradient(120deg, #f093fb 0%, #f5576c 100%);
+}
+
+/* 글씨체 */
+::selection {
+  background-color: #c3cfe2;
+}
+
+.text {
+  text-transform: uppercase;
+  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 1.5vw;
+  font-family: 'MaplestoryOTFBold';
+}
+</style>

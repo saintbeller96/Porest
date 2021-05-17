@@ -30,7 +30,10 @@ export default {
   refreshCalendar: false,
   thisMonth: [],
   thisMonthWithEmoji: [],
-  
+
   //MyreceivedMail에서 사용
   counselId: null,
+
+  // profile
+  modalProfileSetting: false,
 };

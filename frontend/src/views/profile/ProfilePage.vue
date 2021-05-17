@@ -6,50 +6,45 @@
     <!-- <div class="bookmark-area">
       <bookmark></bookmark>
     </div> -->
-
-    <!-- <div class="active-record-area">
+    <div class="active-record-area">
       <active-record></active-record>
-    </div> -->
-
-    <!-- <temperature></temperature> -->
+    </div>
+    <profile-setting-modal v-if="$store.state.modalProfileSetting" class="modal">
+      <profile-setting></profile-setting>
+    </profile-setting-modal>
   </div>
 </template>
 
 <script>
-// import Temperature from '@/components/profile/Temperature';
 import Profile from '@/components/profile/Profile';
-import Bookmark from '@/components/profile/Bookmark';
+// import Bookmark from '@/components/profile/Bookmark';
 import ActiveRecord from '@/components/profile/ActiveRecord';
+import ProfileSetting from '@/components/profile/ProfileSetting';
+import ProfileSettingModal from '@/components/profile/modal/ProfileSettingModal';
 export default {
   components: {
-    // Temperature,
     Profile,
-    Bookmark,
+    // Bookmark,
     ActiveRecord,
+    ProfileSettingModal,
+    ProfileSetting,
   },
 };
 </script>
 
 <style scoped>
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@200;300;400;500;600;700&display=swap');
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-  font-family: 'Poppins', sans-serif;
-  transition: all 0.3s ease;
+@font-face {
+  font-family: 'MaplestoryOTFBold';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/MaplestoryOTFBold.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
+
 .body {
   height: 100vh;
   width: 100vw;
-  /* display: grid; */
-
+  display: flex;
   justify-content: center;
-  /* 그리드 나누기 */
-  /* grid-template-columns: repeat(8, 1fr);
-  grid-template-rows: 1fr 1fr;
-  box-sizing: border-box; */
-
   overflow: hidden;
   background-image: url('../../assets/image/sky.jpg');
   background-size: cover;
@@ -58,24 +53,33 @@ export default {
 }
 
 .profile-area {
-  /* grid-column-start: 3;
-  grid-column-end: 4;
-  grid-row-start: 1;
-  grid-row-end: span 2;
-  margin: 4.1vh 1.4vw 0 0; */
+  margin-top: 10vh;
+  width: 17%;
+  height: 40%;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+
+  border-radius: 25px;
+  margin-right: 1.5vw;
 }
 
-.bookmark-area {
-  /* grid-column-start: 4;
-  grid-column-end: 7;
-  grid-row-start: 1;
-  grid-row-end: 2;
-  margin-top: 4.1vh; */
-}
 .active-record-area {
-  /* grid-column-start: 4;
-  grid-column-end: 7;
-  grid-row-start: 2;
-  grid-row-end: 3; */
+  margin-top: 10vh;
+  width: 50%;
+  height: 80%;
+  background: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+  border-top: 1px solid rgba(255, 255, 255, 0.5);
+  border-left: 1px solid rgba(255, 255, 255, 0.5);
+  backdrop-filter: blur(5px);
+
+  border-radius: 25px;
+}
+
+.modal {
+  z-index: 2;
 }
 </style>
