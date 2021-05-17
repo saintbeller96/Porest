@@ -69,7 +69,8 @@ class BanReportRepositoryImplTest {
         Long storyId = storyService.putStory(new FormDto("첫번째 사연의 제목", "너무 힘들어요, 어떻게 해야 하죠", null), reporter.getId());
         SimpleCounselDto counselDto = storyService.pickStory(storyId, counsellor.getId());
         Long counselId = counselDto.getCounselId();
-        Long letterId = counselDto.getLetterId();
+        //! 이거 때문에 build 실패해서 수정해놨습니다! - 견2 -
+        Long letterId = counselDto.getDetail().getLetterId();
 
         //상담사 편지 작성
         Long letterId2 = letterService.writeLetter(new FormDto("첫번째 답장", "그러시군요 ㅠㅠ", null), counselId, letterId, counsellor.getId());

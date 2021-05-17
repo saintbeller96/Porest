@@ -6,27 +6,23 @@
         <div
           class="page"
           :class="{ active: index == 0 }"
-          v-for="(item, index) in pages"
+          v-for="(page, index) in pages"
           :key="index"
           :data-value="index"
         >
           <div class="front" :data-value="index">
             <div class="book_cover" v-if="index == 0">
-              <div class="root_story_header">이번에도 면접에서 떨어졌어요</div>
-              <div class="root_story_content">
-                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Vitae voluptates perspiciatis est tempore
-                magnam libero laboriosam nemo obcaecati aut totam? Consequuntur dolores, commodi omnis eaque in atque
-                quibusdam ad reiciendis!
-              </div>
+              <div class="root_story_header" v-text="page.letter.detail.title"></div>
+              <div class="root_story_content" v-text="page.letter.detail.content"></div>
             </div>
             <div class="reply" v-else>
-              <div class="reply_header">답장한 제목</div>
-              <div class="reply_content">답장한 목록</div>
+              <div class="reply_header" v-text="page.reply.detail.title"></div>
+              <div class="reply_content" v-text="page.reply.detail.content"></div>
             </div>
           </div>
           <div class="back" :data-value="index">
-            <div class="letter_header">답변 받은 제목</div>
-            <div class="letter_content">답변 받은 내용</div>
+            <div class="letter_header" v-text="page.letter.detail.title"></div>
+            <div class="letter_content" v-text="page.letter.detail.content"></div>
           </div>
         </div>
       </div>
@@ -36,12 +32,12 @@
 </template>
 
 <script>
-import { init } from '@/assets/js/mail/AllLetters.js';
+import { init } from "@/assets/js/mail/AllLetters.js";
 export default {
-  name: 'Allletters',
+  name: "Allletters",
   data() {
     return {
-      pages: [1, 2, 3, 4, 5, 6, 7, 8],
+      pages: this.$store.state.allLetters.detail,
     };
   },
   mounted() {
@@ -49,7 +45,7 @@ export default {
   },
   methods: {
     exitAll() {
-      this.$emit('exitAll');
+      this.$emit("exitAll");
     },
   },
 };
