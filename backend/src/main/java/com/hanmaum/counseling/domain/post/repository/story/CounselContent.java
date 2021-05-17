@@ -12,8 +12,8 @@ public class CounselContent {
     private FormDto reply;
 
     public CounselContent(){};
-    public CounselContent(Long counselId, String letterTitle, String letterContent, LocalDateTime letterDate,
-                          String replyTitle, String replyContent, LocalDateTime replyDate){
+    public CounselContent(Long counselId, Long letterId, String letterTitle, String letterContent, LocalDateTime letterDate,
+                          Long replyId, String replyTitle, String replyContent, LocalDateTime replyDate){
         this.counselId = counselId;
         this.letter = new FormDto(letterTitle, letterContent, letterDate);
         this.reply = new FormDto(replyTitle, replyContent, replyDate);

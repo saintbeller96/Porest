@@ -24,6 +24,6 @@ public class SimpleStoryDto {
     @Builder
     public SimpleStoryDto(Long storyId, String title, String content, LocalDateTime date){
         this.storyId = storyId;
-        this.detail = new FormDto(title, content, date);
+        this.detail = FormDto.builder().title(title).content(content).createAt(date).build();
     }
 }
