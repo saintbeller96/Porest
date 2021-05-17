@@ -3,7 +3,7 @@
     <div class="stickers">
       <div v-for="(data, idx) in todaysSticker" :key="idx" class="container">
         <div class="img-container">
-          <img :src="data" class="img" :class="`item${idx}`" @click="getStickerIndex(idx)" />
+          <img :src="data" class="img" :class="`sticker${idx}`" @click="getStickerIndex(idx)" />
         </div>
       </div>
     </div>
@@ -111,16 +111,20 @@ export default {
   },
   methods: {
     getStickerIndex(n) {
+      console.log('1', n);
       let index = n + 1;
       if (this.check.length === 0) {
         this.check.push(n);
-        const selected = document.querySelector(`.item${n}`);
+        const selected = document.querySelector(`.sticker${n}`);
+        console.log('2', selected);
         selected.classList.toggle('selected');
         this.$store.commit('getSelectedSticker', `${index}.png`);
       } else {
         let a = this.check.pop();
-        const selected1 = document.querySelector(`.item${a}`);
-        const selected2 = document.querySelector(`.item${n}`);
+        const selected1 = document.querySelector(`.sticker${a}`);
+        const selected2 = document.querySelector(`.sticker${n}`);
+        console.log('3', selected1);
+        console.log('4', selected2); // 여기가 잘못됨
         if (a === n) {
           selected1.classList.toggle('selected');
           this.$store.commit('getSelectedSticker', '');
