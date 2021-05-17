@@ -4,12 +4,14 @@ import com.hanmaum.counseling.domain.ban.dto.BanReportDetailDto;
 import com.hanmaum.counseling.domain.ban.dto.BanReportDto;
 import com.hanmaum.counseling.domain.ban.service.BanReportService;
 import com.hanmaum.counseling.domain.ban.service.BanService;
+import com.hanmaum.counseling.security.CustomUserDetails;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;

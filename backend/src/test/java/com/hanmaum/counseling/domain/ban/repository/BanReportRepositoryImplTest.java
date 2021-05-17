@@ -83,8 +83,11 @@ class BanReportRepositoryImplTest {
     void create_counsel() throws Exception{
         //given
         User reporter = userRepository.findByEmail("reporter@test.com").get();
-        List<UserCounselStateDto> c = counselService.getCounselStateOfUser(reporter.getId());
-        Long counselId = c.get(0).getCounselId();
+        User counsellor = userRepository.findByEmail("counsellor@test.com").get();
+        List<UserStoryStateDto> c = storyService.getUserStoryState(reporter.getId());
+        Long storyId = c.get(0).getStoryId();
+        List<UserCounselStateDto> d = counselService.getCounselStateOfUser(counsellor.getId());
+        Long counselId = d.get(0).getCounselId();
         BanReport banReport = BanReport.of(new BanReportDto(counselId,"너무 성의가 없네요"), reporter.getId());
         //when
         BanReport save = banReportRepository.save(banReport);

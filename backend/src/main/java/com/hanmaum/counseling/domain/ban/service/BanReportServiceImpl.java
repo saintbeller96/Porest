@@ -4,7 +4,6 @@ import com.hanmaum.counseling.domain.ban.dto.BanReportDetailDto;
 import com.hanmaum.counseling.domain.ban.dto.BanReportDto;
 import com.hanmaum.counseling.domain.ban.entity.Ban;
 import com.hanmaum.counseling.domain.ban.entity.BanReport;
-import com.hanmaum.counseling.domain.ban.entity.BanReportStatus;
 import com.hanmaum.counseling.domain.ban.entity.BanStatus;
 import com.hanmaum.counseling.domain.ban.repository.BanReportRepository;
 import com.hanmaum.counseling.domain.ban.repository.BanRepository;
@@ -14,10 +13,7 @@ import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContext;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,13 +27,16 @@ public class BanReportServiceImpl implements BanReportService{
     private final BanReportRepository banReportRepository;
     private final BanRepository banRepository;
     private final CounselRepository counselRepository;
-    private final SecurityContext securityContext;
 
     @Override
     public Long reportBan(BanReportDto reportDto) {
         Long reporterId = getCurrentUserId();
         BanReport report = BanReport.of(reportDto, reporterId);
         return banReportRepository.save(report).getId();
+    }
+
+    private Long getCurrentUserId() {
+        return ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()).getId();
     }
 
     @Override
@@ -66,10 +65,5 @@ public class BanReportServiceImpl implements BanReportService{
     @Override
     public Page<BanReportDetailDto> getProceedingBanReports(Pageable pageable) {
         return banReportRepository.findProceedingReport(pageable);
-    }
-
-    private Long getCurrentUserId(){
-        Authentication auth = securityContext.getAuthentication();
-        return ((CustomUserDetails)auth.getPrincipal()).getId();
     }
 }
