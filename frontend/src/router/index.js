@@ -142,6 +142,12 @@ const routes = [
     name: 'MailBoxIntro',
     component: () => import('@/views/mailbox/MailBoxIntro.vue'),
   },
+  {
+    path: '/joy',
+    name: 'JoyMainPage',
+    component: () => import('@/views/joy/JoyMainPage.vue'),
+  },
+
 ];
 
 const router = new VueRouter({
