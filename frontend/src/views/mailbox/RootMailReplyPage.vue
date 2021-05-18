@@ -3,7 +3,7 @@
     <div class="envelope new">
       <div class="front">
         <div class="stamp"></div>
-        <div class="mailme">
+        <div class="mailme mail_reply_title">
           <p v-text="$store.state.selectedStory.detail.title"></p>
         </div>
       </div>
@@ -28,7 +28,8 @@
       <div class="front">
         <div class="stamp"></div>
         <div class="mailme">
-          <p>Porest</p>
+          <p>당신의 소중한 답장</p>
+          <p>porest가 전해드립니다.</p>
         </div>
       </div>
 
@@ -39,21 +40,21 @@
           <div class="root-mail-reply">
             <form class="mailform">
               <div>
-                <label for="reply_title">reply_title</label>
-                <input type="text" name="reply_title" size="40" placeholder="reply_title" v-model="letter.body.title" />
+                <label for="reply_title">답장 제목</label>
+                <input type="text" name="reply_title" size="40" placeholder="답장의 제목을 적어주세요." v-model="letter.body.title" />
               </div>
               <div>
-                <label for="reply_content">reply_content</label>
+                <label for="reply_content">답장 내용</label>
                 <textarea
                   name="reply_content"
                   cols="40"
                   rows="5"
-                  placeholder="reply_content"
+                  placeholder="답장의 내용을 적어주세요. (여러분의 말 한마디가 소중합니다.)"
                   v-model="letter.body.content"
                 ></textarea>
               </div>
               <div>
-                <input class="sendBtn" type="submit" value="Send" @click="reply()" />
+                <input class="sendBtns" type="submit" value="보내기" @click="reply()" />
               </div>
             </form>
           </div>

@@ -3,7 +3,7 @@ export const init = () => {
   const envelope = document.querySelector('.envelope');
   const mailFormInput = document.querySelectorAll('.mailform input');
   const mailFormTextArea = document.querySelector('.mailform textarea');
-  const sendBtn = document.querySelector('.sendBtn');
+  const sendBtn = document.querySelector('.sendBtns');
   const btnReply = document.querySelector('.btnReply');
   const envelopeReply = document.querySelector('.envelope.reply');
 

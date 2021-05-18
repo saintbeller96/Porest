@@ -149,7 +149,7 @@
   transform-origin: right center;
   transition: transform 1s ease;
   font-family: 'Love_son';
-  color: black;
+  color: #1F1F1F;
   
 }
 .envelope .front, .envelope .back {
@@ -321,10 +321,10 @@
   border: none;
   box-sizing: border-box;
   width: 100%;
-  padding: 0px 0 0 8px;
+  padding: 0px 0 5px 8px;
   margin: 0;
   background-color: #F6F6DF;
-  caret-color:white;
+  caret-color:#ADADAD;
 
 }
 .envelope .back .letter input:focus, .envelope .back .letter textarea:focus {

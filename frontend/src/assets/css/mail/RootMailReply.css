@@ -1,5 +1,4 @@
 /*@import "compass/css3";*/
-@import url(https://fonts.googleapis.com/css?family=Allan:700,400);
 @keyframes new { 
   0% {
     left: 0%;
@@ -41,11 +40,15 @@
 @keyframes letter-out {
   0% {
     transform: translate3d(0, 0, 0);
-    box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px;
+    /* box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px; */
+  }
+  50%{
+    transform: translate3d(0, -680px, 0) scale(1);
+
   }
   100% {
-    transform: translate3d(0, -733.3333333333px, 0);
-    box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px;
+    transform: translate3d(0, -733.3333333333px, 0) scale(1.4);
+    /* box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px; */
   }
 }
 @keyframes send {
@@ -91,11 +94,14 @@
 }
 @keyframes letter-in {
   0% {
-    transform: translate3d(0, -733.3333333333px, 0);
+    transform: translate3d(0, -733.3333333333px, 0) scale(1.4);
     box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px;
   }
+  50%{
+    transform: translate3d(0, -350px, 0) scale(1);
+  }
   100% {
-    transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0) scale(1);
     box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px;
   }
 }
@@ -110,6 +116,8 @@
   position: relative;
   perspective: 800px;
   overflow: hidden;
+  background-image: url(../../image/sky.jpg);
+  background-size: 1950px;
 }
 
 
@@ -125,7 +133,7 @@
   transform-style: preserve-3d;
   transform-origin: right center;
   transition: all 1s ease;
-  font-family: "Allan", sans-serif;
+  font-family: 'Love_son';
   color: #1F1F1F;
 }
 
@@ -194,13 +202,12 @@
   font-weight: bold;
   margin: 0;
 }
-.envelope .front .mailme p:first-child {
-  font-size: 50px;
-  line-height: 50px;
+.mail_reply_title{
+font-size: 43px;
+padding-bottom: 19px;
+font-family: 'Love_son';
 }
-.envelope .front .mailme p:last-child {
-  font-size: 30px;
-}
+
 .envelope .back {
   transform: rotateY(180deg) translate3d(0, 0, 1px);
 }
@@ -281,22 +288,48 @@
   box-sizing: border-box;
   box-shadow: inset 0 0px 30px -5px #B08C5B, 0 0 10px -5px;
 }
+.root-mail{
+  font-size: 25px;
+  color: black;
+}
+.btnReply{
+  top: 220px;
+  font-weight: bold;
+  cursor: pointer;
+  border: none;
+  padding: 6px 10px 6px 13.2px;
+  background-color: #e7e1bc;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin: 0px 0px 0 394px;
+  -webkit-transition: all 0.1s linear;
+  transition: all 0.1s linear;
+  font-size: 20px;
+}
+
+.btnReply:hover {
+  background-color: #DCD0AA;
+}
 .envelope .back .letter div {
   position: relative;
-  margin-top: 25px;
+  margin-top: 23px;
+}
+.mailform{
+  margin-top: 38px;
 }
 .envelope .back .letter label {
   position: absolute;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 34px;
   opacity: 0;
   top: -15px;
   transition: all 0.1s linear;
-  color: #ADADAD;
+  color: black;
+  background-color:transparent;
 }
 .envelope .back .letter label.show {
   opacity: 1;
-  top: -18px;
+  top: -30px;
 }
 .envelope .back .letter label.focus {
   color: inherit;
@@ -308,37 +341,42 @@
   border: none;
   box-sizing: border-box;
   width: 100%;
-  padding: 5px;
-  margin: 0;
+   padding: 0px 0 5px 8px;
+  margin: 0 0 4px 0;
   background-color: #F6F6DF;
+  caret-color:#ADADAD;
 }
 .envelope .back .letter input:focus, .envelope .back .letter textarea:focus {
   outline: none;
 }
 .envelope .back .letter input, .envelope .back .letter textarea {
-  font-family: "Allan", sans-serif;
-  font-size: 20px;
+  font-family: 'Love_son';
+  font-size: 1.2rem;
+  color: black;
 }
 .envelope .back .letter input[type='text'] {
-  height: 33px;
+  height: 31px;
 }
 .envelope .back .letter input[type='submit'] {
   font-weight: bold;
   cursor: pointer;
   border: none;
-  border-radius: 2px;
-  padding: 5px 20px;
+  padding: 4px 20px 5px 20px;
   background-color: #e7e1bc;
-  margin: 0;
+  border-radius: 5px;
+  box-sizing: border-box;
+  margin: -10px 0 0px 396px;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
+  font-size: 19px;
 }
 .envelope .back .letter input[type='submit']:hover {
   background-color: #DCD0AA;
 }
 .envelope .back .letter textarea {
   resize: none;
-  height: 117.6666666667px;
+  height: 175px;
+  font-family: 'Love_son';
 }
 
 .envelope.new {
