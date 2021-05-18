@@ -3,58 +3,18 @@
     <div class="stickers">
       <div v-for="(data, idx) in todaysSticker" :key="idx" class="container">
         <div class="img-container">
-          <img :src="data" class="img" :class="`item${idx}`" @click="getStickerIndex(idx)" />
+          <img :src="data" class="img" :class="`sticker${idx}`" @click="getStickerIndex(idx)" />
         </div>
       </div>
     </div>
-    <!-- <swiper class="swiper" :options="swiperOption">
-      <swiper-slide v-for="(data, idx) in todaysSticker" :key="idx"
-        ><img :src="data" class="img" @click="getStickerIndex(idx)"
-      /></swiper-slide>
-      <div class="swiper-pagination" slot="pagination"></div>
-    </swiper> -->
   </div>
 </template>
 
 <script>
-// import Vue from 'vue';
-// import { Swiper, SwiperSlide } from 'vue-awesome-swiper';
-// import 'swiper/swiper-bundle.css';
-
 export default {
-  // components: {
-  //   Swiper,
-  //   SwiperSlide,
-  // },
   data() {
     return {
       check: [],
-      // swiperOption: {
-      //   slidesPerView: 5,
-      //   spaceBetween: 10,
-      //   pagination: {
-      //     el: '.swiper-pagination',
-      //     clickable: true,
-      //   },
-      //   breakpoints: {
-      //     1024: {
-      //       slidesPerView: 4,
-      //       spaceBetween: 40,
-      //     },
-      //     768: {
-      //       slidesPerView: 3,
-      //       spaceBetween: 30,
-      //     },
-      //     640: {
-      //       slidesPerView: 2,
-      //       spaceBetween: 20,
-      //     },
-      //     320: {
-      //       slidesPerView: 1,
-      //       spaceBetween: 10,
-      //     },
-      //   },
-      // },
       todaysSticker: [
         require('../../assets/image/sticker/1.png'),
         require('../../assets/image/sticker/2.png'),
@@ -114,13 +74,13 @@ export default {
       let index = n + 1;
       if (this.check.length === 0) {
         this.check.push(n);
-        const selected = document.querySelector(`.item${n}`);
+        const selected = document.querySelector(`.sticker${n}`);
         selected.classList.toggle('selected');
         this.$store.commit('getSelectedSticker', `${index}.png`);
       } else {
         let a = this.check.pop();
-        const selected1 = document.querySelector(`.item${a}`);
-        const selected2 = document.querySelector(`.item${n}`);
+        const selected1 = document.querySelector(`.sticker${a}`);
+        const selected2 = document.querySelector(`.sticker${n}`);
         if (a === n) {
           selected1.classList.toggle('selected');
           this.$store.commit('getSelectedSticker', '');
@@ -134,10 +94,11 @@ export default {
     },
   },
   mounted() {
+    console.log(this.$store.state.stickerindex);
     if (this.$store.state.stickerindex !== 0) {
       let n = this.$store.state.stickerindex - 1;
       this.check.push(n);
-      const selected = document.querySelector(`.item${n}`);
+      const selected = document.querySelector(`.sticker${n}`);
       selected.classList.toggle('selected');
     }
   },
@@ -173,7 +134,7 @@ export default {
 }
 
 .img:hover {
-  transform: scale(1.25);
+  transform: scale(1.23);
   filter: none;
 }
 
@@ -182,7 +143,7 @@ export default {
 }
 
 .selected {
-  transform: scale(1.25);
+  transform: scale(1.23);
   filter: none;
 }
 </style>

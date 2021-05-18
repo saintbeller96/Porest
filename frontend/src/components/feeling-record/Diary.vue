@@ -51,7 +51,7 @@
       </div>
 
       <div
-        class="writing-btn"
+        class="description"
         v-if="
           ($store.state.targetDate[0] < year && $store.state.targetDateDetail === '') ||
             ($store.state.targetDate[0] === year &&
@@ -66,7 +66,7 @@
         기록된 감정이 없어요 ㅠㅠ
       </div>
       <div
-        class="writing-btn"
+        class="description"
         v-else-if="
           ($store.state.targetDate[0] >= year &&
             $store.state.targetDate[1] > month &&
@@ -166,6 +166,8 @@ export default {
     openCreateModal() {
       this.$store.commit('getModalStatus', true);
       this.$store.commit('getDiaryModalStatus', 'create');
+      this.$store.commit('getStickerIndex', 0);
+      this.$store.commit('getEmotionIndex', 0);
     },
   },
   created() {
@@ -190,7 +192,7 @@ export default {
 }
 
 .dairy-container {
-  width: 26vw;
+  width: 27vw;
   height: 61vh;
   background: rgba(255, 255, 255, 0.3);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
@@ -207,7 +209,7 @@ export default {
 }
 
 .date-container {
-  font-size: 25px;
+  font-size: 2vw;
   font-weight: bold;
   margin-bottom: 8vh;
 }
@@ -218,18 +220,17 @@ export default {
 }
 
 .setting-btn {
-  color: #635ac1;
-  /* color: #fff; */
+  /* color: #635ac1; */
+  color: #fff;
   float: right;
-  font-size: 15px;
-  opacity: 0.8;
+  font-size: 20px;
   margin-top: -10px;
   margin-right: -10px;
   cursor: pointer;
 }
 
 .setting-btn:hover {
-  opacity: 0.8;
+  transform: scale(1.2);
   color: #fff;
 }
 
@@ -241,14 +242,7 @@ export default {
 }
 
 .chosen-sticker img {
-  width: 6vw;
-}
-
-.feeling-detail {
-  display: flex;
-  justify-content: center;
-  font-size: 22px;
-  font-family: 'Nanum Pen Script', cursive;
+  width: 7vw;
 }
 
 .diary-detail {
@@ -257,10 +251,10 @@ export default {
   height: 18vh;
   display: flex;
   justify-content: center;
-  line-height: 32px;
+  line-height: 4.4vh;
   text-align: center;
   text-align: justify;
-  font-size: 32px;
+  font-size: 2.2vw;
   overflow-y: scroll;
 }
 ::-webkit-scrollbar {
@@ -276,7 +270,17 @@ export default {
 
 .writing-btn {
   height: 25vh;
-  font-size: 27px;
+  font-size: 2vw;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.description {
+  color: #4d4d4d;
+  height: 25vh;
+  font-size: 2vw;
   font-weight: bold;
   display: flex;
   align-items: center;
