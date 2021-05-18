@@ -155,6 +155,8 @@ export default {
   mounted() {
     startAnimation();
   },
+  created(){
+  }
 };
 </script>
 

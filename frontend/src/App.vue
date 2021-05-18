@@ -2,18 +2,21 @@
   <div id="app">
       <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
       <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
-  <nav id="nav"><button class="nav-icon" id="nav-icon"><span></span></button>
-    <ul class="nav_ul">
+  <nav  id="nav"><button class="nav-icon" id="nav-icon"><span></span></button>
+    <ul v-if="loginState" class="nav_ul">
         <li><a href="#about">우체통</a></li>
         <li><a href="#search">하루일기</a></li>
         <li><a href="#newbie">마음나눔</a></li>
         <li><a href="#newbie">하소연</a></li>
         <li><a href="#newbie">쉼터</a></li>
-      
         <li @click="logout">떠나기</li>
     </ul>
-</nav>
-    <router-view :user="user" />
+    <ul v-else class="nav_ul">
+        <li><a href="#about">로그인</a></li>
+    </ul>
+    
+  </nav>
+    <router-view :user="user"  />
   </div>
 </template>
 
@@ -28,11 +31,13 @@ export default {
     return {
       user: null,
       rooms: [],
+      loginState:false,
     };
   },
   methods: {
     logout() {
       // :TODO 삭제요청
+      this.loginState = false;
       console.log('logout', this.$router.history.current.name);
       this.$store.dispatch('LOGOUT');
       FireBase.auth()
@@ -45,18 +50,28 @@ export default {
           }
         });
     },
+
   },
   mounted() {
     init();
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
         console.log('user login request');
+        this.loginState = !this.loginState;
         this.user = user;
         if (this.$store.state.uid == '' || this.$store.state.uid == 'null') {
           this.$store.dispatch('saveuUserUid', { firebaseData: this.user });
         }
       }
     });
+  },
+   created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      this.$router.push({ name: 'Login' });
+    }else {
+      this.loginState = true;
+    }
   },
 };
 </script>
