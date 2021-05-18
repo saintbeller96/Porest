@@ -9,39 +9,13 @@
           <div class="disk_inner"></div>
         </div>
         <div target="blank" class="coverImg">
-          <img class="thumbnail" src="../../assets/image/iu_0.jpg" alt="" />
+          <img class="thumbnail" src="../../assets/music/rain.jpg" alt="" />
           <audio id="audio" controls="controls">
             <source id="audioSource" src=""></source>
             Your browser does not support the audio format.
           </audio>
         </div>
       </section>
-
-      <!-- <section class="album">
-        <div class="disk">
-          <div class="disk_inner"></div>
-        </div>
-        <a
-          href="https://www.youtube.com/watch?v=Ub6IyAOTwr8"
-          target="blank"
-          class="coverImg"
-        >
-          <img src="../../assets/image/iu_1.jpg" alt="" />
-        </a>
-      </section>
-
-      <section class="album ">
-        <div class="disk">
-          <div class="disk_inner"></div>
-        </div>
-        <a
-          href="https://www.youtube.com/watch?v=D1PvIWdJ8xo"
-          target="blank"
-          class="coverImg"
-        >
-          <img src="../../assets/image/iu_2.jpg" alt="" />
-        </a>
-      </section> -->
     </article>
     <section class="music__list__main__wrapper">
       <div class="music__list__wrapper">
@@ -125,7 +99,6 @@
 </template>
 
 <script>
-import { init } from '@/assets/js/joy/HealingMusicPage.js';
 export default {
   name: 'Healingmusicpage',
   data() {
@@ -146,11 +119,10 @@ export default {
       ],
       activeAudio: '',
       playAudio: false,
-      bgArray:[['#0272a4', '#f6a564'],['#b6bfc8', '#36595b'],['#e58e82', '#6f569f'],['#ffecd2','#fcb69f'],['#ff9a9e','#fecfef'],['#d4fc79','#96e6a1'],['#e0c3fc','#8ec5fc']],
+      bgArray:[['#fa709a', '#fee140'],['#b6bfc8', '#36595b'],['#e58e82', '#6f569f'],['#ffecd2','#fcb69f'],['#ff9a9e','#fecfef'],['#d4fc79','#96e6a1'],['#e0c3fc','#8ec5fc']],
     };
   },
   mounted() {
-    init();
   },
   methods: {
     moveToBack(){

@@ -1,5 +1,5 @@
 .healing__music__wrapper {
-  background: linear-gradient(120deg, #0272a4, #f6a564);
+  background: linear-gradient(120deg, #fa709a, #fee140);
   width: 100vw;
   height: 100vh;
   display: flex;
@@ -191,7 +191,7 @@ audio {
   transform: translate(-50%, -50%);
   width: 170px;
   height: 170px;
-  background-color: #0473a4;
+  background-color: #fa709a;
   border-radius: 50%;
   border: 3px dashed rgba(255, 255, 255, 0.4);
 }
