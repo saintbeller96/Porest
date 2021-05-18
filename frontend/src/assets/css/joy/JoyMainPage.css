@@ -145,3 +145,26 @@
   writing-mode: vertical-lr;
 }
 
+
+@media (max-width:820px){
+  .title {
+    font-size: 0.8rem;
+  }
+  .intro__header {
+    font-size: .9rem;
+  }
+
+  .content {
+    font-size: .9rem;
+    line-height: 1rem;
+  }
+}
+
+@media (max-width:380px){
+  .joy__items {
+    margin-right: 1rem;
+  }
+  .content {
+    top: 10%;
+  }
+}

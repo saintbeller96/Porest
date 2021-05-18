@@ -124,6 +124,13 @@ export default {
   },
   mounted() {
   },
+    created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
+  },
   methods: {
     moveToBack(){
       this.$router.go(-1);
