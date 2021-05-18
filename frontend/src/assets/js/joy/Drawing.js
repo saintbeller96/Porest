@@ -1,11 +1,33 @@
 let colorCode = '#ffffff';
 let colorChanged = false;
+let resotre_array = [];
+let currentDraw = '';
+export const colorValue = value => {
+  colorCode = value;
+  colorChanged = true;
+};
+
 export const init = () => {
+  const wrapper = document.querySelector('.drawing-wrapper');
+  const changeDrawing = document.querySelector('.change__drawing');
+
+  changeDrawing.addEventListener('change', e => {
+    console.log('chae', e.target.value);
+    let value = e.target.value;
+    if (currentDraw == '') {
+      currentDraw = value;
+      wrapper.classList.add(value);
+    } else {
+      wrapper.classList.remove(currentDraw);
+      wrapper.classList.add(value);
+      currentDraw = value;
+    }
+  });
+
   const canvas = document.querySelector('#drawing-canvas');
   const cntx = canvas.getContext('2d');
   const painting = document.querySelector('#content');
   const paintStyle = getComputedStyle(painting);
-  let resotre_array = [];
   let index = -1;
 
   canvas.width = parseInt(paintStyle.getPropertyValue('width'));
@@ -30,12 +52,11 @@ export const init = () => {
     console.log('color pick');
     const applyBtn = document.querySelector('.e-apply');
     applyBtn.addEventListener('click', function() {
-      // console.log('color', colorCode.textContent);
-      // const colorCode = color.dataset.value;
-      // console.log(colorCode);
+      changecolor();
     });
   });
   thickness.addEventListener('change', changethickness);
+
   color.addEventListener('change', function(event) {
     changecolor(event);
   });
@@ -45,7 +66,6 @@ export const init = () => {
     cntx.lineWidth = thicknessVal;
   }
   const changecolor = () => {
-    // let colorVal = document.querySelector('#color').value;
     console.log(colorCode);
     cntx.strokeStyle = colorCode;
   };
@@ -79,10 +99,7 @@ export const init = () => {
   clearBtn.addEventListener('click', clearcanvas);
   undoBtn.addEventListener('click', undo);
   function clearcanvas() {
-    // cntx.fillStyle = '#fff';
     cntx.clearRect(0, 0, canvas.width, canvas.height);
-    // cntx.fillRect(0, 0, canvas.width, canvas.height);
-
     resotre_array = [];
     index = -1;
   }
@@ -101,10 +118,4 @@ export const init = () => {
     cntx.lineTo(mouse.x, mouse.y);
     cntx.stroke();
   };
-};
-
-export const colorValue = value => {
-  colorCode = value;
-  colorChanged = true;
-  init();
 };

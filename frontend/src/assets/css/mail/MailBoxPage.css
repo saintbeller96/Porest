@@ -5,8 +5,12 @@
   height: 100vh;
   box-sizing: border-box;
   background: white;
-overflow: hidden;
-position: relative;
+  background-image: url('../../image/AdobeStock_90351428.jpeg');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
 }
 
 .backarrow_wrapper {
