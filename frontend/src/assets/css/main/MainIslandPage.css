@@ -19,6 +19,7 @@
     animation: min .3s forwards linear;
   }
 
+
   @keyframes min {
     0%{
       background-size: 2500px 2500px;

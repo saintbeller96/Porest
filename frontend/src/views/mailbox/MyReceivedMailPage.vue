@@ -19,8 +19,8 @@
           <div class="letter_paper">
             <div class="letter_form_wrapper">
               <div class="paper">
-                <div class="paper_header" v-text="selectedCounsel.detail[0].reply.title"></div>
-                <div class="paper_content" v-text="selectedCounsel.detail[0].reply.content"></div>
+                <div class="paper_header" v-text="getTitle()"></div>
+                <div class="paper_content" v-text="getContent()"></div>
                 <div class="paper_footer">
                   <div class="ban_btn">신고</div>
                 </div>
@@ -28,10 +28,10 @@
             </div>
             <div class="letter_form_wrapper">
               <div class="paper">
-                <div class="paper_header">제목 작성하기 <input type="text" v-model="reply.content" /></div>
+                <div class="paper_header">제목 작성하기 <input type="text" v-model="letter.body.title" /></div>
                 <div class="paper_content">
                   내용 작성하기
-                  <textarea name="" id=""></textarea>
+                  <textarea name="" id="" v-model="letter.body.content"></textarea>
                 </div>
                 <div class="paper_footer">
                   <!-- 벤 버튼인데 답장 보내기..라고 써있어요ㅠㅠ! -->
@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { writeStory } from "@/api/stories";
+import { writeLetter, readLetter } from "@/api/letters";
 import { getCounsel } from "@/api/counsels";
 import MyCounselList from "@/components/mail/MyCounselList.vue";
 import MyStoryList from "@/components/mail/MyStoryList.vue";
@@ -81,23 +81,38 @@ export default {
       stories: null,
       viewStoryState: true,
       openAllLetters: false,
-      reply: {
-        title: "",
-        content: "",
+      letter: {
+        ids: {
+          counselId: null,
+          letterId: null,
+        },
+        body: {
+          content: "",
+          createAt: "",
+          title: "",
+        },
       },
-
+      //TODO : 구조가 변경될 수도 있습니다. 변경되면 확인!
       selectedCounsel: {
+        counselId: null,
+        counsellorNickname: "반가운 전나무",
         detail: [
           {
             letter: {
-              title: "",
-              content: "",
-              createAt: "",
+              detail: {
+                title: "",
+                content: "",
+                createAt: "",
+              },
+              letterId: "",
             },
             reply: {
-              title: "",
-              content: "",
-              createAt: "",
+              detail: {
+                title: "",
+                content: "",
+                createAt: "",
+              },
+              letterId: "",
             },
           },
         ],
@@ -123,17 +138,28 @@ export default {
     exitAll() {
       this.openAllLetters = false;
     },
+    getTitle() {
+      let letters = this.$store.state.allLetters;
+      if (letters === null) return null;
+      else return letters.detail[0].reply.detail.title;
+    },
+    getContent() {
+      let letters = this.$store.state.allLetters;
+      if (letters === null) return null;
+      else return letters.detail[0].reply.detail.title;
+    },
     async ReplyForm() {
       //리플라이 null 예외처리 해야함
-      //여기에 들어가야 하는 것은 답장(letter)인데 api 수정 부탁해야함
+      this.letter.ids.counselId = this.$store.state.allLetters.counselId;
+      this.letter.ids.letterId = this.$store.state.allLetters.detail[0].reply.letterId;
+      await writeLetter(this.letter);
+      await readLetter(this.letter);
     },
-  },
-  mounted() {
-    console.log(this.stories);
   },
   watch: {
     "$store.state.counselId": async function() {
-      this.selectedCounsel = await getCounsel(this.$store.state.counselId);
+      if (this.$store.state.counselId !== null)
+        await this.$store.dispatch("saveAllLetters", await getCounsel(this.$store.state.counselId));
     },
   },
 };

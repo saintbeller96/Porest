@@ -1,6 +1,12 @@
 <template>
   <div class="mail_box_main_wrapper">
-    <div class="title">민지의 우체통</div>
+    <div class="backarrow_wrapper">
+      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
+    </div>
+    <div class="mailbox_main_title">
+      <div class="mailbox_name">민지의 우체통</div>
+      <div class="mailbox_title">심리 상담은 자격증이 있어야 되지만, 고민 대화는 따뜻한 마음씨만 있으면 됩니다.</div>
+    </div>
     <div class="postmenu_wrapper">
       <div class="postmenu1" @click="goToStoryLetterPage">
         <div class="postmenu1_content">
@@ -15,7 +21,7 @@
 
       <div class="postmenu2" @click="goToRandomMail">
         <div class="postmenu2_content">
-          <h1 class="postmenu2_title">랜덤 우체통</h1>
+          <h1 class="postmenu2_title">랜덤 편지함</h1>
           <h2 class="postmenu2_subtitle">당신의 경험을 공유해주세요.</h2>
 
           <div class="letter_wrapper">
@@ -43,6 +49,9 @@
 <script>
 export default {
   methods: {
+    moveToBack() {
+      this.$router.push({ name: 'MainIsland' });
+    },
     goToStoryLetterPage(e) {
       console.log(e.target);
       e.target.classList.add('click1');

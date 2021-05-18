@@ -1,11 +1,3 @@
-/* @import url(https://fonts.googleapis.com/css?family=Allan:700,400); */
-@font-face {
-  font-family: 'UhBeeann';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeeann.woff%27') format('woff');
-  font-weight: normal;
-  font-style: normal;
-}
-
 @keyframes new {
   0% { 
     left: 0%;
@@ -49,8 +41,12 @@
     transform: translate3d(0, 0, 0);
     /* box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px; */
   }
+  50%{
+    transform: translate3d(0, -680px, 0) scale(1);
+
+  }
   100% {
-    transform: translate3d(0, -733.3333333333px, 0);
+    transform: translate3d(0, -733.3333333333px, 0) scale(2);
     /* box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px; */
   }
 }
@@ -97,12 +93,15 @@
 }
 @keyframes letter-in {
   0% {
-    transform: translate3d(0, -733.3333333333px, 0);
-    box-shadow: inset 0 0px 30px -5px #6A5ACD, 0 0 20px -5px;
+    transform: translate3d(0, -733.3333333333px, 0) scale(2);
+    box-shadow: inset 0 0px 30px -5px #a87e50, 0 0 20px -5px;
+  }
+  50%{
+    transform: translate3d(0, -350px, 0) scale(1);
   }
   100% {
-    transform: translate3d(0, 0, 0);
-    box-shadow: inset 0 0px 30px -5px #8572EE, 0 0 10px -5px;
+    transform: translate3d(0, 0, 0) scale(1);
+    box-shadow: inset 0 0px 30px -5px #b08c5b, 0 0 10px -5px;
   }
 }
 
@@ -123,6 +122,19 @@
 }
 
 
+.backarrow_wrapper {
+  position: absolute;
+  width: 100%;
+  height: 30%;
+  top: 8%;
+  left: 2%;
+  cursor: pointer;
+}
+
+.backarrow{
+  font-size:3rem;
+  cursor: pointer;
+}
 
 .envelope {
   z-index: 2;
@@ -136,8 +148,13 @@
   transform-style: preserve-3d;
   transform-origin: right center;
   transition: transform 1s ease;
+<<<<<<< HEAD
   font-family: 'UhBeeann';
   color: #1F1F1F;
+=======
+  font-family: 'Love_son';
+  color: black;
+>>>>>>> 1d05bb6a675788da896eff6f9be9144cc387e0dd
   
 }
 .envelope .front, .envelope .back {
@@ -145,9 +162,9 @@
   width: 100%;
   height: 100%;
   
-  background-color:#B4B4FF;;
+  background-color: #EDEDBF;
   border-radius: 5px;
-  box-shadow: inset 0 0 30px -5px #8282FF, 0 0 20px -5px;
+  box-shadow: inset 0 0 30px -5px #a87e50, 0 0 20px -5px;
 }
 .envelope .front {
   backface-visibility: hidden;
@@ -167,7 +184,7 @@
   right: 10px;
   top: 10px;
   padding: 10px;
-  background: radial-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 4px, white 4px, white);
+  background: radial-gradient(rgba(0, 0, 0, 0) 0px, rgba(0, 0, 0, 0) 4px, #f6f6df 4px, #f6f6df);
   background-size: 20px 20px;
   background-position: -10px -10px;
 }
@@ -176,14 +193,14 @@
   display: block;
   width: 100%;
   height: 100%;
-  background-color: #FFDCFF;
+  background-color: #F2F2CF;
   border-radius: 2px;
-}
-.envelope .front .mailme {
+}.envelope .front .mailme {
   transform: translate3d(0, 0, 1px);
   text-align: center;
   display: table-cell;
   vertical-align: middle;
+  top: -10px;
 }
 .envelope .front .mailme p {
   font-weight: bold;
@@ -191,8 +208,9 @@
 }
 .envelope .front .mailme p:first-child {
   font-size: 50px;
-  line-height: 50px;
+  line-height: 90px;
 }
+
 .envelope .front .mailme p:last-child {
   font-size: 30px;
 }
@@ -209,8 +227,8 @@
 .envelope .back .flap:before {
   content: "";
   position: absolute;
-  background-color: #B4B4FF;
-  box-shadow: inset 0 0 30px -7px #8282FF;
+  background-color: #EDEDBF;
+  box-shadow: inset 0 0 30px -7px #a87e50;
 }
 .envelope .back .top-flap:before, .envelope .back .bottom-flap:before {
   width: calc(550px / 1.414);
@@ -272,78 +290,97 @@
   left: 10px;
   width: 530px;
   height: 346.6666666667px;
-  background-color:#DCEBFF;
+  background-color: #F2F2CF;
   border-radius: 5px;
   padding: 0 30px;
   box-sizing: border-box;
-  box-shadow: inset 0 0px 30px -5px #8282FF, 0 0 10px -5px;
+  box-shadow: inset 0 0px 30px -5px #B08C5B, 0 0 10px -5px;
 }
 
 
 .envelope .back .letter div {
   position: relative;
-  margin-top: 25px;
+  margin-top: 35px;
 }
 .envelope .back .letter label {
   position: absolute;
-  font-size: 16px;
-  line-height: 20px;
+  font-size: 15px;
+  line-height: 27px;
   opacity: 0;
   top: -15px;
   transition: all 0.1s linear;
-  color:  white ;
+  color: black;
   background-color:transparent;
   font-family: 'UhBeeann';
 }
 .envelope .back .letter label.show {
   opacity: 1;
-  top: -18px;
+  top: -29px;
 }
 .envelope .back .letter label.focus {
   color: inherit;
 }
 .envelope .back .letter ::placeholder {
-  color: white;
+  color: #ADADAD;
 }
 .envelope .back .letter input[type='text'], .envelope .back .letter textarea {
   border: none;
   box-sizing: border-box;
   width: 100%;
-  padding: 5px;
+  padding: 0px 0 0 8px;
   margin: 0;
-  background-color: #DCEBFF;
+  background-color: #F6F6DF;
+  caret-color:white;
 
 }
 .envelope .back .letter input:focus, .envelope .back .letter textarea:focus {
   outline: none;
 }
+<<<<<<< HEAD
 .envelope .back .letter input, .envelope .back .letter textarea {
   font-family: 'UhBeeann';
+=======
+.envelope .back .letter .titleinput{
+  font-family: 'Love_son';
+  font-size: 1.2rem;
+  color: black;
+}
+
+.envelope .back .letter textarea {
+  font-family: 'Love_son';
+>>>>>>> 1d05bb6a675788da896eff6f9be9144cc387e0dd
   font-size: 20px;
 }
+
 .envelope .back .letter input[type='text'] {
-  height: 32px;
+  height: 31px;
 }
 .envelope .back .letter input[type='submit'] {
   font-weight: bold;
   cursor: pointer;
   border: none;
-  border-radius: 2px;
-  padding: 5px 20px;
-  background-color:#DCEBFF;
+  padding: 5px 20px 5px 20px;
+  background-color: #e7e1bc;
   border-radius: 5px;
   box-sizing: border-box;
-  margin: 0;
+  margin: -20px 0 0 397px;
   -webkit-transition: all 0.1s linear;
   transition: all 0.1s linear;
 }
 .envelope .back .letter input[type='submit']:hover {
-  background-color: #8282FF;
-  color: whi;
+  background-color: #DCD0AA;
+  
+  /* color: whi; */
+}
+
+.sendBtn{
+  font-family: 'Love_son';
+  font-size: 1.2rem;
+  color: black;
 }
 .envelope .back .letter textarea {
   resize: none;
-  height: 117.6666666667px;
+  height: 165px;
 }
 
 .envelope.new {
@@ -375,8 +412,13 @@
   z-index: 1;
   color: #1F1F1F;
   opacity: 0;
+<<<<<<< HEAD
   font-family: 'UhBeeann';
+=======
+  font-family: 'Love_son';
+>>>>>>> 1d05bb6a675788da896eff6f9be9144cc387e0dd
   font-weight: bold;
+  font-size: 100px;
   width: 100%;
   height: 100%;
   display: table;
@@ -386,6 +428,7 @@
   display: table-cell;
   vertical-align: middle;
 }
+<<<<<<< HEAD
 .notification > div > div {
   display: inline-block;
 }
@@ -437,7 +480,15 @@
   top: 0;
   left: 50px;
   background-color: #98e8e8;
+=======
+.noti_title{
+  font-size: 60px;
+  padding-bottom: 100px;
+  font-family: 'Cafe24Danjunghae';
+>>>>>>> 1d05bb6a675788da896eff6f9be9144cc387e0dd
 }
+
+
 .new + .notification, .open + .notification {
   transition: all 1s linear;
   opacity: 0;

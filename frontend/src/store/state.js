@@ -32,7 +32,10 @@ export default {
   thisMonthWithEmoji: [],
 
   //MyreceivedMail에서 사용
+  //Mail관련
   counselId: null,
+  selectedStory: null,
+  allLetters: null,
 
   // profile
   modalProfileSetting: false,

@@ -65,9 +65,10 @@ const routes = [
     component: () => import("@/views/mailbox/RandomMailPage.vue"),
   },
   {
-    path: "/mailbox/random-mail/rootmail/reply/:storyId",
+    path: "/mailbox/random-mail/rootmail/reply",
     name: "RootMailReply",
     component: () => import("@/views/mailbox/RootMailReplyPage.vue"),
+    props: true,
   },
   {
     path: "/mailbox/my-mailbox/letter-detail/letter-reply",

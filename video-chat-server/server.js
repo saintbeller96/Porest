@@ -58,9 +58,12 @@ app.get("/api/video", async (req, res) => {
 
 ///
 
-app.get("/", (req, res) => {
+app.post("/", (req, res) => {
   console.log("abcd in");
-  res.redirect(`video_chat/room/${uuidV4()}`);
+  console.log(req.body.roomId);
+  console.log(req.body.userId);
+  console.log(req.body.roomName);
+  res.redirect(`video_chat/room/${req.body.roomId}`);
 });
 
 
@@ -72,10 +75,10 @@ app.post('/ar',(req,res)=>{
   sessionstorage.setItem('userNickName',req.body.userId);
   // sessionStorage.setItem('userNickName',req.body.userId);
   // sessionStorage.setItem('roomName',req.body.roomName);
-  res.redirect(`video_chat/room/ar/${uuidV4()}`);
+  res.redirect(`video_chat/room/ar/${req.body.roomId}`);
 })
 
-app.get("/secret", (req, res) => {
+app.post("/secret", (req, res) => {
   res.redirect(`video_chat/room/secret/${uuidV4()}`);
 });
 

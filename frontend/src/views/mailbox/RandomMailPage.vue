@@ -15,7 +15,7 @@
       <!-- <div></div> -->
     </div>
     <div class="mystery">
-      <div v-for="(story, index) in stories" :key="index" @click="goToRootMailReply(story.storyId)">
+      <div v-for="(story, index) in stories" :key="index" @click="goToRootMailReply(story)">
         <img src="../../assets/image/letter_1.png" alt="" />
       </div>
     </div>
@@ -23,17 +23,17 @@
 </template>
 
 <script>
-import Star from '@/components/common/Star.vue';
+import Star from "@/components/common/Star.vue";
 // import { startAnimation } from '@/assets/js/main/IntroPage.js';
-import { fireworks } from '@/assets/js/mail/RandomMailPage.js';
-import { getCandidatesOfStories } from '@/api/stories';
+import { fireworks } from "@/assets/js/mail/RandomMailPage.js";
+import { getCandidatesOfStories } from "@/api/stories";
 export default {
-  name: 'RandomMail',
+  name: "RandomMail",
   data() {
     return {
       randomMails: [1, 2, 3, 4, 5, 6],
       stories: [],
-      post_box_svg: require('../../assets/svg/postbox_1.svg'),
+      post_box_svg: require("../../assets/svg/postbox_1.svg"),
     };
   },
   components: {
@@ -43,15 +43,19 @@ export default {
     async getRandomStories() {
       this.stories = await getCandidatesOfStories();
     },
-    goToRootMailReply(id) {
-      this.$router.push({ name: 'RootMailReply', params: { storyId: id } });
+    async goToRootMailReply(story) {
+      await this.$store.dispatch("saveSelectedStory", story);
+      this.$router.push({ name: "RootMailReply" });
     },
+    // goToRootMailReply(id) {
+    //   this.$router.push({ name: 'RootMailReply', params: { storyId: id } });
+    // },
     pop(e) {
-      e.target.classList.add('pop-ball');
-      const big = document.querySelector('.big');
-      const mystery = document.querySelector('.mystery');
-      big.classList.add('show');
-      mystery.classList.add('show');
+      e.target.classList.add("pop-ball");
+      const big = document.querySelector(".big");
+      const mystery = document.querySelector(".mystery");
+      big.classList.add("show");
+      mystery.classList.add("show");
       setTimeout(() => {
         fireworks();
       }, 3000);

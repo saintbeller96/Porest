@@ -11,7 +11,7 @@
             <button v-if="!attendeeJoined && attendeeApproved" class="join-btn" @click="doJoin">
               입장하기
             </button>
-            <button v-if="!attendeeJoined && attendeeApproved" class="leave-btn" @click="doLeave">
+            <button v-if="!attendeeJoined && attendeeApproved" class="leave-btn" @click="doLeave(user.uid)">
               나가기
             </button>
           </form>
@@ -19,7 +19,7 @@
       </div>
       <div class="attendee-list-wrapper" v-if="(user && user.uid == hostId) || attendeeApproved">
         <div class="attendee-attend">
-          <h4 class="">참가자</h4>
+          <h4 class="">* 참가자</h4>
           <ul class="">
             <li v-for="(attendee, index) in attendeesApprovedArr" :key="attendee.id">
               <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
@@ -37,7 +37,7 @@
           </ul>
         </div>
         <div v-if="user && user.uid == hostId" class="attendee-wait">
-          <h4 class="">참가 대기자</h4>
+          <h4 class="">* 참가 대기자</h4>
           <ul class="">
             <li class="" v-for="(attendee, index) in attendeesPendingArr" :key="attendee.id">
               <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
@@ -62,6 +62,9 @@
         <p class="lead">
           안녕하세요! 현재 참가 요청에 대한 방장의 승인이 진행 중에 있습니다. 잠시만 기다려주세요!
         </p>
+        <div class="leave_approve" @click="doLeave(user.uid)">
+          나가기
+        </div>
       </div>
     </div>
   </div>
@@ -79,6 +82,7 @@ export default {
       attendeesApprovedArr: [],
       attendeeApproved: false,
       attendeeJoined: false,
+      roomPublic: false,
     };
   },
   components: {},
@@ -112,38 +116,36 @@ export default {
     deleteAttendee: function(attendeeID) {
       console.log('삭제한다');
       // host인 경우만 삭제가 가능하다
-      if (this.user && this.user.uid == this.hostId) {
+      if ((this.user && this.user.uid == this.hostId) || (this.user && this.user.uid == attendeeID)) {
         db.collection('users')
-          .doc(this.user.uid)
+          .doc(this.hostId)
           .collection('rooms')
           .doc(this.roomId)
           .collection('attendees')
           .doc(attendeeID)
           .delete();
+        console.log('삭제 완료스');
       }
     },
     doJoin() {
       const form = document.querySelector('.approve-form');
-      form.action = 'http://localhost:3000/ar';
+      console.log(this.roomPublic);
+      if (this.roomPublic) {
+        form.action = 'http://localhost:3000/';
+      } else {
+        form.action = 'http://localhost:3000/ar';
+      }
       form.method = 'POST';
       form.target = 'pop';
       form.roomId.value = this.roomId;
       form.userId.value = this.user.uid;
       form.roomName.value = this.roomName;
-      // this.$refs.webrtc.join();
-      // this.attendeeJoined = true;
-      // this.$router.push('http://localhost:3000/ar', { data: { Uid: this.user.uid, who: 'host' } });
-      // window.location = 'http://localhost:3000/ar';
       window.open('', 'pop');
       form.submit();
-      // this.$router.push({
-      //   path: '/github',
-      //   beforeEnter() {
-      //     window.location.href = 'http://localhost:3000/ar';
-      //   },
-      // });
     },
-    doLeave() {
+    doLeave(uid) {
+      console.log(uid, '삭제해야한다');
+      this.deleteAttendee(uid);
       this.attendeeJoined = false;
       this.$emit('exitRoom');
     },
@@ -163,6 +165,10 @@ export default {
         alert('존재하지 않는 상담방입니다.');
         this.$router.push('/all/rooms');
       }
+    });
+    console.log('this.rooms');
+    roomRef.onSnapshot(snapShot => {
+      this.roomPublic = snapShot.data().publicState;
     });
     //Get Host Name
     roomRef.collection('attendees').onSnapshot(snapShot => {
@@ -198,10 +204,10 @@ export default {
           });
         }
       });
-      if (!userCheckedIn) {
-        alert('체크인 하지 않은 유저는 입장하실 수 없습니다.');
-        this.$router.push(`/all/rooms`);
-      }
+      // if (!userCheckedIn) {
+      //   alert('체크인 하지 않은 유저는 입장하실 수 없습니다.');
+      //   this.$router.push(`/all/rooms`);
+      // }
       this.attendeesPendingArr = tempPendeing;
       this.attendeesApprovedArr = tempApproved;
     });
