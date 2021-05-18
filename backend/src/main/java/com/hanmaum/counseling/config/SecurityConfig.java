@@ -55,14 +55,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
                 .and()
                 .authorizeRequests()
-                .antMatchers("/admin/*").hasRole("ADMIN")
-                .antMatchers("/user/*").hasRole("USER")
-                .antMatchers("/stories/**","/counsels/**").hasRole("USER")
+                .antMatchers(
+                        "/signup", "/login", "/verify-check", "/email-check", "/find-password", "/email-verify").permitAll()
                 .antMatchers(HttpMethod.POST, "/bans").hasRole("USER")
                 .antMatchers(HttpMethod.PUT, "/bans/**").hasRole("ADMIN")
                 .antMatchers(HttpMethod.GET, "/bans").hasRole("ADMIN")
-                .antMatchers("/signup", "auth").permitAll()
-                .anyRequest().permitAll()
+                .anyRequest().hasRole("USER")
 
                 .and()
                 .exceptionHandling()

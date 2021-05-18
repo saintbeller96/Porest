@@ -40,7 +40,7 @@ export default {
   position: relative;
   max-width: 27%;
   margin: auto;
-  margin-top: 9vh;
+  margin-top: 6vh;
   min-height: 80%;
   z-index: 10;
   border-radius: 20px;

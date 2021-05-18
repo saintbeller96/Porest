@@ -1,5 +1,6 @@
 <template>
   <div class="writing-diary-container">
+    <div class="close-btn" @click="closeModal"><i class="fas fa-times"></i></div>
     <div class="date-container">
       <div v-if="$store.state.targetDate.length === 0">
         <p>{{ month }}월 {{ today }}일 {{ days[day] }}요일</p>
@@ -203,6 +204,9 @@ export default {
         console.log(error);
       }
     },
+    closeModal() {
+      this.$store.commit('getModalStatus', false);
+    },
   },
 };
 </script>
@@ -219,7 +223,7 @@ export default {
 }
 
 .writing-diary-container {
-  padding: 8px;
+  padding: 1.7%;
   width: 23vw;
   height: 100%;
   font-family: 'UhBeemysen';
@@ -235,8 +239,8 @@ export default {
 }
 
 .date-container {
-  margin-top: 3vh;
-  font-size: 25px;
+  margin-top: 5vh;
+  font-size: 1.8vw;
   font-weight: bold;
   text-align: center;
 }
@@ -264,7 +268,7 @@ export default {
   height: 20vh;
   padding: 12px;
   font-weight: bold;
-  font-size: 25px;
+  font-size: 1.7vw;
   resize: none;
   opacity: 0.9;
   outline-style: none;
@@ -290,9 +294,9 @@ export default {
 }
 
 .title {
-  font-size: 21px;
+  font-size: 1.7vw;
   font-weight: bold;
-  margin-top: 3vh;
+  margin-top: 2.8vh;
   color: #525252;
 }
 
@@ -306,12 +310,19 @@ export default {
 .save-btn span {
   cursor: pointer;
   color: #525252;
-  font-size: 27px;
+  font-size: 1.8vw;
   font-weight: bold;
   margin-left: 1vw;
 }
 
 .save-btn span:hover {
   color: #35ae6d;
+}
+
+.close-btn {
+  display: flex;
+  float: right;
+  margin-top: 2vh;
+  cursor: pointer;
 }
 </style>

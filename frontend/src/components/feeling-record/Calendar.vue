@@ -1,6 +1,6 @@
 <template>
   <div class="calendar-container">
-    <header>
+    <header class="calendar-icon">
       <i class="fas fa-chevron-left" @click="calendarMonth(-1)"></i> {{ year }}년 {{ month }}월
       <i class="fas fa-chevron-right" @click="calendarMonth(1)"></i>
     </header>
@@ -63,7 +63,7 @@
 </template>
 
 <script>
-import '@/assets/css/feelingRecord/Calendar.css';
+// import '@/assets/css/feelingRecord/Calendar.css';
 import { getEmotionsOfRecord, getEmotionDetail } from '@/api/emotions';
 export default {
   data() {
@@ -257,19 +257,19 @@ export default {
     clickEffect(idx, index) {
       if (this.check.length === 0) {
         this.check.push([idx, index]);
-        const selected = document.querySelector(`.item${idx}${index}`);
-        selected.classList.toggle('selected');
+        const selectedCalendar = document.querySelector(`.item${idx}${index}`);
+        selectedCalendar.classList.toggle('selected-calendar');
       } else {
         let a = this.check.pop();
-        const selected1 = document.querySelector(`.item${a[0]}${a[1]}`);
-        const selected2 = document.querySelector(`.item${idx}${index}`);
+        const selectedCalendar1 = document.querySelector(`.item${a[0]}${a[1]}`);
+        const selectedCalendar2 = document.querySelector(`.item${idx}${index}`);
         if (a === [idx, index]) {
-          selected1.classList.toggle('selected');
+          selectedCalendar1.classList.toggle('selected-calendar');
           // selected2.classList.toggle('selected');
         } else if (a !== [idx, index]) {
           this.check.push([idx, index]);
-          selected1.classList.toggle('selected');
-          selected2.classList.toggle('selected');
+          selectedCalendar1.classList.toggle('selected-calendar');
+          selectedCalendar2.classList.toggle('selected-calendar');
         }
       }
     },
@@ -277,4 +277,4 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped src="@/assets/css/feelingRecord/Calendar.css"></style>
