@@ -249,8 +249,6 @@ export default {
   },
   props: ['user'],
   created() {
-    console.log(document.cookie);
-    console.log(this.$store.getters.getAuthToken);
     let token = this.$store.getters.getAuthToken;
     if (token == '' || token == null) {
       alert('로그인이 필요합니다.');

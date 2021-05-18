@@ -5,7 +5,9 @@
       <section class="received_mail_inner_left">
         <div class="section_header">
           <div class="header_btn" @click="openUserBoard(true)">위로 받기</div>
-          <div class="header_btn" @click="openUserBoard(false)">위로 보내기</div>
+          <div class="header_btn" @click="openUserBoard(false)">
+            위로 보내기
+          </div>
         </div>
         <div class="section_body">
           <my-story-list v-if="viewStoryState"></my-story-list>
@@ -28,10 +30,17 @@
             </div>
             <div class="letter_form_wrapper">
               <div class="paper">
-                <div class="paper_header">제목 작성하기 <input type="text" v-model="letter.body.title" /></div>
+                <div class="paper_header">
+                  제목 작성하기
+                  <input type="text" v-model="letter.body.title" />
+                </div>
                 <div class="paper_content">
                   내용 작성하기
-                  <textarea name="" id="" v-model="letter.body.content"></textarea>
+                  <textarea
+                    name=""
+                    id=""
+                    v-model="letter.body.content"
+                  ></textarea>
                 </div>
                 <div class="paper_footer">
                   <!-- 벤 버튼인데 답장 보내기..라고 써있어요ㅠㅠ! -->
@@ -62,20 +71,24 @@
         </div>
       </div>
     </div>
-    <all-letters v-if="openAllLetters" @exitAll="exitAll" class="all_letters"></all-letters>
+    <all-letters
+      v-if="openAllLetters"
+      @exitAll="exitAll"
+      class="all_letters"
+    ></all-letters>
   </div>
 </template>
 
 <script>
-import { writeLetter, readLetter } from "@/api/letters";
-import { getCounsel } from "@/api/counsels";
-import MyCounselList from "@/components/mail/MyCounselList.vue";
-import MyStoryList from "@/components/mail/MyStoryList.vue";
-import AllLetters from "@/components/mail/AllLetters.vue";
-import Star from "@/components/common/Star.vue";
+import { writeLetter, readLetter } from '@/api/letters';
+import { getCounsel } from '@/api/counsels';
+import MyCounselList from '@/components/mail/MyCounselList.vue';
+import MyStoryList from '@/components/mail/MyStoryList.vue';
+import AllLetters from '@/components/mail/AllLetters.vue';
+import Star from '@/components/common/Star.vue';
 
 export default {
-  name: "MyReceivedMailPage",
+  name: 'MyReceivedMailPage',
   data() {
     return {
       stories: null,
@@ -87,32 +100,32 @@ export default {
           letterId: null,
         },
         body: {
-          content: "",
-          createAt: "",
-          title: "",
+          content: '',
+          createAt: '',
+          title: '',
         },
       },
       //TODO : 구조가 변경될 수도 있습니다. 변경되면 확인!
       selectedCounsel: {
         counselId: null,
-        counsellorNickname: "반가운 전나무",
+        counsellorNickname: '반가운 전나무',
         detail: [
           {
             letter: {
               detail: {
-                title: "",
-                content: "",
-                createAt: "",
+                title: '',
+                content: '',
+                createAt: '',
               },
-              letterId: "",
+              letterId: '',
             },
             reply: {
               detail: {
-                title: "",
-                content: "",
-                createAt: "",
+                title: '',
+                content: '',
+                createAt: '',
               },
-              letterId: "",
+              letterId: '',
             },
           },
         ],
@@ -125,9 +138,16 @@ export default {
     MyStoryList,
     AllLetters,
   },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
+  },
   methods: {
     goToLetterReply() {
-      this.$router.push({ name: "LetterReply" });
+      this.$router.push({ name: 'LetterReply' });
     },
     openUserBoard(value) {
       this.viewStoryState = value;
@@ -157,9 +177,12 @@ export default {
     },
   },
   watch: {
-    "$store.state.counselId": async function() {
+    '$store.state.counselId': async function() {
       if (this.$store.state.counselId !== null)
-        await this.$store.dispatch("saveAllLetters", await getCounsel(this.$store.state.counselId));
+        await this.$store.dispatch(
+          'saveAllLetters',
+          await getCounsel(this.$store.state.counselId),
+        );
     },
   },
 };

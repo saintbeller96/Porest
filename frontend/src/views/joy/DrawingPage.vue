@@ -51,6 +51,13 @@ export default {
     };
   },
   components: {},
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
+  },
   mounted() {
     init();
     const dropdownBtn = document.querySelector('.e-dropdown-btn');

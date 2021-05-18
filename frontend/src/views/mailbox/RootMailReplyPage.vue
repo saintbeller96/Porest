@@ -40,7 +40,13 @@
             <form class="mailform">
               <div>
                 <label for="reply_title">reply_title</label>
-                <input type="text" name="reply_title" size="40" placeholder="reply_title" v-model="letter.body.title" />
+                <input
+                  type="text"
+                  name="reply_title"
+                  size="40"
+                  placeholder="reply_title"
+                  v-model="letter.body.title"
+                />
               </div>
               <div>
                 <label for="reply_content">reply_content</label>
@@ -53,7 +59,12 @@
                 ></textarea>
               </div>
               <div>
-                <input class="sendBtn" type="submit" value="Send" @click="reply()" />
+                <input
+                  class="sendBtn"
+                  type="submit"
+                  value="Send"
+                  @click="reply()"
+                />
               </div>
             </form>
           </div>
@@ -69,11 +80,11 @@
 </template>
 
 <script>
-import { init } from "@/assets/js/mail/RootMailReplyPage.js";
-import { selectStory } from "@/api/stories";
-import { writeLetter } from "@/api/letters";
+import { init } from '@/assets/js/mail/RootMailReplyPage.js';
+import { selectStory } from '@/api/stories';
+import { writeLetter } from '@/api/letters';
 export default {
-  name: "RootMailReply",
+  name: 'RootMailReply',
   data() {
     return {
       story: {
@@ -81,9 +92,9 @@ export default {
         //TODO : 데이터 구조 변경 될 수 있음 확인 꼭하기
         detail: {
           detail: {
-            content: "",
-            createAt: "",
-            title: "",
+            content: '',
+            createAt: '',
+            title: '',
           },
           letterId: 0,
         },
@@ -94,9 +105,9 @@ export default {
           letterId: null,
         },
         body: {
-          content: "",
-          createAt: "",
-          title: "",
+          content: '',
+          createAt: '',
+          title: '',
         },
       },
     };
@@ -116,6 +127,13 @@ export default {
   },
   mounted() {
     init();
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

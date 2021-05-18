@@ -8,7 +8,9 @@
         <div class="post_main_wall post_wall_bottom"></div>
       </div>
 
-      <div id="planesvg" class="planesvg"><img src="@/assets/image/plane2.svg" alt="" /></div>
+      <div id="planesvg" class="planesvg">
+        <img src="@/assets/image/plane2.svg" alt="" />
+      </div>
 
       <div class="plane_fold">
         <svg
@@ -20,11 +22,32 @@
           xmlns:xlink="http://www.w3.org/1999/xlink"
         >
           <g id="plane">
-            <polygon id="top_left_wing" points="150,150, 150,0, 0,150" style="fill:#ffffff;" />
-            <polygon id="top_right_wing" points="150,0 150,150 300,150" style="fill:#ffffff;" />
-            <polygon id="left_wing" points="150,0 90,150 0,150" style="fill:#ffffff;" />
-            <polygon id="right_wing" points="150,0 210,150 300,150" style="fill:#ffffff;" />
-            <polygon id="left_bottom" points="0,150 150,150 150,190 90,150" style="fill:#ffffff;" stroke-width="0.5" />
+            <polygon
+              id="top_left_wing"
+              points="150,150, 150,0, 0,150"
+              style="fill:#ffffff;"
+            />
+            <polygon
+              id="top_right_wing"
+              points="150,0 150,150 300,150"
+              style="fill:#ffffff;"
+            />
+            <polygon
+              id="left_wing"
+              points="150,0 90,150 0,150"
+              style="fill:#ffffff;"
+            />
+            <polygon
+              id="right_wing"
+              points="150,0 210,150 300,150"
+              style="fill:#ffffff;"
+            />
+            <polygon
+              id="left_bottom"
+              points="0,150 150,150 150,190 90,150"
+              style="fill:#ffffff;"
+              stroke-width="0.5"
+            />
             <polygon
               id="right_bottom"
               points="150,150 300,150 210,150 150,190"
@@ -58,6 +81,13 @@
 export default {
   mounted() {
     // init();
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

@@ -1,6 +1,6 @@
 <template>
   <div class="write-letter-wrapper">
-     <div class="backarrow_wrapper">
+    <div class="backarrow_wrapper">
       <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
     </div>
     <div class="envelope open">
@@ -17,7 +17,14 @@
           <form class="mailform">
             <div>
               <label for="title">제목</label>
-              <input class="titleinput" type="text" name="title" size="40" v-model="story.title" placeholder="고민의 제목을 적어주세요" />
+              <input
+                class="titleinput"
+                type="text"
+                name="title"
+                size="40"
+                v-model="story.title"
+                placeholder="고민의 제목을 적어주세요"
+              />
             </div>
             <div>
               <label for="content">내용</label>
@@ -30,7 +37,12 @@
               ></textarea>
             </div>
             <div>
-              <input class="sendBtn" type="submit" value="보내기" @click="storyForm" />
+              <input
+                class="sendBtn"
+                type="submit"
+                value="보내기"
+                @click="storyForm"
+              />
             </div>
           </form>
         </div>
@@ -48,16 +60,16 @@
 </template>
 
 <script>
-import { writeStory } from "@/api/stories";
-import { init } from "@/assets/js/mail/WriteLetterPage.js";
+import { writeStory } from '@/api/stories';
+import { init } from '@/assets/js/mail/WriteLetterPage.js';
 export default {
-  name: "WriteLetterPage",
+  name: 'WriteLetterPage',
   data() {
     return {
       story: {
-        title: "",
-        content: "",
-        createAt: "",
+        title: '',
+        content: '',
+        createAt: '',
       },
     };
   },
@@ -71,6 +83,13 @@ export default {
   },
   mounted() {
     init();
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>
