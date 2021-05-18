@@ -79,6 +79,10 @@ public class AccountService {
         if (!passwordEncoder.matches(updatePasswordDto.getOldPassword(), user.getPassword())) {
              throw new WrongPasswordException("비밀번호가 틀렸습니다.");
         }
+        else if(passwordEncoder.matches(updatePasswordDto.getNewPassword(), user.getPassword())){
+           throw new WrongPasswordException("새로운 비밀번호가 이전 비밀번호와 같습니다.");
+        }
+
         String newPassword = passwordEncoder.encode(updatePasswordDto.getNewPassword());
         user.setPassword(newPassword);
         userRepository.save(user);
@@ -150,5 +154,14 @@ public class AccountService {
             result.put("message","입력하신 정보가 옮바르지 않습니다.");
         }
         return isExist ? ResponseEntity.ok().build() : ResponseEntity.badRequest().body(result);
+    }
+
+    public void updateNickname(HttpServletRequest request, UpdateNicknameDto updateNicknameDto) {
+        String token = request.getHeader("Authorization").substring(7);
+        String email = jwtProvider.getEmailFromToken(token);
+
+        User user = userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
+        user.setNickname(updateNicknameDto.getNickname());
+        userRepository.save(user);
     }
 }

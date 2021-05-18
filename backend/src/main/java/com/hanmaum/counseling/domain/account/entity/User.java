@@ -66,4 +66,5 @@ public class User {
     }
     public void setProfileImgNumber(Long profileImgNumber){this.profileImgNumber = profileImgNumber;}
     public void setPassword(String password){ this.password = password; }
+    public void setNickname(String nickname) { this.nickname = nickname;}
 }
