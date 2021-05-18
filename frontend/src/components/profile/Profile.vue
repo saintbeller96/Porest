@@ -2,7 +2,14 @@
   <div class="profile-container">
     <div class="setting-btn" @click="openModal"><i class="fas fa-cog"></i></div>
     <div class="profile-pic">
-      <img src="@/assets/image/profile.png" alt="" />
+      <img
+        :src="
+          $store.getters.getUpdateProfileImgFinal != 0
+            ? images[$store.getters.getUpdateProfileImgFinal - 1]
+            : require('../../assets/image/profile.png')
+        "
+        :class="{ basicImg: $store.getters.getUpdateProfileImgFinal == 0 }"
+      />
     </div>
     <div class="personal-info">
       <p>{{ $store.state.nickname }}</p>
@@ -16,6 +23,17 @@
 <script>
 import Temperature from '@/components/profile/Temperature';
 export default {
+  data() {
+    return {
+      images: [
+        require('../../assets/image/feeling/1.png'), // 0
+        require('../../assets/image/feeling/2.png'), // 1
+        require('../../assets/image/feeling/3.png'), // 2
+        require('../../assets/image/feeling/4.png'),
+        require('../../assets/image/feeling/5.png'),
+      ],
+    };
+  },
   components: {
     Temperature,
   },
@@ -23,6 +41,13 @@ export default {
     openModal() {
       this.$store.commit('setModalProfile', true);
     },
+  },
+  created() {
+    if (this.$store.state.profileImg === 'null') {
+      this.$store.commit('setProfileImgToShow', 0);
+    } else {
+      this.$store.commit('setProfileImgToShow', this.$store.state.profileImg);
+    }
   },
 };
 </script>
@@ -60,12 +85,14 @@ export default {
 }
 
 .profile-pic img {
-  width: 35%;
-  height: 35%;
+  height: 10vh;
   object-fit: cover;
   border-radius: 50%;
-  border: 2px solid #fff;
   box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.basicImg {
+  border: 2px solid #fff;
 }
 
 .personal-info {

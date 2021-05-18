@@ -58,6 +58,7 @@ export default {
   getThisMonthEmoji(state, thisMonthWithEmoji) {
     state.thisMonthWithEmoji = thisMonthWithEmoji;
   },
+
   //Mail 관련
   setCounselId(state, counselId) {
     state.counselId = counselId;
@@ -72,5 +73,8 @@ export default {
   // 프로필
   setModalProfile(state, modalProfileSetting) {
     state.modalProfileSetting = modalProfileSetting;
+  },
+  setProfileImgToShow(state, profileImgToShow) {
+    state.profileImgToShow = profileImgToShow;
   },
 };

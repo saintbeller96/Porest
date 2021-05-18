@@ -34,10 +34,10 @@ export default {
 }
 .modal-card {
   position: relative;
-  max-width: 25%;
+  max-width: 28%;
   margin: auto;
-  margin-top: 10vh;
-  min-height: 65%;
+  margin-top: 8vh;
+  min-height: 75%;
   z-index: 10;
   border-radius: 20px;
   background: #fdf6e8;

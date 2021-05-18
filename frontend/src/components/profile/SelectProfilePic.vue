@@ -1,21 +1,24 @@
 <template>
   <div>
-    <nav class="menu">
-      <input type="checkbox" href="#" class="menu-open" name="menu-open" id="menu-open" />
-      <label class="menu-open-button" for="menu-open">
+    <div class="profile-pic">
+      <div class="menu-item">
         <img
-          :src="$store.state.profileImg === 0 ? $store.state.profileImg : require('@/assets/image/profile.png')"
-          class="basic-img"
+          :src="
+            $store.getters.getUpdateProfileImg != 0
+              ? images[$store.getters.getUpdateProfileImg - 1]
+              : require('../../assets/image/profile.png')
+          "
         />
-        <!-- <img src="@/assets/image/profile.png" alt="" class="basic-img" /> -->
-      </label>
-      <div class="menu-item"><img src="../../assets/image/feeling/5.png" /></div>
-      <div class="menu-item"><img src="../../assets/image/feeling/4.png" /></div>
-      <div class="menu-item"><img src="../../assets/image/feeling/3.png" /></div>
-      <div class="menu-item"><img src="../../assets/image/feeling/2.png" /></div>
-      <div class="menu-item"><img src="../../assets/image/feeling/1.png" /></div>
-      <div class="menu-item"><img src="../../assets/image/profile.png" /></div>
-    </nav>
+      </div>
+    </div>
+    <div class="images">
+      <img src="../../assets/image/profile.png" @click="getFeeling(0)" class="img0 basic" />
+      <img src="../../assets/image/feeling/5.png" @click="getFeeling(5)" class="img5" />
+      <img src="../../assets/image/feeling/4.png" @click="getFeeling(4)" class="img4" />
+      <img src="../../assets/image/feeling/3.png" @click="getFeeling(3)" class="img3" />
+      <img src="../../assets/image/feeling/2.png" @click="getFeeling(2)" class="img2" />
+      <img src="../../assets/image/feeling/1.png" @click="getFeeling(1)" class="img1" />
+    </div>
   </div>
 </template>
 
@@ -23,136 +26,114 @@
 export default {
   data() {
     return {
-      profileImg: [
-        require('../../assets/image/feeling/1.png'),
-        require('../../assets/image/feeling/2.png'),
-        require('../../assets/image/feeling/3.png'),
+      profileImg: 0,
+      check: [],
+      images: [
+        require('../../assets/image/feeling/1.png'), // 0
+        require('../../assets/image/feeling/2.png'), // 1
+        require('../../assets/image/feeling/3.png'), // 2
         require('../../assets/image/feeling/4.png'),
         require('../../assets/image/feeling/5.png'),
       ],
     };
   },
+  methods: {
+    getFeeling(n) {
+      if (this.check.length === 0) {
+        this.check.push(n);
+        const selected = document.querySelector(`.img${n}`);
+        selected.classList.toggle('selected');
+        this.$store.commit('setImg', n);
+      } else {
+        let a = this.check.pop();
+        const selected1 = document.querySelector(`.img${a}`);
+        const selected2 = document.querySelector(`.img${n}`);
+        if (a == n) {
+          selected1.classList.toggle('selected');
+          this.$store.commit('setImg', 0);
+        } else if (a != n) {
+          this.check.push(n);
+          selected1.classList.toggle('selected');
+          selected2.classList.toggle('selected');
+          this.$store.commit('setImg', n);
+        }
+      }
+    },
+  },
+  created() {
+    if (this.$store.state.profileImg === 'null') {
+      this.$store.commit('setImg', 0);
+    }
+  },
+  mounted() {
+    let n = this.$store.state.profileImg;
+    this.check.push(n);
+    const selected = document.querySelector(`.img${n}`);
+    selected.classList.toggle('selected');
+  },
 };
 </script>
 
 <style scoped>
-.menu-item img {
-  /* width: 3.3vw; */
-  width: 50px;
-  height: 50px;
-  /* height: 7vh; */
+.profile-pic {
+  margin-top: 2vh;
+  margin-bottom: 3vh;
+  display: flex;
+  justify-content: center;
 }
 
-.menu-open-button img {
-  /* width: 3.3vw;
-  height: 7vh; */
-  width: 50px;
-  height: 50px;
+.menu-item img {
+  height: 11vh;
+  background-color: #fff;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.images {
+  display: flex;
+  justify-content: center;
+}
+
+.images img {
+  width: 2vw;
+  margin: 0 0.4vw 0 0.4vw;
+  cursor: pointer;
+  transition: 0.1s ease;
+  filter: opacity(0.7) drop-shadow(0 0 0 white);
+}
+
+.basic {
   background: #fff;
   border-radius: 50%;
 }
 
-.menu-item,
-.menu-open-button {
-  border-radius: 100%;
-  position: absolute;
-  text-align: center;
-  -webkit-transform: translate3d(0, 0, 0);
-  -webkit-transition: -webkit-transform ease-out 200ms;
-  margin-top: 200px;
+.images img:hover {
+  transform: scale(1.3);
+  filter: none;
 }
-.menu-open {
-  display: none;
+
+.img1.selected {
+  transform: scale(1.3);
+  filter: none;
 }
-.menu {
-  position: absolute;
-  left: 45%;
-  top: -23%;
-  box-sizing: border-box;
-  font-size: 20px;
-  /* text-align: left; */
-  margin-left: -190px;
-  /* padding-top: 20px; */
-  padding-left: 190px;
-  /* width: 380px;
-  height: 250px; */
+.img2.selected {
+  transform: scale(1.3);
+  filter: none;
 }
-.menu-item:hover {
-  background: white;
-  color: #e91e63;
+.img3.selected {
+  transform: scale(1.3);
+  filter: none;
 }
-.menu-item:nth-child(3) {
-  -webkit-transition-duration: 180ms;
+.img4.selected {
+  transform: scale(1.3);
+  filter: none;
 }
-.menu-item:nth-child(4) {
-  -webkit-transition-duration: 180ms;
+.img5.selected {
+  transform: scale(1.3);
+  filter: none;
 }
-.menu-item:nth-child(5) {
-  -webkit-transition-duration: 180ms;
-}
-.menu-item:nth-child(6) {
-  -webkit-transition-duration: 180ms;
-}
-.menu-item:nth-child(7) {
-  -webkit-transition-duration: 180ms;
-}
-.menu-item:nth-child(8) {
-  -webkit-transition-duration: 180ms;
-}
-.menu-item:nth-child(9) {
-  -webkit-transition-duration: 180ms;
-}
-.menu-open-button {
-  z-index: 2;
-  -webkit-transition-timing-function: cubic-bezier(0.1, 0.8, 0.3, 1.2);
-  -webkit-transition-duration: 400ms;
-  -webkit-transform: scale(1.1, 1.1) translate3d(0, 0, 0);
-  cursor: pointer;
-}
-.menu-open-button:hover {
-  -webkit-transform: scale(1.2, 1.2) translate3d(0, 0, 0);
-}
-.menu-open:checked + .menu-open-button {
-  -webkit-transition-timing-function: linear;
-  -webkit-transition-duration: 200ms;
-  -webkit-transform: scale(0.8, 0.8) translate3d(0, 0, 0);
-}
-.menu-open:checked ~ .menu-item {
-  -webkit-transition-timing-function: cubic-bezier(0.9, 0, 0.3, 1.3);
-}
-.menu-open:checked ~ .menu-item:nth-child(3) {
-  -webkit-transition-duration: 380ms;
-  -webkit-transform: translate3d(0.08%, -104.9%, 0);
-  /* -webkit-transform: translate3d(0.08px, -104.9px, 0); */
-}
-.menu-open:checked ~ .menu-item:nth-child(4) {
-  -webkit-transition-duration: 480ms;
-  -webkit-transform: translate3d(90.9%, -52.6%, 0);
-  /* -webkit-transform: translate3d(90.9px, -52.6px, 0); */
-}
-.menu-open:checked ~ .menu-item:nth-child(5) {
-  -webkit-transition-duration: 580ms;
-  -webkit-transform: translate3d(90.9%, 52.6%, 0);
-  /* -webkit-transform: translate3d(90.9px, 52.6px, 0); */
-}
-.menu-open:checked ~ .menu-item:nth-child(6) {
-  -webkit-transition-duration: 680ms;
-  -webkit-transform: translate3d(0.08%, 104.9%, 0);
-  /* -webkit-transform: translate3d(0.08px, 104.9px, 0); */
-}
-.menu-open:checked ~ .menu-item:nth-child(7) {
-  -webkit-transition-duration: 780ms;
-  -webkit-transform: translate3d(-90.8%, 52.6%, 0);
-  /* -webkit-transform: translate3d(-90.8px, 52.6px, 0); */
-}
-.menu-open:checked ~ .menu-item:nth-child(8) {
-  -webkit-transition-duration: 880ms;
-  -webkit-transform: translate3d(-91.03%, -52.3%, 0);
-  /* -webkit-transform: translate3d(-91.03px, -52.3px, 0); */
-}
-.menu-open:checked ~ .menu-item:nth-child(9) {
-  -webkit-transition-duration: 980ms;
-  -webkit-transform: translate3d(-0.25%, -104.9%, 0);
-  /* -webkit-transform: translate3d(-0.25px, -104.9px, 0); */
+.img0.selected {
+  transform: scale(1.3);
+  filter: none;
 }
 </style>
