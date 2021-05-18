@@ -21,7 +21,9 @@
     </div>
     <div class="letter">
       <div class="type"></div>
-      <div class="text_intro">당신의 마음 속 이야기, POREST 세상 속에서 들려주세요.</div>
+      <div class="text_intro">
+        당신의 마음 속 이야기, POREST 세상 속에서 들려주세요.
+      </div>
     </div>
     <div class="skip-btn">넘어가기</div>
     <div id="canvas"></div>
@@ -54,6 +56,13 @@ export default {
     //   big.classList.add('show');
     //   mystery.classList.add('show');
     // },
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>
