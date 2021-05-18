@@ -114,7 +114,7 @@ class BanReportRepositoryImplTest {
         Page<BanReportDetailDto> result = banReportRepository.findProceedingReport(PageRequest.of(0, 10));
 
         //then
-        Assertions.assertThat(result.getContent()).extracting("id").containsExactly(1L);
+        Assertions.assertThat(result.getContent().size()).isEqualTo(1);
         //
     }
 }
