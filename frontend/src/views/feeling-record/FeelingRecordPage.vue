@@ -103,17 +103,12 @@ export default {
 }
 
 .wrapper {
-  width: 26vw;
-  height: 70vh;
+  width: 27vw;
+  height: 72vh;
   position: relative;
 }
 
 .calendar-area {
-  /* grid-column-start: 2;
-  grid-column-end: 4;
-  align-items: center;
-  justify-content: center;
-  display: flex; */
 }
 
 .calendar-area,

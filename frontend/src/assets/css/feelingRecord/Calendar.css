@@ -6,7 +6,7 @@
   }
 
 .calendar-container {
-    width: 26vw;
+    width: 27vw;
     height: 61vh;
     background: rgba(255, 255, 255, 0.35);
     /* background: rgba(255, 255, 255, 0.1); */
@@ -17,20 +17,22 @@
     border-radius: 25px;
     padding: 6vh;
     font-family: 'UhBeemysen';
+    
 }
 
-header i {
-    margin: 0 50px 0 50px;
-    font-size: small;
+.calendar-icon i {
+    margin: 0 3vw 0 3vw;
     cursor: pointer;
     /* color: #fff; */
+    font-size: 1vw;
 }
 
+
 .calendar-container header {
-    margin: 0 0 20px 0;
+    margin: 0 0 2vh 0;
     text-align: center;
     font-family: 'UhBeemysen';
-    font-size: 25px;
+    font-size: 2vw;
     font-weight: bold;
 }
 
@@ -45,7 +47,8 @@ table th {
     width: 14.2%;
     padding-bottom: 1.7vh;
     padding-top: 1.7vh;
-    font-size: 1.7em;
+    /* font-size: 1.7em; */
+    font-size: 2vw;
     font-weight: 600;
 }
 
@@ -62,7 +65,8 @@ table td {
     height: 6vh;
     /* font-size: 15px; */
     vertical-align: middle;
-    font-size: 1.9em;
+    font-size: 2vw;
+    /* font-size: 1.9em; */
     
 }
 
@@ -90,7 +94,7 @@ table td {
 }
 
 .image {
-    width: 1.8vw;
+    width: 1.9vw;
 }
 
 .selected-calendar {

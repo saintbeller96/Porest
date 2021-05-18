@@ -1,6 +1,6 @@
 <template>
   <div class="calendar-container">
-    <header>
+    <header class="calendar-icon">
       <i class="fas fa-chevron-left" @click="calendarMonth(-1)"></i> {{ year }}년 {{ month }}월
       <i class="fas fa-chevron-right" @click="calendarMonth(1)"></i>
     </header>
