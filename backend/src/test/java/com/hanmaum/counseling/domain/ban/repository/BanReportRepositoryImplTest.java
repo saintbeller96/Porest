@@ -95,26 +95,26 @@ class BanReportRepositoryImplTest {
         Assertions.assertThat(banReport).isEqualTo(save);
     }
 
-//    @Test
-//    @DisplayName("신고 목록 가져오기")
-//    void test() throws Exception{
-//        //given
-//        User reporter = userRepository.findByEmail("reporter@test.com").get();
-//        User counsellor = userRepository.findByEmail("counsellor@test.com").get();
-//        List<UserStoryStateDto> c = storyService.getUserStoryState(reporter.getId());
-//        Long storyId = c.get(0).getStoryId();
-//        List<UserCounselStateDto> d = counselService.getCounselStateOfUser(counsellor.getId());
-//        Long counselId = d.get(0).getCounselId();
-//
-//        BanReport banReport = BanReport.of(new BanReportDto(counselId,"너무 성의가 없네요"), reporter.getId());
-//        //when
-//        BanReport save = banReportRepository.save(banReport);
-//
-//        //when
-//        Page<BanReportDetailDto> result = banReportRepository.findProceedingReport(PageRequest.of(0, 10));
-//
-//        //then
-//        Assertions.assertThat(result.getContent()).extracting("id").containsExactly(1L);
-//        //
-//    }
+    @Test
+    @DisplayName("신고 목록 가져오기")
+    void test() throws Exception{
+        //given
+        User reporter = userRepository.findByEmail("reporter@test.com").get();
+        User counsellor = userRepository.findByEmail("counsellor@test.com").get();
+        List<UserStoryStateDto> c = storyService.getUserStoryState(reporter.getId());
+        Long storyId = c.get(0).getStoryId();
+        List<UserCounselStateDto> d = counselService.getCounselStateOfUser(counsellor.getId());
+        Long counselId = d.get(0).getCounselId();
+
+        BanReport banReport = BanReport.of(new BanReportDto(counselId,"너무 성의가 없네요"), reporter.getId());
+        //when
+        BanReport save = banReportRepository.save(banReport);
+
+        //when
+        Page<BanReportDetailDto> result = banReportRepository.findProceedingReport(PageRequest.of(0, 10));
+
+        //then
+        Assertions.assertThat(result.getContent().size()).isEqualTo(1);
+        //
+    }
 }

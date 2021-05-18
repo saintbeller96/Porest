@@ -41,9 +41,9 @@
 .mailbox_title{
 width: 100%;
 height: 20%;
-font-size: 1.94rem;
+font-size: 1.44rem;
 text-align: center;
-font-family: 'Hardworking';
+font-family: 'GyeonggiBatang';
 }
 
 .postmenu_wrapper {
@@ -139,7 +139,7 @@ font-family: 'InfinitySans-BoldA1';
 }
 
 .postmenu1_subtitle{
-color: black;
+color: #696969;
 font-size: 1.14rem;
 padding-top: 6.5%;
 font-family: 'SLEIGothicTTF';
@@ -259,7 +259,7 @@ pointer-events: none;
   }
   
   .postmenu2_subtitle{
-  color: black;
+  color: #696969;
   font-size: 1.14rem;
   padding-top: 6.5%;
   font-family: 'SLEIGothicTTF';
@@ -383,7 +383,7 @@ pointer-events: none;
   }
   
   .postmenu3_subtitle{
-  color: black;
+  color: #696969;
   font-size: 1.14rem;
   padding-top: 6.5%;
   font-family: 'SLEIGothicTTF';
