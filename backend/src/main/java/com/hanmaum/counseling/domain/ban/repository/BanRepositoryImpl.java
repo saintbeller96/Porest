@@ -20,19 +20,19 @@ public class BanRepositoryImpl implements BanRepositoryCustom{
 
     @Override
     public Optional<Ban> findByIdFetch(Long banId) {
-        Ban ban = queryFactory
-                .selectFrom(QBan.ban)
-                .join(banReport).fetchJoin()
-                .where(QBan.ban.id.eq(banId))
+        Ban result = queryFactory
+                .selectFrom(ban)
+                .join(ban.report).fetchJoin()
+                .where(ban.id.eq(banId))
                 .fetchOne();
-        return Optional.ofNullable(ban);
+        return Optional.ofNullable(result);
     }
 
     @Override
     public List<Ban> findByUserIdFetch(Long userId) {
         return queryFactory
                 .selectFrom(ban)
-                .join(banReport).fetchJoin()
+                .join(ban.report).fetchJoin()
                 .where(ban.banUserId.eq(userId), ban.banStatus.eq(BanStatus.BANNED))
                 .fetch();
     }
