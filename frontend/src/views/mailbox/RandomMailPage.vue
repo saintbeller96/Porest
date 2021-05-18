@@ -22,7 +22,11 @@
       <!-- <div></div> -->
     </div>
     <div class="mystery">
-      <div v-for="(story, index) in stories" :key="index" @click="goToRootMailReply(story)">
+      <div
+        v-for="(story, index) in stories"
+        :key="index"
+        @click="goToRootMailReply(story)"
+      >
         <img src="../../assets/image/letter_1.png" alt="" />
       </div>
     </div>
@@ -30,17 +34,17 @@
 </template>
 
 <script>
-import Star from "@/components/common/Star.vue";
+import Star from '@/components/common/Star.vue';
 // import { startAnimation } from '@/assets/js/main/IntroPage.js';
-import { fireworks } from "@/assets/js/mail/RandomMailPage.js";
-import { getCandidatesOfStories } from "@/api/stories";
+import { fireworks } from '@/assets/js/mail/RandomMailPage.js';
+import { getCandidatesOfStories } from '@/api/stories';
 export default {
-  name: "RandomMail",
+  name: 'RandomMail',
   data() {
     return {
       randomMails: [1, 2, 3, 4, 5, 6],
       stories: [],
-      post_box_svg: require("../../assets/svg/postbox_1.svg"),
+      post_box_svg: require('../../assets/svg/postbox_1.svg'),
     };
   },
   components: {
@@ -55,6 +59,7 @@ export default {
       setTimeout(()=>{
         this.$router.push({ name: "RootMailReply" });
       },800)
+
     },
     // goToRootMailReply(id) {
     //   this.$router.push({ name: 'RootMailReply', params: { storyId: id } });
@@ -85,6 +90,13 @@ export default {
   mounted() {
     this.getRandomStories();
     // startAnimation();
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

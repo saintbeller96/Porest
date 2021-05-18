@@ -40,8 +40,10 @@
           <div class="root-mail-reply">
             <form class="mailform">
               <div>
+
                 <label for="reply_title">답장 제목</label>
                 <input type="text" name="reply_title" size="40" placeholder="답장의 제목을 적어주세요." v-model="letter.body.title" />
+
               </div>
               <div>
                 <label for="reply_content">답장 내용</label>
@@ -55,6 +57,7 @@
               </div>
               <div>
                 <input class="sendBtns" type="submit" value="보내기" @click="reply()" />
+
               </div>
             </form>
           </div>
@@ -70,11 +73,11 @@
 </template>
 
 <script>
-import { init } from "@/assets/js/mail/RootMailReplyPage.js";
-import { selectStory } from "@/api/stories";
-import { writeLetter } from "@/api/letters";
+import { init } from '@/assets/js/mail/RootMailReplyPage.js';
+import { selectStory } from '@/api/stories';
+import { writeLetter } from '@/api/letters';
 export default {
-  name: "RootMailReply",
+  name: 'RootMailReply',
   data() {
     return {
       story: {
@@ -82,9 +85,9 @@ export default {
         //TODO : 데이터 구조 변경 될 수 있음 확인 꼭하기
         detail: {
           detail: {
-            content: "",
-            createAt: "",
-            title: "",
+            content: '',
+            createAt: '',
+            title: '',
           },
           letterId: 0,
         },
@@ -95,9 +98,9 @@ export default {
           letterId: null,
         },
         body: {
-          content: "",
-          createAt: "",
-          title: "",
+          content: '',
+          createAt: '',
+          title: '',
         },
       },
     };
@@ -117,6 +120,13 @@ export default {
   },
   mounted() {
     init();
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

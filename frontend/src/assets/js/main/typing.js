@@ -28,16 +28,18 @@ export const typing = () => {
   const big = document.querySelector('.big');
   const magic = document.querySelector('.magic');
   const textIntro = document.querySelector('.text_intro');
-  entrance.addEventListener('click', () => {
-    typeBoard.style.opacity = '0';
-    entrance.classList.add('pop-ball');
-    textIntro.classList.remove('show');
-    big.classList.add('show');
-    setTimeout(() => {
-      // audioTag.play();
-      router.push({ name: 'MainIsland' });
-    }, 3500);
-  });
+  if (entrance) {
+    entrance.addEventListener('click', () => {
+      typeBoard.style.opacity = '0';
+      entrance.classList.add('pop-ball');
+      textIntro.classList.remove('show');
+      big.classList.add('show');
+      setTimeout(() => {
+        // audioTag.play();
+        router.push({ name: 'MainIsland' });
+      }, 3500);
+    });
+  }
   async function type() {
     // if (count === 3) {
     //   return;

@@ -5,7 +5,9 @@
     <div class="main_wrapper">
       <div class="post_ground_wrapper">
         <div class="post_ground_container" @click="goToMailbox">
-          <div class="paper-plane"><img src="@/assets/image/plane2.svg" alt="" /></div>
+          <div class="paper-plane">
+            <img src="@/assets/image/plane2.svg" alt="" />
+          </div>
           <!-- <div class="paper-plane-2"><img src="@/assets/image/plane2.svg" alt="" /></div> -->
           <div class="post_island">
             <object :data="post_island" type="image/svg+xml"></object>
@@ -14,7 +16,7 @@
       </div>
 
       <div class="game_ground_wrapper">
-        <div class="game_ground_container">
+        <div class="game_ground_container" @click="goToJoy">
           <div class="pointer-game"></div>
           <div class="game_island">
             <object :data="game_island" type="image/svg+xml"></object>
@@ -70,6 +72,9 @@ export default {
     Star,
   },
   methods: {
+    goToJoy() {
+      this.$router.push({ name: 'JoyMainPage' });
+    },
     goToGurumi() {
       const form = document.querySelector('.gurumi');
       form.action = 'http://localhost:3000/secret';
@@ -95,6 +100,13 @@ export default {
     // const whiteBg = document.querySelector('.white-background');
     mainisland.classList.add('show');
     mainislandWrapper.classList.add('show');
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

@@ -1,12 +1,11 @@
 package com.hanmaum.counseling.domain.account.controller;
 
+import com.google.api.Http;
 import com.hanmaum.counseling.domain.account.dto.*;
 import com.hanmaum.counseling.domain.account.entity.User;
 import com.hanmaum.counseling.domain.account.service.AccountService;
-import com.hanmaum.counseling.security.JwtProvider;
 import exception.UserNotFoundException;
 import exception.WrongPasswordException;
-import io.swagger.models.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -60,6 +59,12 @@ public class AccountController {
     @PutMapping("update-password")
     public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, HttpServletRequest httpServletRequest) throws WrongPasswordException, UserNotFoundException {
         accountService.updatePassword(httpServletRequest, updatePasswordDto);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
+
+    @PutMapping("update-nickname")
+    public ResponseEntity<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto, HttpServletRequest httpServletRequest){
+        accountService.updateNickname(httpServletRequest, updateNicknameDto);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
