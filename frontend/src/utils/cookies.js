@@ -1,23 +1,27 @@
+let date = new Date(Date.now() + 86400e3);
+let Oneday = date.toUTCString();
+let options = `;path=/;secure; expires=${Oneday}`;
 function saveUserIdToCookie(value) {
-  document.cookie = `login_id=${value}`;
+  document.cookie = `login_id=${value}${options}`;
 }
 function saveUserUidToCookie(value) {
-  document.cookie = `login_uid=${value}`;
+  console.log('cookie 저장', value, 'value');
+  document.cookie = `login_uid=${value}${options}`;
 }
 function saveUserNameToCookie(value) {
-  document.cookie = `login_name=${value}`;
+  document.cookie = `login_name=${value}${options}`;
 }
 function saveUserEmailToCookie(value) {
-  document.cookie = `login_email=${value}`;
+  document.cookie = `login_email=${value}${options}`;
 }
 function saveAuthToCookie(value) {
-  document.cookie = `login_token=${value}`;
+  document.cookie = `login_token=${value}${options}`;
 }
 function saveUserImgFromCookie(value) {
-  document.cookie = `login_img=${value}`;
+  document.cookie = `login_img=${value}${options}`;
 }
 function saveUserTemperatureFromCookie(value) {
-  document.cookie = `login_temperature=${value}`;
+  document.cookie = `login_temperature=${value}${options}`;
 }
 function getUserIdFromCookie() {
   return document.cookie.replace(/(?:(?:^|.*;\s*)login_id\s*=\s*([^;]*).*$)|^.*$/, '$1');

@@ -1,95 +1,118 @@
 <template>
   <div class="home-wrapper">
-    <auth-form></auth-form>
+    <!-- <auth-form></auth-form> -->
     <section>
       <div class="box">
-        <div class="square" style="--i:0;"></div>
+        <!-- <div class="square" style="--i:0;"></div>
         <div class="square" style="--i:1;"></div>
         <div class="square" style="--i:2;"></div>
         <div class="square" style="--i:3;"></div>
-        <div class="square" style="--i:4;"></div>
+        <div class="square" style="--i:4;"></div> -->
         <div class="container">
           <div class="form">
-            <p class="title">
-              Email
-              <span
-                v-if="!emailRedundancy || !isValidEmail || this.email.length === 0"
-                class="redundancy_check"
-                @click="checkEmail"
-                >중복확인</span
-              >
-              <span v-else class="redundancy_check2">중복확인 완료</span>
-            </p>
-            <div class="inputBox">
-              <input
-                type="email"
-                class="input"
-                v-model="email"
-                placeholder="이메일 주소를 입력해주세요."
-                autocomplete="on"
-              />
-            </div>
-            <p v-if="!isValidEmail" class="error_message">
-              잘못된 이메일 양식입니다.
-            </p>
-            <p v-else-if="!emailRedundancy && email" class="error_message">
-              이메일 중복 확인을 진행해주세요
-            </p>
+            <form @submit.prevent>
+              <p class="title">
+                Email
+                <span
+                  v-if="!emailRedundancy || !isValidEmail || this.email.length === 0"
+                  class="redundancy_check"
+                  @click="checkEmail"
+                  >중복확인</span
+                >
+                <span v-else class="redundancy_check2">중복확인 완료</span>
+              </p>
+              <div class="inputBox">
+                <input
+                  type="email"
+                  class="input"
+                  v-model="email"
+                  placeholder="이메일 주소를 입력해주세요."
+                  autocomplete="on"
+                />
+              </div>
+              <p v-if="!isValidEmail" class="error_message">
+                잘못된 이메일 양식입니다.
+              </p>
+              <p v-else-if="!emailRedundancy && email" class="error_message">
+                이메일 중복 확인을 진행해주세요
+              </p>
 
-            <p class="title">닉네임</p>
-            <div class="inputBox">
-              <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요." autocomplete="off" />
-            </div>
+              <!-- 이메일 인증 부분 start -->
+              <div v-if="emailRedundancy">
+                <span v-if="!verify" class="redundancy_check" @click="checkVerify">이메일 인증</span>
+                <span v-else class="redundancy_check2">이메일 인증 완료</span>
+              </div>
+              <div v-if="emailRedundancy" class="inputBox">
+                <input
+                  type="text"
+                  class="input"
+                  v-model="code"
+                  placeholder="이메일 인증코드를 입력해주세요"
+                  autocomplete="off"
+                />
+              </div>
+              <!-- 이메일 인증 부분  end -->
 
-            <p class="title">비밀번호</p>
-            <div class="inputBox">
-              <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
-            </div>
-            <p v-if="!isValidPwd && password1.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
-            <p v-else-if="!isValidPwd && password1.length > 20" class="error_message">
-              20자 이하의 비밀번호를 입력해주세요.
-            </p>
-
-            <p class="title">비밀번호 확인</p>
-            <div class="inputBox">
-              <input
-                type="password"
-                v-model="password2"
-                placeholder="비밀번호를 다시 입력해주세요."
-                autocomplete="off"
-              />
-            </div>
-            <p v-if="!isValidPwdConfirm" class="error_message">
-              다시 비밀번호를 확인해주세요.
-            </p>
-
-            <p class="title">가입 약관 동의</p>
-            <div class="terms-check">
-              <div class="accordion">
-                <register-terms></register-terms>
+              <p class="title">닉네임</p>
+              <div class="inputBox">
+                <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요." autocomplete="off" />
               </div>
 
-              <p v-if="!isTermsChecked" class="error_message_2">
-                이용 약관을 확인해주세요.
+              <p class="title">비밀번호</p>
+              <div class="inputBox">
+                <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+              </div>
+              <p v-if="!isValidPwd && password1.length < 8" class="error_message">
+                8자 이상의 비밀번호를 입력해주세요.
               </p>
-              <input type="checkbox" name="terms" value="true" v-model="terms" />
-              <span class="term" @click="checkTerms">약관 확인</span>
-            </div>
-            <button @click="submitForm" class="button">Sign up</button>
-            <div class="go-to-login-container">
-              <span @click="goToLogin" class="go-to-login">로그인 하러 가기</span>
-            </div>
+              <p v-else-if="!isValidPwd && password1.length > 20" class="error_message">
+                20자 이하의 비밀번호를 입력해주세요.
+              </p>
+
+              <p class="title">비밀번호 확인</p>
+              <div class="inputBox">
+                <input
+                  type="password"
+                  v-model="password2"
+                  placeholder="비밀번호를 다시 입력해주세요."
+                  autocomplete="off"
+                />
+              </div>
+              <p v-if="!isValidPwdConfirm" class="error_message">
+                다시 비밀번호를 확인해주세요.
+              </p>
+
+              <p class="title">가입 약관 동의</p>
+              <div class="terms-check">
+                <div class="accordion">
+                  <register-terms></register-terms>
+                </div>
+
+                <p v-if="!isTermsChecked" class="error_message_2">
+                  이용 약관을 확인해주세요.
+                </p>
+                <input type="checkbox" name="terms" value="true" v-model="terms" />
+                <span class="term" @click="checkTerms">약관 확인</span>
+              </div>
+              <button type="submit" @click="submitForm" class="button">Sign up</button>
+              <div class="go-to-login-container">
+                <span @click="goToLogin" class="go-to-login">로그인 하러 가기</span>
+              </div>
+            </form>
           </div>
         </div>
       </div>
     </section>
+    <div id="canvas"></div>
   </div>
 </template>
 
 <script>
-import { signupUser, emailCheck } from '@/api/auth';
-// import FireBase from 'firebase/app';
-// import 'firebase/auth';
+import { signupUser, emailCheck, emailVerify, verifyCheck } from '@/api/auth';
+import { startAnimation } from '@/assets/js/main/IntroPage.js';
+
+import FireBase from 'firebase/app';
+import 'firebase/auth';
 import { validateEmail, validatePwd } from '@/utils/validation';
 import AuthForm from '@/components/auth/AuthForm';
 import RegisterTerms from '@/components/auth/RegisterTerms';
@@ -104,8 +127,10 @@ export default {
       nickname: '',
       password1: '',
       password2: '',
+      code: '',
       terms: false,
       emailRedundancy: false,
+      verify: false,
     };
   },
   computed: {
@@ -165,12 +190,26 @@ export default {
             email: this.email,
             nickname: this.nickname,
             password: this.password1,
+            code: this.code,
           });
           await this.$store.dispatch('LOGIN', {
             email: this.email,
             password: this.password1,
           });
-          this.$router.push('/main');
+          await FireBase.auth()
+            .createUserWithEmailAndPassword(this.email, this.password1)
+            .then(
+              userCred => {
+                return userCred.user
+                  .updateProfile({
+                    nickname: this.nickname,
+                  })
+                  .then(() => {
+                    this.$router.push('/log/login');
+                  });
+              },
+              error => (this.error = error.message),
+            );
         } catch (error) {
           alert(error);
         }
@@ -189,12 +228,24 @@ export default {
           this.emailRedundancy = data.redundancy;
           if (!this.emailRedundancy) {
             alert('이미 존재하는 이메일 주소입니다.');
+          } else {
+            await emailVerify({ email: this.email });
           }
         } catch (error) {
           alert(error);
         }
       }
     },
+    async checkVerify() {
+      //기본적인 코드만 넣어놨습니다.
+      this.verify = await verifyCheck({
+        email: this.email,
+        code: this.code,
+      });
+    },
+  },
+  mounted() {
+    startAnimation();
   },
 };
 </script>
@@ -204,10 +255,12 @@ export default {
   position: relative;
   overflow: hidden;
   box-sizing: border-box;
-  background-image: url('../../assets/image/sky3.png');
+  background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
+
+  /* background-image: url('../../assets/image/sky3.png');
   background-position: 50% 50%;
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: cover; */
 }
 
 section {
@@ -217,7 +270,7 @@ section {
   min-height: 100vh;
 }
 
-.box {
+/* .box {
   position: relative;
 }
 
@@ -276,7 +329,7 @@ section {
   left: 140px;
   width: 60px;
   height: 60px;
-}
+} */
 .container {
   position: relative;
   min-width: 27vw;
@@ -381,6 +434,22 @@ section {
   cursor: pointer;
 }
 
+.verify_button {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  outline: none;
+  padding: 9px;
+  border-radius: 10px;
+  margin-top: 5px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  color: #fff;
+  font-size: 15px;
+  cursor: pointer;
+}
+
 .terms-check {
   color: #fff;
 }
@@ -400,5 +469,15 @@ section {
   font-size: 15px;
   margin-left: 5px;
   cursor: pointer;
+}
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
 }
 </style>

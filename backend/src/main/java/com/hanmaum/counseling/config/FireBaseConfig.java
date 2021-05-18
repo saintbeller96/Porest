@@ -27,7 +27,7 @@ public class FireBaseConfig {
                 logger.info("Firebase application has been initialized");
             }
         } catch (Exception e) {
-            logger.error(""+e.getMessage());
+            logger.error(e.getMessage());
         }
     }
 }

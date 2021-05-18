@@ -29,9 +29,8 @@ public class User {
     @Column
     private String nickname;
 
-    @Column
-    @ColumnDefault("36")
-    private Long temperature;
+    @Column(name = "temperature", columnDefinition = "integer default 36")
+    private int temperature;
 
     @Column
     private String profileImg;
@@ -52,7 +51,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Builder
-    public User(String email, String password, String nickname, Long temperature, Long profileImgNumber, RoleType role) {
+    public User(String email, String password, String nickname, int temperature,  Long profileImgNumber, RoleType role) {
         this.email = email;
         this.password = password;
         this.nickname = nickname;
@@ -67,4 +66,5 @@ public class User {
     public void setProfileImgNumber(Long profileImgNumber){this.profileImgNumber = profileImgNumber;}
     public void setPassword(String password){ this.password = password; }
     public void setNickname(String nickname) { this.nickname = nickname;}
+    public void setTemperature(int temperature){this.temperature = temperature;}
 }

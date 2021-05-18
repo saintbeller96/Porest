@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import org.springframework.http.HttpMethod;
 import org.springframework.http.MediaType;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
@@ -55,12 +56,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .authorizeRequests()
                 .antMatchers(
-                        "/signup",
-                        "/login",
-                        "/verify-check",
-                        "/email-check",
-                        "/find-password",
-                        "/email-verify").permitAll()
+                        "/signup", "/login", "/verify-check", "/email-check", "/find-password", "/email-verify").permitAll()
+                .antMatchers(HttpMethod.POST, "/bans").hasRole("USER")
+                .antMatchers(HttpMethod.PUT, "/bans/**").hasRole("ADMIN")
+                .antMatchers(HttpMethod.GET, "/bans").hasRole("ADMIN")
                 .anyRequest().hasRole("USER")
 
                 .and()

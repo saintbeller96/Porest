@@ -19,15 +19,13 @@ public class LetterServiceImpl implements LetterService{
 
     @Override
     public Long writeLetter(FormDto form, Long counselId, Long parentLetterId, Long userId) {
-        Counsel counsel = counselRepository.findById(counselId).orElseThrow(
-                IllegalStateException::new
-        );
+        Counsel counsel = counselRepository.findById(counselId)
+                .orElseThrow(IllegalStateException::new);
         Letter parentLetter = getLetter(parentLetterId);
 
         Letter letter = Letter.write(userId, parentLetter, form.getTitle(), form.getContent());
         counsel.addLetter(letter);
-        Letter saveLetter = letterRepository.save(letter);
-        return saveLetter.getId();
+        return letterRepository.save(letter).getId();
     }
 
     @Override
@@ -45,10 +43,9 @@ public class LetterServiceImpl implements LetterService{
         return letter.getId();
     }
 
-    private Letter getLetter(Long parentLetterId) {
-        Letter letter = letterRepository.findByIdFetch(parentLetterId).orElseThrow(
-                IllegalStateException::new
-        );
+    private Letter getLetter(Long letterId) {
+        Letter letter = letterRepository.findByIdFetch(letterId)
+                .orElseThrow(IllegalStateException::new);
         return letter;
     }
 }

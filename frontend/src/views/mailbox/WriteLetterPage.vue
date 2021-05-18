@@ -1,62 +1,78 @@
 <template>
   <div class="write-letter-wrapper">
- 
-  
-<div class="envelope open">
-  <div class="front">
-    <div class="stamp"></div>
-    <div class="mailme">
-      <p>당신의 고민을 담은 편지</p>
-      <p>한사랑 수목원이 전해드립니다</p>
+     <div class="backarrow_wrapper">
+      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
     </div>
-  </div>
-  
-  <div class="back">
+    <div class="envelope open">
+      <div class="front">
+        <div class="stamp"></div>
+        <div class="mailme">
+          <p>당신의 고민을 담은 편지</p>
+          <p>porest가 전해드립니다</p>
+        </div>
+      </div>
 
-    <div class="letter">
-      <form class="mailform">
-        <div>
-          <label for="title">title</label>
-          <input type="text" name="title" size="40" placeholder="고민의 제목을 적어주세요">
+      <div class="back">
+        <div class="letter">
+          <form class="mailform">
+            <div>
+              <label for="title">제목</label>
+              <input class="titleinput" type="text" name="title" size="40" v-model="story.title" placeholder="고민의 제목을 적어주세요" />
+            </div>
+            <div>
+              <label for="content">내용</label>
+              <textarea
+                name="content"
+                cols="40"
+                rows="5"
+                v-model="story.content"
+                placeholder="고민을 남겨주세요"
+              ></textarea>
+            </div>
+            <div>
+              <input class="sendBtn" type="submit" value="보내기" @click="storyForm" />
+            </div>
+          </form>
         </div>
-        <div>
-          <label for="content">content</label>
-          <textarea name="content" cols="40" rows="5" placeholder="고민을 남겨주세요"></textarea>
-        </div>
-        <div>
-          <input class="sendBtn" type="submit" value="Send">
-        </div>
-      </form>
-    </div>
-    <div class="flap left-flap"></div>
-    <div class="flap right-flap"></div>
-    <div class="flap bottom-flap"></div>
-    <div class="flap top-flap"></div>
-  </div>
-</div>
-
-<div class="notification">
-    <div>
-      <div>
-        <p>Message sent!</p>
-        <p>Write a new message(보류)</p>
+        <div class="flap left-flap"></div>
+        <div class="flap right-flap"></div>
+        <div class="flap bottom-flap"></div>
+        <div class="flap top-flap"></div>
       </div>
     </div>
-</div>
 
-</div>
+    <div class="notification">
+      <div class="noti_title">당신의 고민이 전송되었습니다.</div>
+    </div>
+  </div>
 </template>
 
 <script>
-
-import { init } from '@/assets/js/mail/WriteLetterPage.js'
+import { writeStory } from "@/api/stories";
+import { init } from "@/assets/js/mail/WriteLetterPage.js";
 export default {
-    name:'WriteLetterPage',
-    mounted(){
-        init()
-    }
-}
+  name: "WriteLetterPage",
+  data() {
+    return {
+      story: {
+        title: "",
+        content: "",
+        createAt: "",
+      },
+    };
+  },
+  methods: {
+    async storyForm() {
+      await writeStory(this.story);
+    },
+    moveToBack() {
+      this.$router.go(-1);
+    },
+  },
+  mounted() {
+    init();
+  },
+};
 </script>
 
-<style scoped  src='@/assets/css/mail/WriteLetterPage.css'>
-</style>
+<style scoped src="@/assets/css/mail/WriteLetterPage.css"></style>

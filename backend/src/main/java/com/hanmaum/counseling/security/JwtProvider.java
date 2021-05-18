@@ -36,8 +36,9 @@ public class JwtProvider {
         payloads.put("email",user.getEmail());
         payloads.put("id", user.getId());
         payloads.put("nickname", user.getNickname());
-        payloads.put("profile_img", user.getProfileImg());
+//        payloads.put("profile_img", user.getProfileImg());
         payloads.put("temperature", user.getTemperature());
+        payloads.put("profile_img_number", user.getProfileImgNumber());
 
         return Jwts.builder()
                 .setHeader(headers)

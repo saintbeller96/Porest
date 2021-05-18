@@ -13,27 +13,20 @@ import java.time.LocalDateTime;
 public class SimpleCounselDto {
     @NotNull
     private Long counselId;
-    @NotNull
-    private Long letterId;
-    private FormDto detail;
+    private LetterDto detail;
 
     public SimpleCounselDto(){}
 
     @Builder
-    public SimpleCounselDto(Long counselId, Long letterId, String title, String content, LocalDateTime date){
+    public SimpleCounselDto(Long counselId, Letter letter){
         this.counselId = counselId;
-        this.letterId = letterId;
-        this.detail = new FormDto(title, content, date);
+        this.detail = LetterDto.of(letter);
     }
 
     public static SimpleCounselDto create(Long counselId, Letter letter){
         return SimpleCounselDto.builder()
                 .counselId(counselId)
-                .letterId(letter.getId())
-                .title(letter.getForm().getTitle())
-                .content(letter.getForm().getContent())
-                .date(letter.getCreatedAt())
+                .letter(letter)
                 .build();
-
     }
 }
