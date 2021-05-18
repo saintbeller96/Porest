@@ -11,6 +11,14 @@
   background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%);
 }
 
+.backarrow {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 300;
+  cursor: pointer;
+  font-size: 1.5rem;
+}
 /* .post_box_svg {
   position: absolute;
   top: 50%;
@@ -35,6 +43,54 @@
   height: 100%;
   z-index: 200;
 } */
+
+
+.random_title{
+  position: absolute;
+  font-size: 2rem;
+  top: 20%;
+  left: 49%;
+  transform: translate(-50%,-50%);
+  font-family: 'SLEIGothicTTF';
+
+
+}
+
+
+.random_subtitle{
+  position: absolute;
+  font-size: 1.6rem;
+  font-weight: bold;
+  top: 34%;
+  left: 48%;
+  transform: translate(-50%,-50%);
+  font-family: 'Love_son';
+}
+
+
+.click_arrow {
+  position: absolute;
+  /* background-color: aqua; */
+  width: 100px;
+  height: 100px;
+  top: 40%;
+  left: 43.5%;
+  transform: translate(-50%,-50%);
+}
+.click_arrow img{
+  width: 30px;
+  transform: rotate(20deg);
+  transform: scaleX(-1);
+
+}
+
+.random_subtitle.hide{
+opacity: 0;
+}
+.click_arrow.hide{
+  opacity: 0;
+}
+
 .star {
   position: absolute;
   /* top: 0%; */
@@ -144,12 +200,12 @@
 .big.show div:nth-child(1) {
   background: #fffcee; animation: big .5s 2s forwards;
   background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+  background-image: linear-gradient(to top, #accbee 0%, #e7f0fd 100%);
 }
 .big.show div:nth-child(2) {
   background: #66a6ff; animation: big .5s 2.5s forwards;
-  background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
-  background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
   background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%);
+  background-image: linear-gradient(120deg, #e0c3fc 0%, #8ec5fc 100%);
 
 }
 

@@ -71,11 +71,6 @@ const routes = [
     props: true,
   },
   {
-    path: '/mailbox/my-mailbox/letter-detail/letter-reply',
-    name: 'LetterReply',
-    component: () => import('@/views/mailbox/LetterReplyPage.vue'),
-  },
-  {
     path: '/mailbox/received',
     name: 'MyReceivedMail',
     component: () => import('@/views/mailbox/MyReceivedMailPage.vue'),

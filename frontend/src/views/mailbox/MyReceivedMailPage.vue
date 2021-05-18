@@ -1,13 +1,16 @@
 <template>
   <div class="received_mail_main_wrapper">
     <!-- <Star class="star"></Star> -->
+    <div>
+      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
+    </div>
     <div class="received_mail_inner_wrapper">
       <section class="received_mail_inner_left">
         <div class="section_header">
-          <div class="header_btn" @click="openUserBoard(true)">위로 받기</div>
-          <div class="header_btn" @click="openUserBoard(false)">
-            위로 보내기
-          </div>
+
+          <div class="header_btn1" @click="openUserBoard(true)">위로 받기</div>
+          <div class="header_btn2" @click="openUserBoard(false)">위로 보내기</div>
+
         </div>
         <div class="section_body">
           <my-story-list v-if="viewStoryState"></my-story-list>
@@ -18,8 +21,10 @@
       <section class="received_mail_inner_right">
         <div class="root_mail_header"></div>
         <div class="write_reply">
+
           <div class="letter_paper">
-            <div class="letter_form_wrapper">
+
+            <div class="letter_form_wrapper1">
               <div class="paper">
                 <div class="paper_header" v-text="getTitle()"></div>
                 <div class="paper_content" v-text="getContent()"></div>
@@ -28,19 +33,15 @@
                 </div>
               </div>
             </div>
-            <div class="letter_form_wrapper">
+
+            <div class="letter_form_wrapper2">
               <div class="paper">
-                <div class="paper_header">
-                  제목 작성하기
-                  <input type="text" v-model="letter.body.title" />
-                </div>
-                <div class="paper_content">
-                  내용 작성하기
-                  <textarea
-                    name=""
-                    id=""
-                    v-model="letter.body.content"
-                  ></textarea>
+
+                <div class="paper_header2">답장 제목<input type="text" v-model="letter.body.title" /></div>
+                <div class="paper_content2">
+                  답장 내용
+                  <textarea name="" id="" v-model="letter.body.content"></textarea>
+
                 </div>
                 <div class="paper_footer">
                   <!-- 벤 버튼인데 답장 보내기..라고 써있어요ㅠㅠ! -->
@@ -151,12 +152,25 @@ export default {
     },
     openUserBoard(value) {
       this.viewStoryState = value;
+      const headerBtn1 = document.querySelector(".header_btn1");
+      const headerBtn2 = document.querySelector(".header_btn2");
+      if (value==true){
+        headerBtn1.classList.add("click");
+        headerBtn2.classList.remove("click");
+
+      } else {
+        headerBtn1.classList.remove("click");
+        headerBtn2.classList.add("click");
+      }
     },
     openAll() {
       this.openAllLetters = true;
     },
     exitAll() {
       this.openAllLetters = false;
+    },
+    moveToBack() {
+      this.$router.go(-1);
     },
     getTitle() {
       let letters = this.$store.state.allLetters;
