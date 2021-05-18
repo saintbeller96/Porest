@@ -5,6 +5,7 @@
         <h1 class="story_title" v-text="counsel.title"></h1>
         <div class="header_counsel" v-text="counsel.writerNickname"></div>
       </div>
+      <span v-text="counsel.numOfReplies >= 1 ? 'NEW' : ''"></span>
       <!-- <div class="story_body">
         <p>
           내가 보낸 답장에 대한 재답장 제목 위치

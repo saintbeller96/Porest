@@ -67,7 +67,7 @@
 </template>
 
 <script>
-import { writeLetter } from "@/api/letters";
+import { writeLetter, readLetter } from "@/api/letters";
 import { getCounsel } from "@/api/counsels";
 import MyCounselList from "@/components/mail/MyCounselList.vue";
 import MyStoryList from "@/components/mail/MyStoryList.vue";
@@ -153,6 +153,7 @@ export default {
       this.letter.ids.counselId = this.$store.state.allLetters.counselId;
       this.letter.ids.letterId = this.$store.state.allLetters.detail[0].reply.letterId;
       await writeLetter(this.letter);
+      await readLetter(this.letter);
     },
   },
   watch: {
