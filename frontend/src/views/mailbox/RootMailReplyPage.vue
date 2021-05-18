@@ -28,8 +28,8 @@
       <div class="front">
         <div class="stamp"></div>
         <div class="mailme">
-          <p>당신의 소중한 답장</p>
-          <p>porest가 전해드립니다.</p>
+          <p class="p_title">당신의 소중한 답장</p>
+          <p class="p_subtitle">porest가 전해드립니다.</p>
         </div>
       </div>
 
@@ -112,7 +112,7 @@ export default {
       this.letter.ids.letterId = this.story.detail.letterId;
       await writeLetter(this.letter);
       //여기서 페이지 이동코드 넣어주세요~!
-      // this.$router.push({name :'' });
+      this.$router.push({name :'Mailbox' });
     },
   },
   mounted() {

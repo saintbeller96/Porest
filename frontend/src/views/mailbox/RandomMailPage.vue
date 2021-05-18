@@ -1,7 +1,14 @@
 <template>
   <div class="random-mail">
     <!-- <div id="canvas"></div> -->
-
+    <div>
+      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
+    </div>
+    <div class="random_title">당신을 기다리고 있는 편지가 있습니다.</div>
+    <div class="random_subtitle">아래 우체통을 클릭해주세요.</div>
+    <div class="click_arrow">
+      <img src="../../assets/image/click_arrow1.png" alt="">
+    </div>
     <Star class="star"></Star>
     <canvas class="fireworks"></canvas>
     <!-- <div class="post_box_svg" @click="postClick"></div> -->
@@ -45,7 +52,9 @@ export default {
     },
     async goToRootMailReply(story) {
       await this.$store.dispatch("saveSelectedStory", story);
-      this.$router.push({ name: "RootMailReply" });
+      setTimeout(()=>{
+        this.$router.push({ name: "RootMailReply" });
+      },800)
     },
     // goToRootMailReply(id) {
     //   this.$router.push({ name: 'RootMailReply', params: { storyId: id } });
@@ -54,14 +63,23 @@ export default {
       e.target.classList.add("pop-ball");
       const big = document.querySelector(".big");
       const mystery = document.querySelector(".mystery");
+      const subtitle = document.querySelector(".random_subtitle");
+      const clickarrow = document.querySelector(".click_arrow");
+
       big.classList.add("show");
       mystery.classList.add("show");
+      subtitle.classList.add("hide");
+      clickarrow.classList.add("hide");
+
       setTimeout(() => {
         fireworks();
       }, 3000);
     },
     postClick(e) {
       console.log(e.target);
+    },
+    moveToBack() {
+      this.$router.go(-1);
     },
   },
   mounted() {
