@@ -15,4 +15,7 @@ export default {
   getUpdateEmotion(state) {
     return state.selectedSticker;
   },
+  getAuthToken(state) {
+    return state.token;
+  },
 };

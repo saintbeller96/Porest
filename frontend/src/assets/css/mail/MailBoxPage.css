@@ -12,14 +12,22 @@ position: relative;
 .backarrow_wrapper {
   position: absolute;
   width: 100%;
-  height: 30%;
-  top: 8%;
-  left: 2%;
+  height: 2rem;
+  top: 1rem;
+  left: 1rem;
 }
 
 .backarrow{
-  font-size:3rem;
+  font-size:2rem;
+  cursor: pointer;
 }
+.mailbox_main_title {
+  position: absolute;
+  top: 15%;
+  left: 50%;
+  transform: translate(-50%,0);
+}
+
 .mailbox_name{
   font-size: 2.8rem;
   text-align: center;

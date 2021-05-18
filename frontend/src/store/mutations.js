@@ -59,7 +59,14 @@ export default {
   getThisMonthEmoji(state, thisMonthWithEmoji) {
     state.thisMonthWithEmoji = thisMonthWithEmoji;
   },
+  //Mail 관련
   setCounselId(state, counselId) {
     state.counselId = counselId;
-  }
+  },
+  setSelectedStory(state, selectedStory) {
+    state.selectedStory = selectedStory;
+  },
+  setAllLetters(state, allLetters) {
+    state.allLetters = allLetters;
+  },
 };

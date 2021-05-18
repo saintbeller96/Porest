@@ -7,15 +7,18 @@
       </div>
       <div class="story_body">
         <div class="received_reply">
-          <div class="received_reply_num" v-text="'새로운 답장 ' + story.numOfNewReply + '통'"></div>
+          <div
+            class="received_reply_num"
+            v-text="story.numOfNewReply > 0 ? '새로운 답장 ' + story.numOfNewReply + '통' : '새로운 답장이 없어요!'"
+          ></div>
           <div class="reply_users_accodian_open" @click="openUsers(index, story.storyId)">열기</div>
         </div>
 
         <!-- reply -->
         <ul class="reply_users" v-if="openUsersState == index">
-          <li class="reply_user" v-for="(reply, index) in replies" :key="index" @click="openStory(reply.counselId)">
+          <li class="reply_user" v-for="(reply, index) in replies" :key="index" @click="openStory(reply)">
             <div class="reply_user_header">
-              <h1 v-text="reply.writerNickname"></h1>
+              <h1 v-text="reply.writerNickname + ' ' + (reply.numOfReplies >= 1 ? 'NEW' : '')"></h1>
               <div class="date" v-text="setDate(reply.updatedAt)"></div>
             </div>
             <p v-text="reply.title"></p>
@@ -78,11 +81,9 @@ export default {
     },
 
     //답장을 해준 다른 사람과의 story를 클릭했을 때
-    async openStory(counselId) {
+    async openStory(reply) {
       // this.counselList = await getCounsel(counselId);
-      await this.$store.dispatch("saveSelectedCounselId", counselId);
-      //read처리 들어가야할 곳
-      //await readLetter({counselId, letterId});
+      await this.$store.dispatch("saveSelectedCounselId", reply.counselId);
     },
   },
   mounted() {

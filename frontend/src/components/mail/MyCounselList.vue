@@ -1,10 +1,11 @@
 <template>
   <ul class="section_body_story_list send_list">
-    <li class="story_item" v-for="(counsel, index) in counselList" :key="index">
+    <li class="story_item" v-for="(counsel, index) in counselList" :key="index" @click="openCounsel(counsel.counselId)">
       <div class="story_header">
         <h1 class="story_title" v-text="counsel.title"></h1>
-        <div class="header_counsel" v-text="counsel.writerNickname"><small>작성자</small></div>
+        <div class="header_counsel" v-text="counsel.writerNickname"></div>
       </div>
+      <span v-text="counsel.numOfReplies >= 1 ? 'NEW' : ''"></span>
       <!-- <div class="story_body">
         <p>
           내가 보낸 답장에 대한 재답장 제목 위치
@@ -25,9 +26,12 @@ export default {
     };
   },
   methods: {
+    async openCounsel(counselId) {
+      await this.$store.dispatch("saveSelectedCounselId", counselId);
+      //await readLetter({counselId, letterId});
+    },
     async getMyCounsels() {
       this.counselList = await getMyCounsels();
-      console.log(this.counselList);
     },
     setDate(date) {
       //date.substring(0, 4)   -> 년

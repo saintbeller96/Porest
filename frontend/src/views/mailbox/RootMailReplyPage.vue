@@ -4,14 +4,14 @@
       <div class="front">
         <div class="stamp"></div>
         <div class="mailme">
-          <p v-text="story.detail.title"></p>
+          <p v-text="$store.state.selectedStory.detail.title"></p>
         </div>
       </div>
 
       <div class="back">
         <div class="letter">
           <div class="root-mail">
-            <p v-text="story.detail.content"></p>
+            <p v-text="$store.state.selectedStory.detail.content"></p>
 
             <div class="btnReply">답장하기</div>
           </div>
@@ -28,7 +28,7 @@
       <div class="front">
         <div class="stamp"></div>
         <div class="mailme">
-          <p>한사랑 수목원</p>
+          <p>Porest</p>
         </div>
       </div>
 
@@ -78,12 +78,15 @@ export default {
     return {
       story: {
         counselId: 0,
+        //TODO : 데이터 구조 변경 될 수 있음 확인 꼭하기
         detail: {
-          content: "",
-          createAt: "",
-          title: "",
+          detail: {
+            content: "",
+            createAt: "",
+            title: "",
+          },
+          letterId: 0,
         },
-        letterId: 0,
       },
       letter: {
         ids: {
@@ -103,15 +106,15 @@ export default {
       this.story = await selectStory(storyId);
     },
     async reply() {
+      await this.getStory(this.$store.state.selectedStory.storyId);
       this.letter.ids.counselId = this.story.counselId;
-      this.letter.ids.letterId = this.story.letterId;
+      this.letter.ids.letterId = this.story.detail.letterId;
       await writeLetter(this.letter);
       //여기서 페이지 이동코드 넣어주세요~!
       // this.$router.push({name :'' });
     },
   },
   mounted() {
-    this.getStory(this.$route.params.storyId);
     init();
   },
 };
