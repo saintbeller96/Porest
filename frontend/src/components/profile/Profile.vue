@@ -12,7 +12,7 @@
       />
     </div>
     <div class="personal-info">
-      <p>{{ $store.state.nickname }}</p>
+      <p>{{ $store.state.nickname }}님의 마음 온도는</p>
     </div>
     <div class="temperature">
       <temperature></temperature>
@@ -63,12 +63,11 @@ export default {
 
 .setting-btn {
   color: #fff;
-  float: right;
-  font-size: 13px;
-  opacity: 0.9;
+  float: left;
+  font-size: 1vw;
   cursor: pointer;
-  margin-top: -20px;
-  margin-right: 20px;
+  margin-top: -2.3vh;
+  margin-left: 1.2vw;
 }
 
 .profile-pic {
@@ -81,7 +80,7 @@ export default {
   /* animation */
   animation: animate 3s ease-in-out infinite;
   object-fit: cover;
-  margin-bottom: 3vh;
+  margin-bottom: 5vh;
 }
 
 .profile-pic img {
@@ -99,18 +98,20 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-bottom: 3vh;
+  margin-bottom: 1.5vh;
   font-size: 1vw;
   font-family: 'MaplestoryOTFBold';
+  color: #fff;
+  letter-spacing: 0.1vw;
 }
 
 @keyframes animate {
   0%,
   100% {
-    transform: translateY(3px);
+    transform: translateY(0.45vh);
   }
   50% {
-    transform: translateY(-3px);
+    transform: translateY(-0.45vh);
   }
 }
 </style>

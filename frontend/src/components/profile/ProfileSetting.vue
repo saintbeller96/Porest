@@ -1,8 +1,5 @@
 <template>
   <div class="profile-container">
-    <div class="title">
-      <p>프로필 수정</p>
-    </div>
     <div class="title2">
       <p>프로필 사진 변경</p>
     </div>
@@ -13,34 +10,35 @@
     <div class="inputBox">
       <input type="text" class="input" v-model="nickname" />
     </div>
-    <div class="title2">
-      <p>비밀번호 변경</p>
-      현재 비밀번호
+    <div>
+      <p class="space"></p>
+      <p class="title2">비밀번호 변경</p>
+      <span class="title3">현재 비밀번호</span>
       <div class="inputBox">
         <input type="password" class="input" v-model="password1" />
       </div>
 
-      새로운 비밀번호
+      <span class="title3">새로운 비밀번호</span>
+      <span v-if="isPasswordNotSame" class="error_message">
+        이전 비밀번호와 다른 비밀번호로 입력해주세요.
+      </span>
+      <span v-else-if="!isValidPwd && password2.length < 8" class="error_message">
+        8자 이상의 비밀번호를 입력해주세요.
+      </span>
+      <span v-else-if="!isValidPwd && password2.length > 20" class="error_message">
+        20자 이하의 비밀번호를 입력해주세요.
+      </span>
       <div class="inputBox">
         <input type="password" class="input" v-model="password2" />
       </div>
-      <p v-if="isPasswordNotSame" class="error_message">
-        이전 비밀번호와 다른 비밀번호로 입력해주세요.
-      </p>
-      <p v-else-if="!isValidPwd && password2.length < 8" class="error_message">
-        8자 이상의 비밀번호를 입력해주세요.
-      </p>
-      <p v-else-if="!isValidPwd && password2.length > 20" class="error_message">
-        20자 이하의 비밀번호를 입력해주세요.
-      </p>
 
-      새 비밀번호 확인
+      <span class="title3">새 비밀번호 확인</span>
+      <span v-if="!isValidPwdConfirm" class="error_message">
+        새 비밀번호와 동일하게 입력해주세요.
+      </span>
       <div class="inputBox">
         <input type="password" class="input" v-model="password3" />
       </div>
-      <p v-if="!isValidPwdConfirm" class="error_message">
-        다시 비밀번호를 확인해주세요.
-      </p>
     </div>
     <p class="save-btn">
       <span @click="updateProfile">변경하기</span>
@@ -120,7 +118,7 @@ export default {
   /* align-items: center; */
   width: 100%;
   height: 100%;
-  padding: 7vh;
+  padding: 6vh;
 }
 
 .title {
@@ -134,13 +132,38 @@ export default {
 .title2 {
   font-family: 'InfinitySans-BoldA1';
   font-size: 1vw;
-  /* margin-left: 1.5vw; */
-  margin-top: 5vh;
-  margin-bottom: 2vh;
+  margin-bottom: 1vh;
+}
+
+.title3 {
+  font-size: 0.8vw;
+  font-family: 'InfinitySans-BoldA1';
+}
+
+.inputBox input {
+  width: 100%;
+  border-style: none;
+  outline-style: none;
+  height: 2.5vh;
+  border-radius: 7px;
+  margin-bottom: 1.5vh;
+  margin-top: 1vh;
+  padding: 1vh;
+}
+
+.error_message {
+  font-size: 0.25vh;
+  margin-left: 0.5vw;
+  color: red;
+}
+
+.space {
+  margin-top: 3vh;
 }
 
 .save-btn {
   text-align: right;
+  margin-top: 2vh;
 }
 
 .save-btn span {

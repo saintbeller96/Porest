@@ -76,14 +76,14 @@ export default {
 
 <style scoped>
 .profile-pic {
-  margin-top: 2vh;
   margin-bottom: 3vh;
   display: flex;
   justify-content: center;
+  margin-top: 2vh;
 }
 
 .menu-item img {
-  height: 11vh;
+  height: 10vh;
   background-color: #fff;
   border-radius: 50%;
   object-fit: cover;
@@ -92,11 +92,12 @@ export default {
 .images {
   display: flex;
   justify-content: center;
+  margin-bottom: 6vh;
 }
 
 .images img {
-  width: 2vw;
-  margin: 0 0.4vw 0 0.4vw;
+  width: 2.3vw;
+  margin: 0 0.45vw 0 0.45vw;
   cursor: pointer;
   transition: 0.1s ease;
   filter: opacity(0.7) drop-shadow(0 0 0 white);

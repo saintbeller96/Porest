@@ -36,7 +36,7 @@ export default {
   position: relative;
   max-width: 28%;
   margin: auto;
-  margin-top: 8vh;
+  margin-top: 6vh;
   min-height: 75%;
   z-index: 10;
   border-radius: 20px;

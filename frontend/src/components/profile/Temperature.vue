@@ -1,6 +1,10 @@
 <template>
   <div class="body">
-    <div class="percent-count text" id="percentCount"></div>
+    <div class="temp-container">
+      <span class="percent-count text" id="percentCount"></span>
+      <span class="description"><span class="temp">°C&nbsp;</span>입니다.</span>
+    </div>
+
     <div class="progress-bar">
       <div class="progress" id="progress"></div>
     </div>
@@ -29,7 +33,7 @@ export default {
           progress += 1;
           counter += 1;
           prg.style.width = progress + '%';
-          percent.innerHTML = counter + '°C';
+          percent.innerHTML = counter;
         }
       }
     },
@@ -42,8 +46,26 @@ export default {
   box-sizing: border-box;
 }
 
+.body {
+  font-family: 'MaplestoryOTFBold';
+}
+
+.temp-container {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 3vh;
+}
+
+.temp {
+  color: linear-gradient(to top, #a8edea 0%, #fed6e3 100%);
+}
+
+.description {
+  color: #fff;
+  font-size: 1.35vw;
+}
+
 .percent-count {
-  font-size: 15px;
   text-align: center;
 }
 
@@ -72,10 +94,10 @@ export default {
 
 .text {
   text-transform: uppercase;
-  background-image: linear-gradient(to top, #dfe9f3 0%, white 100%);
+  /* background-image: linear-gradient(to top, #dfe9f3 0%, white 100%); */
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   font-size: 1.5vw;
-  font-family: 'MaplestoryOTFBold';
+  background-image: linear-gradient(to top, #fddb92 0%, #d1fdff 100%);
 }
 </style>
