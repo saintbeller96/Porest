@@ -141,7 +141,7 @@ export default {
 }
 
 .inputBox input {
-  width: 100%;
+  width: 95%;
   border-style: none;
   outline-style: none;
   height: 2.5vh;
