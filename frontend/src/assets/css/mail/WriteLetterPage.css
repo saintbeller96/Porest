@@ -331,13 +331,13 @@
   outline: none;
 }
 .envelope .back .letter .titleinput{
-  font-family: 'Hardworking';
+  font-family: 'Love_son';
   font-size: 1.2rem;
   color: black;
 }
 
 .envelope .back .letter textarea {
-  font-family: 'Hardworking';
+  font-family: 'Love_son';
   font-size: 20px;
 }
 
@@ -363,7 +363,7 @@
 }
 
 .sendBtn{
-  font-family: 'Hardworking';
+  font-family: 'Love_son';
   font-size: 1.2rem;
   color: black;
 }
