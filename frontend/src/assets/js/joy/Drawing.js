@@ -1,13 +1,29 @@
 let colorCode = '#ffffff';
 let colorChanged = false;
 let resotre_array = [];
-
+let currentDraw = '';
 export const colorValue = value => {
   colorCode = value;
   colorChanged = true;
 };
 
 export const init = () => {
+  const wrapper = document.querySelector('.drawing-wrapper');
+  const changeDrawing = document.querySelector('.change__drawing');
+
+  changeDrawing.addEventListener('change', e => {
+    console.log('chae', e.target.value);
+    let value = e.target.value;
+    if (currentDraw == '') {
+      currentDraw = value;
+      wrapper.classList.add(value);
+    } else {
+      wrapper.classList.remove(currentDraw);
+      wrapper.classList.add(value);
+      currentDraw = value;
+    }
+  });
+
   const canvas = document.querySelector('#drawing-canvas');
   const cntx = canvas.getContext('2d');
   const painting = document.querySelector('#content');
