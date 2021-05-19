@@ -1,11 +1,11 @@
 <template>
   <div class="body">
+    <span @click="goOneStepBack" class="oneStepBack">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="profile-area">
       <profile></profile>
     </div>
-    <!-- <div class="bookmark-area">
-      <bookmark></bookmark>
-    </div> -->
     <div class="active-record-area">
       <active-record></active-record>
     </div>
@@ -17,17 +17,20 @@
 
 <script>
 import Profile from '@/components/profile/Profile';
-// import Bookmark from '@/components/profile/Bookmark';
 import ActiveRecord from '@/components/profile/ActiveRecord';
 import ProfileSetting from '@/components/profile/ProfileSetting';
 import ProfileSettingModal from '@/components/profile/modal/ProfileSettingModal';
 export default {
   components: {
     Profile,
-    // Bookmark,
     ActiveRecord,
     ProfileSettingModal,
     ProfileSetting,
+  },
+  methods: {
+    goOneStepBack() {
+      history.go(-1);
+    },
   },
 };
 </script>
@@ -81,5 +84,12 @@ export default {
 
 .modal {
   z-index: 2;
+}
+
+.oneStepBack {
+  position: absolute;
+  height: 2rem;
+  top: 1rem;
+  left: 1rem;
 }
 </style>

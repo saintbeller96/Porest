@@ -70,9 +70,9 @@ export default {
 @import '../node_modules/@syncfusion/ej2-splitbuttons/styles/material.css';
 @import '../node_modules/@syncfusion/ej2-inputs/styles/material.css';
 
-
 /*-------- 폰트  (손글씨용)--------------*/
-@font-face {   /*사랑해아들체*/
+@font-face {
+  /*사랑해아들체*/
   font-family: 'Love_son';
   src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/naverfont_07@1.0/Love_son.woff') format('woff');
   font-weight: normal;
@@ -80,28 +80,29 @@ export default {
 }
 
 /*--------- 폰트(명언용)----------- */
-@font-face {  /*경기청년바탕*/
-    font-family: 'GyeonggiBatang';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+@font-face {
+  /*경기청년바탕*/
+  font-family: 'GyeonggiBatang';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiBatang.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
 /*------------ 폰트(굵은글씨용) -----------*/
 
-@font-face { /*인피니티산스 ------> 메인 */
-    font-family: 'InfinitySans-BoldA1';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-BoldA1.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+@font-face {
+  /*인피니티산스 ------> 메인 */
+  font-family: 'InfinitySans-BoldA1';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_20-04@2.1/InfinitySans-BoldA1.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
 
-@font-face { /*서평원꺾깎체------>서브메인 */
-    font-family: 'SLEIGothicTTF';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+@font-face {
+  /*서평원꺾깎체------>서브메인 */
+  font-family: 'SLEIGothicTTF';
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2104@1.0/SLEIGothicTTF.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
-
-
 </style>

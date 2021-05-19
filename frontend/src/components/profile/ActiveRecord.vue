@@ -15,29 +15,39 @@
       <div class="line"></div>
       <div class="tab-content">
         <div v-show="currentTab == 0">
-          <div v-for="(story, idx) in myStories" :key="idx">
-            <div class="card">
-              <div class="wrapper">
-                <div class="box">
-                  <div class="box-container">
-                    <p>{{ story['title'] }}</p>
+          <div v-if="myStories.length > 0">
+            <div v-for="(story, idx) in myStories" :key="idx">
+              <div class="card">
+                <div class="wrapper">
+                  <div class="box">
+                    <div class="box-container">
+                      <p>{{ story['title'] }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+          <div v-else class="notice">
+            <p>아직 작성한 사연이 없습니다.</p>
+          </div>
         </div>
         <div v-show="currentTab == 1">
-          <div v-for="(story, idx) in myAnswers" :key="idx">
-            <div class="card">
-              <div class="wrapper">
-                <div class="box">
-                  <div class="box-container">
-                    <p>{{ story['title'] }}</p>
+          <div v-if="myAnswers.length > 0">
+            <div v-for="(story, idx) in myAnswers" :key="idx">
+              <div class="card">
+                <div class="wrapper">
+                  <div class="box">
+                    <div class="box-container">
+                      <p>{{ story['title'] }}</p>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
+          </div>
+          <div v-else class="notice2">
+            <p>아직 작성한 답변이 없습니다.</p>
           </div>
         </div>
       </div>
@@ -179,5 +189,25 @@ export default {
 
 .wrapper .box:hover {
   transform: translateY(-5%);
+}
+
+.notice {
+  display: flex;
+  justify-content: center;
+  margin-top: 30%;
+  font-size: 1.3vw;
+  color: #fff;
+  font-weight: bold;
+  font-family: 'InfinitySans-BoldA1';
+}
+
+.notice2 {
+  display: flex;
+  justify-content: center;
+  margin-top: 30%;
+  font-size: 1.3vw;
+  color: #fff;
+  font-weight: bold;
+  font-family: 'InfinitySans-BoldA1';
 }
 </style>
