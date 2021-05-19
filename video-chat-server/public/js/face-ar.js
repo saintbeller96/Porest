@@ -128,14 +128,6 @@ recognition.addEventListener('end',()=>{
 
 let userId;
 
-fetch("/userId",{
-  method:'POST'
-}).then(async(response) =>{
-  userId = await response.json();
-  console.log(userId.userId);
-})
-
-
 fetch("/api/video")
   .then(async (response) => {
     const { apiKey, sessionId, token, deepARKey } = await response.json();
