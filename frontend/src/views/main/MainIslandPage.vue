@@ -1,6 +1,8 @@
 <template>
   <div class="mainisland">
-    <div class="short-profile">프로필</div>
+    <div class="short-profile">
+      <profile-for-main></profile-for-main>
+    </div>
     <!-- <div class="white-background"></div> -->
     <Star class="star"></Star>
     <div class="main_wrapper">
@@ -59,6 +61,7 @@
 
 <script>
 import Star from '@/components/common/Star.vue';
+import ProfileForMain from '@/components/main/ProfileForMain.vue';
 export default {
   data() {
     return {
@@ -71,6 +74,7 @@ export default {
   },
   components: {
     Star,
+    ProfileForMain,
   },
   methods: {
     goToJoy() {
