@@ -1,22 +1,22 @@
 <template>
   <div id="app">
-      <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
-      <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
-  <nav  id="nav"><button class="nav-icon" id="nav-icon"><span></span></button>
-    <ul v-if="loginState" class="nav_ul">
+    <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
+    <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
+    <nav id="nav">
+      <button class="nav-icon" id="nav-icon"><span></span></button>
+      <ul v-if="loginState" class="nav_ul">
         <li><a href="#about">우체통</a></li>
         <li><a href="#search">하루일기</a></li>
         <li><a href="#newbie">마음나눔</a></li>
         <li><a href="#newbie">하소연</a></li>
         <li><a href="#newbie">쉼터</a></li>
         <li @click="logout">떠나기</li>
-    </ul>
-    <ul v-else class="nav_ul">
+      </ul>
+      <ul v-else class="nav_ul">
         <li><a href="#about">로그인</a></li>
-    </ul>
-    
-  </nav>
-    <router-view :user="user"  />
+      </ul>
+    </nav>
+    <router-view :user="user" />
   </div>
 </template>
 
@@ -24,14 +24,14 @@
 import db from '@/db.js';
 import FireBase from 'firebase/app';
 import 'firebase/auth';
-import {init} from '@/assets/js/common/Nav.js'
+import { init } from '@/assets/js/common/Nav.js';
 export default {
   name: 'App',
   data() {
     return {
       user: null,
       rooms: [],
-      loginState:false,
+      loginState: false,
     };
   },
   methods: {
@@ -50,7 +50,6 @@ export default {
           }
         });
     },
-
   },
   mounted() {
     init();
@@ -65,11 +64,11 @@ export default {
       }
     });
   },
-   created() {
+  created() {
     let token = this.$store.getters.getAuthToken;
     if (token == '' || token == null) {
       this.$router.push({ name: 'Login' });
-    }else {
+    } else {
       this.loginState = true;
     }
   },
@@ -134,104 +133,100 @@ export default {
 }
 
 .nav_ul a {
-    color: inherit;
-    text-decoration: none;
+  color: inherit;
+  text-decoration: none;
 }
 
 #nav {
   position: absolute;
   top: 1rem;
   right: 1rem;
-/*  이거 떄문에 메뉴색이 배경 마다 바뀜*/
-/*    mix-blend-mode: difference;*/
+  /*  이거 떄문에 메뉴색이 배경 마다 바뀜*/
+  /*    mix-blend-mode: difference;*/
   cursor: pointer;
-    z-index: 100;
+  z-index: 100;
 }
 .r_rated {
   color: red;
-  
 }
 .nav_ul {
-    position: fixed;
-    top: 45px;
-    right: 6px;
-    height: 100vh;
-    z-index: 100;
-    color: #fff;
-    visibility: hidden;
-    pointer-events: none;
-    list-style: none;
-    width: 35px;
+  position: fixed;
+  top: 45px;
+  right: 6px;
+  height: 100vh;
+  z-index: 100;
+  color: #fff;
+  visibility: hidden;
+  pointer-events: none;
+  list-style: none;
+  width: 35px;
 }
 
 .nav_ul li {
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    padding: 0.75em 0;
-    writing-mode: vertical-lr;
-      font-size: 1.1rem;
-       font-family: 'InfinitySans-BoldA1';
-       letter-spacing: 0.4rem;
-       
-
-
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  padding: 0.75em 0;
+  writing-mode: vertical-lr;
+  font-size: 1.1rem;
+  font-family: 'InfinitySans-BoldA1';
+  letter-spacing: 0.4rem;
 }
 
 nav.active ul {
-    visibility: visible;
-    pointer-events: initial;
-    transition-delay: 0.2s;
+  visibility: visible;
+  pointer-events: initial;
+  transition-delay: 0.2s;
 }
 
 .nav-icon {
-    appearance: none;
-    background: transparent;
-    cursor: pointer;
-    display: inline-block;
-    height: 35px;
-    position: fixed;
-    top: 15px;
-    right: 15px;
-    transition: background 0.3s;
-    width: 35px;
+  appearance: none;
+  background: transparent;
+  cursor: pointer;
+  display: inline-block;
+  height: 35px;
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  transition: background 0.3s;
+  width: 35px;
   border: 0;
   outline: 0;
   color: #fff;
 }
 
 .nav-icon span {
-    position: absolute;
-    top: 15px;
-    left: 5px;
-    background: #fff;
+  position: absolute;
+  top: 15px;
+  left: 5px;
+  background: #fff;
 
-    display: block;
-    height: 3px;
-    right: 5px;
-    transition: transform 0.3s;
+  display: block;
+  height: 3px;
+  right: 5px;
+  transition: transform 0.3s;
 }
 
-.nav-icon span:before, .nav-icon span:after {
-    width: 100%;
-    height: 3px;
-    background: #fff;
-    
-    content: '';
-    display: block;
-    left: 0;
-    position: absolute;
+.nav-icon span:before,
+.nav-icon span:after {
+  width: 100%;
+  height: 3px;
+  background: #fff;
+
+  content: '';
+  display: block;
+  left: 0;
+  position: absolute;
 }
 
 .nav-icon span:before {
-    top: -8px;
+  top: -8px;
 }
 
 .nav-icon span:after {
-    bottom: -8px;
+  bottom: -8px;
 }
 
 .active .nav-icon span {
-    transform: rotate(90deg);
+  transform: rotate(90deg);
 }
-
 </style>

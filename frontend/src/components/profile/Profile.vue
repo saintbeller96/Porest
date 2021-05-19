@@ -1,43 +1,117 @@
 <template>
   <div class="profile-container">
-    <div class="profile_img">
-      <img src="@/assets/image/profile.png" alt="" />
+    <div class="setting-btn" @click="openModal"><i class="fas fa-cog"></i></div>
+    <div class="profile-pic">
+      <img
+        :src="
+          $store.getters.getUpdateProfileImgFinal != 0
+            ? images[$store.getters.getUpdateProfileImgFinal - 1]
+            : require('../../assets/image/profile.png')
+        "
+        :class="{ basicImg: $store.getters.getUpdateProfileImgFinal == 0 }"
+      />
+    </div>
+    <div class="personal-info">
+      <p>{{ $store.state.nickname }}님의 마음 온도는</p>
+    </div>
+    <div class="temperature">
+      <temperature></temperature>
     </div>
   </div>
 </template>
 
 <script>
-export default {};
+import Temperature from '@/components/profile/Temperature';
+export default {
+  data() {
+    return {
+      images: [
+        require('../../assets/image/feeling/1.png'), // 0
+        require('../../assets/image/feeling/2.png'), // 1
+        require('../../assets/image/feeling/3.png'), // 2
+        require('../../assets/image/feeling/4.png'),
+        require('../../assets/image/feeling/5.png'),
+      ],
+    };
+  },
+  components: {
+    Temperature,
+  },
+  methods: {
+    openModal() {
+      this.$store.commit('setModalProfile', true);
+    },
+  },
+  created() {
+    if (this.$store.state.profileImg === 'null') {
+      this.$store.commit('setProfileImgToShow', 0);
+    } else {
+      this.$store.commit('setProfileImgToShow', this.$store.state.profileImg);
+    }
+  },
+};
 </script>
 
 <style scoped>
 .profile-container {
-  height: 88vh;
-  width: 100%;
-  background: rgba(255, 255, 255, 0.1);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
-  border-top: 1px solid rgba(255, 255, 255, 0.5);
-  border-left: 1px solid rgba(255, 255, 255, 0.5);
-  backdrop-filter: blur(5px);
-  z-index: 12;
-  border-radius: 25px;
-  margin: auto;
   position: relative;
-  display: flex;
   justify-content: center;
-  /* align-items: center; */
+  align-items: center;
+  width: 100%;
+  height: 100%;
 }
 
-/* .profile_img {
-  margin: auto;
-} */
+.setting-btn {
+  color: #fff;
+  float: left;
+  font-size: 1vw;
+  cursor: pointer;
+  margin-top: -2.3vh;
+  margin-left: 1.2vw;
+}
 
-img {
-  height: 13vh;
-  background-color: #fff;
-  border-radius: 50%;
-  /* border: 3px solid; */
+.profile-pic {
+  display: flex;
+  justify-content: center;
+  margin-top: 5vh;
+  /* top: 50px; */
+  /* position: relative; */
+
+  /* animation */
+  animation: animate 3s ease-in-out infinite;
   object-fit: cover;
-  margin-top: 13vh;
+  margin-bottom: 5vh;
+}
+
+.profile-pic img {
+  height: 10vh;
+  object-fit: cover;
+  border-radius: 50%;
+  box-shadow: 10px 10px 30px rgba(0, 0, 0, 0.4);
+}
+
+.basicImg {
+  border: 2px solid #fff;
+}
+
+.personal-info {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1.5vh;
+  font-size: 1vw;
+  font-family: 'MaplestoryOTFBold';
+  color: #fff;
+  letter-spacing: 0.1vw;
+}
+
+@keyframes animate {
+  0%,
+  100% {
+    transform: translateY(0.45vh);
+  }
+  50% {
+    transform: translateY(-0.45vh);
+  }
 }
 </style>
