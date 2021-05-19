@@ -36,7 +36,6 @@
 
             <div class="letter_form_wrapper2">
               <div class="paper">
-
                 <div class="paper_header2">답장 제목<input type="text" v-model="letter.body.title" /></div>
                 <div class="paper_content2">
                   답장 내용
@@ -44,8 +43,8 @@
 
                 </div>
                 <div class="paper_footer">
-                  <!-- 벤 버튼인데 답장 보내기..라고 써있어요ㅠㅠ! -->
-                  <div class="ban_btn" @click="ReplyForm">답장 보내기</div>
+                  
+                  <div class="reply_btn" @click="ReplyForm">보내기</div>
                 </div>
               </div>
             </div>
