@@ -4,11 +4,12 @@
   height: 100vh;
   display: flex;
   overflow: hidden;
+  font-family: 'Love_son';
 
 }
 .before {
   position: absolute;
-  top: 1rem;
+  top: 3rem;
   left: 1rem;
   z-index: 100;
 }
@@ -79,6 +80,7 @@ audio {
   width: 100%;
   height: 100%;
   display: flex;
+  font-size: 1.2rem;
   justify-content: center;
   align-items: center;
   color: #fff;
@@ -111,9 +113,9 @@ audio {
 }
 
 #audio {
-  background-color: none;
   border: none;
   height: 1.2rem;
+  opacity: 0.8;
 }
 
 .contentWrap .album {

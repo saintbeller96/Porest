@@ -8,6 +8,8 @@
   background-repeat: no-repeat;
   background-size: contain;
   overflow: hidden;
+  font-family: 'InfinitySans-BoldA1';
+
 }
 .amongus {
   background-image: url('../../image/amongus.jpg');
@@ -44,7 +46,7 @@
 }
 .back {
   position: absolute;
-  top: 1rem;
+  top: 3rem;
   left: 1rem;
   z-index: 100;
 }
@@ -56,7 +58,7 @@
 }
 form {
   position: absolute;
-  top: 4rem;
+  top: 6rem;
   left: 1rem;
   width: 15rem;
   height: 15rem;
@@ -84,6 +86,8 @@ form {
   height: 2rem;
   font-size: 1rem;
   padding: 0 1rem;
+  font-family: 'InfinitySans-BoldA1';
+
 
 }
 .change__drawing option {
