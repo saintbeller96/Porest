@@ -161,9 +161,10 @@ export default {
       const form = document.querySelector('.approve-form');
       console.log(this.roomPublic);
       if (this.roomPublic) {
-        form.action = 'http://localhost:3000/';
+        form.action = 'https://live.porest.kr/';
       } else {
-        form.action = 'http://localhost:3000/ar';
+        form.action = 'https://live.porest.kr/ar';
+        // form.action = 'http://localhost:3000/ar';
       }
       form.method = 'POST';
       form.target = 'pop';

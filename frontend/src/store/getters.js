@@ -18,4 +18,10 @@ export default {
   getAuthToken(state) {
     return state.token;
   },
+  getUpdateProfileImg(state) {
+    return state.profileImg;
+  },
+  getUpdateProfileImgFinal(state) {
+    return state.profileImgToShow;
+  },
 };

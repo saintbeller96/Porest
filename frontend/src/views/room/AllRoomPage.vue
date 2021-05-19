@@ -119,7 +119,7 @@
           </div>
         </div>
         <div class="room-list-eixt-btn">
-          <i class="fas fa-sign-out-alt"></i>
+          나가기
         </div>
       </div>
     </div>
@@ -389,8 +389,9 @@ export default {
       this.hostId = hostId;
       this.roomId = roomId;
       this.roomName = roomName;
-      const checkinExit = document.querySelector('.checkin-exit');
-      checkinExit.classList.add('checkin-exit-show');
+      // const checkinExit = document.querySelector('.checkin-exit');
+      // console.log(checkinExit);
+      // checkinExit.classList.add('checkin-exit-show');
       // console.log(checkinPopUp);
       // checkinPopUp.classList.add('check-in-pop-up-show');
       // this.$router.push({
