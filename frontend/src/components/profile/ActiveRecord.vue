@@ -1,43 +1,45 @@
 <template>
   <div class="active-record-container">
-    <button
-      v-for="(tab, index) in tabs"
-      :key="index"
-      :class="{ active: currentTab === index }"
-      @click="currentTab = index"
-    >
-      {{ tab }}
-    </button>
-    <div class="tab-content">
-      <div v-show="currentTab == 0">
-        <!-- <div v-for="(story, idx) in myStories" :key="idx"> -->
-        {{ story }}
-        <div class="card">
-          <div class="wrapper">
-            <div class="box">
-              <div class="box-container">
-                <h2>letter 1</h2>
-                <p>안녕하세요 내용입니다</p>
-                <a href="#">읽으러 가기</a>
+    <div class="container">
+      <div class="tab-container">
+        <span
+          v-for="(tab, index) in tabs"
+          :key="index"
+          class="tab-style"
+          :class="{ active: currentTab === index }"
+          @click="currentTab = index"
+        >
+          {{ tab }}
+        </span>
+      </div>
+      <div class="line"></div>
+      <div class="tab-content">
+        <div v-show="currentTab == 0">
+          <div v-for="(story, idx) in myStories" :key="idx">
+            <div class="card">
+              <div class="wrapper">
+                <div class="box">
+                  <div class="box-container">
+                    <p>{{ story['title'] }}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-        <!-- </div> -->
-      </div>
-      <div v-show="currentTab == 1">
-        22
-        <!-- <div class="card">
-          <div class="wrapper">
-            <div class="box">
-              <div class="box-container">
-                <h2>letter 22</h2>
-                <p>안녕하세요 내용입니다</p>
-                <a href="#">읽으러 가기</a>
+        <div v-show="currentTab == 1">
+          <div v-for="(story, idx) in myAnswers" :key="idx">
+            <div class="card">
+              <div class="wrapper">
+                <div class="box">
+                  <div class="box-container">
+                    <p>{{ story['title'] }}</p>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
       </div>
     </div>
   </div>
@@ -87,68 +89,84 @@ export default {
 .active-record-container {
   width: 100%;
   height: 100%;
+  padding: 7vh;
 }
 
-/* .card {
-  display: -webkit-flex;
-  display: -moz-flex;
-  display: -ms-flex;
-  display: -o-flex;
-  min-height: 100vh;
-} */
+.container {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  overflow-y: scroll;
+}
+
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+::-webkit-scrollbar-corner {
+}
+::-webkit-scrollbar-thumb {
+  background-color: #e2deff;
+  border-radius: 6px;
+  opacity: 0.1;
+}
+
+.tab-container {
+  color: #e1e0e0;
+  margin-bottom: 2vh;
+}
+
+.tab-style {
+  cursor: pointer;
+  margin-right: 0.5vw;
+  font-size: 1vw;
+  font-family: 'InfinitySans-BoldA1';
+}
+
+.active {
+  color: #fff;
+  font-weight: bold;
+  font-size: 1.2vw;
+}
+
+.line {
+  height: 0.1vh;
+  width: 95%;
+  background: #fff;
+  margin-bottom: 3vh;
+}
 
 .wrapper {
-  display: flex;
-  /* display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  grid-gap: 30px; */
+  float: left;
 }
 
 .wrapper .box {
-  width: 250px;
-  height: 250px;
+  width: 12vw;
+  height: 23vh;
   border-radius: 15px;
   transition: transform 500ms ease-out;
   overflow: hidden;
-  color: #fff;
-  padding: 5%;
-  text-align: center;
   background: rgba(255, 255, 255, 0.2);
   backdrop-filter: blur(30px);
   border: 2px solid rgba(255, 255, 255, 0.1);
-  /* display: flex;
+  display: flex;
   justify-content: center;
-  align-items: center; */
+  align-items: center;
+  font-weight: bold;
+  margin-right: 0.5vw;
+  margin-left: 0.9vw;
+  margin-bottom: 2.5vh;
+  padding: 0.8vw;
+  cursor: pointer;
 }
 
-.box h2 {
-  font-size: 17px;
-  margin-bottom: 30px;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: 'Black Han Sans', sans-serif;
-}
 .box p {
   line-height: 1.9;
-  color: rgba(255, 255, 255, 0.7);
-  font-family: 'Nanum Brush Script', cursive;
+  color: #fff;
+  font-family: 'Love_son';
   font-size: 20px;
 }
 
-.box a {
-  border: none;
-  background: #fff;
-  padding: 10px 30px;
-  display: inline-block;
-  margin-top: 20px;
-  text-decoration: none;
-  font-size: 16px;
-  border-radius: 50px;
-  font-family: 'Black Han Sans', sans-serif;
-}
-
 .wrapper .box:before {
-  content: '';
-  background: rgba(255, 255, 255, 0.3);
   width: 60%;
   height: 100%;
   top: 0%;
