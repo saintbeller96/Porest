@@ -127,17 +127,24 @@ recognition.addEventListener('end',()=>{
 })
 
 let userId;
+let sessionID ='2_MX40NzIwNTYyNH5-MTYyMTQ1OTkwOTUxMX4zSlVxem9ySHFlUjZkK2xMdE9zVENrd2h-fg'
 
 fetch("/api/video")
   .then(async (response) => {
     const { apiKey, sessionId, token, deepARKey } = await response.json();
+    console.log(sessionId);
     video_apiKey = apiKey;
-    video_sessionId = sessionId;
+    if(sessionId){
+      video_sessionId = sessionId;
+      
+    }else{
+      video_sessionId = sessionID;
+    }
     video_token = token;
     deepAR_license_key = deepARKey;
     initDeepAR();
     recognition.start();
-    initializeSession(video_apiKey, video_sessionId);
+    initializeSession(video_apiKey, sessionID);
   })
   .catch((err) => console.log(err));
 

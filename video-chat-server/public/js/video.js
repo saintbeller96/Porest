@@ -43,6 +43,7 @@ let sessionId ='2_MX40NzIwNTYyNH5-MTYyMTQ1OTkwOTUxMX4zSlVxem9ySHFlUjZkK2xMdE9zVE
 const getTheGoods = () => {
   return new Promise((res, rej) => {
       const token = opentok.generateToken(sessionId);
+      console.log(token)
       res({
         apiKey: process.env.OPENTOK_API_KEY,
         sessionId,
