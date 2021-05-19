@@ -330,12 +330,14 @@
 }
 .envelope .back .letter .titleinput{
   font-family: 'Love_son';
+  
   font-size: 1.2rem;
   color: black;
 }
 
 .envelope .back .letter textarea {
   font-family: 'Love_son';
+  font-weight: bold;
   font-size: 20px;
 }
 

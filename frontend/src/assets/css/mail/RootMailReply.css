@@ -214,6 +214,7 @@
 font-size: 43px;
 padding-bottom: 19px;
 font-family: 'Love_son';
+font-weight: bold;
 }
 
 .envelope .back {
@@ -359,6 +360,7 @@ font-family: 'Love_son';
 }
 .envelope .back .letter input, .envelope .back .letter textarea {
   font-family: 'Love_son';
+  font-weight: bold;
   font-size: 1.2rem;
   color: black;
 }
@@ -385,6 +387,7 @@ font-family: 'Love_son';
   resize: none;
   height: 175px;
   font-family: 'Love_son';
+  font-weight: bold;
 }
 
 .envelope.new {
