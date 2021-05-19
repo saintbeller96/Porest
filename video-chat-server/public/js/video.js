@@ -47,8 +47,8 @@ const getTheGoods = () => {
       // const token = opentok.generateToken(sessionId);
       res({
         apiKey: process.env.OPENTOK_API_KEY,
-        sessionId : '2_MX40NzIwNTYyNH5-MTYyMTQ1OTkwOTUxMX4zSlVxem9ySHFlUjZkK2xMdE9zVENrd2h-fg',
-        token:video_token,
+        sessionId : process.env.OPENTOK_API_SESSIONID,
+        token:process.env.OPENTOK_API_TOKEN,
         deepARKey: process.env.DEEPAR_KEY,
       });
   });

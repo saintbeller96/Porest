@@ -163,8 +163,8 @@ export default {
       if (this.roomPublic) {
         form.action = 'https://live.porest.kr/';
       } else {
-        // form.action = 'https://live.porest.kr/ar';
-        form.action = 'http://localhost:3000/ar';
+        form.action = 'https://live.porest.kr/ar';
+        // form.action = 'http://localhost:3000/ar';
       }
       form.method = 'POST';
       form.target = 'pop';
