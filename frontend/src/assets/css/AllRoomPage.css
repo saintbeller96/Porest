@@ -3,6 +3,8 @@
   height: 100vh;
   overflow: hidden; 
   overflow: hidden;
+  font-family: 'SLEIGothicTTF';
+
   /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); */
   /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
   /* background-image: linear-gradient(to top, #b224ef 0%, #7579ff 100%); */
@@ -14,7 +16,7 @@
 }
 .before {
   position: absolute;
-  top: 1rem;
+  top: 3rem;
   left: 1rem;
   width: 2rem;
   height: 2rem;
@@ -40,6 +42,8 @@
   color: #fff;
   z-index: 40;
   transition: all .7s;
+  font-family: 'GyeonggiBatang';
+  
 }
 
 .intro_title.show  {
@@ -108,6 +112,8 @@
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
+  
+  font-family: 'GyeonggiBatang';
   
 
   /* background-image: linear-gradient(135deg, #667eea 0%, #764ba2 100%); */
@@ -411,24 +417,22 @@ textarea::placeholder {
   border: 1px solid rgba(255, 255, 255, 0.5);
   border-right: 1px solid rgba(255, 255, 255, 0.2);
   border-bottom: 1px solid rgba(255, 255, 255, 0.2); 
+  font-family: 'InfinitySans-BoldA1';
+
 }
 
 .room-list-eixt-btn {
   position: fixed;
-  top: 1rem;
-  right: 1rem;
-  width: 2rem;
+  top: 3rem;
+  right: 8rem;
+  width: 4rem;
   height: 2rem;
   color: #fff;
   font-weight: 600;
-}
-.room-list-eixt-btn .fas {
-  width: 2rem;
-  height: 2rem;
-  color: #fff;
   cursor: pointer;
-  z-index: 100;
+  letter-spacing: 3px;
 }
+
 
 .list-pop-up-show{
   /* opacity: 1; */
@@ -567,6 +571,8 @@ textarea::placeholder {
   transform: translate(-50%,-45%);
 /*  border: 1px solid white;*/
   transition: all 1s;
+  font-family: 'GyeonggiBatang';
+  
 }
 
 .card-main-board {

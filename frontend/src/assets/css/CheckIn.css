@@ -5,6 +5,8 @@
   display: flex;
   justify-content: center;
   align-items: center;
+  font-family: 'InfinitySans-BoldA1';
+
 }
 
 .checkin-inner-wrapper {
@@ -98,6 +100,8 @@
   height: 2rem;
   transition: .5s all;
   cursor: pointer;
+  font-family: 'InfinitySans-BoldA1';
+
 }
 
 .checkin-btn:hover{
