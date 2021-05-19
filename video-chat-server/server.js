@@ -103,7 +103,6 @@ io.on("connection", (socket) => {
     socket.broadcast.to(roomId).emit("user-connected", userId);
     // message emit 수신부
     socket.on("message", (message) => {
-      console.log("message", message);
       io.to(roomId).emit("createMessage", message);
     });
     socket.on("disconnect", () => {
@@ -111,7 +110,6 @@ io.on("connection", (socket) => {
     });
   });
   socket.on("client message", (message) => {
-    console.log("message", message);
     io.emit("client createMessage", message);
   });
 });
