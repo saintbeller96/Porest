@@ -12,12 +12,36 @@
       </div>
     </div>
     <div class="images">
-      <img src="../../assets/image/profile.png" @click="getFeeling(0)" class="img0 basic" />
-      <img src="../../assets/image/feeling/5.png" @click="getFeeling(5)" class="img5" />
-      <img src="../../assets/image/feeling/4.png" @click="getFeeling(4)" class="img4" />
-      <img src="../../assets/image/feeling/3.png" @click="getFeeling(3)" class="img3" />
-      <img src="../../assets/image/feeling/2.png" @click="getFeeling(2)" class="img2" />
-      <img src="../../assets/image/feeling/1.png" @click="getFeeling(1)" class="img1" />
+      <img
+        src="../../assets/image/profile.png"
+        @click="getFeeling(0)"
+        class="img0 basic"
+      />
+      <img
+        src="../../assets/image/feeling/5.png"
+        @click="getFeeling(5)"
+        class="img5"
+      />
+      <img
+        src="../../assets/image/feeling/4.png"
+        @click="getFeeling(4)"
+        class="img4"
+      />
+      <img
+        src="../../assets/image/feeling/3.png"
+        @click="getFeeling(3)"
+        class="img3"
+      />
+      <img
+        src="../../assets/image/feeling/2.png"
+        @click="getFeeling(2)"
+        class="img2"
+      />
+      <img
+        src="../../assets/image/feeling/1.png"
+        @click="getFeeling(1)"
+        class="img1"
+      />
     </div>
   </div>
 </template>

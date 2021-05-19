@@ -72,7 +72,6 @@ export default {
       try {
         let data = await getMyStories();
         this.myStories = data;
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
@@ -81,7 +80,6 @@ export default {
       try {
         let data = await getMyCounsels();
         this.myAnswers = data;
-        console.log(data);
       } catch (error) {
         console.log(error);
       }
