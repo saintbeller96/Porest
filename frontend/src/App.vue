@@ -1,16 +1,19 @@
 <template>
   <div id="app">
-    <!-- <router-link to="/">메인페이지</router-link> | <router-link to="/login">로그인</router-link> | -->
-    <!-- <router-link to="/signup">회원가입</router-link> | <router-link to="/auth">디자인 적용</router-link> | -->
+    <div class="logo" @click="goToMain">POREST 로고 자리</div>
     <nav id="nav">
       <button class="nav-icon" id="nav-icon"><span></span></button>
-      <ul v-if="loginState" class="nav_ul">
-        <li><a href="#about">우체통</a></li>
-        <li><a href="#search">하루일기</a></li>
-        <li><a href="#newbie">마음나눔</a></li>
-        <li><a href="#newbie">하소연</a></li>
-        <li><a href="#newbie">쉼터</a></li>
-        <li @click="logout">떠나기</li>
+      <ul v-if="$store.state.id" class="nav_ul">
+        <li>
+          <span class="nav-detail" @click="goToMailbox">우체통</span>
+        </li>
+        <li>
+          <span class="nav-detail" @click="goToFeelingRecord">하루일기</span>
+        </li>
+        <li><span class="nav-detail" @click="goToVideoChat">마음나눔</span></li>
+        <li><span class="nav-detail">하소연</span></li>
+        <li><span class="nav-detail" @click="goToJoy">쉼터</span></li>
+        <li @click="logout">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
         <li><a href="#about">로그인</a></li>
@@ -49,6 +52,29 @@ export default {
             this.$router.push('/log/login');
           }
         });
+    },
+    goToMain() {
+      this.$router.push('/main/mainisland');
+    },
+    goToMailbox() {
+      let nav = document.getElementById('nav');
+      nav.classList.remove('active');
+      this.$router.push('/mailbox');
+    },
+    goToFeelingRecord() {
+      let nav = document.getElementById('nav');
+      nav.classList.remove('active');
+      this.$router.push('/feeling-record');
+    },
+    goToVideoChat() {
+      let nav = document.getElementById('nav');
+      nav.classList.remove('active');
+      this.$router.push('/all/rooms');
+    },
+    goToJoy() {
+      let nav = document.getElementById('nav');
+      nav.classList.remove('active');
+      this.$router.push('/joy');
     },
   },
   mounted() {
@@ -132,9 +158,17 @@ export default {
   font-style: normal;
 }
 
-.nav_ul a {
+.nav-detail {
   color: inherit;
   text-decoration: none;
+}
+
+.logo {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  cursor: pointer;
+  z-index: 100;
 }
 
 #nav {

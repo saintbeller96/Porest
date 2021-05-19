@@ -1,20 +1,21 @@
-export const init = ()=>{
+export const init = () => {
+  let nav = document.getElementById('nav');
+  let navlinks = nav.getElementsByTagName('a');
 
-let nav = document.getElementById('nav');
-let navlinks = nav.getElementsByTagName('a');
-
-function toggleNav() {
-    (nav.classList.contains('active')) ? nav.classList.remove('active') : nav.classList.add('active');
+  function toggleNav() {
+    nav.classList.contains('active')
+      ? nav.classList.remove('active')
+      : nav.classList.add('active');
   }
 
-document.getElementById('nav-icon').addEventListener('click', function(e) {
+  document.getElementById('nav-icon').addEventListener('click', function(e) {
     e.preventDefault();
     toggleNav();
-});
+  });
 
-for(var i = 0; i < navlinks.length; i++) {
+  for (var i = 0; i < navlinks.length; i++) {
     navlinks[i].addEventListener('click', function() {
       toggleNav();
-  });
-}
-}
+    });
+  }
+};
