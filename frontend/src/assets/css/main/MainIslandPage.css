@@ -384,9 +384,12 @@
 
 /*  */
 .short-profile {
+  width: 25vw;
   position: absolute;
-  top: 1.5rem;
-  right: 5rem;
-  cursor: pointer;
+  top: 1rem;
+  right: 11vw;
   z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
 }
