@@ -145,6 +145,7 @@ fetch("/api/video")
     video_sessionId = sessionId;
     video_token = token;
     deepAR_license_key = deepARKey;
+    console.log('process key',video_apiKey,video_sessionId,video_token,deepAR_license_key);
     initDeepAR();
     recognition.start();
     initializeSession(video_apiKey, video_sessionId);
