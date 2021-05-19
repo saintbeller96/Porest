@@ -78,7 +78,7 @@ export default {
     },
     goToGurumi() {
       const form = document.querySelector('.gurumi');
-      form.action = 'http://localhost:3000/secret';
+      form.action = 'https://live.porest.kr/secret';
       form.method = 'POST';
       form.target = 'pop';
       window.open('', 'pop');
