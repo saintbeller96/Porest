@@ -12,7 +12,7 @@ export default {};
 
 <style scoped>
 .bookmark-container {
-  height: 43vh;
+  /* height: 43vh;
   width: 100%;
   background: rgba(255, 255, 255, 0.1);
   box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
@@ -22,6 +22,6 @@ export default {};
   z-index: 12;
   border-radius: 25px;
   margin: auto;
-  position: relative;
+  position: relative; */
 }
 </style>

@@ -91,6 +91,9 @@ export default {
           this.$store.commit('getSelectedSticker', `${index}.png`);
         }
       }
+      console.log(n);
+      // console.log(this.check);
+      // console.log(this.$store.state.selectedSticker);
     },
   },
   mounted() {

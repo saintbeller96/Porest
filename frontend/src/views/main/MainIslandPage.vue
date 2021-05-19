@@ -1,5 +1,6 @@
 <template>
   <div class="mainisland">
+    <div class="short-profile">프로필</div>
     <!-- <div class="white-background"></div> -->
     <Star class="star"></Star>
     <div class="main_wrapper">

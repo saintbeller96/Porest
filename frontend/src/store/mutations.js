@@ -20,6 +20,8 @@ export default {
   setTemperature(state, temperature) {
     state.temperature = temperature;
   },
+
+  // 감정 기록
   getThisMonthFeelings(state, thisMonthFeelings) {
     state.thisMonthFeelings = thisMonthFeelings;
   },
@@ -29,7 +31,6 @@ export default {
   getTargetDateDetail(state, targetDateDetail) {
     state.targetDateDetail = targetDateDetail;
   },
-  // 스티커 번호
   getStickerIndex(state, stickerindex) {
     state.stickerindex = stickerindex;
   },
@@ -42,8 +43,6 @@ export default {
   getDiaryModalStatus(state, diaryModalStatus) {
     state.diaryModalStatus = diaryModalStatus;
   },
-
-  // --- //
   getTargetDate(state, targetDate) {
     state.targetDate = targetDate;
   },
@@ -59,6 +58,7 @@ export default {
   getThisMonthEmoji(state, thisMonthWithEmoji) {
     state.thisMonthWithEmoji = thisMonthWithEmoji;
   },
+
   //Mail 관련
   setCounselId(state, counselId) {
     state.counselId = counselId;
@@ -68,5 +68,13 @@ export default {
   },
   setAllLetters(state, allLetters) {
     state.allLetters = allLetters;
+  },
+
+  // 프로필
+  setModalProfile(state, modalProfileSetting) {
+    state.modalProfileSetting = modalProfileSetting;
+  },
+  setProfileImgToShow(state, profileImgToShow) {
+    state.profileImgToShow = profileImgToShow;
   },
 };

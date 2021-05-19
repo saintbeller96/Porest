@@ -105,6 +105,8 @@
   }
 }
 
+
+
 .write-letter-wrapper { 
   width: 100vw;
   height: 100vh;
@@ -304,6 +306,7 @@
   transition: all 0.1s linear;
   color: black;
   background-color:transparent;
+  font-family: 'UhBeeann';
 }
 .envelope .back .letter label.show {
   opacity: 1;
