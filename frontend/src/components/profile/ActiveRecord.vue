@@ -17,7 +17,7 @@
         <div v-show="currentTab == 0">
           <div v-if="myStories.length > 0">
             <div v-for="(story, idx) in myStories" :key="idx">
-              <div class="card">
+              <div class="card" @click="goToMyReceivedMail">
                 <div class="wrapper">
                   <div class="box">
                     <div class="box-container">
@@ -35,7 +35,7 @@
         <div v-show="currentTab == 1">
           <div v-if="myAnswers.length > 0">
             <div v-for="(story, idx) in myAnswers" :key="idx">
-              <div class="card">
+              <div class="card" @click="goToMyReceivedMail">
                 <div class="wrapper">
                   <div class="box">
                     <div class="box-container">
@@ -85,6 +85,9 @@ export default {
       } catch (error) {
         console.log(error);
       }
+    },
+    goToMyReceivedMail() {
+      this.$router.push({ name: 'MyReceivedMail' });
     },
   },
   created() {
