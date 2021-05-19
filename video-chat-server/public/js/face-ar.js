@@ -4,6 +4,12 @@ const all_messages = document.getElementById("all_messages");
 const main__chat__window = document.getElementById("main__chat__window");
 let myProfile;
 let people =0;
+// require("dotenv").config();
+// const OpenTok = require("opentok");
+// const opentok = new OpenTok(
+//   process.env.OPENTOK_API_KEY,
+//   process.env.OPENTOK_API_SECRET
+// );
 const socket = io("/");
 let currentUserId;
 socket.on("connect", function () {
@@ -127,10 +133,14 @@ recognition.addEventListener('end',()=>{
 })
 
 let userId;
-
+// video_sessionId ='2_MX40NzIwNTYyNH5-MTYyMTQ1OTkwOTUxMX4zSlVxem9ySHFlUjZkK2xMdE9zVENrd2h-fg'
+// video_apiKey = process.env.OPENTOK_API_KEY;
+// video_token = 'T1==cGFydG5lcl9pZD00NzIwNTYyNCZzaWc9MTgwNzEwYWY4NDRhZjY4NjliNjhmMjlhNzNjMzAxNjUzNzg2NjFkNDpzZXNzaW9uX2lkPTJfTVg0ME56SXdOVFl5Tkg1LU1UWXlNVFExT1Rrd09UVXhNWDR6U2xWeGVtOXlTSEZsVWpaa0syeE1kRTl6VkVOcmQyaC1mZyZjcmVhdGVfdGltZT0xNjIxNDYwODE2Jm5vbmNlPTAuMzg4NTUxNzkwODY5MTU0MDMmcm9sZT1tb2RlcmF0b3ImZXhwaXJlX3RpbWU9MTYyNDA1MjgxNSZpbml0aWFsX2xheW91dF9jbGFzc19saXN0PQ=='
+// deepAR_license_key = process.env.DEEPAR_KEY;
 fetch("/api/video")
   .then(async (response) => {
     const { apiKey, sessionId, token, deepARKey } = await response.json();
+    console.log(sessionId);
     video_apiKey = apiKey;
     video_sessionId = sessionId;
     video_token = token;
@@ -140,6 +150,9 @@ fetch("/api/video")
     initializeSession(video_apiKey, video_sessionId);
   })
   .catch((err) => console.log(err));
+
+
+
 
 function initializeSession(video_apiKey, video_sessionId) {
   // const users =document.querySelector('.user-wrapper')
