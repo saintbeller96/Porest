@@ -5,8 +5,12 @@
   height: 100vh;
   box-sizing: border-box;
   background: white;
-overflow: hidden;
-position: relative;
+  background-image: url('../../image/AdobeStock_90351428.jpeg');
+  background-size: cover;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  overflow: hidden;
+  position: relative;
 }
 
 .backarrow_wrapper {
@@ -23,7 +27,7 @@ position: relative;
 }
 .mailbox_main_title {
   position: absolute;
-  top: 15%;
+  top: 13%;
   left: 50%;
   transform: translate(-50%,0);
 }
@@ -31,7 +35,7 @@ position: relative;
 .mailbox_name{
   font-size: 2.8rem;
   text-align: center;
-  padding: 1% 0 2% 0;
+  padding: 1% 0 6% 0;
   font-family: 'InfinitySans-BoldA1';
 }
 .mailbox_title{

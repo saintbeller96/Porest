@@ -8,21 +8,37 @@
             <input type="hidden" name="roomId" value="something" />
             <input type="hidden" name="userId" value="something" />
             <input type="hidden" name="roomName" value="something" />
-            <button v-if="!attendeeJoined && attendeeApproved" class="join-btn" @click="doJoin">
+            <button
+              v-if="!attendeeJoined && attendeeApproved"
+              class="join-btn"
+              @click="doJoin"
+            >
               입장하기
             </button>
-            <button v-if="!attendeeJoined && attendeeApproved" class="leave-btn" @click="doLeave(user.uid)">
+            <button
+              v-if="!attendeeJoined && attendeeApproved"
+              class="leave-btn"
+              @click="doLeave(user.uid)"
+            >
               나가기
             </button>
           </form>
         </div>
       </div>
-      <div class="attendee-list-wrapper" v-if="(user && user.uid == hostId) || attendeeApproved">
+      <div
+        class="attendee-list-wrapper"
+        v-if="(user && user.uid == hostId) || attendeeApproved"
+      >
         <div class="attendee-attend">
           <h4 class="">* 참가자</h4>
           <ul class="">
-            <li v-for="(attendee, index) in attendeesApprovedArr" :key="attendee.id">
-              <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
+            <li
+              v-for="(attendee, index) in attendeesApprovedArr"
+              :key="attendee.id"
+            >
+              <div class="attendee-nickname" v-if="attendee.id != hostId">
+                익명이{{ index + 1 }}
+              </div>
               <div class="attendee-nickname" v-else>담이</div>
               <a
                 type="button"
@@ -39,8 +55,14 @@
         <div v-if="user && user.uid == hostId" class="attendee-wait">
           <h4 class="">* 참가 대기자</h4>
           <ul class="">
-            <li class="" v-for="(attendee, index) in attendeesPendingArr" :key="attendee.id">
-              <div class="attendee-nickname" v-if="attendee.id != hostId">익명이{{ index + 1 }}</div>
+            <li
+              class=""
+              v-for="(attendee, index) in attendeesPendingArr"
+              :key="attendee.id"
+            >
+              <div class="attendee-nickname" v-if="attendee.id != hostId">
+                익명이{{ index + 1 }}
+              </div>
               <div class="attendee-nickname" v-else>담이</div>
               <span>
                 <a
@@ -50,7 +72,11 @@
                   @click="toggleApproval(attendee.id)"
                   >참가승인
                 </a>
-                <a type="button" class="approve-btn-delete" title="Delete Attendee" @click="deleteAttendee(attendee.id)"
+                <a
+                  type="button"
+                  class="approve-btn-delete"
+                  title="Delete Attendee"
+                  @click="deleteAttendee(attendee.id)"
                   >참가거절</a
                 >
               </span>
@@ -60,7 +86,8 @@
       </div>
       <div v-else>
         <p class="lead">
-          안녕하세요! 현재 참가 요청에 대한 방장의 승인이 진행 중에 있습니다. 잠시만 기다려주세요!
+          안녕하세요! 현재 참가 요청에 대한 방장의 승인이 진행 중에 있습니다.
+          잠시만 기다려주세요!
         </p>
         <div class="leave_approve" @click="doLeave(user.uid)">
           나가기
@@ -116,7 +143,10 @@ export default {
     deleteAttendee: function(attendeeID) {
       console.log('삭제한다');
       // host인 경우만 삭제가 가능하다
-      if ((this.user && this.user.uid == this.hostId) || (this.user && this.user.uid == attendeeID)) {
+      if (
+        (this.user && this.user.uid == this.hostId) ||
+        (this.user && this.user.uid == attendeeID)
+      ) {
         db.collection('users')
           .doc(this.hostId)
           .collection('rooms')
@@ -153,7 +183,13 @@ export default {
   props: ['user', 'roomId', 'roomName', 'hostId'],
 
   mounted() {
-    console.log('this is approve page', this.user, this.roomId, this.roomName, this.hostId);
+    console.log(
+      'this is approve page',
+      this.user,
+      this.roomId,
+      this.roomName,
+      this.hostId,
+    );
     const roomRef = db
       .collection('users')
       .doc(this.hostId)
@@ -211,6 +247,13 @@ export default {
       this.attendeesPendingArr = tempPendeing;
       this.attendeesApprovedArr = tempApproved;
     });
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

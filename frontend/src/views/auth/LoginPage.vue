@@ -1,9 +1,6 @@
 <template>
   <div class="home-wrapper">
     <!-- <auth-form></auth-form> -->
-    <div class="letter">
-      <div class="type"></div>
-    </div>
     <section>
       <div class="box">
         <!-- <div class="square" style="--i:0;"></div>
@@ -33,15 +30,30 @@
 
               <p class="title">비밀번호</p>
               <div class="inputBox">
-                <input type="password" v-model="password" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+                <input
+                  type="password"
+                  v-model="password"
+                  placeholder="8~20자의 영문, 숫자 입력"
+                  autocomplete="off"
+                />
               </div>
-              <p v-if="!isValidPwd && password.length < 8" class="error_message">8자 이상의 비밀번호를 입력해주세요.</p>
-              <p v-else-if="!isValidPwd && password.length > 20" class="error_message">
+              <p
+                v-if="!isValidPwd && password.length < 8"
+                class="error_message"
+              >
+                8자 이상의 비밀번호를 입력해주세요.
+              </p>
+              <p
+                v-else-if="!isValidPwd && password.length > 20"
+                class="error_message"
+              >
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
               <button @click="submitForm" class="button">Login</button>
               <div class="go-to-find-password-container">
-                <span @click="goToFindPassword" class="go-to-find-password">비밀번호 찾기</span>
+                <span @click="goToFindPassword" class="go-to-find-password"
+                  >비밀번호 찾기</span
+                >
               </div>
               <div class="go-to-signup-container">
                 <span @click="goToSignup" class="go-to-signup">회원가입</span>
@@ -63,8 +75,6 @@ import { startAnimation } from '@/assets/js/main/IntroPage.js';
 import FireBase from 'firebase/app';
 import 'firebase/auth';
 import AuthForm from '@/components/auth/AuthForm';
-import { typing } from '@/assets/js/main/typing.js';
-
 export default {
   components: {
     AuthForm,
@@ -144,8 +154,9 @@ export default {
   },
   mounted() {
     startAnimation();
-    typing();
   },
+  created(){
+  }
 };
 </script>
 
@@ -163,15 +174,7 @@ export default {
   background-repeat: no-repeat;
   background-size: cover; */
 }
-.type {
-  width: 100%;
-  position: absolute;
-  font-size: 2rem;
-  top: 15%;
-  left: 50%;
-  color: #fff;
-  transform: perspective(1200px) translate3d(-50%, 0, -200px);
-}
+
 section {
   display: flex;
   justify-content: center;

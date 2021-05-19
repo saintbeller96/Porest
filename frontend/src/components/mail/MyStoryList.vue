@@ -11,14 +11,15 @@
             class="received_reply_num"
             v-text="story.numOfNewReply > 0 ? '새로운 답장 ' + story.numOfNewReply + '통' : '새로운 답장이 없어요!'"
           ></div>
-          <div class="reply_users_accodian_open" @click="openUsers(index, story.storyId)">열기</div>
+          <div class="reply_users_accodian_open" @click="openUsers(index, story.storyId)">답장보기</div>
         </div>
 
         <!-- reply -->
         <ul class="reply_users" v-if="openUsersState == index">
           <li class="reply_user" v-for="(reply, index) in replies" :key="index" @click="openStory(reply)">
             <div class="reply_user_header">
-              <h1 v-text="reply.writerNickname + ' ' + (reply.numOfReplies >= 1 ? 'NEW' : '')"></h1>
+              <h1 class="reply_nickname" v-text="reply.writerNickname + '님의 답장'"></h1>
+              <h1 class="reply_new" v-text="(reply.numOfReplies >= 1 ? 'NEW' : '')"></h1>
               <div class="date" v-text="setDate(reply.updatedAt)"></div>
             </div>
             <p v-text="reply.title"></p>
@@ -93,6 +94,10 @@ export default {
 </script>
 
 <style scoped>
+@import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
+<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+
+
 .section_body_story_list {
   width: 100%;
   height: 100%;
@@ -143,6 +148,10 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 24px;
+  font-family: 'Love_son';
+  
+
 }
 .header_counsel {
   width: 25%;
@@ -161,7 +170,11 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  margin: 1rem 0;
+  margin: 0.5rem 0;
+  /* font-family: 'GyeonggiBatang'; */
+  font-family: 'Spoqa Han Sans';
+  font-size: 15px;
+
 }
 .received_reply_num {
   pointer-events: none;
@@ -171,9 +184,9 @@ export default {
 }
 .reply_user {
   width: 100%;
-  height: 4rem;
+  height: 4.4rem;
   border-radius: 0.3rem;
-  padding: 0.5rem 0.3rem;
+  padding: 0.5rem 0.3rem ;
   margin: 0.5rem 0;
   color: white;
   border: none;
@@ -192,18 +205,35 @@ export default {
 .reply_user_header {
   display: flex;
   padding-bottom: 0.3rem;
-  justify-content: space-between;
+  /* justify-content: space-between; */
   align-items: center;
 }
-.reply_user_header h1 {
-  pointer-events: none;
+
+.reply_new{
+  color: red;
+  font-family: 'Love_son';
+  font-size: 20px;
+  letter-spacing: 1px;
   font-weight: 600;
+  pointer-events: none;
+
+}
+.reply_nickname{
+  margin: 0 0.4rem 0 0.2rem;
+font-family: 'GyeonggiBatang';
+ font-size: 1rem;
+
+}
+
+.date{
+margin-left: auto;
 }
 
 .reply_user p {
   pointer-events: none;
-
-  padding: 0.3rem 0;
+  font-family: 'Love_son';
+  font-size: 1.5rem;
+  padding: 0.2rem 0 0.3rem 0.5rem;
 }
 .reply_user_header .date {
   display: inline-block;
@@ -214,4 +244,10 @@ export default {
 .reply_users_accodian_open {
   cursor: pointer;
 }
+
+.reply_users_accodian_open:hover {
+  font-weight: bold;
+}
+
+
 </style>

@@ -20,7 +20,7 @@ public class LetterDto {
     }
 
     public static LetterDto of(Letter letter) {
-        if(letter == null) return new LetterDto();
+        if(letter == null) return null;
         return LetterDto.builder()
                 .letterId(letter.getId())
                 .title(letter.getTitle())

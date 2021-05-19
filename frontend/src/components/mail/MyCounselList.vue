@@ -2,10 +2,10 @@
   <ul class="section_body_story_list send_list">
     <li class="story_item" v-for="(counsel, index) in counselList" :key="index" @click="openCounsel(counsel.counselId)">
       <div class="story_header">
+        <span class="counsel_new" v-text="counsel.numOfReplies >= 1 ? 'NEW' : ''"></span>
         <h1 class="story_title" v-text="counsel.title"></h1>
-        <div class="header_counsel" v-text="counsel.writerNickname"></div>
+        <div class="header_counsel" v-text="counsel.writerNickname+'님의 사연'"></div>
       </div>
-      <span v-text="counsel.numOfReplies >= 1 ? 'NEW' : ''"></span>
       <!-- <div class="story_body">
         <p>
           내가 보낸 답장에 대한 재답장 제목 위치
@@ -83,9 +83,9 @@ export default {
 
 .story_item {
   width: 100%;
-  height: 18%;
+  height: 15%;
   border-radius: 1rem;
-  padding: 1rem 0.5rem;
+  padding: 1.3rem 0.5rem;
   margin: 1rem 0;
   color: #444;
   backdrop-filter: blur(15px);
@@ -106,24 +106,41 @@ export default {
 .story_header {
   display: flex;
   width: 100%;
-  height: 30%;
+  height: 45%;
   /* height: 30%; */
-  justify-content: space-between;
+  /* justify-content: space-between; */
   /* margin: 0.3rem 0; */
-  font-size: 1.1rem;
+  /* font-size: 1.1rem; */
   font-weight: 600;
   pointer-events: none;
 }
 .story_title {
-  width: 70%;
+  /* width: 70%; */
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
+  font-size: 25px;
+  font-family: 'Love_son';
+  margin-left: 0.3rem;
+  /* margin-left: 8px; */
 }
 .header_counsel {
-  width: 25%;
-  font-size: 0.7rem;
+  /* width: 100%; */
+  margin-left: auto;
+font-size: 0.9rem;
+padding: 0.29rem 0.2rem 0 0;
+  font-family: 'GyeonggiBatang';
+
 }
+.counsel_new{
+  color: red;
+  font-family: 'Love_son';
+  font-size: 20px;
+  letter-spacing: 1px;
+  font-weight: 600;
+  pointer-events: none;
+}
+
 .header_counsel small {
   color: #333;
 }
@@ -143,7 +160,7 @@ export default {
 }
 
 .date {
-  height: 10%;
+  height: 3%;
   padding: 0.7rem;
   font-size: 0.7rem;
   text-align: right;

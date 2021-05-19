@@ -5,7 +5,10 @@
     </div>
     <div class="mailbox_main_title">
       <div class="mailbox_name">민지의 우체통</div>
-      <div class="mailbox_title">심리 상담은 자격증이 있어야 되지만, 고민 대화는 따뜻한 마음씨만 있으면 됩니다.</div>
+      <div class="mailbox_title">
+        심리 상담은 자격증이 있어야 되지만, 고민 대화는 따뜻한 마음씨만 있으면
+        됩니다.
+      </div>
     </div>
     <div class="postmenu_wrapper">
       <div class="postmenu1" @click="goToStoryLetterPage">
@@ -71,6 +74,13 @@ export default {
         this.$router.push({ name: 'MyReceivedMail' });
       }, 100);
     },
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>

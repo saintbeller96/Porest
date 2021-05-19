@@ -34,7 +34,12 @@
                 <div class="category">성</div>
                 <div class="category">자녀육아</div>
               </div>
-              <button type="submit" class="btn btn-sm btn-info" id="buttonAdd" @click.prevent="checkRoomName">
+              <button
+                type="submit"
+                class="btn btn-sm btn-info"
+                id="buttonAdd"
+                @click.prevent="checkRoomName"
+              >
                 개설하기
               </button>
             </form>
@@ -43,8 +48,14 @@
         <div class="rooms-section-right">
           <div v-for="(room, index) in rooms" :key="index">
             <div class="room-card-wrapper">
-              <div @click="moveToCheckIn(room.id, room.name)">{{ room }} 방</div>
-              <span v-if="uid === room.hostID" @click="deleteRoom(room.id, index)">Delete</span>
+              <div @click="moveToCheckIn(room.id, room.name)">
+                {{ room }} 방
+              </div>
+              <span
+                v-if="uid === room.hostID"
+                @click="deleteRoom(room.id, index)"
+                >Delete</span
+              >
             </div>
           </div>
         </div>
@@ -160,6 +171,13 @@ export default {
         });
       });
     },
+  },
+  created() {
+    let token = this.$store.getters.getAuthToken;
+    if (token == '' || token == null) {
+      alert('로그인이 필요합니다.');
+      this.$router.push({ name: 'Login' });
+    }
   },
 };
 </script>
