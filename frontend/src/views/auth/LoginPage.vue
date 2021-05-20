@@ -13,7 +13,7 @@
             <form @submit.prevent>
               <p class="welcome">Welcome to POREST :)</p>
               <p class="title">
-                Email
+                이메일
               </p>
               <div class="inputBox">
                 <input
@@ -66,6 +66,14 @@
     <div class="white-show"></div>
 
     <div id="canvas"></div>
+    <div>
+      <snackbar :infinity="infinity" :position="position">
+        {{ snackbarText }}
+        <button class="close-btn" @click="$store.state.snackbarStatus = false">
+          close
+        </button>
+      </snackbar>
+    </div>
   </div>
 </template>
 
@@ -75,15 +83,23 @@ import { startAnimation } from '@/assets/js/main/IntroPage.js';
 import FireBase from 'firebase/app';
 import 'firebase/auth';
 import AuthForm from '@/components/auth/AuthForm';
+import Snackbar from '@/components/common/Snackbar';
+
 export default {
   components: {
     AuthForm,
+    Snackbar,
   },
   data() {
     return {
       email: '',
       nickname: '',
       password: '',
+
+      //snackbar
+      position: 'top-center',
+      infinity: false,
+      snackbarText: '',
     };
   },
   computed: {
@@ -101,52 +117,30 @@ export default {
     goToSignup() {
       this.$router.push({ name: 'Signup' });
     },
-    // register() {
-    //   if (!this.error) {
-    //     FireBase.auth()
-    //       .createUserWithEmailAndPassword(this.email, this.password1)
-    //       .then(
-    //         userCred => {
-    //           return userCred.user
-    //             .updateProfile({
-    //               nickname: this.nickname,
-    //             })
-    //             .then(() => {
-    //               this.$router.push('/home');
-    //             });
-    //         },
-    //         error => (this.error = error.message),
-    //       );
-    //   }
-    // },
     goToFindPassword() {
       this.$router.push({ name: 'FindPassword' });
     },
     async submitForm() {
-      console.log('login');
       try {
         await this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.password,
         });
-        console.log('이동');
         this.fireBaseLogin();
-        setTimeout(() => {
-          const whiteShow = document.querySelector('.white-show');
-          whiteShow.classList.add('active');
-        }, 1000);
+        this.$emit('controlMusic', 'play');
+        this.$emit('introPlay');
         this.$router.push({ name: 'Intro' });
       } catch (error) {
-        alert('이메일이나 비밀번호를 다시 확인해주세요.');
+        this.$store.dispatch('saveSnackbarStatus', true);
+        this.snackbarText = '이메일이나 비밀번호를 다시 확인해주세요.';
       }
     },
     fireBaseLogin() {
-      console.log('login');
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           response => {
-            console.log('response status', response);
+            return;
           },
           error => (this.error = error.message),
         );
@@ -155,8 +149,12 @@ export default {
   mounted() {
     startAnimation();
   },
-  created(){
-  }
+  created() {
+    // let token = this.$store.getters.getAuthToken;
+    // if (token != '' || token != null) {
+    //   this.$router.push({ name: 'MainIsland' });
+    // }
+  },
 };
 </script>
 
@@ -292,6 +290,12 @@ section {
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.05);
   margin-bottom: 5px;
 }
+.inputBox input:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.inputBox input:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
 
 .form .inputBox input::placeholder {
   color: #fff;
@@ -331,7 +335,9 @@ section {
   font-size: 15px;
   cursor: pointer;
 }
-
+.button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
 .go-to-signup-container {
   margin-top: 20px;
   float: right;

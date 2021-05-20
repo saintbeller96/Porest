@@ -9,17 +9,37 @@
         <div class="received_reply">
           <div
             class="received_reply_num"
-            v-text="story.numOfNewReply > 0 ? '새로운 답장 ' + story.numOfNewReply + '통' : '새로운 답장이 없어요!'"
+            v-text="
+              story.numOfNewReply > 0
+                ? '새로운 답장 ' + story.numOfNewReply + '통'
+                : '새로운 답장이 없어요!'
+            "
           ></div>
-          <div class="reply_users_accodian_open" @click="openUsers(index, story.storyId)">답장보기</div>
+          <div
+            class="reply_users_accodian_open"
+            @click="openUsers(index, story.storyId)"
+          >
+            답장보기
+          </div>
         </div>
 
         <!-- reply -->
         <ul class="reply_users" v-if="openUsersState == index">
-          <li class="reply_user" v-for="(reply, index) in replies" :key="index" @click="openStory(reply)">
+          <li
+            class="reply_user"
+            v-for="(reply, index) in replies"
+            :key="index"
+            @click="openStory(reply)"
+          >
             <div class="reply_user_header">
-              <h1 class="reply_nickname" v-text="reply.writerNickname + '님의 답장'"></h1>
-              <h1 class="reply_new" v-text="(reply.numOfReplies >= 1 ? 'NEW' : '')"></h1>
+              <h1
+                class="reply_nickname"
+                v-text="reply.writerNickname + '님의 답장'"
+              ></h1>
+              <h1
+                class="reply_new"
+                v-text="reply.numOfReplies >= 1 ? 'NEW' : ''"
+              ></h1>
               <div class="date" v-text="setDate(reply.updatedAt)"></div>
             </div>
             <p v-text="reply.title"></p>
@@ -31,10 +51,10 @@
 </template>
 
 <script>
-import { getMyStories, getStoryOfAllLetters } from "@/api/stories";
-import { readLetter } from "@/api/letters";
+import { getMyStories, getStoryOfAllLetters } from '@/api/stories';
+import { readLetter } from '@/api/letters';
 export default {
-  name: "Mystroylist",
+  name: 'Mystroylist',
   data() {
     return {
       replies: {},
@@ -67,24 +87,24 @@ export default {
       let writeTime = new Date(date);
       let elapsed = new Date() - writeTime;
       if ((elapsed = elapsed / 1000) < 60) {
-        return "방금 전";
+        return '방금 전';
       } else if ((elapsed = elapsed / 60) < 60) {
-        return Math.floor(elapsed) + "분 전";
+        return Math.floor(elapsed) + '분 전';
       } else if ((elapsed = elapsed / 60) < 24) {
-        return Math.floor(elapsed) + "시간 전";
+        return Math.floor(elapsed) + '시간 전';
       } else if ((elapsed /= 24) < 31) {
-        return Math.floor(elapsed) + "일 전";
+        return Math.floor(elapsed) + '일 전';
       } else if ((elapsed /= 30) < 12) {
-        return Math.floor(elapsed) + "달 전";
+        return Math.floor(elapsed) + '달 전';
       } else {
-        return Math.floor(elapsed / 12) + "년 전";
+        return Math.floor(elapsed / 12) + '년 전';
       }
     },
 
     //답장을 해준 다른 사람과의 story를 클릭했을 때
     async openStory(reply) {
       // this.counselList = await getCounsel(counselId);
-      await this.$store.dispatch("saveSelectedCounselId", reply.counselId);
+      await this.$store.dispatch('saveSelectedCounselId', reply.counselId);
     },
   },
   mounted() {
@@ -95,8 +115,7 @@ export default {
 
 <style scoped>
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
-<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
-
+/* <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'> */
 
 .section_body_story_list {
   width: 100%;
@@ -150,8 +169,6 @@ export default {
   white-space: nowrap;
   font-size: 24px;
   font-family: 'Love_son';
-  
-
 }
 .header_counsel {
   width: 25%;
@@ -174,7 +191,6 @@ export default {
   /* font-family: 'GyeonggiBatang'; */
   font-family: 'Spoqa Han Sans';
   font-size: 15px;
-
 }
 .received_reply_num {
   pointer-events: none;
@@ -186,7 +202,7 @@ export default {
   width: 100%;
   height: 4.4rem;
   border-radius: 0.3rem;
-  padding: 0.5rem 0.3rem ;
+  padding: 0.5rem 0.3rem;
   margin: 0.5rem 0;
   color: white;
   border: none;
@@ -209,24 +225,22 @@ export default {
   align-items: center;
 }
 
-.reply_new{
+.reply_new {
   color: red;
   font-family: 'Love_son';
   font-size: 20px;
   letter-spacing: 1px;
   font-weight: 600;
   pointer-events: none;
-
 }
-.reply_nickname{
+.reply_nickname {
   margin: 0 0.4rem 0 0.2rem;
-font-family: 'GyeonggiBatang';
- font-size: 1rem;
-
+  font-family: 'GyeonggiBatang';
+  font-size: 1rem;
 }
 
-.date{
-margin-left: auto;
+.date {
+  margin-left: auto;
 }
 
 .reply_user p {
@@ -248,6 +262,4 @@ margin-left: auto;
 .reply_users_accodian_open:hover {
   font-weight: bold;
 }
-
-
 </style>

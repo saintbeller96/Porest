@@ -1,5 +1,8 @@
 <template>
   <div class="root-mail-reply-wrapper">
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="envelope new">
       <div class="front">
         <div class="stamp"></div>
@@ -11,10 +14,11 @@
       <div class="back">
         <div class="letter">
           <div class="root-mail">
+            <!-- <p>{{ $store.state.selectedStory.detail.content }}</p> -->
             <p v-text="$store.state.selectedStory.detail.content"></p>
-
-            <div class="btnReply">답장하기</div>
+            <!-- <p v-html="$store.state.selectedStory.detail.content"></p> -->
           </div>
+          <div class="btnReply">답장하기</div>
         </div>
 
         <div class="flap left-flap"></div>
@@ -40,10 +44,14 @@
           <div class="root-mail-reply">
             <form class="mailform">
               <div>
-
                 <label for="reply_title">답장 제목</label>
-                <input type="text" name="reply_title" size="40" placeholder="답장의 제목을 적어주세요." v-model="letter.body.title" />
-
+                <input
+                  type="text"
+                  name="reply_title"
+                  size="40"
+                  placeholder="답장의 제목을 적어주세요."
+                  v-model="letter.body.title"
+                />
               </div>
               <div>
                 <label for="reply_content">답장 내용</label>
@@ -56,8 +64,12 @@
                 ></textarea>
               </div>
               <div>
-                <input class="sendBtns" type="submit" value="보내기" @click="reply()" />
-
+                <input
+                  class="sendBtns"
+                  type="submit"
+                  value="보내기"
+                  @click="reply()"
+                />
               </div>
             </form>
           </div>
@@ -106,16 +118,27 @@ export default {
     };
   },
   methods: {
+    moveToBack() {
+      this.$router.go(-1);
+    },
+    conversion() {
+      let str = this.letter.body.content;
+      str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+      this.letter.body.content = str;
+    },
     async getStory(storyId) {
       this.story = await selectStory(storyId);
     },
     async reply() {
+      this.conversion();
       await this.getStory(this.$store.state.selectedStory.storyId);
       this.letter.ids.counselId = this.story.counselId;
       this.letter.ids.letterId = this.story.detail.letterId;
       await writeLetter(this.letter);
       //여기서 페이지 이동코드 넣어주세요~!
-      this.$router.push({name :'Mailbox' });
+      setTimeout(() => {
+        this.$router.push({ name: 'Mailbox' });
+      }, 5000);
     },
   },
   mounted() {

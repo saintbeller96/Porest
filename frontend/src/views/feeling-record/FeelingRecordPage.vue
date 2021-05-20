@@ -1,5 +1,8 @@
 <template>
   <div class="feeling-record-background">
+    <span @click="goOneStepBack" class="oneStepBack">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="wrapper" @click="move">
       <div class="calendar-area box fade-in">
         <calendar></calendar>
@@ -70,6 +73,9 @@ export default {
       calendarArea.classList.add('show');
       diaryArea.classList.add('show');
     },
+    goOneStepBack() {
+      history.go(-1);
+    },
   },
   created() {
     let token = this.$store.getters.getAuthToken;
@@ -108,6 +114,21 @@ export default {
   background-position: center;
   background-attachment: fixed;
 }
+
+/* .back {
+  position: absolute;
+  display: inline-block;
+  z-index: 30;
+}
+
+.back i {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #fff;
+} */
 
 .wrapper {
   width: 27vw;
@@ -202,6 +223,15 @@ export default {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
   animation-duration: 0.5s;
+}
+
+.oneStepBack {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.3vw;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* .fade-in.one {

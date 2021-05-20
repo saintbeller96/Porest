@@ -1,13 +1,16 @@
 <template>
   <div class="writing-diary-container">
-    <div class="close-btn" @click="closeModal"><i class="fas fa-times"></i></div>
+    <div class="close-btn" @click="closeModal">
+      <i class="fas fa-times"></i>
+    </div>
     <div class="date-container">
       <div v-if="$store.state.targetDate.length === 0">
         <p>{{ month }}월 {{ today }}일 {{ days[day] }}요일</p>
       </div>
       <div v-else>
         <p>
-          {{ $store.state.targetDate[1] }}월 {{ $store.state.targetDate[2] }}일 {{ $store.state.targetDate[3] }}요일
+          {{ $store.state.targetDate[1] }}월 {{ $store.state.targetDate[2] }}일
+          {{ $store.state.targetDate[3] }}요일
         </p>
       </div>
     </div>
@@ -28,7 +31,12 @@
       </div>
     </div>
     <p class="save-btn">
-      <slot name="span" :createDiary="createDiary" :updateDiary="updateDiary" :deleteDiary="deleteDiary"></slot>
+      <slot
+        name="span"
+        :createDiary="createDiary"
+        :updateDiary="updateDiary"
+        :deleteDiary="deleteDiary"
+      ></slot>
     </p>
   </div>
 </template>
@@ -81,13 +89,18 @@ export default {
   },
   computed: {
     checkForm() {
-      return this.content !== '' && this.$store.state.emotionIndex !== 0 && this.$store.state.selectedSticker !== '';
+      return (
+        this.content !== '' &&
+        this.$store.state.emotionIndex !== 0 &&
+        this.$store.state.selectedSticker !== ''
+      );
     },
   },
   methods: {
     async createDiary() {
       if (this.checkForm) {
         try {
+          this.conversion();
           await createEmotion({
             content: this.content,
             feeling: this.$store.state.emotionIndex,
@@ -187,7 +200,10 @@ export default {
         let dates2 = this.$store.state.thisMonth.map(v => v.slice());
         for (let a = 0; a < dates2.length; a++) {
           for (let b = 0; b < dates2[a].length; b++) {
-            if ((a === 0 && dates2[a][b] > 10) || ((a === 4 || a === 5) && dates2[a][b] < 10)) {
+            if (
+              (a === 0 && dates2[a][b] > 10) ||
+              ((a === 4 || a === 5) && dates2[a][b] < 10)
+            ) {
               continue;
             } else {
               for (let c = 0; c < emotionList.length; c++) {
@@ -207,6 +223,12 @@ export default {
     closeModal() {
       this.$store.commit('getModalStatus', false);
     },
+    conversion() {
+      // textarea 의 줄바꿈 부분을 <br/>로 변경
+      let str = this.content;
+      str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+      this.content = str;
+    },
   },
 };
 </script>
@@ -217,7 +239,8 @@ export default {
 
 @font-face {
   font-family: 'UhBeemysen';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff')
+    format('woff');
   font-weight: normal;
   font-style: normal;
 }

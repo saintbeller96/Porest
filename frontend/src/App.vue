@@ -1,25 +1,71 @@
 <template>
   <div id="app">
-    <div class="logo" @click="goToMain">POREST 로고 자리</div>
+    <audio id="audio-player1" loop="false">
+      <source src="../src/assets/audio/introvoice.mp3" type="audio/mpeg" />
+      <p class="sr-only">
+        Your browser does not support the audio element.
+      </p>
+    </audio>
+    <div class="music__player">
+      <div class="music-player__wrapper">
+        <div class="music-player music-player--disabled" id="music-container">
+          <audio id="audio-player" loop>
+            <source
+              src="../src/assets/audio/backgroundMusic.mp3"
+              type="audio/mpeg"
+            />
+            <p class="sr-only">
+              Your browser does not support the audio element.
+            </p>
+          </audio>
+
+          <div class="music-player__bar music-player__bar1"></div>
+          <div class="music-player__bar music-player__bar2"></div>
+          <div class="music-player__bar music-player__bar3"></div>
+          <div class="music-player__bar music-player__bar4"></div>
+
+          <button
+            @click.prevent="controlMusic('play')"
+            class="music-player__button music-player__play"
+          >
+            <span class="sr-only">Play</span>
+          </button>
+          <button
+            @click.prevent="controlMusic('pause')"
+            class="music-player__button music-player__pause"
+          >
+            <span class="sr-only">Pause</span>
+          </button>
+        </div>
+      </div>
+    </div>
     <nav id="nav">
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
-        <li>
-          <span class="nav-detail" @click="goToMailbox">우체통</span>
+        <li @click="goToMain">
+          <span class="nav-detail">홈</span>
         </li>
-        <li>
-          <span class="nav-detail" @click="goToFeelingRecord">하루일기</span>
+        <li @click="goToMailbox">
+          <span class="nav-detail">우체통</span>
         </li>
-        <li><span class="nav-detail" @click="goToVideoChat">마음나눔</span></li>
-        <li><span class="nav-detail">하소연</span></li>
-        <li><span class="nav-detail" @click="goToJoy">쉼터</span></li>
-        <li @click="logout">로그아웃</li>
+        <li @click="goToFeelingRecord">
+          <span class="nav-detail">하루일기</span>
+        </li>
+        <li @click="goToVideoChat"><span class="nav-detail">마음나눔</span></li>
+        <li @click="goToJoy"><span class="nav-detail">쉼터</span></li>
+        <li @click="logout" class="nav-detail">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
-        <li><a href="#about">로그인</a></li>
+        <li>로그인</li>
       </ul>
     </nav>
-    <router-view :user="user" />
+    <router-view
+      :user="user"
+      @introState="introState"
+      @introPlay="introPlay"
+      @controlMusic="controlMusic"
+      @skip="skip"
+    />
   </div>
 </template>
 
@@ -35,26 +81,32 @@ export default {
       user: null,
       rooms: [],
       loginState: false,
+      introState: false,
     };
   },
   methods: {
+    skip() {
+      const audioPlayer1 = document.querySelector('#audio-player1');
+      audioPlayer1.pause();
+      this.$router.push({ name: 'MainIsland' });
+    },
     logout() {
       // :TODO 삭제요청
       this.loginState = false;
-      console.log('logout', this.$router.history.current.name);
       this.$store.dispatch('LOGOUT');
       FireBase.auth()
         .signOut()
         .then(() => {
-          console.log('logout');
           this.user = null;
           if (this.$router.history.current.name != 'Login') {
-            this.$router.push('/log/login');
+            this.$router.push({ name: 'Login' });
           }
         });
     },
     goToMain() {
-      this.$router.push('/main/mainisland');
+      let nav = document.getElementById('nav');
+      nav.classList.remove('active');
+      this.$router.push({ name: 'MainIsland' });
     },
     goToMailbox() {
       let nav = document.getElementById('nav');
@@ -76,12 +128,34 @@ export default {
       nav.classList.remove('active');
       this.$router.push('/joy');
     },
+    controlMusic(playState) {
+      const audioPlayer = document.querySelector('#audio-player');
+      const audioContainer = document.querySelector('#music-container');
+      if (playState != 'play') {
+        audioContainer.classList.add('music-player--disabled');
+        audioPlayer.pause();
+      } else {
+        audioPlayer.play();
+        audioContainer.classList.remove('music-player--disabled');
+      }
+    },
+    introPlay() {
+      const audioPlayer1 = document.querySelector('#audio-player1');
+      setTimeout(() => {
+        audioPlayer1.play();
+      }, 150);
+      setTimeout(() => {
+        audioPlayer1.pause();
+      }, 5650);
+    },
   },
   mounted() {
     init();
+    const audioPlayer = document.querySelector('#audio-player');
+    const audioPlayer1 = document.querySelector('#audio-player1');
+
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('user login request');
         this.loginState = !this.loginState;
         this.user = user;
         if (this.$store.state.uid == '' || this.$store.state.uid == 'null') {
@@ -91,12 +165,12 @@ export default {
     });
   },
   created() {
-    let token = this.$store.getters.getAuthToken;
-    if (token == '' || token == null) {
-      this.$router.push({ name: 'Login' });
-    } else {
-      this.loginState = true;
-    }
+    // let token = this.$store.getters.getAuthToken;
+    // if (token == '' || token == null) {
+    //   this.$router.push({ name: 'Login' });
+    // } else {
+    //   this.loginState = true;
+    // }
   },
 };
 </script>
@@ -163,14 +237,6 @@ export default {
   text-decoration: none;
 }
 
-.logo {
-  position: absolute;
-  top: 1rem;
-  left: 1rem;
-  cursor: pointer;
-  z-index: 100;
-}
-
 #nav {
   position: absolute;
   top: 1rem;
@@ -180,7 +246,8 @@ export default {
   cursor: pointer;
   z-index: 100;
 }
-.r_rated {
+
+#nav a .r_rated {
   color: red;
 }
 .nav_ul {
@@ -262,5 +329,112 @@ nav.active ul {
 
 .active .nav-icon span {
   transform: rotate(90deg);
+}
+
+.music-player {
+  width: 30px;
+  height: 20px;
+  margin-top: 1rem;
+  /* padding: 1rem; */
+  position: relative;
+  opacity: 1;
+  transition: opacity 200ms;
+}
+
+.music-player.music-player--disabled {
+  opacity: 0.26;
+}
+
+.music-player__wrapper {
+  position: fixed;
+  left: 1rem;
+  bottom: 1rem;
+  z-index: 30;
+}
+
+.music-player__button {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: transparent;
+  z-index: 1;
+  width: 100%;
+  border: 0;
+  cursor: pointer;
+}
+
+.music-player__play {
+  background: transparent;
+  display: none;
+}
+
+.music-player--disabled .music-player__play {
+  display: block;
+}
+
+.music-player--disabled .music-player__pause {
+  display: none;
+}
+
+.music-player__bar {
+  background: #fff;
+  width: 5px;
+  height: 60%;
+  position: absolute;
+  bottom: 0;
+  animation-name: music-bar-anim;
+  animation-iteration-count: infinite;
+  pointer-events: none;
+  border: 0.3px solid rgba(0, 0, 0, 0.8);
+}
+
+.music-player--disabled .music-player__bar {
+  animation-play-state: paused;
+}
+
+.music-player__bar1 {
+  animation-duration: 1.3s;
+  left: 0;
+}
+
+.music-player__bar2 {
+  animation-duration: 1.8s;
+  left: 7px;
+}
+
+.music-player__bar3 {
+  animation-duration: 2.2s;
+  left: 14px;
+}
+
+.music-player__bar4 {
+  animation-duration: 2s;
+  left: 21px;
+}
+
+@keyframes music-bar-anim {
+  0% {
+    height: 15px;
+  }
+  50% {
+    height: 30px;
+  }
+  100% {
+    height: 8px;
+  }
+}
+
+.sr-only {
+  clip: rect(1px, 1px, 1px, 1px);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  width: 1px;
+}
+
+.logout {
+  color: red;
 }
 </style>

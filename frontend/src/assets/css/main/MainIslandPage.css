@@ -15,6 +15,70 @@
     /* perspective: 800px; */
   }
   
+  .postbox {
+    opacity: 0;
+    position: absolute;
+    top: 130%;
+    left: 50%;
+    z-index: 30;
+    transform: translate(-50%,50px) scale(0);
+    width: 30rem;
+    height: 5rem;
+    transition: all 1s;
+  }
+
+  .healing {
+    opacity: 0;
+
+    position: absolute;
+    left: 60%;
+    top: 50%;
+    z-index: 30;
+    transform: translate(-50%,50px) scale(0);
+    
+    width: 35rem;
+    height: 4.5rem;
+    transition: all 1s;
+
+  }
+
+  .gurumi {
+    opacity: 0;
+    position: absolute;
+    top: 78%;
+    left: 8%;
+    width: 35rem;
+    height: 4.5rem;
+    transform: translate(0,50px) scale(0);
+    transition: 1s all;
+
+  }
+
+  .chatroom {
+    opacity: 0;
+    position: absolute;
+    width: 35rem;
+    height: 3.8rem;
+    z-index: 30;
+    top: 40%;
+    left: 3%;
+    transform: translate(0,50px) scale(0);
+    transition: 1s all;
+  }
+
+  .calenderflag{
+    opacity: 0;
+    position: absolute;
+    width: 35rem;
+    height: 4.5rem;
+    z-index: 30;
+    top: 65%;
+    left: 25%;
+    transform: translate(0,50px) scale(0);
+    transition: 1s all;
+
+  }
+ 
   .mainisland.show  {
     animation: min .3s forwards linear;
   }
@@ -161,6 +225,8 @@
   .post_ground_container:hover .paper-plane {
     animation: move 2000ms forwards linear ;
   }
+
+  
   /* .post_ground_container:hover .paper-plane-2 {
     animation: sweep 6s linear infinite;
   } */
@@ -189,6 +255,11 @@
   
   .post_ground_container:hover {
     transform: scale(1.1) translateY(-20px);
+  }
+  
+  .post_ground_wrapper:hover  .postbox {
+    opacity: 1;
+    transform: translate(-50%,0) scale(1);
   }
   
   .post_shadow{
@@ -242,8 +313,11 @@
   }
   .pointer-game:hover  {
   transform: perspective(1200px)  translate3d(-50%,calc(-50% - 50px),50px) scale(1.1);
-
-
+  }
+  .pointer-game:hover ~ .healing {
+      opacity: 1;
+      transform: translate(-50%,0px) scale(1);
+  
   }
 .pointer-game:hover ~ .game_island {
   /* transform-origin: top left; */
@@ -280,6 +354,11 @@
   }
   .pointer-chat:hover {
     transform: perspective(1200px)  translate3d(-50%,calc(-30% - 50px),50px) scale(1.1);
+  }
+  .pointer-chat:hover ~ .gurumi {
+    opacity: 1;
+    transform: translate(0,0px) scale(1);
+    
   }
   .pointer-chat:hover ~ .chat_island {
     transform: perspective(1200px)  translate3d(-50%,calc(-30% - 50px),50px) scale(1.1);
@@ -323,6 +402,10 @@
 
   .pointer-video:hover {
     transform: perspective(1200px)  translate3d(calc(-50% + 50px) ,calc(-50% - 50px),50px) scale(1.1);
+  }
+  .pointer-video:hover ~ .chatroom {
+    opacity: 1;
+    transform: translate(0,0px) scale(1);
   }
   .pointer-video:hover ~ .video_island {
     transform: perspective(1200px)  translate3d(calc(-50% + 50px),calc(-50% - 50px),50px) scale(1.1);
@@ -371,6 +454,11 @@
   .pointer-calender:hover {
     transform: perspective(1200px)  translate3d(calc(-50% + 50px) ,calc(-30% - 50px),50px) scale(1.1);
   }
+  .pointer-calender:hover ~ .calenderflag{
+    opacity: 1;
+    transform: translate(0,0px) scale(1);
+    
+  }
   .pointer-calender:hover ~ .calender_island {
     transform: perspective(1200px)  translate3d(calc(-50% + 50px),calc(-30% - 50px),50px) scale(1.1);
   }
@@ -392,4 +480,16 @@
   display: flex;
   align-items: center;
   justify-content: flex-end;
+}
+
+.logo {
+  position: absolute;
+  top: 0.6vh;
+  left: 1rem;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.logo img {
+  width: 10vw;
 }

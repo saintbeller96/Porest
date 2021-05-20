@@ -133,6 +133,7 @@
   transform-origin: right center;
   transition: all 1s ease;
   font-family: 'Love_son';
+
   color: #1F1F1F;
 }
 
@@ -299,10 +300,35 @@ font-weight: bold;
 }
 .root-mail{
   font-size: 25px;
+  font-weight: 600;
   color: black;
+  height: 70%;
+  overflow-y: scroll;
+  letter-spacing: 2px;
+  line-height: 30px;
 }
+.root-mail p{
+  font-size: 25px;
+  font-weight: 600;
+  color: black;
+  height: 70%;
+  letter-spacing: 2px;
+  line-height: 30px;
+}
+
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+::-webkit-scrollbar-corner {
+}
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 6px;
+}
+
+
+
 .btnReply{
-  top: 220px;
   font-weight: bold;
   cursor: pointer;
   border: none;
@@ -515,3 +541,18 @@ font-weight: bold;
   animation: root-mail-back 3s forwards;
 }
 
+
+
+.back {
+  position: absolute;
+  display: inline-block;
+  z-index: 30;
+}
+
+.back i {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+}

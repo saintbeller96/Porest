@@ -1,8 +1,8 @@
 <template>
   <div class="rooms-wrapepr">
-    <div class="before">
-      <i class="fas fa-arrow-left" @click="moveToBack"></i>
-    </div>
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="intro_title">
       당신은 오늘 어떤 마음 속 이야기를 나누고 싶나요?
     </div>
@@ -19,7 +19,9 @@
               <!-- 그대는 충분히 반짝거리기에, <br />
               그대가 주인공인 삶을 살아줬으면 한다. -->
             </div>
-            <div class="create-chat-room">상담소 열기</div>
+            <div class="create-chat-room" v-if="createRoomState">
+              상담소 열기
+            </div>
           </div>
           <div class="room-card-back">
             <h1>상담소 열기</h1>
@@ -191,6 +193,7 @@ export default {
   data() {
     return {
       roomName: null,
+      temperature: this.$store.state.temperature,
       uid: this.$store.state.uid,
       rooms: [],
       addState: false,
@@ -207,6 +210,7 @@ export default {
       displayRooms: [],
       login_state: false,
       selected: null,
+      createRoomState: false,
       // tagColors: ['#F9957F', '#ABCFD1', '#D4E6C4', '#FFCFCB', '#ABBEEC', '#F4C464', '#F7D7C2', '#8CC1D3'],
       tagColors: [
         '#004e66',
@@ -250,6 +254,9 @@ export default {
   props: ['user'],
   created() {
     let token = this.$store.getters.getAuthToken;
+    if (this.temperature >= 60) {
+      this.createRoomState = true;
+    }
     if (token == '' || token == null) {
       alert('로그인이 필요합니다.');
       this.$router.push({ name: 'Login' });
@@ -258,7 +265,6 @@ export default {
   async mounted() {
     init();
     if (this.rooms.length == 0) {
-      console.log('시작한다');
       await this.loadData();
     }
   },
@@ -270,13 +276,12 @@ export default {
       this.publicState = false;
     },
     moveToBack() {
-      this.$router.push({ name: 'MainIsland' });
+      this.$router.go(-1);
     },
     select(index) {
       this.selected = index;
       const headlingText = document.querySelector('.healing_text');
       headlingText.innerHTML = this.healingTexts[index];
-      console.log(index);
       this.displayRooms = [];
       this.category_name = this.categories[index];
       for (let i = 0; i < this.rooms.length; i++) {
@@ -285,10 +290,8 @@ export default {
         }
       }
       this.displayRooms.reverse();
-      console.log(this.displayRooms);
     },
     showApprove() {
-      console.log('approve');
       this.approveState = true;
     },
     exitCheckin() {
@@ -317,7 +320,6 @@ export default {
       await roomCategory.forEach(ele => {
         if (ele.classList.contains('room-category-selected')) {
           this.selectedCategory.push(ele.dataset.value - 1);
-          console.log('돈다');
         }
       });
       this.addRoom();
@@ -331,9 +333,7 @@ export default {
       const minute = now.getMinutes();
       const seconds = now.getSeconds();
       const num = document.querySelector('.count-num');
-      console.log(num.innerText);
       this.addState = true;
-      console.log('추가할거야', this.roomName, this.rooms);
       const docRef = db.collection('users').doc(this.user.uid);
       // let roomData = {
       //   name: this.roomName,
@@ -346,7 +346,6 @@ export default {
       // };
       // this.displayRooms.unshift(roomData);
       docRef.set({ name: this.user.uid });
-      console.log('추가할거야', this.publicState);
       docRef
         .collection('rooms')
         .add({
@@ -360,19 +359,17 @@ export default {
         })
         .then(() => {
           this.roomName = '';
+          this.selectedCategory = [];
           this.loadData();
         });
     },
     deleteRoom(roomId, index) {
-      console.log('지운다잉', this.rooms);
       db.collection('users')
         .doc(this.user.uid)
         .collection('rooms')
         .doc(roomId)
         .delete();
-      console.log(this.displayRooms);
       this.displayRooms.splice(index, 1);
-      console.log(this.displayRooms);
       this.rooms.forEach((ele, idx) => {
         if (ele.id == roomId) {
           this.rooms.splice(idx, 1);
@@ -381,23 +378,12 @@ export default {
     },
     moveToCheckIn(hostId, roomId, roomName) {
       this.checkinState = true;
-      console.log('move to check in page', roomId);
-      console.log('this room name');
       if (!this.uid) {
         this.uid = 'none';
       }
       this.hostId = hostId;
       this.roomId = roomId;
       this.roomName = roomName;
-      // const checkinExit = document.querySelector('.checkin-exit');
-      // console.log(checkinExit);
-      // checkinExit.classList.add('checkin-exit-show');
-      // console.log(checkinPopUp);
-      // checkinPopUp.classList.add('check-in-pop-up-show');
-      // this.$router.push({
-      //   path: `/checkin/${this.uid}/${roomId}`,
-      //   params: { roomId: roomId, roomNameParams: roomNameParams },
-      // });
     },
     async loadData() {
       const dbRef = db.collection('users');
@@ -425,13 +411,11 @@ export default {
                     }
                   }
                   if (!state) {
-                    console.log('더할거에요');
                     this.rooms.unshift(dataForm);
                   }
                 } else {
                   this.rooms.push(dataForm);
                 }
-                console.log('for');
               });
               this.rooms.sort((a, b) => {
                 a.createdAt > b.createdAt;
@@ -439,7 +423,6 @@ export default {
               if (this.selected != null) {
                 this.select(this.selected);
               }
-              console.log(this.rooms, 'sorting');
             });
         });
       });

@@ -5,10 +5,15 @@
     </div>
     <select-profile-pic></select-profile-pic>
     <div class="title2">
-      <p>닉네임 변경</p>
+      <p>
+        닉네임 변경
+        <span v-if="!nicknameLength" class="error_message">
+          20자 이하로 입력해주세요.
+        </span>
+      </p>
     </div>
     <div class="inputBox">
-      <input type="text" class="input" v-model="nickname" />
+      <input type="text" class="input" v-model="nickname" maxlength="20" />
     </div>
     <div>
       <p class="space"></p>
@@ -22,10 +27,16 @@
       <span v-if="isPasswordNotSame" class="error_message">
         이전 비밀번호와 다른 비밀번호로 입력해주세요.
       </span>
-      <span v-else-if="!isValidPwd && password2.length < 8" class="error_message">
+      <span
+        v-else-if="!isValidPwd && password2.length < 8"
+        class="error_message"
+      >
         8자 이상의 비밀번호를 입력해주세요.
       </span>
-      <span v-else-if="!isValidPwd && password2.length > 20" class="error_message">
+      <span
+        v-else-if="!isValidPwd && password2.length > 20"
+        class="error_message"
+      >
         20자 이하의 비밀번호를 입력해주세요.
       </span>
       <div class="inputBox">
@@ -48,7 +59,11 @@
 
 <script>
 import SelectProfilePic from '@/components/profile/SelectProfilePic';
-import { updateProfileImg, updateNickname, updatePassword } from '@/api/profile';
+import {
+  updateProfileImg,
+  updateNickname,
+  updatePassword,
+} from '@/api/profile';
 import { saveUserImgFromCookie, saveUserNameToCookie } from '@/utils/cookies';
 import { validatePwd } from '@/utils/validation';
 export default {
@@ -73,6 +88,9 @@ export default {
     },
     isPasswordNotSame() {
       return this.password2 !== '' && this.password1 === this.password2;
+    },
+    nicknameLength() {
+      return this.nickname.length < 20;
     },
   },
   methods: {

@@ -1,8 +1,8 @@
 <template>
   <div class="write-letter-wrapper">
-    <div class="backarrow_wrapper">
-      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
-    </div>
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="envelope open">
       <div class="front">
         <div class="stamp"></div>
@@ -75,11 +75,20 @@ export default {
   },
   methods: {
     async storyForm() {
+      this.conversion();
       await writeStory(this.story);
+      setTimeout(() => {
+        this.$router.push({ name: 'Mailbox' });
+      }, 5500);
     },
     moveToBack() {
       this.$router.go(-1);
     },
+  },
+  conversion() {
+    let str = this.story['content'];
+    str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    this.story['content'] = str;
   },
   mounted() {
     init();

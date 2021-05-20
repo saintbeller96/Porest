@@ -42,7 +42,10 @@ export const init = () => {
   const temperature = document.getElementById('temperature');
 
   function setTemperature() {
-    temperature.style.height = ((range.value - config.minTemp) / (config.maxTemp - config.minTemp)) * 100 + '%';
+    temperature.style.height =
+      ((range.value - config.minTemp) / (config.maxTemp - config.minTemp)) *
+        100 +
+      '%';
     temperature.dataset.value = range.value + units[config.unit];
   }
 

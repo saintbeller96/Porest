@@ -77,4 +77,14 @@ export default {
   setProfileImgToShow(state, profileImgToShow) {
     state.profileImgToShow = profileImgToShow;
   },
+
+  // 메인
+  setLogoStatus(state, logoStatus) {
+    state.logoStatus = logoStatus;
+  },
+
+  //snackbar
+  setSnackbarStatus(state, snackbarStatus) {
+    state.snackbarStatus = snackbarStatus;
+  },
 };

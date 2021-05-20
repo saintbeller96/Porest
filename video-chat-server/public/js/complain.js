@@ -195,7 +195,7 @@ recognition.addEventListener('result',(e)=>{
       },200)
     }
 
-    if(text.includes('아니')|| text.includes('별로') || text.includes('행복하지않았어') && answer === 1){
+    if(text.includes('아니')|| text.includes('별로') || text.includes('행복하지 않았어') && answer === 1){
       defaultFace()
       storyContent = 'sad';
       answer++;
@@ -230,7 +230,7 @@ recognition.addEventListener('result',(e)=>{
         audioPlay(10)
       },300)
     }
-    if(text.includes('내 말을 안 들어줘') || text.includes('들어줄 사람이 없어') || text.includes('이야기할 사람이 없어')){
+    if(text.includes('내 말을 안 들어줘') || text.includes('들어 줄 사람이 없어') || text.includes('들어줄 사람이 없어') || text.includes('이야기할 사람이 없어')){
       defaultFace()
       setTimeout(()=>{
         saySpeek();

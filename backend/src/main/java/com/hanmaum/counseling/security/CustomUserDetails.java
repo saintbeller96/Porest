@@ -1,12 +1,12 @@
 package com.hanmaum.counseling.security;
 
+import com.hanmaum.counseling.domain.account.entity.RoleType;
 import com.hanmaum.counseling.domain.account.entity.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.util.Collection;
-import java.util.Collections;
+import java.util.*;
 
 public class CustomUserDetails implements UserDetails {
     private Long id;
@@ -19,7 +19,12 @@ public class CustomUserDetails implements UserDetails {
         customUserDetails.id = user.getId();
         customUserDetails.email = user.getEmail();
         customUserDetails.password = user.getPassword();
-        customUserDetails.getAuthorities = Collections.singletonList(new SimpleGrantedAuthority(user.getRole().name()));
+        List<GrantedAuthority> temp = new ArrayList<>();
+        temp.add(new SimpleGrantedAuthority(user.getRole().name()));
+        if(user.getRole() == RoleType.ROLE_ADMIN){
+            temp.add(new SimpleGrantedAuthority(RoleType.ROLE_USER.name()));
+        };
+        customUserDetails.getAuthorities = temp;
         return customUserDetails;
     }
 

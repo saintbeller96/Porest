@@ -92,8 +92,10 @@ export default {
 
 .oneStepBack {
   position: absolute;
-  height: 2rem;
   top: 1rem;
   left: 1rem;
+  font-size: 1.3vw;
+  color: #fff;
+  cursor: pointer;
 }
 </style>

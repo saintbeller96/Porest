@@ -1,7 +1,8 @@
 <template>
   <div class="calendar-container">
     <header class="calendar-icon">
-      <i class="fas fa-chevron-left" @click="calendarMonth(-1)"></i> {{ year }}년 {{ month }}월
+      <i class="fas fa-chevron-left" @click="calendarMonth(-1)"></i>
+      {{ year }}년 {{ month }}월
       <i class="fas fa-chevron-right" @click="calendarMonth(1)"></i>
     </header>
     <table>
@@ -17,14 +18,24 @@
           <td
             v-for="(day, index) in date"
             :key="index"
-            @click="[getTargetDate(year, month, idx, index), clickEffect(idx, index)]"
+            @click="
+              [getTargetDate(year, month, idx, index), clickEffect(idx, index)]
+            "
             class="dates"
             :class="`item${idx}${index}`"
           >
-            <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+            <div
+              v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)"
+              class="not-this-month"
+            >
               {{ day }}
             </div>
-            <div v-else-if="day === today && presentMonth === month && presentYear === year" class="today">
+            <div
+              v-else-if="
+                day === today && presentMonth === month && presentYear === year
+              "
+              class="today"
+            >
               {{ day }}
             </div>
             <div v-else-if="day > 0 || day < 32">
@@ -42,14 +53,27 @@
           <td
             v-for="(day, index) in date"
             :key="index"
-            @click="[getTargetDate(year, month, idx, index), clickEffect(idx, index, day)]"
+            @click="
+              [
+                getTargetDate(year, month, idx, index),
+                clickEffect(idx, index, day),
+              ]
+            "
             class="dates"
             :class="`item${idx}${index}`"
           >
-            <div v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)" class="not-this-month">
+            <div
+              v-if="(idx === 0 && day > 20) || (idx > 3 && day < 10)"
+              class="not-this-month"
+            >
               {{ day }}
             </div>
-            <div v-else-if="day === today && presentMonth === month && presentYear === year" class="today">
+            <div
+              v-else-if="
+                day === today && presentMonth === month && presentYear === year
+              "
+              class="today"
+            >
               {{ day }}
             </div>
             <div v-else-if="day > 0 || day < 32">
@@ -115,8 +139,16 @@ export default {
         this.year += 1;
         this.month = 1;
       }
-      const [monthFirstDay, monthLastDate, lastMonthLastDate] = this.getFirstDayLastDate(this.year, this.month);
-      this.dates = this.getMonthOfDays(monthFirstDay, monthLastDate, lastMonthLastDate);
+      const [
+        monthFirstDay,
+        monthLastDate,
+        lastMonthLastDate,
+      ] = this.getFirstDayLastDate(this.year, this.month);
+      this.dates = this.getMonthOfDays(
+        monthFirstDay,
+        monthLastDate,
+        lastMonthLastDate,
+      );
       this.$store.commit('getThisMonth', this.dates);
       this.loadEmotionRecord();
     },
@@ -175,7 +207,12 @@ export default {
         month += 1;
       }
       this.targetDate = [year, month, day2, this.days[index]];
-      this.$store.commit('getTargetDate', [year, month, day2, this.days[index]]);
+      this.$store.commit('getTargetDate', [
+        year,
+        month,
+        day2,
+        this.days[index],
+      ]);
       this.getTargetId(day2);
       this.loadDiaryDetail(year, month, day2);
     },
@@ -184,7 +221,10 @@ export default {
       if (this.emotionList) {
         for (let i = 0; i < this.emotionList.length; i++) {
           if (this.emotionList[i].day === day) {
-            this.$store.commit('getTargetDateId', this.emotionList[i].emotionId);
+            this.$store.commit(
+              'getTargetDateId',
+              this.emotionList[i].emotionId,
+            );
             break;
           } else {
             this.$store.commit('getTargetDateId', 0);
@@ -199,7 +239,10 @@ export default {
       this.dates2 = this.dates.map(v => v.slice());
       for (let a = 0; a < this.dates2.length; a++) {
         for (let b = 0; b < this.dates2[a].length; b++) {
-          if ((a === 0 && this.dates2[a][b] > 10) || ((a === 4 || a === 5) && this.dates2[a][b] < 10)) {
+          if (
+            (a === 0 && this.dates2[a][b] > 10) ||
+            ((a === 4 || a === 5) && this.dates2[a][b] < 10)
+          ) {
             continue;
           } else {
             for (let c = 0; c < this.emotionList.length; c++) {
@@ -222,8 +265,15 @@ export default {
         // 페이지 로드시 미리 오늘 날짜 기준 디테일이 들어오게 하기
         for (let i = 0; i < this.emotionList.length; i++) {
           if (this.emotionList[i].day === this.today) {
-            this.$store.commit('getTargetDateId', this.emotionList[i].emotionId);
-            this.loadDiaryDetail(this.presentYear, this.presentMonth, this.today);
+            this.$store.commit(
+              'getTargetDateId',
+              this.emotionList[i].emotionId,
+            );
+            this.loadDiaryDetail(
+              this.presentYear,
+              this.presentMonth,
+              this.today,
+            );
           }
         }
         this.getFeelings();
@@ -239,8 +289,11 @@ export default {
           let targetMonth = Number(data.createdAt.slice(5, 7));
           let targetYear = Number(data.createdAt.slice(0, 4));
           let targetDay = Number(data.createdAt.slice(8, 10));
-
-          if (year === targetYear && month === targetMonth && day === targetDay) {
+          if (
+            year === targetYear &&
+            month === targetMonth &&
+            day === targetDay
+          ) {
             this.$store.commit('getTargetDateDetail', data);
           } else {
             this.$store.commit('getTargetDateDetail', '');
@@ -253,6 +306,7 @@ export default {
         this.$store.commit('getTargetDateDetail', '');
       }
     },
+    conversion() {},
     // 특정 날짜 클릭 시 녹색 표시
     clickEffect(idx, index) {
       if (this.check.length === 0) {

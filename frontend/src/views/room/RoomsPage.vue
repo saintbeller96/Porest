@@ -83,7 +83,6 @@ export default {
   props: ['user'],
   mounted() {
     if (this.rooms.length == 0) {
-      console.log('시작한다');
       this.loadData();
     }
   },
@@ -102,7 +101,6 @@ export default {
     },
     addRoom() {
       this.addState = true;
-      console.log('추가할거야', this.roomName, this.rooms);
       const docRef = db.collection('users').doc(this.user.uid);
 
       docRef.set({ name: this.user.uid });
@@ -118,7 +116,6 @@ export default {
         });
     },
     deleteRoom(roomId, index) {
-      console.log('지운다잉', this.rooms);
       db.collection('users')
         .doc(this.user.uid)
         .collection('rooms')
@@ -127,8 +124,6 @@ export default {
       this.rooms.splice(index, 1);
     },
     moveToCheckIn(roomId, roomNameParams) {
-      console.log('move to check in page', roomId);
-      console.log('this room name');
       if (!this.uid) {
         this.uid = 'none';
       }
