@@ -64,7 +64,6 @@ export default {
     dropdownBtn.addEventListener('click', () => {
       const pick = document.querySelector('.e-hsv-color');
       const hex = document.querySelector('.e-hex');
-      console.log('오픈', pick);
       pick.addEventListener('click', () => {
         this.color(hex.value);
       });
@@ -72,7 +71,6 @@ export default {
   },
   methods: {
     color(value) {
-      console.log('change');
       colorValue(value);
     },
     moveToBack() {

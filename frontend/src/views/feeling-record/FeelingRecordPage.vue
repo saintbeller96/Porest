@@ -115,6 +115,21 @@ export default {
   background-attachment: fixed;
 }
 
+/* .back {
+  position: absolute;
+  display: inline-block;
+  z-index: 30;
+}
+
+.back i {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #fff;
+} */
+
 .wrapper {
   width: 27vw;
   height: 72vh;
@@ -212,8 +227,8 @@ export default {
 
 .oneStepBack {
   position: absolute;
-  top: 9.5vh;
-  left: 1.1vw;
+  top: 1rem;
+  left: 1rem;
   font-size: 1.3vw;
   color: #fff;
   cursor: pointer;

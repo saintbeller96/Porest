@@ -64,7 +64,6 @@ export default {
   methods: {
     handleCheckIn() {
       const warning = document.querySelector('.warning-checkbox-nonactive');
-      console.log(this.checkState);
       if (!this.checkState) {
         warning.classList.add('warning-show');
         return;
@@ -78,7 +77,6 @@ export default {
         .doc(this.roomId);
       roomRef.get().then(doc => {
         if (doc.exists) {
-          console.log('존재한다.');
           roomRef
             .collection('attendees')
             .doc(this.user.uid)
@@ -107,21 +105,7 @@ export default {
         this.nickName = user.nickName;
       }
     });
-    console.log(this.user, this.roomName, this.roomId, this.hostId);
-    // Getting Room name
-    // db.collection('users')
-    //   .doc(this.$route.params.hostID)
-    //   .collection('rooms')
-    //   .doc(this.$route.params.roomID)
-    //   .get()
-    //   .then(doc => {
-    //     if (doc.exists) {
-    //       this.roomName = doc.data().name;
-    //     } else {
-    //       // this.$router.push('/');
-    //       console.log('Room name is none');
-    //     }
-    //   });
+
   },
 };
 </script>

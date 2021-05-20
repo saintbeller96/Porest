@@ -106,7 +106,7 @@ export default {
   },
   methods: {
     moveToBack() {
-      this.$router.push({ name: 'JoyMainPage' });
+      this.$router.go(-1);
     },
     showVideo(index) {
       const frame = document.querySelector('.healing__VR');

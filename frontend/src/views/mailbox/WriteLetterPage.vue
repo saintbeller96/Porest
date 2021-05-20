@@ -1,6 +1,6 @@
 <template>
   <div class="write-letter-wrapper">
-    <span @click="moveToBack" class="oneStepBack">
+    <span @click="moveToBack" class="back">
       <i class="fas fa-arrow-left"></i>
     </span>
     <div class="envelope open">
@@ -75,15 +75,20 @@ export default {
   },
   methods: {
     async storyForm() {
+      this.conversion();
       await writeStory(this.story);
       setTimeout(() => {
-        console.log('돌아가자');
         this.$router.go(-1);
       }, 5500);
     },
     moveToBack() {
       this.$router.go(-1);
     },
+  },
+  conversion() {
+    let str = this.story['content'];
+    str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    this.story['content'] = str;
   },
   mounted() {
     init();

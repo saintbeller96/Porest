@@ -32,10 +32,18 @@
                   @focus="setCodeInput"
                 />
               </div>
-              <p style="color: #FF6A89" v-if="!isValidEmail" class="error_message">
+              <p
+                style="color: #FF6A89"
+                v-if="!isValidEmail"
+                class="error_message"
+              >
                 잘못된 이메일 양식입니다
               </p>
-              <p style="color: #FF6A89" v-else-if="!emailRedundancy && email" class="error_message">
+              <p
+                style="color: #FF6A89"
+                v-else-if="!emailRedundancy && email"
+                class="error_message"
+              >
                 다음 텝으로 이동하면 이메일 중복체크를 진행합니다
               </p>
 
@@ -54,13 +62,34 @@
                   autocomplete="off"
                   @blur="checkVerify"
                 />
-                <div class="re_send_button" v-if="!verify && remainTime >= '3:00'" @click="sendEmail">전송</div>
-                <div class="re_send_button" v-else-if="!verify && remainTime == '0:00'" @click="sendEmail">재전송</div>
-                <span class="timer" v-else-if="!verify" v-text="remainTime"></span>
+                <div
+                  class="re_send_button"
+                  v-if="!verify && remainTime >= '3:00'"
+                  @click="sendEmail"
+                >
+                  전송
+                </div>
+                <div
+                  class="re_send_button"
+                  v-else-if="!verify && remainTime == '0:00'"
+                  @click="sendEmail"
+                >
+                  재전송
+                </div>
+                <span
+                  class="timer"
+                  v-else-if="!verify"
+                  v-text="remainTime"
+                ></span>
               </div>
               <p
                 style="color: #FF6A89"
-                v-if="!verify && emailRedundancy && code.length < 1 && remainTime < '3:00'"
+                v-if="
+                  !verify &&
+                    emailRedundancy &&
+                    code.length < 1 &&
+                    remainTime < '3:00'
+                "
                 class="error_message"
               >
                 다음 텝으로 이동하면 인증코드 확인을 진행합니다
@@ -75,20 +104,42 @@
 
               <p class="title">닉네임</p>
               <div class="inputBox">
-                <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요" autocomplete="off" />
+                <input
+                  type="text"
+                  v-model="nickname"
+                  placeholder="닉네임을 입력해주세요"
+                  autocomplete="off"
+                />
               </div>
-              <p style="color: #FF6A89" v-if="nickname.length > 20" class="error_message">
+              <p
+                style="color: #FF6A89"
+                v-if="nickname.length > 20"
+                class="error_message"
+              >
                 20자 이하의 닉네임을 입력해주세요.
               </p>
 
               <p class="title">비밀번호</p>
               <div class="inputBox">
-                <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+                <input
+                  type="password"
+                  v-model="password1"
+                  placeholder="8~20자의 영문, 숫자 입력"
+                  autocomplete="off"
+                />
               </div>
-              <p style="color: #FF6A89" v-if="!isValidPwd && password1.length < 8" class="error_message">
+              <p
+                style="color: #FF6A89"
+                v-if="!isValidPwd && password1.length < 8"
+                class="error_message"
+              >
                 8자 이상의 비밀번호를 입력해주세요.
               </p>
-              <p style="color: #FF6A89" v-else-if="!isValidPwd && password1.length > 20" class="error_message">
+              <p
+                style="color: #FF6A89"
+                v-else-if="!isValidPwd && password1.length > 20"
+                class="error_message"
+              >
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
 
@@ -101,7 +152,11 @@
                   autocomplete="off"
                 />
               </div>
-              <p style="color: #FF6A89" v-if="!isValidPwdConfirm" class="error_message">
+              <p
+                style="color: #FF6A89"
+                v-if="!isValidPwdConfirm"
+                class="error_message"
+              >
                 다시 비밀번호를 확인해주세요.
               </p>
 
@@ -111,15 +166,28 @@
                   <register-terms></register-terms>
                 </div>
 
-                <p style="color: #FF6A89" v-if="!isTermsChecked" class="error_message_2">
+                <p
+                  style="color: #FF6A89"
+                  v-if="!isTermsChecked"
+                  class="error_message_2"
+                >
                   이용 약관을 확인해주세요.
                 </p>
-                <input type="checkbox" name="terms" value="true" v-model="terms" />
+                <input
+                  type="checkbox"
+                  name="terms"
+                  value="true"
+                  v-model="terms"
+                />
                 <span class="term" @click="checkTerms">약관 확인</span>
               </div>
-              <button type="submit" @click="submitForm" class="button">Sign up</button>
+              <button type="submit" @click="submitForm" class="button">
+                Sign up
+              </button>
               <div class="go-to-login-container">
-                <span @click="goToLogin" class="go-to-login">로그인 하러 가기</span>
+                <span @click="goToLogin" class="go-to-login"
+                  >로그인 하러 가기</span
+                >
               </div>
             </form>
           </div>
@@ -146,15 +214,15 @@
 </template>
 
 <script>
-import { signupUser, emailCheck, emailVerify, verifyCheck } from "@/api/auth";
-import { startAnimation } from "@/assets/js/main/IntroPage.js";
+import { signupUser, emailCheck, emailVerify, verifyCheck } from '@/api/auth';
+import { startAnimation } from '@/assets/js/main/IntroPage.js';
 
-import FireBase from "firebase/app";
-import "firebase/auth";
-import { validateEmail, validatePwd } from "@/utils/validation";
-import AuthForm from "@/components/auth/AuthForm";
-import RegisterTerms from "@/components/auth/RegisterTerms";
-import Snackbar from "@/components/common/Snackbar";
+import FireBase from 'firebase/app';
+import 'firebase/auth';
+import { validateEmail, validatePwd } from '@/utils/validation';
+import AuthForm from '@/components/auth/AuthForm';
+import RegisterTerms from '@/components/auth/RegisterTerms';
+import Snackbar from '@/components/common/Snackbar';
 export default {
   components: {
     AuthForm,
@@ -163,11 +231,11 @@ export default {
   },
   data() {
     return {
-      email: "",
-      nickname: "",
-      password1: "",
-      password2: "",
-      code: "",
+      email: '',
+      nickname: '',
+      password1: '',
+      password2: '',
+      code: '',
       terms: false,
       emailRedundancy: false,
       checkedEmailList: [],
@@ -178,18 +246,18 @@ export default {
       //snackbar
       position: "top-center",
       infinity: false,
-      snackbarText: "",
+      snackbarText: '',
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === "" || validateEmail(this.email);
+      return this.email === '' || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password1 === "" || validatePwd(this.password1);
+      return this.password1 === '' || validatePwd(this.password1);
     },
     isValidPwdConfirm() {
-      return this.password2 === "" || this.password1 === this.password2;
+      return this.password2 === '' || this.password1 === this.password2;
     },
     isTermsChecked() {
       return this.terms === true;
@@ -199,17 +267,17 @@ export default {
         validateEmail(this.email) &&
         validatePwd(this.password1) &&
         this.password1 === this.password2 &&
-        this.username !== "" &&
+        this.username !== '' &&
         this.terms === true &&
         this.emailRedundancy &&
-        this.code !== ""
+        this.code !== ''
       );
     },
   },
   methods: {
     setCodeInput() {
       this.verify = false;
-      this.remainTime = "3:34";
+      this.remainTime = '3:34';
       this.emailRedundancy = false;
     },
     verifyTime() {
@@ -219,7 +287,7 @@ export default {
 
       //초 설정
       if (sec < 10 && sec >= 0) {
-        sec = "0" + sec;
+        sec = '0' + sec;
       } else if (sec < 0) {
         sec = 59;
       }
@@ -229,17 +297,17 @@ export default {
         min = min - 1;
       }
 
-      this.remainTime = min + ":" + sec;
-      if (this.remainTime == "3:33" || (min == 0 && sec == 0)) {
+      this.remainTime = min + ':' + sec;
+      if (this.remainTime == '3:33' || (min == 0 && sec == 0)) {
         clearTimeout(this.verifyTime);
-        this.remainTime = "3:00";
+        this.remainTime = '3:00';
         return;
       }
       setTimeout(this.verifyTime, 1000);
     },
 
     goToLogin() {
-      this.$router.push({ name: "Login" });
+      this.$router.push({ name: 'Login' });
     },
     checkTerms() {
       this.terms = !this.terms;
@@ -265,16 +333,16 @@ export default {
           await FireBase.auth()
             .createUserWithEmailAndPassword(this.email, this.password1)
             .then(
-              (userCred) => {
+              userCred => {
                 return userCred.user
                   .updateProfile({
                     nickname: this.nickname,
                   })
                   .then(() => {
-                    this.$router.push("/log/login");
+                    this.$router.push({ name: 'Login' });
                   });
               },
-              (error) => (this.error = error.message)
+              error => (this.error = error.message),
             );
         } catch (error) {
           this.$store.dispatch("saveSnackbarStatus", true);
@@ -292,7 +360,7 @@ export default {
       } else {
         try {
           let checkEmailList = false;
-          this.checkedEmailList.forEach((element) => {
+          this.checkedEmailList.forEach(element => {
             if (element.email == this.email) checkEmailList = true;
           });
           if (!checkEmailList) {
@@ -312,7 +380,10 @@ export default {
               this.$store.dispatch("saveSnackbarStatus", true);
               this.snackbarText = "이미 존재하는 이메일 주소입니다.";
             } else {
-              this.checkedEmailList.push({ email: this.email, remainTime: this.remainTime });
+              this.checkedEmailList.push({
+                email: this.email,
+                remainTime: this.remainTime,
+              });
             }
           } else {
             this.emailRedundancy = true;

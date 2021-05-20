@@ -1,7 +1,7 @@
 <template>
   <div class="received_mail_main_wrapper">
     <!-- <Star class="star"></Star> -->
-    <span @click="moveToBack" class="oneStepBack">
+    <span @click="moveToBack" class="back">
       <i class="fas fa-arrow-left"></i>
     </span>
     <!-- <div>
@@ -10,9 +10,9 @@
     <div class="received_mail_inner_wrapper">
       <section class="received_mail_inner_left">
         <div class="section_header">
-          <div class="header_btn1" @click="openUserBoard(true)">받은 위로</div>
+          <div class="header_btn1" @click="openUserBoard(true)">내 사연</div>
           <div class="header_btn2" @click="openUserBoard(false)">
-            보낸 위로
+            내 답장
           </div>
         </div>
         <div class="section_body">
@@ -28,7 +28,7 @@
             <div class="letter_form_wrapper1">
               <div class="paper">
                 <div class="paper_header" v-text="getTitle()"></div>
-                <div class="paper_content" v-text="getContent()"></div>
+                <div class="paper_content" v-html="getContent()"></div>
                 <div class="paper_footer">
                   <div class="finish__mail" @click="finishLetter">
                     사연 끝내기
@@ -180,7 +180,6 @@ export default {
       }
     },
     openAll() {
-      console.log("here openm");
       this.openAllLetters = true;
     },
     exitAll() {
@@ -196,6 +195,7 @@ export default {
     },
     getContent() {
       let letters = this.$store.state.allLetters;
+      console.log(letters);
       if (letters === null || letters.detail[0].reply == null) return null;
       else return letters.detail[0].reply.detail.content;
     },

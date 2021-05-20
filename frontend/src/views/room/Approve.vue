@@ -127,7 +127,6 @@ export default {
 
         ref.get().then(attendeeDoc => {
           const approved = attendeeDoc.data().approved;
-          console.log('approved', approved);
           if (approved) {
             ref.update({
               approved: !approved,
@@ -141,7 +140,6 @@ export default {
       }
     },
     deleteAttendee: function(attendeeID) {
-      console.log('삭제한다');
       // host인 경우만 삭제가 가능하다
       if (
         (this.user && this.user.uid == this.hostId) ||
@@ -154,12 +152,10 @@ export default {
           .collection('attendees')
           .doc(attendeeID)
           .delete();
-        console.log('삭제 완료스');
       }
     },
     doJoin() {
       const form = document.querySelector('.approve-form');
-      console.log(this.roomPublic);
       if (this.roomPublic) {
         form.action = 'https://live.porest.kr/';
       } else {
@@ -175,7 +171,6 @@ export default {
       form.submit();
     },
     doLeave(uid) {
-      console.log(uid, '삭제해야한다');
       this.deleteAttendee(uid);
       this.attendeeJoined = false;
       this.$emit('exitRoom');
@@ -184,13 +179,6 @@ export default {
   props: ['user', 'roomId', 'roomName', 'hostId'],
 
   mounted() {
-    console.log(
-      'this is approve page',
-      this.user,
-      this.roomId,
-      this.roomName,
-      this.hostId,
-    );
     const roomRef = db
       .collection('users')
       .doc(this.hostId)
@@ -203,7 +191,6 @@ export default {
         this.$router.push('/all/rooms');
       }
     });
-    console.log('this.rooms');
     roomRef.onSnapshot(snapShot => {
       this.roomPublic = snapShot.data().publicState;
     });

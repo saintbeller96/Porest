@@ -1,8 +1,8 @@
 <template>
   <div class="rooms-wrapepr">
-    <div class="before">
-      <i class="fas fa-arrow-left" @click="moveToBack"></i>
-    </div>
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="intro_title">
       당신은 오늘 어떤 마음 속 이야기를 나누고 싶나요?
     </div>
@@ -276,7 +276,7 @@ export default {
       this.publicState = false;
     },
     moveToBack() {
-      this.$router.push({ name: 'MainIsland' });
+      this.$router.go(-1);
     },
     select(index) {
       this.selected = index;

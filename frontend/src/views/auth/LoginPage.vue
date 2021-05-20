@@ -102,53 +102,30 @@ export default {
     goToSignup() {
       this.$router.push({ name: "Signup" });
     },
-    // register() {
-    //   if (!this.error) {
-    //     FireBase.auth()
-    //       .createUserWithEmailAndPassword(this.email, this.password1)
-    //       .then(
-    //         userCred => {
-    //           return userCred.user
-    //             .updateProfile({
-    //               nickname: this.nickname,
-    //             })
-    //             .then(() => {
-    //               this.$router.push('/home');
-    //             });
-    //         },
-    //         error => (this.error = error.message),
-    //       );
-    //   }
-    // },
     goToFindPassword() {
       this.$router.push({ name: "FindPassword" });
     },
     async submitForm() {
-      console.log("login");
       try {
         await this.$store.dispatch("LOGIN", {
           email: this.email,
           password: this.password,
         });
-        console.log("이동");
         this.fireBaseLogin();
-        setTimeout(() => {
-          const whiteShow = document.querySelector(".white-show");
-          whiteShow.classList.add("active");
-        }, 1000);
-        this.$router.push({ name: "Intro" });
+        this.$emit('controlMusic', 'play');
+        this.$emit('introPlay');
+        this.$router.push({ name: 'Intro' });
       } catch (error) {
         this.$store.dispatch("saveSnackbarStatus", true);
         this.snackbarText = "이메일이나 비밀번호를 다시 확인해주세요.";
       }
     },
     fireBaseLogin() {
-      console.log("login");
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          (response) => {
-            console.log("response status", response);
+          response => {
+            return;
           },
           (error) => (this.error = error.message)
         );
@@ -157,7 +134,12 @@ export default {
   mounted() {
     startAnimation();
   },
-  created() {},
+  created() {
+    // let token = this.$store.getters.getAuthToken;
+    // if (token != '' || token != null) {
+    //   this.$router.push({ name: 'MainIsland' });
+    // }
+  },
 };
 </script>
 
