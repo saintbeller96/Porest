@@ -1,8 +1,8 @@
 <template>
   <div class="join__main__wrapper">
-    <div class="before">
-      <i class="fas fa-arrow-left" @click="moveToBack"></i>
-    </div>
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="intro__header">
       지치고 힘든 이유는, 그 만큼 당신이 열정적이었기 때문이다.
     </div>
@@ -55,7 +55,7 @@ export default {
   mounted() {},
   methods: {
     moveToBack() {
-      this.$router.push({ name: 'MainIsland' });
+      this.$router.go(-1);
     },
     moveToHealingMusic() {
       this.$router.push({ name: 'HealingMusic' });

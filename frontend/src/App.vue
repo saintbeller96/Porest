@@ -43,6 +43,9 @@
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
         <li>
+          <span class="nav-detail" @click="goToMain">홈</span>
+        </li>
+        <li>
           <span class="nav-detail" @click="goToMailbox">우체통</span>
         </li>
         <li>
@@ -51,7 +54,7 @@
         <li><span class="nav-detail" @click="goToVideoChat">마음나눔</span></li>
         <li><span class="nav-detail">하소연</span></li>
         <li><span class="nav-detail" @click="goToJoy">쉼터</span></li>
-        <li @click="logout">로그아웃</li>
+        <li @click="logout" class="nav-detail">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
         <li>로그인</li>
@@ -435,5 +438,9 @@ nav.active ul {
   overflow: hidden;
   position: absolute;
   width: 1px;
+}
+
+.logout {
+  color: red;
 }
 </style>
