@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <div class="logo" @click="goToMain">POREST 로고 자리</div>
+    <!-- <div class="logo" @click="goToMain">
+      <img src="@/assets/image/logo2.png" />
+    </div> -->
     <nav id="nav">
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
@@ -54,6 +56,8 @@ export default {
         });
     },
     goToMain() {
+      let nav = document.getElementById('nav');
+      nav.classList.remove('active');
       this.$router.push('/main/mainisland');
     },
     goToMailbox() {
@@ -169,6 +173,10 @@ export default {
   left: 1rem;
   cursor: pointer;
   z-index: 100;
+}
+
+.logo img {
+  width: 10vw;
 }
 
 #nav {
