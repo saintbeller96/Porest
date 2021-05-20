@@ -50,14 +50,7 @@ export const typing = () => {
         textIntro.classList.add('show');
         typeBoard.classList.add('hide');
       }, 500);
-      // count = 0;
-      // 몽글이 떠올리기
-      // setTimeout(() => {
-      //   whiteShow.classList.add('active');
-      //   setTimeout(() => {
-      //     router.push('/main/mainisland');
-      //   }, 450);
-      // }, 1000);
+
     }
     // currentText = txt[count];
     currentText = txt;

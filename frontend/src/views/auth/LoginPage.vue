@@ -101,24 +101,6 @@ export default {
     goToSignup() {
       this.$router.push({ name: 'Signup' });
     },
-    // register() {
-    //   if (!this.error) {
-    //     FireBase.auth()
-    //       .createUserWithEmailAndPassword(this.email, this.password1)
-    //       .then(
-    //         userCred => {
-    //           return userCred.user
-    //             .updateProfile({
-    //               nickname: this.nickname,
-    //             })
-    //             .then(() => {
-    //               this.$router.push('/home');
-    //             });
-    //         },
-    //         error => (this.error = error.message),
-    //       );
-    //   }
-    // },
     goToFindPassword() {
       this.$router.push({ name: 'FindPassword' });
     },

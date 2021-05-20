@@ -102,14 +102,14 @@ export default {
           console.log('logout');
           this.user = null;
           if (this.$router.history.current.name != 'Login') {
-            this.$router.push('/log/login');
+            this.$router.push({ name: 'Login' });
           }
         });
     },
     goToMain() {
       let nav = document.getElementById('nav');
       nav.classList.remove('active');
-      this.$router.push('/main/mainisland');
+      this.$router.push({ name: 'MainIsland' });
     },
     goToMailbox() {
       let nav = document.getElementById('nav');
