@@ -52,6 +52,16 @@ export default {
       pages: this.$store.state.allLetters.detail,
     };
   },
+  created() {
+    for (let i = 0; i < this.pages.length; i++) {
+      if (this.pages[i].letter == null) {
+        this.pages[i].letter = { detail: { title: '', content: '' } };
+      }
+      if (this.pages[i].reply == null) {
+        this.pages[i].reply = { detail: { title: '', content: '' } };
+      }
+    }
+  },
   mounted() {
     init();
   },

@@ -2,6 +2,22 @@
   <div class="finish__wrapper">
     <div class="exitBtn" @click="exit">떠나기</div>
     <div class="finish__inner">
+      <div class="state__choice__wrapper">
+        <div class="state__title">
+          답변 받으신 내용이 어떠셨나요?
+        </div>
+        <div class="state__choice">
+          <div class="good active">
+            좋았어요<img src="../../assets/image/feeling/5.png" alt="" />
+          </div>
+          <div class="normal">
+            별로였어요<img src="../../assets/image/feeling/4.png" alt="" />
+          </div>
+          <div class="bad">
+            안좋았어요<img src="../../assets/image/feeling/1.png" alt="" />
+          </div>
+        </div>
+      </div>
       <div class="inner__title">
         같은 고민을 가진 다른 분들에게 사연을 공개하시겠습니까?
       </div>
@@ -21,19 +37,25 @@
 </template>
 
 <script>
+import { finishLetter } from '@/api/letters';
+
 export default {
   name: 'Finishmodal',
   data() {
     return {
       publicState: false,
+      likeState: '',
     };
   },
+  props: ['counselId'],
   mounted() {
     this.animation();
   },
   methods: {
     finish() {
       console.log(this.publicState);
+      console.log(this.counselId);
+      console.log(this.likeState);
     },
     animation() {
       const publicBtn = document.querySelector('.public');
@@ -45,6 +67,28 @@ export default {
       nonpublicBtn.addEventListener('click', () => {
         nonpublicBtn.classList.add('active');
         publicBtn.classList.remove('active');
+      });
+
+      const good = document.querySelector('.good');
+      const normal = document.querySelector('.normal');
+      const bad = document.querySelector('.bad');
+      good.addEventListener('click', () => {
+        this.likeState = 'GOOD';
+        good.classList.add('active');
+        normal.classList.remove('active');
+        bad.classList.remove('active');
+      });
+      normal.addEventListener('click', () => {
+        this.likeState = 'NORMAL';
+        good.classList.remove('active');
+        normal.classList.add('active');
+        bad.classList.remove('active');
+      });
+      bad.addEventListener('click', () => {
+        this.likeState = 'BAD';
+        good.classList.remove('active');
+        normal.classList.remove('active');
+        bad.classList.add('active');
       });
     },
     exit() {
@@ -80,7 +124,7 @@ export default {
   font-family: 'GyeonggiBatang';
 
   width: 40rem;
-  height: 20rem;
+  height: 30rem;
   border-radius: 1rem;
   backdrop-filter: blur(5px);
   display: flex;
@@ -94,13 +138,18 @@ export default {
   border-bottom: 1px solid rgba(255, 255, 255, 0.2);
   padding: 1rem;
 }
+.state {
+  width: 100%;
+}
 
-.inner__title {
+.inner__title,
+.state__title {
   font-size: 1.5rem;
   /* font-weight: 600; */
   color: #fff;
 }
-.inner__content {
+.inner__content,
+.state__choice {
   font-size: 1.5rem;
   /* font-weight: 600; */
   color: #fccb90;
@@ -124,5 +173,34 @@ export default {
 .inner__footer {
   color: #fff;
   cursor: pointer;
+}
+
+.state__choice {
+  display: flex;
+  font-size: 1rem;
+  margin-top: 1rem;
+  justify-content: space-between;
+}
+
+.good,
+.normal,
+.bad {
+  text-align: center;
+  width: 5rem;
+  height: 5rem;
+  cursor: pointer;
+}
+.good.active,
+.normal.active,
+.bad.active {
+  color: #ff9a9e;
+}
+
+.good img,
+.normal img,
+.bad img {
+  margin: 0.3rem;
+  width: 90%;
+  height: 90%;
 }
 </style>

@@ -1,5 +1,4 @@
 export const init = () => {
-  console.log('all letters');
   const book = document.querySelector('.book');
   let page;
   const front = document.querySelectorAll('.front');
@@ -14,12 +13,9 @@ export const init = () => {
       e.target.classList.contains('page')
     ) {
       let id = e.target.dataset.value;
-      console.log(id);
       if (page[id].classList.contains('active')) {
-        console.log('있디');
         nextPage(id);
       } else {
-        console.log('없다');
         prevPage(id);
       }
     }
@@ -33,7 +29,6 @@ export const init = () => {
     console.log(current);
     if (page && index + 1 < page.length) {
       page[index + 1].classList.add('active');
-      console.log('더한다', page[parseInt(index, 10) + 1]);
     }
   }
   function prevPage(index) {
@@ -45,7 +40,6 @@ export const init = () => {
 
     if (page && index + 1 < page.length) {
       page[index + 1].classList.remove('active');
-      console.log('뺀다', page[parseInt(index, 10) + 1]);
     }
   }
 };

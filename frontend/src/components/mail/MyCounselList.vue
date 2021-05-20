@@ -34,6 +34,7 @@ export default {
   data() {
     return {
       counselList: {},
+      sorted: {},
     };
   },
   methods: {
@@ -43,6 +44,13 @@ export default {
     },
     async getMyCounsels() {
       this.counselList = await getMyCounsels();
+      for (let i = 0; i < this.counselList.length; i++) {
+        if (this.counselList[i].numOfReplies > 0) {
+          let temp = this.counselList[i];
+          this.counselList.splice(i, 1);
+          this.counselList.unshift(temp);
+        }
+      }
     },
     setDate(date) {
       //date.substring(0, 4)   -> 년

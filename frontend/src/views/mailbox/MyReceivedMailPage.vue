@@ -30,7 +30,13 @@
                   <div class="finish__mail" @click="finishLetter">
                     사연 끝내기
                   </div>
-                  <div class="ban_btn" @click="ban">신고</div>
+                  <div
+                    class="ban_btn"
+                    :data-value="getCounselId()"
+                    @click="ban"
+                  >
+                    신고
+                  </div>
                 </div>
               </div>
             </div>
@@ -81,8 +87,12 @@
       @exitAll="exitAll"
       class="all_letters"
     ></all-letters>
-    <finish-modal v-if="finishState" @exit="exit"></finish-modal>
-    <ban-modal v-if="banState" @exit="exit"></ban-modal>
+    <finish-modal
+      v-if="finishState"
+      :counselId="counselId"
+      @exit="exit"
+    ></finish-modal>
+    <ban-modal v-if="banState" :counselId="counselId" @exit="exit"></ban-modal>
   </div>
 </template>
 
@@ -141,6 +151,7 @@ export default {
           },
         ],
       },
+      counselId: null,
     };
   },
   components: {
@@ -185,6 +196,7 @@ export default {
       }
     },
     openAll() {
+      console.log('here openm');
       this.openAllLetters = true;
     },
     exitAll() {
@@ -195,13 +207,18 @@ export default {
     },
     getTitle() {
       let letters = this.$store.state.allLetters;
-      if (letters === null) return null;
+      if (letters == null || letters.detail[0].reply == null) return null;
       else return letters.detail[0].reply.detail.title;
     },
     getContent() {
       let letters = this.$store.state.allLetters;
-      if (letters === null) return null;
+      if (letters === null || letters.detail[0].reply == null) return null;
       else return letters.detail[0].reply.detail.title;
+    },
+    getCounselId() {
+      this.counselId = this.$store.state.allLetters;
+      if (this.counselId == null) return null;
+      else return this.counselId.counselId;
     },
     async ReplyForm() {
       //리플라이 null 예외처리 해야함

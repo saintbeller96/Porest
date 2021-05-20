@@ -1,36 +1,43 @@
-import { instance } from "@/api";
+import { instance } from '@/api';
 
-const signupUser = (userData) => instance.post("/signup", userData);
-const loginUser = (userData) => instance.post("/login", userData);
-const emailCheck = (userData) => instance.post("/email-check", userData);
+const signupUser = userData => instance.post('/signup', userData);
+const loginUser = userData => instance.post('/login', userData);
+const emailCheck = userData => instance.post('/email-check', userData);
 
-const findPassword = (userData) =>
+const findPassword = userData =>
   instance
-    .post("/find-password", userData)
-    .then((res) => {
-      alert("이메일을 확인해주세요.");
-      this.$router.push({ name: "Login" });
+    .post('/find-password', userData)
+    .then(res => {
+      alert('이메일을 확인해주세요.');
+      this.$router.push({ name: 'Login' });
     })
-    .catch((error) => {
+    .catch(error => {
       alert(error.response.data.message);
     });
 
-const emailVerify = (userData) =>
+const emailVerify = userData =>
   instance
-    .post("/email-verify", userData)
-    .then((res) => {
-      alert("이메일을 확인해 주세요");
+    .post('/email-verify', userData)
+    .then(res => {
+      alert('이메일을 확인해 주세요');
     })
-    .catch((err) => {
+    .catch(err => {
       alert(err.response.data.message);
     });
-const verifyCheck = (userData) =>
+const verifyCheck = userData =>
   instance
-    .post("/verify-check", userData)
-    .then((res) => {
+    .post('/verify-check', userData)
+    .then(res => {
       return res.data.verify;
     })
-    .catch((error) => {
+    .catch(error => {
       alert(error.response.data.message);
     });
-export { signupUser, loginUser, emailCheck, findPassword, emailVerify, verifyCheck };
+export {
+  signupUser,
+  loginUser,
+  emailCheck,
+  findPassword,
+  emailVerify,
+  verifyCheck,
+};

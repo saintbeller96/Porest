@@ -15,6 +15,10 @@
         <div class="subject">
           주제에 맞지 않는 답변으로 인해 신고합니다.
         </div>
+        <div class="etc">
+          기타사유
+          <input type="text" v-model="banReason" />
+        </div>
       </div>
       <div class="inner__footer" @click="ban">
         신고하기
@@ -24,41 +28,72 @@
 </template>
 
 <script>
+import { banReportDto } from '@/api/ban';
+
 export default {
   name: 'Banmodal',
   data() {
     return {
       banState: 1,
+      banReason: '',
+      reason: [
+        '욕설 및 폭언',
+        '성적인 대화 및 음란한 단어 사용',
+        '주제에 맞지 않는 답변',
+      ],
+      banData: {
+        banReason: '',
+        counselId: 0,
+      },
     };
   },
+  props: ['counselId'],
   mounted() {
     this.animation();
   },
   methods: {
     ban() {
-      console.log(this.banState);
+      if (this.banState == 3) {
+        this.banData.banReason = this.banReason;
+      } else {
+        this.banData.banReason = this.reason[this.banState];
+      }
+      this.banData.counselId = this.counselId.counselId;
+      console.log(this.banData);
+      // await banReportDto(this.banData);
     },
     animation() {
       const violence = document.querySelector('.violence');
       const sexuel = document.querySelector('.sexuel');
       const subject = document.querySelector('.subject');
+      const etc = document.querySelector('.etc');
       violence.addEventListener('click', () => {
-        this.banState = 1;
+        this.banState = 0;
         subject.classList.remove('active');
         sexuel.classList.remove('active');
         violence.classList.add('active');
+        etc.classList.remove('active');
       });
       sexuel.addEventListener('click', () => {
-        this.banState = 2;
+        this.banState = 1;
         subject.classList.remove('active');
         sexuel.classList.add('active');
         violence.classList.remove('active');
+        etc.classList.remove('active');
       });
       subject.addEventListener('click', () => {
-        this.banState = 3;
+        this.banState = 2;
         subject.classList.add('active');
         sexuel.classList.remove('active');
         violence.classList.remove('active');
+        etc.classList.remove('active');
+      });
+      etc.addEventListener('click', () => {
+        this.banState = 3;
+        subject.classList.remove('active');
+        sexuel.classList.remove('active');
+        violence.classList.remove('active');
+        etc.classList.add('active');
       });
     },
     exit() {
@@ -94,7 +129,7 @@ export default {
   font-family: 'GyeonggiBatang';
 
   width: 40rem;
-  height: 20rem;
+  height: 25rem;
   border-radius: 1rem;
   backdrop-filter: blur(5px);
   display: flex;
@@ -121,20 +156,33 @@ export default {
 }
 .subject,
 .sexuel,
-.violence {
+.violence,
+.etc {
   font-size: 1.1rem;
-  margin: 1.3rem 0;
+  margin: 2rem 0;
   cursor: pointer;
   transition: all 0.5s;
 }
+
+.etc input {
+  outline: none;
+  width: 100%;
+  border: none;
+  border-radius: 0.3rem;
+  margin-top: 0.3rem;
+  margin-left: 0.3rem;
+  padding: 0.5rem;
+}
 .subject:hover,
 .sexuel:hover,
-.violence:hover {
+.violence:hover,
+.etc:hover {
   color: #ff9a9e;
 }
 .subject.active,
 .sexuel.active,
-.violence.active {
+.violence.active,
+.etc.active {
   color: #ff9a9e;
 }
 
