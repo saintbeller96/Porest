@@ -172,7 +172,6 @@ export default {
     // } else {
     //   this.loginState = true;
     // }
-    this.$store.commit('setLogoStatus', true);
   },
 };
 </script>

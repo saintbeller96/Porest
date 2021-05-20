@@ -32,7 +32,8 @@ export default {
   mounted() {
     init();
     const second = document.querySelector('#seconds');
-    window.addEventListener('click', () => {
+    const header = document.querySelector('#headline');
+    header.addEventListener('click', () => {
       setInterval(() => {
         if (this.count > 0) {
           second.innerHTML = this.count--;
