@@ -100,6 +100,7 @@ export default {
     async createDiary() {
       if (this.checkForm) {
         try {
+          this.conversion();
           await createEmotion({
             content: this.content,
             feeling: this.$store.state.emotionIndex,
@@ -221,6 +222,12 @@ export default {
     },
     closeModal() {
       this.$store.commit('getModalStatus', false);
+    },
+    conversion() {
+      // textarea 의 줄바꿈 부분을 <br/>로 변경
+      let str = this.content;
+      str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+      this.content = str;
     },
   },
 };
