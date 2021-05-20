@@ -1,24 +1,24 @@
-(function () {
+(function() {
   // Set our main variables
   let scene,
-  renderer,
-  camera,
-  model, // Our character
-  neck, // Reference to the neck bone in the skeleton
-  waist, // Reference to the waist bone in the skeleton
-  possibleAnims, // Animations found in our file
-  mixer, // THREE.js animations mixer
-  idle, // Idle, the default state our character returns to
-  clock = new THREE.Clock(), // Used for anims, which run to a clock instead of frame rate 
-  currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
-  raycaster = new THREE.Raycaster(), // Used to detect the click on our character
-  loaderAnim = document.getElementById('js-loader');
+    renderer,
+    camera,
+    model, // Our character
+    neck, // Reference to the neck bone in the skeleton
+    waist, // Reference to the waist bone in the skeleton
+    possibleAnims, // Animations found in our file
+    mixer, // THREE.js animations mixer
+    idle, // Idle, the default state our character returns to
+    clock = new THREE.Clock(), // Used for anims, which run to a clock instead of frame rate
+    currentlyAnimating = false, // Used to check whether characters neck is being used in another anim
+    raycaster = new THREE.Raycaster(), // Used to detect the click on our character
+    loaderAnim = document.getElementById('js-loader');
 
   init();
 
   function init() {
-
-    const MODEL_PATH = 'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb';
+    const MODEL_PATH =
+      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy_lightweight.glb';
     const canvas = document.querySelector('#c');
     const backgroundColor = 0xf1f1f1;
 
@@ -35,84 +35,83 @@
 
     // Add a camera
     camera = new THREE.PerspectiveCamera(
-    50,
-    window.innerWidth / window.innerHeight,
-    0.1,
-    1000);
+      50,
+      window.innerWidth / window.innerHeight,
+      0.1,
+      1000,
+    );
 
     camera.position.z = 5;
     camera.position.x = 0;
     camera.position.y = 0;
 
-    let stacy_txt = new THREE.TextureLoader().load('https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy.jpg');
+    let stacy_txt = new THREE.TextureLoader().load(
+      'https://s3-us-west-2.amazonaws.com/s.cdpn.io/1376484/stacy.jpg',
+    );
     stacy_txt.flipY = false;
 
     const stacy_mtl = new THREE.MeshPhongMaterial({
       map: stacy_txt,
       color: 0xffffff,
-      skinning: true });
-
-
+      skinning: true,
+    });
 
     var loader = new THREE.GLTFLoader();
 
     loader.load(
-    MODEL_PATH,
-    function (gltf) {
-      model = gltf.scene;
-      let fileAnimations = gltf.animations;
+      MODEL_PATH,
+      function(gltf) {
+        model = gltf.scene;
+        let fileAnimations = gltf.animations;
 
-      model.traverse(o => {
+        model.traverse(o => {
+          if (o.isMesh) {
+            o.castShadow = true;
+            o.receiveShadow = true;
+            o.material = stacy_mtl;
+          }
+          // Reference the neck and waist bones
+          if (o.isBone && o.name === 'mixamorigNeck') {
+            neck = o;
+          }
+          if (o.isBone && o.name === 'mixamorigSpine') {
+            waist = o;
+          }
+        });
 
-        if (o.isMesh) {
-          o.castShadow = true;
-          o.receiveShadow = true;
-          o.material = stacy_mtl;
-        }
-        // Reference the neck and waist bones
-        if (o.isBone && o.name === 'mixamorigNeck') {
-          neck = o;
-        }
-        if (o.isBone && o.name === 'mixamorigSpine') {
-          waist = o;
-        }
-      });
+        model.scale.set(7, 7, 7);
+        model.position.y = -11;
 
-      model.scale.set(7, 7, 7);
-      model.position.y = -11;
+        scene.add(model);
 
-      scene.add(model);
+        loaderAnim.remove();
 
-      loaderAnim.remove();
+        mixer = new THREE.AnimationMixer(model);
 
-      mixer = new THREE.AnimationMixer(model);
+        let clips = fileAnimations.filter(val => val.name !== 'idle');
+        possibleAnims = clips.map(val => {
+          let clip = THREE.AnimationClip.findByName(clips, val.name);
 
-      let clips = fileAnimations.filter(val => val.name !== 'idle');
-      possibleAnims = clips.map(val => {
-        let clip = THREE.AnimationClip.findByName(clips, val.name);
+          clip.tracks.splice(3, 3);
+          clip.tracks.splice(9, 3);
 
-        clip.tracks.splice(3, 3);
-        clip.tracks.splice(9, 3);
+          clip = mixer.clipAction(clip);
+          return clip;
+        });
 
-        clip = mixer.clipAction(clip);
-        return clip;
-      });
+        let idleAnim = THREE.AnimationClip.findByName(fileAnimations, 'idle');
 
+        idleAnim.tracks.splice(3, 3);
+        idleAnim.tracks.splice(9, 3);
 
-      let idleAnim = THREE.AnimationClip.findByName(fileAnimations, 'idle');
-
-      idleAnim.tracks.splice(3, 3);
-      idleAnim.tracks.splice(9, 3);
-
-      idle = mixer.clipAction(idleAnim);
-      idle.play();
-
-    },
-    undefined, // We don't need this function
-    function (error) {
-      console.error(error);
-    });
-
+        idle = mixer.clipAction(idleAnim);
+        idle.play();
+      },
+      undefined, // We don't need this function
+      function(error) {
+        console.error(error);
+      },
+    );
 
     // Add lights
     let hemiLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 0.61);
@@ -134,13 +133,12 @@
     // Add directional Light to scene
     scene.add(dirLight);
 
-
     // Floor
     let floorGeometry = new THREE.PlaneGeometry(5000, 5000, 1, 1);
     let floorMaterial = new THREE.MeshPhongMaterial({
       color: 0xeeeeee,
-      shininess: 0 });
-
+      shininess: 0,
+    });
 
     let floor = new THREE.Mesh(floorGeometry, floorMaterial);
     floor.rotation.x = -0.5 * Math.PI;
@@ -149,7 +147,7 @@
     scene.add(floor);
 
     let geometry = new THREE.SphereGeometry(8, 32, 32);
-    let material = new THREE.MeshBasicMaterial({ color: 0x9bffaf }); // 0xf2ce2e 
+    let material = new THREE.MeshBasicMaterial({ color: 0x9bffaf }); // 0xf2ce2e
     let sphere = new THREE.Mesh(geometry, material);
 
     sphere.position.z = -15;
@@ -157,7 +155,6 @@
     sphere.position.x = -0.25;
     scene.add(sphere);
   }
-
 
   function update() {
     if (mixer) {
@@ -184,7 +181,7 @@
     let canvasPixelHeight = canvas.height / window.devicePixelRatio;
 
     const needResize =
-    canvasPixelWidth !== width || canvasPixelHeight !== height;
+      canvasPixelWidth !== width || canvasPixelHeight !== height;
     if (needResize) {
       renderer.setSize(width, height, false);
     }
@@ -213,7 +210,6 @@
       var object = intersects[0].object;
 
       if (object.name === 'stacy') {
-
         if (!currentlyAnimating) {
           currentlyAnimating = true;
           playOnClick();
@@ -222,29 +218,27 @@
     }
   }
 
-  // Get a random animation, and play it 
+  // Get a random animation, and play it
   function playOnClick() {
     let anim = Math.floor(Math.random() * possibleAnims.length) + 0;
     playModifierAnimation(idle, 0.25, possibleAnims[anim], 0.25);
   }
-
 
   function playModifierAnimation(from, fSpeed, to, tSpeed) {
     to.setLoop(THREE.LoopOnce);
     to.reset();
     to.play();
     from.crossFadeTo(to, fSpeed, true);
-    setTimeout(function () {
+    setTimeout(function() {
       from.enabled = true;
       to.crossFadeTo(from, tSpeed, true);
       currentlyAnimating = false;
     }, to._clip.duration * 1000 - (tSpeed + fSpeed) * 1000);
   }
 
-  document.addEventListener('mousemove', function (e) {
+  document.addEventListener('mousemove', function(e) {
     var mousecoords = getMousePos(e);
     if (neck && waist) {
-
       moveJoint(mousecoords, neck, 50);
       moveJoint(mousecoords, waist, 30);
     }
@@ -258,16 +252,15 @@
     let degrees = getMouseDegrees(mouse.x, mouse.y, degreeLimit);
     joint.rotation.y = THREE.Math.degToRad(degrees.x);
     joint.rotation.x = THREE.Math.degToRad(degrees.y);
-    console.log(joint.rotation.x);
   }
 
   function getMouseDegrees(x, y, degreeLimit) {
     let dx = 0,
-    dy = 0,
-    xdiff,
-    xPercentage,
-    ydiff,
-    yPercentage;
+      dy = 0,
+      xdiff,
+      xPercentage,
+      ydiff,
+      yPercentage;
 
     let w = { x: window.innerWidth, y: window.innerHeight };
 
@@ -277,31 +270,30 @@
       // 2. Get the difference between middle of screen and cursor position
       xdiff = w.x / 2 - x;
       // 3. Find the percentage of that difference (percentage toward edge of screen)
-      xPercentage = xdiff / (w.x / 2) * 100;
+      xPercentage = (xdiff / (w.x / 2)) * 100;
       // 4. Convert that to a percentage of the maximum rotation we allow for the neck
-      dx = degreeLimit * xPercentage / 100 * -1;
+      dx = ((degreeLimit * xPercentage) / 100) * -1;
     }
 
     // Right (Rotates neck right between 0 and degreeLimit)
     if (x >= w.x / 2) {
       xdiff = x - w.x / 2;
-      xPercentage = xdiff / (w.x / 2) * 100;
-      dx = degreeLimit * xPercentage / 100;
+      xPercentage = (xdiff / (w.x / 2)) * 100;
+      dx = (degreeLimit * xPercentage) / 100;
     }
     // Up (Rotates neck up between 0 and -degreeLimit)
     if (y <= w.y / 2) {
       ydiff = w.y / 2 - y;
-      yPercentage = ydiff / (w.y / 2) * 100;
+      yPercentage = (ydiff / (w.y / 2)) * 100;
       // Note that I cut degreeLimit in half when she looks up
-      dy = degreeLimit * 0.5 * yPercentage / 100 * -1;
+      dy = ((degreeLimit * 0.5 * yPercentage) / 100) * -1;
     }
     // Down (Rotates neck down between 0 and degreeLimit)
     if (y >= w.y / 2) {
       ydiff = y - w.y / 2;
-      yPercentage = ydiff / (w.y / 2) * 100;
-      dy = degreeLimit * yPercentage / 100;
+      yPercentage = (ydiff / (w.y / 2)) * 100;
+      dy = (degreeLimit * yPercentage) / 100;
     }
     return { x: dx, y: dy };
   }
-
 })();

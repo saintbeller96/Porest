@@ -11,26 +11,21 @@ const routes = [
   },
   {
     path: '/main',
-    name: 'Main',
-    component: () => import('@/views/main/MainPage.vue'),
-  },
-  {
-    path: '/main/mainisland',
     name: 'MainIsland',
     component: () => import('@/views/main/MainIslandPage.vue'),
   },
   {
-    path: '/log/login',
+    path: '/login',
     name: 'Login',
     component: () => import('@/views/auth/LoginPage.vue'),
   },
   {
-    path: '/sing/signup',
+    path: '/signup',
     name: 'Signup',
     component: () => import('@/views/auth/SignupPage.vue'),
   },
   {
-    path: '/int/intro',
+    path: '/intro',
     name: 'Intro',
     component: () => import('@/views/main/IntroPage.vue'),
   },
@@ -38,16 +33,6 @@ const routes = [
     path: '/find-password',
     name: 'FindPassword',
     component: () => import('@/views/auth/FindPasswordPage.vue'),
-  },
-  {
-    path: '/test',
-    name: 'Test',
-    component: () => import('@/views/test/Test.vue'),
-  },
-  {
-    path: '/mailboxplane',
-    name: 'MailboxPlane',
-    component: () => import('@/views/mailbox/MailboxPlanePage.vue'),
   },
   {
     path: '/mailbox',
@@ -77,11 +62,6 @@ const routes = [
     props: true,
   },
   {
-    path: '/home',
-    name: 'Home',
-    component: () => import('@/views/test/Home.vue'),
-  },
-  {
     path: '/rooms',
     name: 'RoomsPage',
     component: () => import('@/views/room/RoomsPage.vue'),
@@ -91,11 +71,6 @@ const routes = [
     name: 'CheckIn',
     component: () => import('@/views/room/CheckInPage.vue'),
     props: true,
-  },
-  {
-    path: '/chat/:hostID/:roomID',
-    name: 'Chat',
-    component: () => import('@/views/room/Approve.vue'),
   },
   {
     path: '/profile',
@@ -146,6 +121,11 @@ const routes = [
     path: '/joy/healing/music',
     name: 'HealingMusic',
     component: () => import('@/views/joy/HealingMusicPage.vue'),
+  },
+  {
+    path: '/admin/ban-report',
+    name: 'BanReport',
+    component: () => import('@/views/admin/BanReportPage.vue'),
   },
 ];
 

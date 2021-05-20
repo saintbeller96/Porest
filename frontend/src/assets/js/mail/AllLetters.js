@@ -6,7 +6,6 @@ export const init = () => {
   let current = 0;
   book.addEventListener('click', e => {
     page = document.querySelectorAll('.page');
-    console.log(e.target);
     if (
       e.target.classList.contains('front') ||
       e.target.classList.contains('back') ||
@@ -26,7 +25,6 @@ export const init = () => {
     page[index].classList.add('flipped');
     page[index].classList.remove('active');
     current = index;
-    console.log(current);
     if (page && index + 1 < page.length) {
       page[index + 1].classList.add('active');
     }
@@ -36,7 +34,6 @@ export const init = () => {
     page[index].classList.remove('flipped');
     page[index].classList.add('active');
     current = index;
-    console.log(current);
 
     if (page && index + 1 < page.length) {
       page[index + 1].classList.remove('active');

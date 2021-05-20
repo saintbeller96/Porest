@@ -27,24 +27,23 @@
 
       <div class="postmenu2" @click="goToRandomMail">
         <div class="postmenu2_content">
-          <h1 class="postmenu2_title">랜덤 편지함</h1>
+          <h1 class="postmenu2_title">사연 고르기</h1>
           <h2 class="postmenu2_subtitle">당신의 경험을 공유해주세요.</h2>
+          <div class="post_wrapper">
+            <img class="post_img" src="@/assets/image/postbox.png" alt="" />
+          </div>
+        </div>
+      </div>
+      <div class="postmenu3" @click="goToMyReceivedMail">
+        <div class="postmenu3_content">
+          <h1 class="postmenu3_title">편지함</h1>
+          <h2 class="postmenu3_subtitle">편지에 고민을 담아 주고받아요.</h2>
 
           <div class="letter_wrapper">
             <img class="letter_img" src="@/assets/image/letter.png" alt="" />
           </div>
           <div class="letter_wrapper2">
             <img class="letter2_img" src="@/assets/image/letter.png" alt="" />
-          </div>
-        </div>
-      </div>
-      <div class="postmenu3" @click="goToMyReceivedMail">
-        <div class="postmenu3_content">
-          <h1 class="postmenu3_title">우편함</h1>
-          <h2 class="postmenu3_subtitle">편지에 고민을 담아 주고받아요.</h2>
-
-          <div class="post_wrapper">
-            <img class="post_img" src="@/assets/image/postbox.png" alt="" />
           </div>
         </div>
       </div>
@@ -59,7 +58,6 @@ export default {
       this.$router.push({ name: 'MainIsland' });
     },
     goToStoryLetterPage(e) {
-      console.log(e.target);
       e.target.classList.add('click1');
       setTimeout(() => {
         this.$router.push({ name: 'WriteLetter' });

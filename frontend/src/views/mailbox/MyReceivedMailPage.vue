@@ -10,9 +10,9 @@
     <div class="received_mail_inner_wrapper">
       <section class="received_mail_inner_left">
         <div class="section_header">
-          <div class="header_btn1" @click="openUserBoard(true)">받은 위로</div>
+          <div class="header_btn1" @click="openUserBoard(true)">내 사연</div>
           <div class="header_btn2" @click="openUserBoard(false)">
-            보낸 위로
+            내 답장
           </div>
         </div>
         <div class="section_body">
@@ -199,7 +199,6 @@ export default {
       }
     },
     openAll() {
-      console.log('here openm');
       this.openAllLetters = true;
     },
     exitAll() {

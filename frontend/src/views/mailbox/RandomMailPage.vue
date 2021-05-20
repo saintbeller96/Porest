@@ -79,9 +79,6 @@ export default {
         fireworks();
       }, 3000);
     },
-    postClick(e) {
-      console.log(e.target);
-    },
     goOneStepBack() {
       history.go(-1);
     },
