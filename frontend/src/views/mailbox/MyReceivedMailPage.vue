@@ -7,10 +7,10 @@
     <div class="received_mail_inner_wrapper">
       <section class="received_mail_inner_left">
         <div class="section_header">
-
           <div class="header_btn1" @click="openUserBoard(true)">위로 받기</div>
-          <div class="header_btn2" @click="openUserBoard(false)">위로 보내기</div>
-
+          <div class="header_btn2" @click="openUserBoard(false)">
+            위로 보내기
+          </div>
         </div>
         <div class="section_body">
           <my-story-list v-if="viewStoryState"></my-story-list>
@@ -21,29 +21,40 @@
       <section class="received_mail_inner_right">
         <div class="root_mail_header"></div>
         <div class="write_reply">
-
           <div class="letter_paper">
-
             <div class="letter_form_wrapper1">
               <div class="paper">
                 <div class="paper_header" v-text="getTitle()"></div>
                 <div class="paper_content" v-text="getContent()"></div>
                 <div class="paper_footer">
-                  <div class="ban_btn">신고</div>
+                  <div class="finish__mail" @click="finishLetter">
+                    사연 끝내기
+                  </div>
+                  <div
+                    class="ban_btn"
+                    :data-value="getCounselId()"
+                    @click="ban"
+                  >
+                    신고
+                  </div>
                 </div>
               </div>
             </div>
 
             <div class="letter_form_wrapper2">
               <div class="paper">
-                <div class="paper_header2">답장 제목<input type="text" v-model="letter.body.title" /></div>
+                <div class="paper_header2">
+                  답장 제목<input type="text" v-model="letter.body.title" />
+                </div>
                 <div class="paper_content2">
                   답장 내용
-                  <textarea name="" id="" v-model="letter.body.content"></textarea>
-
+                  <textarea
+                    name=""
+                    id=""
+                    v-model="letter.body.content"
+                  ></textarea>
                 </div>
                 <div class="paper_footer">
-                  
                   <div class="reply_btn" @click="ReplyForm">보내기</div>
                 </div>
               </div>
@@ -76,6 +87,12 @@
       @exitAll="exitAll"
       class="all_letters"
     ></all-letters>
+    <finish-modal
+      v-if="finishState"
+      :counselId="counselId"
+      @exit="exit"
+    ></finish-modal>
+    <ban-modal v-if="banState" :counselId="counselId" @exit="exit"></ban-modal>
   </div>
 </template>
 
@@ -85,12 +102,16 @@ import { getCounsel } from '@/api/counsels';
 import MyCounselList from '@/components/mail/MyCounselList.vue';
 import MyStoryList from '@/components/mail/MyStoryList.vue';
 import AllLetters from '@/components/mail/AllLetters.vue';
+import FinishModal from '@/components/mail/FinishModal.vue';
+import BanModal from '@/components/mail/BanModal.vue';
 import Star from '@/components/common/Star.vue';
 
 export default {
   name: 'MyReceivedMailPage',
   data() {
     return {
+      banState: false,
+      finishState: false,
       stories: null,
       viewStoryState: true,
       openAllLetters: false,
@@ -130,6 +151,7 @@ export default {
           },
         ],
       },
+      counselId: null,
     };
   },
   components: {
@@ -137,6 +159,8 @@ export default {
     MyCounselList,
     MyStoryList,
     AllLetters,
+    FinishModal,
+    BanModal,
   },
   created() {
     let token = this.$store.getters.getAuthToken;
@@ -146,23 +170,33 @@ export default {
     }
   },
   methods: {
+    exit() {
+      this.finishState = false;
+      this.banState = false;
+    },
+    ban() {
+      this.banState = true;
+    },
+    finishLetter() {
+      this.finishState = true;
+    },
     goToLetterReply() {
       this.$router.push({ name: 'LetterReply' });
     },
     openUserBoard(value) {
       this.viewStoryState = value;
-      const headerBtn1 = document.querySelector(".header_btn1");
-      const headerBtn2 = document.querySelector(".header_btn2");
-      if (value==true){
-        headerBtn1.classList.add("click");
-        headerBtn2.classList.remove("click");
-
+      const headerBtn1 = document.querySelector('.header_btn1');
+      const headerBtn2 = document.querySelector('.header_btn2');
+      if (value == true) {
+        headerBtn1.classList.add('click');
+        headerBtn2.classList.remove('click');
       } else {
-        headerBtn1.classList.remove("click");
-        headerBtn2.classList.add("click");
+        headerBtn1.classList.remove('click');
+        headerBtn2.classList.add('click');
       }
     },
     openAll() {
+      console.log('here openm');
       this.openAllLetters = true;
     },
     exitAll() {
@@ -173,13 +207,18 @@ export default {
     },
     getTitle() {
       let letters = this.$store.state.allLetters;
-      if (letters === null) return null;
+      if (letters == null || letters.detail[0].reply == null) return null;
       else return letters.detail[0].reply.detail.title;
     },
     getContent() {
       let letters = this.$store.state.allLetters;
-      if (letters === null) return null;
+      if (letters === null || letters.detail[0].reply == null) return null;
       else return letters.detail[0].reply.detail.title;
+    },
+    getCounselId() {
+      this.counselId = this.$store.state.allLetters;
+      if (this.counselId == null) return null;
+      else return this.counselId.counselId;
     },
     async ReplyForm() {
       //리플라이 null 예외처리 해야함

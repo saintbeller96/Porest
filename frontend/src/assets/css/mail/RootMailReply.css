@@ -133,6 +133,7 @@
   transform-origin: right center;
   transition: all 1s ease;
   font-family: 'Love_son';
+
   color: #1F1F1F;
 }
 
@@ -299,6 +300,7 @@ font-weight: bold;
 }
 .root-mail{
   font-size: 25px;
+  font-weight: 600;
   color: black;
 }
 .btnReply{

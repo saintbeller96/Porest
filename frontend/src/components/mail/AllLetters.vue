@@ -12,17 +12,29 @@
         >
           <div class="front" :data-value="index">
             <div class="book_cover" v-if="index == 0">
-              <div class="root_story_header" v-text="page.letter.detail.title"></div>
-              <div class="root_story_content" v-text="page.letter.detail.content"></div>
+              <div
+                class="root_story_header"
+                v-text="page.letter.detail.title"
+              ></div>
+              <div
+                class="root_story_content"
+                v-text="page.letter.detail.content"
+              ></div>
             </div>
             <div class="reply" v-else>
               <div class="reply_header" v-text="page.reply.detail.title"></div>
-              <div class="reply_content" v-text="page.reply.detail.content"></div>
+              <div
+                class="reply_content"
+                v-text="page.reply.detail.content"
+              ></div>
             </div>
           </div>
           <div class="back" :data-value="index">
             <div class="letter_header" v-text="page.letter.detail.title"></div>
-            <div class="letter_content" v-text="page.letter.detail.content"></div>
+            <div
+              class="letter_content"
+              v-text="page.letter.detail.content"
+            ></div>
           </div>
         </div>
       </div>
@@ -32,20 +44,30 @@
 </template>
 
 <script>
-import { init } from "@/assets/js/mail/AllLetters.js";
+import { init } from '@/assets/js/mail/AllLetters.js';
 export default {
-  name: "Allletters",
+  name: 'Allletters',
   data() {
     return {
       pages: this.$store.state.allLetters.detail,
     };
+  },
+  created() {
+    for (let i = 0; i < this.pages.length; i++) {
+      if (this.pages[i].letter == null) {
+        this.pages[i].letter = { detail: { title: '', content: '' } };
+      }
+      if (this.pages[i].reply == null) {
+        this.pages[i].reply = { detail: { title: '', content: '' } };
+      }
+    }
   },
   mounted() {
     init();
   },
   methods: {
     exitAll() {
-      this.$emit("exitAll");
+      this.$emit('exitAll');
     },
   },
 };
@@ -64,15 +86,16 @@ export default {
 
 .exit_btn {
   position: absolute;
-  top: 1rem;
-  right: 1rem;
+  top: 3rem;
+  right: 13rem;
+  font-family: 'InfinitySans-BoldA1';
+  font-size: 1.1rem;
   color: #fff;
   cursor: pointer;
 }
 .book_wrapper {
   width: 35%;
   height: 95%;
-  border: 1px solid black;
   perspective: 2000px;
   position: relative;
   left: 50%;
@@ -91,6 +114,7 @@ export default {
 }
 ::-webkit-scrollbar-thumb {
   background-color: rgb(177, 174, 174);
+
   border-radius: 6px;
 }
 .page {
@@ -101,6 +125,7 @@ export default {
   position: absolute;
   transform-origin: left center;
   transform-style: preserve-3d;
+
   transform: perspective(2000px) rotateY(0deg);
   transition: 1s all;
 }
@@ -114,7 +139,9 @@ export default {
   height: 100%;
   padding: 2rem;
   overflow-y: scroll;
-  background: linear-gradient(to bottom right, #fff, #ccc);
+  background-color: #f2f2cf;
+  box-shadow: inset 0 0px 30px -5px #e9dccb, 0 0 10px -5px;
+  background-color: #f2f2cf;
   backface-visibility: hidden;
   transform: perspective(2000px) rotateY(0);
 }
@@ -148,10 +175,10 @@ export default {
   width: 100%;
   padding: 1rem 0;
   text-align: center;
-  font-size: 1.5rem;
+  font-size: 2.2rem;
   font-weight: 600;
   margin: 2rem 0;
-  border: 1px solid;
+  font-family: 'Love_son';
 }
 
 .reply_header {
@@ -161,8 +188,10 @@ export default {
 .root_story_content,
 .reply_content,
 .letter_content {
+  font-family: 'Love_son';
+  font-size: 2rem;
+  font-weight: 600;
   pointer-events: none;
-  font-size: 1.2rem;
   text-align: justify;
   letter-spacing: 1px;
   line-height: 1.5rem;

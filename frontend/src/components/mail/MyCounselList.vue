@@ -1,10 +1,21 @@
 <template>
   <ul class="section_body_story_list send_list">
-    <li class="story_item" v-for="(counsel, index) in counselList" :key="index" @click="openCounsel(counsel.counselId)">
+    <li
+      class="story_item"
+      v-for="(counsel, index) in counselList"
+      :key="index"
+      @click="openCounsel(counsel.counselId)"
+    >
       <div class="story_header">
-        <span class="counsel_new" v-text="counsel.numOfReplies >= 1 ? 'NEW' : ''"></span>
+        <span
+          class="counsel_new"
+          v-text="counsel.numOfReplies >= 1 ? 'NEW' : ''"
+        ></span>
         <h1 class="story_title" v-text="counsel.title"></h1>
-        <div class="header_counsel" v-text="counsel.writerNickname+'님의 사연'"></div>
+        <div
+          class="header_counsel"
+          v-text="counsel.writerNickname + '님의 사연'"
+        ></div>
       </div>
       <!-- <div class="story_body">
         <p>
@@ -17,21 +28,29 @@
 </template>
 
 <script>
-import { getMyCounsels } from "@/api/counsels";
+import { getMyCounsels } from '@/api/counsels';
 export default {
-  name: "Mycounsellist",
+  name: 'Mycounsellist',
   data() {
     return {
       counselList: {},
+      sorted: {},
     };
   },
   methods: {
     async openCounsel(counselId) {
-      await this.$store.dispatch("saveSelectedCounselId", counselId);
+      await this.$store.dispatch('saveSelectedCounselId', counselId);
       //await readLetter({counselId, letterId});
     },
     async getMyCounsels() {
       this.counselList = await getMyCounsels();
+      for (let i = 0; i < this.counselList.length; i++) {
+        if (this.counselList[i].numOfReplies > 0) {
+          let temp = this.counselList[i];
+          this.counselList.splice(i, 1);
+          this.counselList.unshift(temp);
+        }
+      }
     },
     setDate(date) {
       //date.substring(0, 4)   -> 년
@@ -42,17 +61,17 @@ export default {
       let writeTime = new Date(date);
       let elapsed = new Date() - writeTime;
       if ((elapsed = elapsed / 1000) < 60) {
-        return "방금 전";
+        return '방금 전';
       } else if ((elapsed = elapsed / 60) < 60) {
-        return Math.floor(elapsed) + "분 전";
+        return Math.floor(elapsed) + '분 전';
       } else if ((elapsed = elapsed / 60) < 24) {
-        return Math.floor(elapsed) + "시간 전";
+        return Math.floor(elapsed) + '시간 전';
       } else if ((elapsed /= 24) < 31) {
-        return Math.floor(elapsed) + "일 전";
+        return Math.floor(elapsed) + '일 전';
       } else if ((elapsed /= 30) < 12) {
-        return Math.floor(elapsed) + "달 전";
+        return Math.floor(elapsed) + '달 전';
       } else {
-        return Math.floor(elapsed / 12) + "년 전";
+        return Math.floor(elapsed / 12) + '년 전';
       }
     },
   },
@@ -90,7 +109,7 @@ export default {
   color: #444;
   backdrop-filter: blur(15px);
   /* box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1); */
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  /* border: 1px solid rgba(255, 255, 255, 0.5); */
   border-right: 1px solid rgba(166, 201, 247, 0.2);
   border-bottom: 1px solid rgba(107, 153, 240, 0.2);
   background-color: #a3b2ec85;
@@ -127,12 +146,11 @@ export default {
 .header_counsel {
   /* width: 100%; */
   margin-left: auto;
-font-size: 0.9rem;
-padding: 0.29rem 0.2rem 0 0;
+  font-size: 0.9rem;
+  padding: 0.29rem 0.2rem 0 0;
   font-family: 'GyeonggiBatang';
-
 }
-.counsel_new{
+.counsel_new {
   color: red;
   font-family: 'Love_son';
   font-size: 20px;
