@@ -42,18 +42,17 @@
     <nav id="nav">
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
-        <li>
-          <span class="nav-detail" @click="goToMain">홈</span>
+        <li @click="goToMain">
+          <span class="nav-detail">홈</span>
         </li>
-        <li>
-          <span class="nav-detail" @click="goToMailbox">우체통</span>
+        <li @click="goToMailbox">
+          <span class="nav-detail">우체통</span>
         </li>
-        <li>
-          <span class="nav-detail" @click="goToFeelingRecord">하루일기</span>
+        <li @click="goToFeelingRecord">
+          <span class="nav-detail">하루일기</span>
         </li>
-        <li><span class="nav-detail" @click="goToVideoChat">마음나눔</span></li>
-        <li><span class="nav-detail">하소연</span></li>
-        <li><span class="nav-detail" @click="goToJoy">쉼터</span></li>
+        <li @click="goToVideoChat"><span class="nav-detail">마음나눔</span></li>
+        <li @click="goToJoy"><span class="nav-detail">쉼터</span></li>
         <li @click="logout" class="nav-detail">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
