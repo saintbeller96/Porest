@@ -304,7 +304,14 @@ font-weight: bold;
   color: black;
   height: 70%;
   overflow-y: scroll;
-  overflow: hidden;
+  letter-spacing: 2px;
+  line-height: 30px;
+}
+.root-mail p{
+  font-size: 25px;
+  font-weight: 600;
+  color: black;
+  height: 70%;
   letter-spacing: 2px;
   line-height: 30px;
 }
