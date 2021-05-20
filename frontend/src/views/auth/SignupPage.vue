@@ -48,16 +48,9 @@
               </p>
 
               <!-- 이메일 인증 부분 start -->
-              <!-- <div v-if="emailRedundancy">
-                <span v-if="!verify" class="redundancy_check" @click="checkVerify">이메일 인증</span>
-                <span v-else class="redundancy_check2">이메일 인증 완료</span>
-              </div> -->
-
               <p class="title" v-if="emailRedundancy">
                 인증코드
-                <span style="color: #6FFFC4; font-size: 8px" v-if="verify"
-                  >인증완료</span
-                >
+                <span class="redundancy_check" style="color: #6FFFC4; font-size: 8px" v-if="verify">인증완료</span>
                 <!-- <span v-else class="redundancy_check2">중복확인 완료</span> -->
               </p>
               <div v-if="emailRedundancy" class="inputBox">
@@ -99,15 +92,14 @@
                 "
                 class="error_message"
               >
-                인증코드를 입력해 주세요
+                다음 텝으로 이동하면 인증코드 확인을 진행합니다
               </p>
               <p
                 style="color: #FF6A89"
-                v-else-if="!verify && emailRedundancy && code"
+                v-else-if="!verify && emailRedundancy && code.length == 5"
+                v-text="verifyCodeText"
                 class="error_message"
-              >
-                다음 텝으로 이동하면 인증코드 확인을 진행합니다
-              </p>
+              ></p>
               <!-- 이메일 인증 부분  end -->
 
               <p class="title">닉네임</p>
@@ -213,13 +205,9 @@
         top-right
          -->
     <div>
-      <snackbar
-        :active.sync="showSnackbar"
-        :infinity="infinity"
-        :position="position"
-      >
+      <snackbar :infinity="infinity" :position="position">
         {{ snackbarText }}
-        <button class="close-btn" @click="showSnackbar = false">close</button>
+        <button class="close-btn" @click="$store.state.snackbarStatus = false">close</button>
       </snackbar>
     </div>
   </div>
@@ -253,10 +241,10 @@ export default {
       checkedEmailList: [],
 
       verify: false,
-      remainTime: '3:00',
-
-      showSnackbar: false,
-      position: 'top-center',
+      verifyCodeText: "다음 텝으로 이동하면 인증코드 확인을 진행합니다",
+      remainTime: "3:00",
+      //snackbar
+      position: "top-center",
       infinity: false,
       snackbarText: '',
     };
@@ -327,13 +315,18 @@ export default {
     async submitForm() {
       if (this.checkForm) {
         try {
-          await signupUser({
+          let res = await signupUser({
             email: this.email,
             nickname: this.nickname,
             password: this.password1,
             code: this.code,
           });
-          await this.$store.dispatch('LOGIN', {
+          //회원 가입 실패시 snackbar
+          if (!res.status) {
+            this.$store.dispatch("saveSnackbarStatus", true);
+            this.snackbarText = res.message;
+          }
+          await this.$store.dispatch("LOGIN", {
             email: this.email,
             password: this.password1,
           });
@@ -352,18 +345,18 @@ export default {
               error => (this.error = error.message),
             );
         } catch (error) {
-          this.showSnackbar = true;
+          this.$store.dispatch("saveSnackbarStatus", true);
           this.snackbarText = error;
         }
       } else {
-        this.showSnackbar = true;
-        this.snackbarText = '모든 항목을 입력해주세요.';
+        this.$store.dispatch("saveSnackbarStatus", true);
+        this.snackbarText = "모든 항목을 입력해주세요.";
       }
     },
     async checkEmail() {
       if (this.email.length < 1 || !this.isValidEmail) {
-        this.showSnackbar = true;
-        this.snackbarText = '사용하실 이메일 주소를 올바르게 입력해주세요.';
+        this.$store.dispatch("saveSnackbarStatus", true);
+        this.snackbarText = "사용하실 이메일 주소를 올바르게 입력해주세요.";
       } else {
         try {
           let checkEmailList = false;
@@ -371,14 +364,21 @@ export default {
             if (element.email == this.email) checkEmailList = true;
           });
           if (!checkEmailList) {
-            var { data } = await emailCheck({
+            var res = await emailCheck({
               email: this.email,
             });
+
+            if (!res.status) {
+              this.$store.dispatch("saveSnackbarStatus", true);
+              this.snackbarText = res.message;
+              return;
+            }
+
             //이메일 인증 결과 데이터를 통해 redundancy 저장
-            this.emailRedundancy = data.redundancy;
+            this.emailRedundancy = res.data.redundancy;
             if (!this.emailRedundancy) {
-              this.showSnackbar = true;
-              this.snackbarText = '이미 존재하는 이메일 주소입니다.';
+              this.$store.dispatch("saveSnackbarStatus", true);
+              this.snackbarText = "이미 존재하는 이메일 주소입니다.";
             } else {
               this.checkedEmailList.push({
                 email: this.email,
@@ -389,21 +389,25 @@ export default {
             this.emailRedundancy = true;
           }
         } catch (error) {
-          this.showSnackbar = true;
+          this.$store.dispatch("saveSnackbarStatus", true);
           this.snackbarText = error;
         }
       }
     },
     async sendEmail() {
-      await emailVerify({ email: this.email });
-      this.remainTime = '3:00';
+      var res = await emailVerify({ email: this.email });
+      this.$store.dispatch("saveSnackbarStatus", true);
+      this.snackbarText = res.message;
+      this.remainTime = "3:00";
       this.verifyTime();
     },
     async checkVerify() {
-      this.verify = await verifyCheck({
+      let res = await verifyCheck({
         email: this.email,
         code: this.code,
       });
+      this.verify = res.data.verify;
+      this.verifyCodeText = this.verify ? this.verifyCodeText : "인증코드가 다릅니다";
     },
   },
   mounted() {

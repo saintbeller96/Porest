@@ -6,25 +6,25 @@ import {
   getUserNameFromCookie,
   getUserImgFromCookie,
   getUserTemperatureFromCookie,
-} from '@/utils/cookies';
+} from "@/utils/cookies";
 
 export default {
-  id: getUserIdFromCookie() || '',
-  uid: getUserUidFromCookie() || '',
-  email: getUserEmailFromCookie() || '',
-  nickname: getUserNameFromCookie() || '',
-  token: getAuthFromCookie() ? `${getAuthFromCookie()}` : '',
-  profileImg: getUserImgFromCookie() || '',
-  temperature: getUserTemperatureFromCookie() || '',
+  id: getUserIdFromCookie() || "",
+  uid: getUserUidFromCookie() || "",
+  email: getUserEmailFromCookie() || "",
+  nickname: getUserNameFromCookie() || "",
+  token: getAuthFromCookie() ? `${getAuthFromCookie()}` : "",
+  profileImg: getUserImgFromCookie() || "",
+  temperature: getUserTemperatureFromCookie() || "",
 
   // 감정 기록
   thisMonthFeelings: [],
   targetDateId: 0,
-  targetDateDetail: '',
+  targetDateDetail: "",
   stickerindex: 0,
-  selectedSticker: '',
+  selectedSticker: "",
   emotionIndex: 0,
-  diaryModalStatus: '',
+  diaryModalStatus: "",
   targetDate: [], // 캘린더에서 선택한 날짜
   modalControl: false,
   refreshCalendar: false,
@@ -43,4 +43,7 @@ export default {
 
   // main
   logoStatus: true,
+
+  //snackbar
+  snackbarStatus: false,
 };

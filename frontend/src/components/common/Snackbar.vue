@@ -1,6 +1,6 @@
 <template>
   <transition name="snackbar">
-    <div v-if="active" class="snackbar" :class="classes">
+    <div v-if="$store.state.snackbarStatus" class="snackbar" :class="classes">
       <div class="snackbar__wrap">
         <div class="snackbar__body">
           <slot></slot>
@@ -13,10 +13,6 @@
 export default {
   name: "Snackbar",
   props: {
-    active: {
-      type: Boolean,
-      default: false,
-    },
     timeout: {
       type: Number,
       default: 4000,
@@ -36,7 +32,7 @@ export default {
     };
   },
   watch: {
-    active() {
+    "$store.state.snackbarStatus"() {
       this.setTimer();
     },
   },
@@ -54,10 +50,13 @@ export default {
       if (this.infinity) return;
 
       this.timer = setTimeout(() => {
-        this.active = false;
-        this.$emit("update:active", false);
+        this.$store.dispatch("saveSnackbarStatus", false);
+        console.log(this.$store.state.snackbarStatus);
       }, this.timeout);
     },
+  },
+  mounted() {
+    this.setTimer();
   },
 };
 </script>
