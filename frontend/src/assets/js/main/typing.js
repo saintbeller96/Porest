@@ -71,7 +71,7 @@ export const typing = () => {
     //     audioTag.play();
     //   }, 1000);
     // } else {
-    await setTimeout(type, 160);
+    await setTimeout(type, 140);
     // }
   }
   setTimeout(() => {

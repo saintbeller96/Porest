@@ -25,7 +25,7 @@
         당신의 마음 속 이야기, POREST 세상 속에서 들려주세요.
       </div>
     </div>
-    <div class="skip-btn">넘어가기</div>
+    <div class="skip-btn" @click="skip">넘어가기</div>
     <div id="canvas"></div>
     <!-- <div class="white-show"></div> -->
   </div>
@@ -49,13 +49,9 @@ export default {
     typing();
   },
   methods: {
-    // pop(e) {
-    //   e.target.classList.add('pop-ball');
-    //   const big = document.querySelector('.big');
-    //   const mystery = document.querySelector('.mystery');
-    //   big.classList.add('show');
-    //   mystery.classList.add('show');
-    // },
+    skip() {
+      this.$router.push({ name: 'MainIsland' });
+    },
   },
   created() {
     let token = this.$store.getters.getAuthToken;
