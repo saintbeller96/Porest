@@ -37,6 +37,7 @@ export default {
         if (this.count > 0) {
           second.innerHTML = this.count--;
         } else {
+          console.log('이동');
           this.$router.push({ name: 'Login' });
         }
       }, 1000);
