@@ -27,6 +27,7 @@ public class BanReportDetailDto {
         this.reportedAt = reportedAt;
     }
 
+    @Getter
     public static class UserInfo{
         private Long userId;
         private String email;
