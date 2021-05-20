@@ -12,60 +12,85 @@
           <div class="form">
             <form @submit.prevent>
               <p class="title">
-                Email
+                이메일
                 <span
-                  v-if="!emailRedundancy || !isValidEmail || this.email.length === 0"
+                  style="color: #6FFFC4"
+                  v-if="emailRedundancy && isValidEmail && email.length > 4"
                   class="redundancy_check"
-                  @click="checkEmail"
-                  >중복확인</span
+                  >중복확인 완료</span
                 >
-                <span v-else class="redundancy_check2">중복확인 완료</span>
+                <!-- <span v-else class="redundancy_check2">중복확인 완료</span> -->
               </p>
               <div class="inputBox">
                 <input
                   type="email"
                   class="input"
                   v-model="email"
-                  placeholder="이메일 주소를 입력해주세요."
+                  placeholder="이메일 주소를 입력해주세요"
                   autocomplete="on"
+                  @blur="checkEmail"
+                  @focus="setCodeInput"
                 />
               </div>
-              <p v-if="!isValidEmail" class="error_message">
-                잘못된 이메일 양식입니다.
+              <p style="color: #FF6A89" v-if="!isValidEmail" class="error_message">
+                잘못된 이메일 양식입니다
               </p>
-              <p v-else-if="!emailRedundancy && email" class="error_message">
-                이메일 중복 확인을 진행해주세요
+              <p style="color: #FF6A89" v-else-if="!emailRedundancy && email" class="error_message">
+                다음 텝으로 이동하면 이메일 중복체크를 진행합니다
               </p>
 
               <!-- 이메일 인증 부분 start -->
-              <div v-if="emailRedundancy">
+              <!-- <div v-if="emailRedundancy">
                 <span v-if="!verify" class="redundancy_check" @click="checkVerify">이메일 인증</span>
                 <span v-else class="redundancy_check2">이메일 인증 완료</span>
-              </div>
+              </div> -->
+
+              <p class="title" v-if="emailRedundancy">
+                인증코드
+                <span style="color: #6FFFC4; font-size: 8px" v-if="verify">인증완료</span>
+                <!-- <span v-else class="redundancy_check2">중복확인 완료</span> -->
+              </p>
               <div v-if="emailRedundancy" class="inputBox">
                 <input
                   type="text"
-                  class="input"
+                  class="input_verify"
                   v-model="code"
-                  placeholder="이메일 인증코드를 입력해주세요"
+                  placeholder="인증코드를 입력해주세요"
                   autocomplete="off"
+                  @blur="checkVerify"
                 />
+                <div class="re_send_button" v-if="!verify && remainTime >= '3:00'" @click="sendEmail">전송</div>
+                <div class="re_send_button" v-else-if="!verify && remainTime == '0:00'" @click="sendEmail">재전송</div>
+                <span class="timer" v-else-if="!verify" v-text="remainTime"></span>
               </div>
+              <p
+                style="color: #FF6A89"
+                v-if="!verify && emailRedundancy && code.length < 1 && remainTime < '3:00'"
+                class="error_message"
+              >
+                인증코드를 입력해 주세요
+              </p>
+              <p style="color: #FF6A89" v-else-if="!verify && emailRedundancy && code" class="error_message">
+                다음 텝으로 이동하면 인증코드 확인을 진행합니다
+              </p>
               <!-- 이메일 인증 부분  end -->
 
               <p class="title">닉네임</p>
               <div class="inputBox">
-                <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요." autocomplete="off" />
+                <input type="text" v-model="nickname" placeholder="닉네임을 입력해주세요" autocomplete="off" />
               </div>
+              <p style="color: #FF6A89" v-if="nickname.length > 20" class="error_message">
+                20자 이하의 닉네임을 입력해주세요.
+              </p>
 
               <p class="title">비밀번호</p>
               <div class="inputBox">
                 <input type="password" v-model="password1" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
               </div>
-              <p v-if="!isValidPwd && password1.length < 8" class="error_message">
+              <p style="color: #FF6A89" v-if="!isValidPwd && password1.length < 8" class="error_message">
                 8자 이상의 비밀번호를 입력해주세요.
               </p>
-              <p v-else-if="!isValidPwd && password1.length > 20" class="error_message">
+              <p style="color: #FF6A89" v-else-if="!isValidPwd && password1.length > 20" class="error_message">
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
 
@@ -74,11 +99,11 @@
                 <input
                   type="password"
                   v-model="password2"
-                  placeholder="비밀번호를 다시 입력해주세요."
+                  placeholder="비밀번호를 다시 입력해주세요"
                   autocomplete="off"
                 />
               </div>
-              <p v-if="!isValidPwdConfirm" class="error_message">
+              <p style="color: #FF6A89" v-if="!isValidPwdConfirm" class="error_message">
                 다시 비밀번호를 확인해주세요.
               </p>
 
@@ -88,7 +113,7 @@
                   <register-terms></register-terms>
                 </div>
 
-                <p v-if="!isTermsChecked" class="error_message_2">
+                <p style="color: #FF6A89" v-if="!isTermsChecked" class="error_message_2">
                   이용 약관을 확인해주세요.
                 </p>
                 <input type="checkbox" name="terms" value="true" v-model="terms" />
@@ -104,44 +129,69 @@
       </div>
     </section>
     <div id="canvas"></div>
+
+    <!-- 
+        bottom-left
+        bottom-center
+        bottom-right
+        top-left
+        top-center
+        top-right
+         -->
+    <div>
+      <snackbar :active.sync="showSnackbar" :infinity="infinity" :position="position">
+        {{ snackbarText }}
+        <button class="close-btn" @click="showSnackbar = false">close</button>
+      </snackbar>
+    </div>
   </div>
 </template>
 
 <script>
-import { signupUser, emailCheck, emailVerify, verifyCheck } from '@/api/auth';
-import { startAnimation } from '@/assets/js/main/IntroPage.js';
+import { signupUser, emailCheck, emailVerify, verifyCheck } from "@/api/auth";
+import { startAnimation } from "@/assets/js/main/IntroPage.js";
 
-import FireBase from 'firebase/app';
-import 'firebase/auth';
-import { validateEmail, validatePwd } from '@/utils/validation';
-import AuthForm from '@/components/auth/AuthForm';
-import RegisterTerms from '@/components/auth/RegisterTerms';
+import FireBase from "firebase/app";
+import "firebase/auth";
+import { validateEmail, validatePwd } from "@/utils/validation";
+import AuthForm from "@/components/auth/AuthForm";
+import RegisterTerms from "@/components/auth/RegisterTerms";
+import Snackbar from "@/components/common/Snackbar";
 export default {
   components: {
     AuthForm,
     RegisterTerms,
+    Snackbar,
   },
   data() {
     return {
-      email: '',
-      nickname: '',
-      password1: '',
-      password2: '',
-      code: '',
+      email: "",
+      nickname: "",
+      password1: "",
+      password2: "",
+      code: "",
       terms: false,
       emailRedundancy: false,
+      checkedEmailList: [],
+
       verify: false,
+      remainTime: "3:00",
+
+      showSnackbar: false,
+      position: "top-center",
+      infinity: false,
+      snackbarText: "",
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === '' || validateEmail(this.email);
+      return this.email === "" || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password1 === '' || validatePwd(this.password1);
+      return this.password1 === "" || validatePwd(this.password1);
     },
     isValidPwdConfirm() {
-      return this.password2 === '' || this.password1 === this.password2;
+      return this.password2 === "" || this.password1 === this.password2;
     },
     isTermsChecked() {
       return this.terms === true;
@@ -151,38 +201,51 @@ export default {
         validateEmail(this.email) &&
         validatePwd(this.password1) &&
         this.password1 === this.password2 &&
-        this.username !== '' &&
+        this.username !== "" &&
         this.terms === true &&
-        this.emailRedundancy
+        this.emailRedundancy &&
+        this.code !== ""
       );
     },
   },
   methods: {
+    setCodeInput() {
+      this.verify = false;
+      this.remainTime = "3:34";
+      this.emailRedundancy = false;
+    },
+    verifyTime() {
+      var timeArray = this.remainTime.split(/[:]+/);
+      var min = timeArray[0];
+      var sec = timeArray[1] - 1;
+
+      //초 설정
+      if (sec < 10 && sec >= 0) {
+        sec = "0" + sec;
+      } else if (sec < 0) {
+        sec = 59;
+      }
+
+      //분 설정
+      if (sec == 59) {
+        min = min - 1;
+      }
+
+      this.remainTime = min + ":" + sec;
+      if (this.remainTime == "3:33" || (min == 0 && sec == 0)) {
+        clearTimeout(this.verifyTime);
+        this.remainTime = "3:00";
+        return;
+      }
+      setTimeout(this.verifyTime, 1000);
+    },
+
     goToLogin() {
-      this.$router.push({ name: 'Login' });
+      this.$router.push({ name: "Login" });
     },
     checkTerms() {
       this.terms = !this.terms;
     },
-
-    // register() {
-    //   if (!this.error) {
-    //     FireBase.auth()
-    //       .createUserWithEmailAndPassword(this.email, this.password1)
-    //       .then(
-    //         userCred => {
-    //           return userCred.user
-    //             .updateProfile({
-    //               nickname: this.nickname,
-    //             })
-    //             .then(() => {
-    //               this.$router.push('/home');
-    //             });
-    //         },
-    //         error => (this.error = error.message),
-    //       );
-    //   }
-    // },
     async submitForm() {
       if (this.checkForm) {
         try {
@@ -192,52 +255,70 @@ export default {
             password: this.password1,
             code: this.code,
           });
-          await this.$store.dispatch('LOGIN', {
+          await this.$store.dispatch("LOGIN", {
             email: this.email,
             password: this.password1,
           });
           await FireBase.auth()
             .createUserWithEmailAndPassword(this.email, this.password1)
             .then(
-              userCred => {
+              (userCred) => {
                 return userCred.user
                   .updateProfile({
                     nickname: this.nickname,
                   })
                   .then(() => {
-                    this.$router.push('/log/login');
+                    this.$router.push("/log/login");
                   });
               },
-              error => (this.error = error.message),
+              (error) => (this.error = error.message)
             );
         } catch (error) {
-          alert(error);
+          this.showSnackbar = true;
+          this.snackbarText = error;
         }
       } else {
-        alert('모든 항목을 입력해주세요.');
+        this.showSnackbar = true;
+        this.snackbarText = "모든 항목을 입력해주세요.";
       }
     },
     async checkEmail() {
       if (this.email.length < 1 || !this.isValidEmail) {
-        alert('사용하실 이메일 주소를 올바르게 입력해주세요.');
+        this.showSnackbar = true;
+        this.snackbarText = "사용하실 이메일 주소를 올바르게 입력해주세요.";
       } else {
         try {
-          let { data } = await emailCheck({
-            email: this.email,
+          let checkEmailList = false;
+          this.checkedEmailList.forEach((element) => {
+            if (element.email == this.email) checkEmailList = true;
           });
-          this.emailRedundancy = data.redundancy;
-          if (!this.emailRedundancy) {
-            alert('이미 존재하는 이메일 주소입니다.');
+          if (!checkEmailList) {
+            var { data } = await emailCheck({
+              email: this.email,
+            });
+            //이메일 인증 결과 데이터를 통해 redundancy 저장
+            this.emailRedundancy = data.redundancy;
+            if (!this.emailRedundancy) {
+              this.showSnackbar = true;
+              this.snackbarText = "이미 존재하는 이메일 주소입니다.";
+            } else {
+              this.checkedEmailList.push({ email: this.email, remainTime: this.remainTime });
+            }
           } else {
-            await emailVerify({ email: this.email });
+            this.emailRedundancy = true;
           }
         } catch (error) {
-          alert(error);
+          this.showSnackbar = true;
+          this.snackbarText = error;
         }
       }
     },
+    async sendEmail() {
+      await emailVerify({ email: this.email });
+      this.remainTime = "3:00";
+      this.verifyTime();
+    },
     async checkVerify() {
-      //기본적인 코드만 넣어놨습니다.
       this.verify = await verifyCheck({
         email: this.email,
         code: this.code,
@@ -256,11 +337,6 @@ export default {
   overflow: hidden;
   box-sizing: border-box;
   background: radial-gradient(ellipse at bottom, #1b2735 0%, #090a0f 100%);
-
-  /* background-image: url('../../assets/image/sky3.png');
-  background-position: 50% 50%;
-  background-repeat: no-repeat;
-  background-size: cover; */
 }
 
 section {
@@ -269,67 +345,6 @@ section {
   align-items: center;
   min-height: 100vh;
 }
-
-/* .box {
-  position: relative;
-}
-
-.box .square {
-  position: absolute;
-  backdrop-filter: blur(5px);
-  background: rgba(255, 255, 255, 0.1);
-
-  box-shadow: 0 25px 45px rgba(0, 0, 0, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.5);
-  border-right: 1px solid rgba(255, 255, 255, 0.2);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 100%;
-  animation: move 10s linear infinite;
-  animation-delay: calc(-1s * var(--i));
-}
-
-@keyframes move {
-  0%,
-  100% {
-    transform: translateY(-40px);
-  }
-  50% {
-    transform: translateY(40px);
-  }
-}
-
-.box .square:nth-child(1) {
-  top: -50px;
-  right: -60px;
-  width: 100px;
-  height: 100px;
-}
-.box .square:nth-child(2) {
-  top: 150px;
-  left: -100px;
-  width: 120px;
-  height: 120px;
-  z-index: 2;
-}
-.box .square:nth-child(3) {
-  bottom: 50px;
-  right: -60px;
-  width: 80px;
-  height: 80px;
-  z-index: 2;
-}
-.box .square:nth-child(4) {
-  bottom: -80px;
-  left: 100px;
-  width: 50px;
-  height: 50px;
-}
-.box .square:nth-child(5) {
-  top: -80px;
-  left: 140px;
-  width: 60px;
-  height: 60px;
-} */
 .container {
   position: relative;
   min-width: 27vw;
@@ -384,7 +399,12 @@ section {
 .form .inputBox input::placeholder {
   color: #fff;
 }
-
+.inputBox input:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.inputBox input:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
 .title {
   color: #fff;
   margin: 15px 0 8px 5px;
@@ -433,23 +453,9 @@ section {
   font-size: 15px;
   cursor: pointer;
 }
-
-.verify_button {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.2);
-  border: none;
-  outline: none;
-  padding: 9px;
-  border-radius: 10px;
-  margin-top: 5px;
-  border: 1px solid rgba(255, 255, 255, 0.7);
-  border-right: 1px solid rgba(255, 255, 255, 0.7);
-  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
-  color: #fff;
-  font-size: 15px;
-  cursor: pointer;
+.button:hover {
+  background: rgba(255, 255, 255, 0.3);
 }
-
 .terms-check {
   color: #fff;
 }
@@ -479,5 +485,48 @@ section {
   height: 100%;
   z-index: 100;
   pointer-events: none;
+}
+.timer {
+  color: #ffffff;
+  font-size: 15px;
+  text-align: center;
+}
+.re_send_button {
+  width: 30%;
+  height: 100%;
+  text-align: center;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-right: 1px solid rgba(255, 255, 255, 0.7);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.7);
+  color: #fff;
+  letter-spacing: 1px;
+  margin: 0 5px 5px 0;
+  font-size: 12px;
+  cursor: pointer;
+}
+.re_send_button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
+.input_verify {
+  width: 70%;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.2);
+  border: none;
+  outline: none;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-right: 1px solid rgba(255, 255, 255, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  font-size: 12px;
+  letter-spacing: 1px;
+  color: #fff;
+  box-shadow: 0 15px 15px rgba(0, 0, 0, 0.05);
+  margin-right: 5px;
 }
 </style>

@@ -3,7 +3,9 @@ function validateEmail(email) {
   return re.test(String(email).toLowerCase());
 }
 function validatePwd(pwd) {
-  const re = /^[A-Za-z0-9+]{8,20}$/;
+  // const re = /^[A-Za-z0-9+]{8,20}$/;
+  //공백을 뺀 나머지 문자가 8~20자 사이
+  const re = /^[\S+]{8,20}$/;
   return re.test(pwd);
 }
 export { validateEmail, validatePwd };
