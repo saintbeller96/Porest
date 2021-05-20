@@ -14,7 +14,9 @@
       <div class="back">
         <div class="letter">
           <div class="root-mail">
-            <p v-html="$store.state.selectedStory.detail.content"></p>
+            <!-- <p>{{ $store.state.selectedStory.detail.content }}</p> -->
+            <p v-text="$store.state.selectedStory.detail.content"></p>
+            <!-- <p v-html="$store.state.selectedStory.detail.content"></p> -->
           </div>
           <div class="btnReply">답장하기</div>
         </div>
