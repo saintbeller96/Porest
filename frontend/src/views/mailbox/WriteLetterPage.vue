@@ -1,8 +1,8 @@
 <template>
   <div class="write-letter-wrapper">
-    <div class="backarrow_wrapper">
-      <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
-    </div>
+    <span @click="moveToBack" class="oneStepBack">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="envelope open">
       <div class="front">
         <div class="stamp"></div>

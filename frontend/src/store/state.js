@@ -40,4 +40,7 @@ export default {
   // profile
   modalProfileSetting: false,
   profileImgToShow: 0,
+
+  // main
+  logoStatus: true,
 };
