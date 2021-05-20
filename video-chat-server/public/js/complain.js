@@ -195,7 +195,7 @@ recognition.addEventListener('result',(e)=>{
       },200)
     }
 
-    if(text.includes('아니')|| text.includes('별로') || text.includes('행복하지않았어') && answer === 1){
+    if(text.includes('아니')|| text.includes('별로') || text.includes('행복하지 않았어') && answer === 1){
       defaultFace()
       storyContent = 'sad';
       answer++;
