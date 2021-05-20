@@ -166,12 +166,12 @@ export default {
     });
   },
   created() {
-    let token = this.$store.getters.getAuthToken;
-    if (token == '' || token == null) {
-      this.$router.push({ name: 'Login' });
-    } else {
-      this.loginState = true;
-    }
+    // let token = this.$store.getters.getAuthToken;
+    // if (token == '' || token == null) {
+    //   this.$router.push({ name: 'Login' });
+    // } else {
+    //   this.loginState = true;
+    // }
     this.$store.commit('setLogoStatus', true);
   },
 };
