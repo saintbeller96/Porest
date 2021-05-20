@@ -7,16 +7,12 @@ const writeLetter = letterData =>
       `/counsels/${letterData.ids.counselId}/letters/${letterData.ids.letterId}`,
       letterData.body,
     )
-    .then(res => {
-      console.log(res.data);
-    });
+    .then(res => {});
 
 const finishLetter = letterData =>
   instanceAuth
     .post(`/counsels/${letterData.counselId}/finish`, letterData)
-    .then(res => {
-      console.log(res.data);
-    });
+    .then(res => {});
 
 const readLetter = letterData =>
   instanceAuth.get(

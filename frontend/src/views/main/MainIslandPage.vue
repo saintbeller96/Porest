@@ -114,7 +114,6 @@ export default {
     },
     goToFeelingRecord() {
       this.$router.push({ name: 'FeelingRecord' });
-      // console.log('!!');
     },
     goToAllRooms() {
       this.$router.push({ name: 'AllRoom' });

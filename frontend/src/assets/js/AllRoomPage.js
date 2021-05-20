@@ -30,11 +30,9 @@ export const init = () => {
     '연애',
     '기타',
   ];
-  console.log(cards);
 
   totalCards = cards.length;
   rotateDeg = 360 / totalCards;
-  console.log(rotateDeg);
   for (let i = 0; i < totalCards; i++) {
     cards[i].style.transform = `rotate(${rotateDeg * i}deg) translateY(-350px)`;
   }
@@ -45,12 +43,7 @@ export const init = () => {
       currentCard--;
     }
     currentDeg += rotateDeg;
-    // if (currentDeg >= 360) {
-    //   currentDeg -= 360;
-    // }
     rotateCard();
-
-    console.log(currentCard, currentDeg);
   }
   function nextHandler() {
     if (currentCard == totalCards - 1) {
@@ -59,11 +52,7 @@ export const init = () => {
       currentCard++;
     }
     currentDeg -= rotateDeg;
-    // if (currentDeg < 0) {
-    //   currentDeg = 360 + currentDeg;
-    // }
     rotateCard();
-    console.log(currentCard, currentDeg);
   }
   prev.addEventListener('click', prevHandler);
   next.addEventListener('click', nextHandler);
@@ -79,8 +68,6 @@ export const init = () => {
     if (e.target.classList.contains('card-outer')) {
       let selectCard = e.target;
       let selectCardId = parseInt(e.target.dataset.value, 10) - 1;
-      // categoryName.dataset.value = selectCardId;
-      // categoryName.innerText = `${categories[selectCardId]}`;
       roomCategory.forEach(ele => {
         if (ele.dataset.value == selectCardId + 1) {
           ele.classList.add('room-category-selected');
@@ -92,19 +79,6 @@ export const init = () => {
       selectCard.classList.add('card-show');
       prev.classList.add('button-hide');
       next.classList.add('button-hide');
-      // frontImg.src = '../svg/tarot3.svg';
-      // createRoomFront.style.background = "url('../../assets/svg/video_final.svg')";
-      // let diffrent = Math.abs(currentCard - selectCardId);
-      // console.log(currentCard, selectCardId);
-      // if (diffrent >= 4) {
-      //   for (let i = 0; i < -diffrent; i++) {
-      //     next.click();
-      //   }
-      // } else {
-      //   for (let i = 0; i < diffrent; i++) {
-      //     prev.click();
-      //   }
-      // }
     }
   }
 

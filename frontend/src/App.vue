@@ -94,12 +94,10 @@ export default {
     logout() {
       // :TODO 삭제요청
       this.loginState = false;
-      console.log('logout', this.$router.history.current.name);
       this.$store.dispatch('LOGOUT');
       FireBase.auth()
         .signOut()
         .then(() => {
-          console.log('logout');
           this.user = null;
           if (this.$router.history.current.name != 'Login') {
             this.$router.push({ name: 'Login' });
@@ -143,7 +141,6 @@ export default {
       }
     },
     introPlay() {
-      console.log('오디오 실행');
       const audioPlayer1 = document.querySelector('#audio-player1');
       setTimeout(() => {
         audioPlayer1.play();
@@ -160,7 +157,6 @@ export default {
 
     FireBase.auth().onAuthStateChanged(user => {
       if (user) {
-        console.log('user login request');
         this.loginState = !this.loginState;
         this.user = user;
         if (this.$store.state.uid == '' || this.$store.state.uid == 'null') {

@@ -199,7 +199,6 @@ export default {
       }
     },
     openAll() {
-      console.log('here openm');
       this.openAllLetters = true;
     },
     exitAll() {

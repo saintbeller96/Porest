@@ -12,7 +12,6 @@ export const init = () => {
   const changeDrawing = document.querySelector('.change__drawing');
 
   changeDrawing.addEventListener('change', e => {
-    console.log('chae', e.target.value);
     let value = e.target.value;
     if (currentDraw == '') {
       currentDraw = value;
@@ -49,7 +48,6 @@ export const init = () => {
   // const colorCode = document.querySelector('.color-code');
   const dropdownBtn = document.querySelector('.e-dropdown-btn');
   dropdownBtn.addEventListener('click', function() {
-    console.log('color pick');
     const applyBtn = document.querySelector('.e-apply');
     applyBtn.addEventListener('click', function() {
       changecolor();
@@ -66,11 +64,9 @@ export const init = () => {
     cntx.lineWidth = thicknessVal;
   }
   const changecolor = () => {
-    console.log(colorCode);
     cntx.strokeStyle = colorCode;
   };
   if (colorChanged) {
-    console.log('changed');
     changecolor();
   }
   canvas.addEventListener(
@@ -88,7 +84,6 @@ export const init = () => {
     function() {
       resotre_array.push(cntx.getImageData(0, 0, canvas.width, canvas.height));
       index += 1;
-      console.log('restore array', resotre_array);
       canvas.removeEventListener('mousemove', onPaint, false);
     },
     false,

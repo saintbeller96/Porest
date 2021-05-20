@@ -105,13 +105,11 @@ export default {
       this.$router.push({ name: 'FindPassword' });
     },
     async submitForm() {
-      console.log('login');
       try {
         await this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.password,
         });
-        console.log('이동');
         this.fireBaseLogin();
         this.$emit('controlMusic', 'play');
         this.$emit('introPlay');
@@ -121,12 +119,11 @@ export default {
       }
     },
     fireBaseLogin() {
-      console.log('login');
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
           response => {
-            console.log('response status', response);
+            return;
           },
           error => (this.error = error.message),
         );

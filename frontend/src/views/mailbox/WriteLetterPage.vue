@@ -77,7 +77,6 @@ export default {
     async storyForm() {
       await writeStory(this.story);
       setTimeout(() => {
-        console.log('돌아가자');
         this.$router.go(-1);
       }, 5500);
     },
