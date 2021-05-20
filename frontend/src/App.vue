@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <div v-if="$store.state.logoStatus" class="logo" @click="goToMain">
-      <img src="@/assets/image/logo.png" />
-    </div>
     <audio id="audio-player1" loop="false">
       <source src="../src/assets/audio/introvoice.mp3" type="audio/mpeg" />
       <p class="sr-only">
@@ -46,6 +43,9 @@
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
         <li>
+          <span class="nav-detail" @click="goToMain">홈</span>
+        </li>
+        <li>
           <span class="nav-detail" @click="goToMailbox">우체통</span>
         </li>
         <li>
@@ -54,7 +54,7 @@
         <li><span class="nav-detail" @click="goToVideoChat">마음나눔</span></li>
         <li><span class="nav-detail">하소연</span></li>
         <li><span class="nav-detail" @click="goToJoy">쉼터</span></li>
-        <li @click="logout">로그아웃</li>
+        <li @click="logout" class="nav-detail">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
         <li>로그인</li>
@@ -176,6 +176,7 @@ export default {
     } else {
       this.loginState = true;
     }
+    this.$store.commit('setLogoStatus', true);
   },
 };
 </script>
@@ -240,18 +241,6 @@ export default {
 .nav-detail {
   color: inherit;
   text-decoration: none;
-}
-
-.logo {
-  position: absolute;
-  top: 0.6vh;
-  left: 1rem;
-  cursor: pointer;
-  z-index: 100;
-}
-
-.logo img {
-  width: 10vw;
 }
 
 #nav {
@@ -449,5 +438,9 @@ nav.active ul {
   overflow: hidden;
   position: absolute;
   width: 1px;
+}
+
+.logout {
+  color: red;
 }
 </style>
