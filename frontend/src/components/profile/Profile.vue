@@ -59,6 +59,7 @@ export default {
   align-items: center;
   width: 100%;
   height: 100%;
+  padding: 3vh;
 }
 
 .setting-btn {
@@ -66,8 +67,8 @@ export default {
   float: left;
   font-size: 1vw;
   cursor: pointer;
-  margin-top: -2.3vh;
-  margin-left: 1.2vw;
+  margin-top: -1vh;
+  /* margin-left: 1.2vw; */
 }
 
 .profile-pic {

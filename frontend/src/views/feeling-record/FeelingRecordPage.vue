@@ -1,5 +1,8 @@
 <template>
   <div class="feeling-record-background">
+    <span @click="goOneStepBack" class="oneStepBack">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="wrapper" @click="move">
       <div class="calendar-area box fade-in">
         <calendar></calendar>
@@ -69,6 +72,9 @@ export default {
       const diaryArea = document.querySelector('.diary-area');
       calendarArea.classList.add('show');
       diaryArea.classList.add('show');
+    },
+    goOneStepBack() {
+      history.go(-1);
     },
   },
   created() {
@@ -202,6 +208,15 @@ export default {
   -webkit-animation-duration: 1s;
   -moz-animation-duration: 1s;
   animation-duration: 0.5s;
+}
+
+.oneStepBack {
+  position: absolute;
+  top: 9.5vh;
+  left: 1.1vw;
+  font-size: 1.3vw;
+  color: #fff;
+  cursor: pointer;
 }
 
 /* .fade-in.one {
