@@ -82,7 +82,7 @@ export default {
 }
 
 .form .info::after {
-  content: '';
+  content: "";
   position: absolute;
   top: 50%;
   right: 0px;
@@ -90,7 +90,7 @@ export default {
 
   width: 15px;
   height: 15px;
-  background-image: url('../../assets/image/arrow-down-mint.svg');
+  background-image: url("../../assets/image/arrow-down-mint.svg");
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
@@ -127,5 +127,15 @@ export default {
 .detail p {
   margin: 10px 0 2px 0;
   font-size: 12px;
+}
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+::-webkit-scrollbar-corner {
+}
+::-webkit-scrollbar-thumb {
+  background-color: #fff;
+  border-radius: 6px;
+  opacity: 0.1;
 }
 </style>
