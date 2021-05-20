@@ -58,7 +58,6 @@ export default {
       this.$router.push({ name: 'MainIsland' });
     },
     goToStoryLetterPage(e) {
-      console.log(e.target);
       e.target.classList.add('click1');
       setTimeout(() => {
         this.$router.push({ name: 'WriteLetter' });

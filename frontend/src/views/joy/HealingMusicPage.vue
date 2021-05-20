@@ -136,7 +136,6 @@ export default {
       this.$router.go(-1);
     },
     pauseAudio(){
-      console.log('top')
 
       let audio = document.querySelector('#audio');
       audio.pause();
@@ -172,7 +171,6 @@ export default {
         disk_inner.style.background = this.bgArray[bgindex][0]
         setTimeout(() => {
           let audioSource = this.getAudioUrl(this.thumbnails[id]);
-          console.log(audioSource);
           source.src = audioSource;
           audio.loop = false; // 반복재생하지 않음
           audio.volume = 0.3; // 음량 설정

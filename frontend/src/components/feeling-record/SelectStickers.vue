@@ -91,13 +91,9 @@ export default {
           this.$store.commit('getSelectedSticker', `${index}.png`);
         }
       }
-      console.log(n);
-      // console.log(this.check);
-      // console.log(this.$store.state.selectedSticker);
     },
   },
   mounted() {
-    console.log(this.$store.state.stickerindex);
     if (this.$store.state.stickerindex !== 0) {
       let n = this.$store.state.stickerindex - 1;
       this.check.push(n);
