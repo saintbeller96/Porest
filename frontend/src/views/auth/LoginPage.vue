@@ -30,30 +30,17 @@
 
               <p class="title">비밀번호</p>
               <div class="inputBox">
-                <input
-                  type="password"
-                  v-model="password"
-                  placeholder="8~20자의 영문, 숫자 입력"
-                  autocomplete="off"
-                />
+                <input type="password" v-model="password" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
               </div>
-              <p
-                v-if="!isValidPwd && password.length < 8"
-                class="error_message"
-              >
+              <p v-if="!isValidPwd && password.length < 8" class="error_message">
                 8자 이상의 비밀번호를 입력해주세요.
               </p>
-              <p
-                v-else-if="!isValidPwd && password.length > 20"
-                class="error_message"
-              >
+              <p v-else-if="!isValidPwd && password.length > 20" class="error_message">
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
               <button @click="submitForm" class="button">Login</button>
               <div class="go-to-find-password-container">
-                <span @click="goToFindPassword" class="go-to-find-password"
-                  >비밀번호 찾기</span
-                >
+                <span @click="goToFindPassword" class="go-to-find-password">비밀번호 찾기</span>
               </div>
               <div class="go-to-signup-container">
                 <span @click="goToSignup" class="go-to-signup">회원가입</span>
@@ -66,32 +53,46 @@
     <div class="white-show"></div>
 
     <div id="canvas"></div>
+    <div>
+      <snackbar :infinity="infinity" :position="position">
+        {{ snackbarText }}
+        <button class="close-btn" @click="$store.state.snackbarStatus = false">close</button>
+      </snackbar>
+    </div>
   </div>
 </template>
 
 <script>
-import { validateEmail, validatePwd } from '@/utils/validation';
-import { startAnimation } from '@/assets/js/main/IntroPage.js';
-import FireBase from 'firebase/app';
-import 'firebase/auth';
-import AuthForm from '@/components/auth/AuthForm';
+import { validateEmail, validatePwd } from "@/utils/validation";
+import { startAnimation } from "@/assets/js/main/IntroPage.js";
+import FireBase from "firebase/app";
+import "firebase/auth";
+import AuthForm from "@/components/auth/AuthForm";
+import Snackbar from "@/components/common/Snackbar";
+
 export default {
   components: {
     AuthForm,
+    Snackbar,
   },
   data() {
     return {
-      email: '',
-      nickname: '',
-      password: '',
+      email: "",
+      nickname: "",
+      password: "",
+
+      //snackbar
+      position: "top-center",
+      infinity: false,
+      snackbarText: "",
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === '' || validateEmail(this.email);
+      return this.email === "" || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password === '' || validatePwd(this.password);
+      return this.password === "" || validatePwd(this.password);
     },
     checkForm() {
       return validateEmail(this.email) && validatePwd(this.password);
@@ -99,7 +100,7 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({ name: 'Signup' });
+      this.$router.push({ name: "Signup" });
     },
     // register() {
     //   if (!this.error) {
@@ -120,43 +121,43 @@ export default {
     //   }
     // },
     goToFindPassword() {
-      this.$router.push({ name: 'FindPassword' });
+      this.$router.push({ name: "FindPassword" });
     },
     async submitForm() {
-      console.log('login');
+      console.log("login");
       try {
-        await this.$store.dispatch('LOGIN', {
+        await this.$store.dispatch("LOGIN", {
           email: this.email,
           password: this.password,
         });
-        console.log('이동');
+        console.log("이동");
         this.fireBaseLogin();
         setTimeout(() => {
-          const whiteShow = document.querySelector('.white-show');
-          whiteShow.classList.add('active');
+          const whiteShow = document.querySelector(".white-show");
+          whiteShow.classList.add("active");
         }, 1000);
-        this.$router.push({ name: 'Intro' });
+        this.$router.push({ name: "Intro" });
       } catch (error) {
-        alert('이메일이나 비밀번호를 다시 확인해주세요.');
+        this.$store.dispatch("saveSnackbarStatus", true);
+        this.snackbarText = "이메일이나 비밀번호를 다시 확인해주세요.";
       }
     },
     fireBaseLogin() {
-      console.log('login');
+      console.log("login");
       FireBase.auth()
         .signInWithEmailAndPassword(this.email, this.password)
         .then(
-          response => {
-            console.log('response status', response);
+          (response) => {
+            console.log("response status", response);
           },
-          error => (this.error = error.message),
+          (error) => (this.error = error.message)
         );
     },
   },
   mounted() {
     startAnimation();
   },
-  created(){
-  }
+  created() {},
 };
 </script>
 
@@ -292,6 +293,12 @@ section {
   box-shadow: 0 15px 15px rgba(0, 0, 0, 0.05);
   margin-bottom: 5px;
 }
+.inputBox input:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+.inputBox input:focus {
+  background: rgba(255, 255, 255, 0.3);
+}
 
 .form .inputBox input::placeholder {
   color: #fff;
@@ -331,7 +338,9 @@ section {
   font-size: 15px;
   cursor: pointer;
 }
-
+.button:hover {
+  background: rgba(255, 255, 255, 0.3);
+}
 .go-to-signup-container {
   margin-top: 20px;
   float: right;

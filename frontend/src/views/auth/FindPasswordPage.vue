@@ -66,7 +66,7 @@ export default {
       this.$router.push({ name: "Login" });
     },
     async submitForm() {
-      await findPassword(this.userData);
+      let res = await findPassword(this.userData);
     },
   },
 };
