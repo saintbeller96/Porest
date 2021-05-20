@@ -481,3 +481,15 @@
   align-items: center;
   justify-content: flex-end;
 }
+
+.logo {
+  position: absolute;
+  top: 0.6vh;
+  left: 1rem;
+  cursor: pointer;
+  z-index: 100;
+}
+
+.logo img {
+  width: 10vw;
+}
