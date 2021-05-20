@@ -19,6 +19,7 @@
             <object :data="post_island" type="image/svg+xml"></object>
           </div>
         </div>
+        <object class="postbox" :data="postbox" type="image/svg+xml"></object>
       </div>
 
       <div class="game_ground_wrapper">
@@ -27,6 +28,7 @@
           <div class="game_island">
             <object :data="game_island" type="image/svg+xml"></object>
           </div>
+          <object class="healing" :data="healing" type="image/svg+xml"></object>
         </div>
       </div>
 
@@ -37,6 +39,7 @@
           <div class="chat_island">
             <object :data="chat_island" type="image/svg+xml"></object>
           </div>
+          <object class="gurumi" :data="gurumi" type="image/svg+xml"></object>
         </div>
       </div>
 
@@ -47,6 +50,11 @@
           <div class="video_island">
             <object :data="video_island" type="image/svg+xml"></object>
           </div>
+          <object
+            class="chatroom"
+            :data="chatroom"
+            type="image/svg+xml"
+          ></object>
         </div>
       </div>
 
@@ -56,6 +64,11 @@
           <div class="calender_island">
             <object :data="calender_island" type="image/svg+xml"></object>
           </div>
+          <object
+            class="calenderflag"
+            :data="calenderflag"
+            type="image/svg+xml"
+          ></object>
         </div>
       </div>
     </div>
@@ -73,6 +86,11 @@ export default {
       chat_island: require('../../assets/svg/chat_final.svg'),
       video_island: require('../../assets/svg/video_final.svg'),
       calender_island: require('../../assets/svg/calender_final.svg'),
+      postbox: require('../../assets/svg/postbox.svg'),
+      calenderflag: require('../../assets/svg/calenderflag.svg'),
+      gurumi: require('../../assets/svg/Gurumi.svg'),
+      healing: require('../../assets/svg/healing.svg'),
+      chatroom: require('../../assets/svg/chatRoom.svg'),
     };
   },
   components: {

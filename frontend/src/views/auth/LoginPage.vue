@@ -131,10 +131,8 @@ export default {
         });
         console.log('이동');
         this.fireBaseLogin();
-        setTimeout(() => {
-          const whiteShow = document.querySelector('.white-show');
-          whiteShow.classList.add('active');
-        }, 1000);
+        this.$emit('controlMusic', 'play');
+        this.$emit('introPlay');
         this.$router.push({ name: 'Intro' });
       } catch (error) {
         alert('이메일이나 비밀번호를 다시 확인해주세요.');
@@ -155,8 +153,12 @@ export default {
   mounted() {
     startAnimation();
   },
-  created(){
-  }
+  created() {
+    // let token = this.$store.getters.getAuthToken;
+    // if (token != '' || token != null) {
+    //   this.$router.push({ name: 'MainIsland' });
+    // }
+  },
 };
 </script>
 
