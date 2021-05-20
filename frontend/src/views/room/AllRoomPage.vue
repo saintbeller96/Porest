@@ -359,6 +359,7 @@ export default {
         })
         .then(() => {
           this.roomName = '';
+          this.selectedCategory = [];
           this.loadData();
         });
     },
