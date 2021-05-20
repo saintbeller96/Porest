@@ -1,5 +1,8 @@
 <template>
   <div class="mail_box_intro_wrapper">
+    <div class="bottom">
+      <img src="../../assets/image/letters.png" alt="" />
+    </div>
     <div class="post_plane_main">
       <div id="planesvg" class="planesvg">
         <img src="@/assets/image/plane2.svg" alt="" />
@@ -94,6 +97,8 @@ export default {
   mounted() {
     setTimeout(() => {
       rotate_and_fly();
+      const bottom = document.querySelector('.bottom');
+      bottom.classList.add('hide');
       setTimeout(() => {
         this.$router.push({ name: 'Mailbox' });
       }, 2700);
