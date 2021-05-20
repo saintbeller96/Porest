@@ -28,7 +28,7 @@
             <div class="letter_form_wrapper1">
               <div class="paper">
                 <div class="paper_header" v-text="getTitle()"></div>
-                <div class="paper_content" v-text="getContent()"></div>
+                <div class="paper_content" v-html="getContent()"></div>
                 <div class="paper_footer">
                   <div class="finish__mail" @click="finishLetter">
                     사연 끝내기
@@ -214,8 +214,9 @@ export default {
     },
     getContent() {
       let letters = this.$store.state.allLetters;
+      console.log(letters);
       if (letters === null || letters.detail[0].reply == null) return null;
-      else return letters.detail[0].reply.detail.title;
+      else return letters.detail[0].reply.detail.content;
     },
     getCounselId() {
       this.counselId = this.$store.state.allLetters;
