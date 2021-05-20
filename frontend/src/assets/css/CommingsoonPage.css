@@ -35,14 +35,16 @@ body {
 }
 
 #headline {
+  position: relative;
   font-weight: normal;
   letter-spacing: .125rem;
   text-transform: uppercase;
-font-family: 'Shadows Into Light Two', cursive;
+  font-family: 'Shadows Into Light Two', cursive;
   color: #228B22;
   font-size: 3.1rem;
   font-weight: bold;
   padding-top: 2.3rem;
+  z-index: 100;
 }
 
 li {

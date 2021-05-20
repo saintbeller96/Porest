@@ -78,7 +78,7 @@ export default {
       this.conversion();
       await writeStory(this.story);
       setTimeout(() => {
-        this.$router.go(-1);
+        this.$router.push({ name: 'Mailbox' });
       }, 5500);
     },
     moveToBack() {

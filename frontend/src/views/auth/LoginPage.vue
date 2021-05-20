@@ -30,17 +30,30 @@
 
               <p class="title">비밀번호</p>
               <div class="inputBox">
-                <input type="password" v-model="password" placeholder="8~20자의 영문, 숫자 입력" autocomplete="off" />
+                <input
+                  type="password"
+                  v-model="password"
+                  placeholder="8~20자의 영문, 숫자 입력"
+                  autocomplete="off"
+                />
               </div>
-              <p v-if="!isValidPwd && password.length < 8" class="error_message">
+              <p
+                v-if="!isValidPwd && password.length < 8"
+                class="error_message"
+              >
                 8자 이상의 비밀번호를 입력해주세요.
               </p>
-              <p v-else-if="!isValidPwd && password.length > 20" class="error_message">
+              <p
+                v-else-if="!isValidPwd && password.length > 20"
+                class="error_message"
+              >
                 20자 이하의 비밀번호를 입력해주세요.
               </p>
               <button @click="submitForm" class="button">Login</button>
               <div class="go-to-find-password-container">
-                <span @click="goToFindPassword" class="go-to-find-password">비밀번호 찾기</span>
+                <span @click="goToFindPassword" class="go-to-find-password"
+                  >비밀번호 찾기</span
+                >
               </div>
               <div class="go-to-signup-container">
                 <span @click="goToSignup" class="go-to-signup">회원가입</span>
@@ -56,19 +69,21 @@
     <div>
       <snackbar :infinity="infinity" :position="position">
         {{ snackbarText }}
-        <button class="close-btn" @click="$store.state.snackbarStatus = false">close</button>
+        <button class="close-btn" @click="$store.state.snackbarStatus = false">
+          close
+        </button>
       </snackbar>
     </div>
   </div>
 </template>
 
 <script>
-import { validateEmail, validatePwd } from "@/utils/validation";
-import { startAnimation } from "@/assets/js/main/IntroPage.js";
-import FireBase from "firebase/app";
-import "firebase/auth";
-import AuthForm from "@/components/auth/AuthForm";
-import Snackbar from "@/components/common/Snackbar";
+import { validateEmail, validatePwd } from '@/utils/validation';
+import { startAnimation } from '@/assets/js/main/IntroPage.js';
+import FireBase from 'firebase/app';
+import 'firebase/auth';
+import AuthForm from '@/components/auth/AuthForm';
+import Snackbar from '@/components/common/Snackbar';
 
 export default {
   components: {
@@ -77,22 +92,22 @@ export default {
   },
   data() {
     return {
-      email: "",
-      nickname: "",
-      password: "",
+      email: '',
+      nickname: '',
+      password: '',
 
       //snackbar
-      position: "top-center",
+      position: 'top-center',
       infinity: false,
-      snackbarText: "",
+      snackbarText: '',
     };
   },
   computed: {
     isValidEmail() {
-      return this.email === "" || validateEmail(this.email);
+      return this.email === '' || validateEmail(this.email);
     },
     isValidPwd() {
-      return this.password === "" || validatePwd(this.password);
+      return this.password === '' || validatePwd(this.password);
     },
     checkForm() {
       return validateEmail(this.email) && validatePwd(this.password);
@@ -100,14 +115,14 @@ export default {
   },
   methods: {
     goToSignup() {
-      this.$router.push({ name: "Signup" });
+      this.$router.push({ name: 'Signup' });
     },
     goToFindPassword() {
-      this.$router.push({ name: "FindPassword" });
+      this.$router.push({ name: 'FindPassword' });
     },
     async submitForm() {
       try {
-        await this.$store.dispatch("LOGIN", {
+        await this.$store.dispatch('LOGIN', {
           email: this.email,
           password: this.password,
         });
@@ -116,8 +131,8 @@ export default {
         this.$emit('introPlay');
         this.$router.push({ name: 'Intro' });
       } catch (error) {
-        this.$store.dispatch("saveSnackbarStatus", true);
-        this.snackbarText = "이메일이나 비밀번호를 다시 확인해주세요.";
+        this.$store.dispatch('saveSnackbarStatus', true);
+        this.snackbarText = '이메일이나 비밀번호를 다시 확인해주세요.';
       }
     },
     fireBaseLogin() {
@@ -127,7 +142,7 @@ export default {
           response => {
             return;
           },
-          (error) => (this.error = error.message)
+          error => (this.error = error.message),
         );
     },
   },

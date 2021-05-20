@@ -32,14 +32,18 @@ export default {
   mounted() {
     init();
     const second = document.querySelector('#seconds');
-    window.addEventListener('click', () => {
-      setInterval(() => {
+    const header = document.querySelector('#headline');
+    header.addEventListener('click', () => {
+      let sett = setInterval(() => {
         if (this.count > 0) {
           second.innerHTML = this.count--;
         } else {
           this.$router.push({ name: 'Login' });
         }
       }, 1000);
+      setTimeout(() => {
+        clearInterval(sett);
+      }, 6000);
     });
   },
 };
