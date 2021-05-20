@@ -1,8 +1,5 @@
 <template>
   <div id="app">
-    <div v-if="$store.state.logoStatus" class="logo" @click="goToMain">
-      <img src="@/assets/image/logo.png" />
-    </div>
     <nav id="nav">
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
@@ -101,6 +98,7 @@ export default {
     } else {
       this.loginState = true;
     }
+    this.$store.commit('setLogoStatus', true);
   },
 };
 </script>
@@ -165,18 +163,6 @@ export default {
 .nav-detail {
   color: inherit;
   text-decoration: none;
-}
-
-.logo {
-  position: absolute;
-  top: 0.6vh;
-  left: 1rem;
-  cursor: pointer;
-  z-index: 100;
-}
-
-.logo img {
-  width: 10vw;
 }
 
 #nav {

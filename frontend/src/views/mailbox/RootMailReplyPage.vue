@@ -1,5 +1,8 @@
 <template>
   <div class="root-mail-reply-wrapper">
+    <span @click="moveToBack" class="back">
+      <i class="fas fa-arrow-left"></i>
+    </span>
     <div class="envelope new">
       <div class="front">
         <div class="stamp"></div>
@@ -12,9 +15,8 @@
         <div class="letter">
           <div class="root-mail">
             <p v-text="$store.state.selectedStory.detail.content"></p>
-
-            <div class="btnReply">답장하기</div>
           </div>
+          <div class="btnReply">답장하기</div>
         </div>
 
         <div class="flap left-flap"></div>
@@ -114,6 +116,9 @@ export default {
     };
   },
   methods: {
+    moveToBack() {
+      this.$router.go(-1);
+    },
     async getStory(storyId) {
       this.story = await selectStory(storyId);
     },

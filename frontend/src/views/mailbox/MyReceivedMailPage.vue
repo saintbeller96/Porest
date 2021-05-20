@@ -1,7 +1,7 @@
 <template>
   <div class="received_mail_main_wrapper">
     <!-- <Star class="star"></Star> -->
-    <span @click="moveToBack" class="oneStepBack">
+    <span @click="moveToBack" class="back">
       <i class="fas fa-arrow-left"></i>
     </span>
     <!-- <div>

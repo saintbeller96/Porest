@@ -1,6 +1,6 @@
 <template>
   <div class="mail_box_main_wrapper">
-    <span @click="moveToBack" class="oneStepBack">
+    <span @click="moveToBack" class="back">
       <i class="fas fa-arrow-left"></i>
     </span>
     <!-- <div class="backarrow_wrapper">

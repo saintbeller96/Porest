@@ -1,5 +1,8 @@
 <template>
   <div class="mainisland">
+    <div v-if="$store.state.logoStatus" class="logo" @click="goToMain">
+      <img src="@/assets/image/logo.png" />
+    </div>
     <div class="short-profile">
       <profile-for-main></profile-for-main>
     </div>
