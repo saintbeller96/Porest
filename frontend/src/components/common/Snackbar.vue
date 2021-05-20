@@ -11,7 +11,7 @@
 </template>
 <script>
 export default {
-  name: "Snackbar",
+  name: 'Snackbar',
   props: {
     timeout: {
       type: Number,
@@ -23,7 +23,7 @@ export default {
     },
     position: {
       type: String,
-      default: "top-center",
+      default: 'top-center',
     },
   },
   data() {
@@ -32,7 +32,7 @@ export default {
     };
   },
   watch: {
-    "$store.state.snackbarStatus"() {
+    '$store.state.snackbarStatus'() {
       this.setTimer();
     },
   },
@@ -50,8 +50,7 @@ export default {
       if (this.infinity) return;
 
       this.timer = setTimeout(() => {
-        this.$store.dispatch("saveSnackbarStatus", false);
-        console.log(this.$store.state.snackbarStatus);
+        this.$store.dispatch('saveSnackbarStatus', false);
       }, this.timeout);
     },
   },
