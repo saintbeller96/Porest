@@ -53,9 +53,13 @@ export default {
   },
   methods: {
     finish() {
-      console.log(this.publicState);
-      console.log(this.counselId);
-      console.log(this.likeState);
+      let letterData = {
+        counselId: this.counselId.counselId,
+        evaluate: this.likeState,
+        open: this.publicState,
+      };
+      finishLetter(letterData);
+      this.exit();
     },
     animation() {
       const publicBtn = document.querySelector('.public');

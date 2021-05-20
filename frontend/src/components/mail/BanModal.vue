@@ -59,8 +59,9 @@ export default {
         this.banData.banReason = this.reason[this.banState];
       }
       this.banData.counselId = this.counselId.counselId;
-      console.log(this.banData);
-      // await banReportDto(this.banData);
+
+      banReportDto(this.banData);
+      this.exit();
     },
     animation() {
       const violence = document.querySelector('.violence');
