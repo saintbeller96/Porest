@@ -40,10 +40,14 @@
           <div class="root-mail-reply">
             <form class="mailform">
               <div>
-
                 <label for="reply_title">답장 제목</label>
-                <input type="text" name="reply_title" size="40" placeholder="답장의 제목을 적어주세요." v-model="letter.body.title" />
-
+                <input
+                  type="text"
+                  name="reply_title"
+                  size="40"
+                  placeholder="답장의 제목을 적어주세요."
+                  v-model="letter.body.title"
+                />
               </div>
               <div>
                 <label for="reply_content">답장 내용</label>
@@ -56,8 +60,12 @@
                 ></textarea>
               </div>
               <div>
-                <input class="sendBtns" type="submit" value="보내기" @click="reply()" />
-
+                <input
+                  class="sendBtns"
+                  type="submit"
+                  value="보내기"
+                  @click="reply()"
+                />
               </div>
             </form>
           </div>
@@ -115,7 +123,9 @@ export default {
       this.letter.ids.letterId = this.story.detail.letterId;
       await writeLetter(this.letter);
       //여기서 페이지 이동코드 넣어주세요~!
-      this.$router.push({name :'Mailbox' });
+      setTimeout(() => {
+        this.$router.push({ name: 'Mailbox' });
+      }, 5000);
     },
   },
   mounted() {
