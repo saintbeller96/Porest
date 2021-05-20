@@ -14,7 +14,7 @@ const loginUser = (userData) =>
   instance
     .post("/login", userData)
     .then((res) => {
-      return { status: true, message: "" };
+      return { status: true, message: "", data: res.data };
     })
     .catch((error) => {
       return { status: false, message: "다시 시도해 주세요" };

@@ -12,12 +12,12 @@ import {
 
 export default {
   async LOGIN({ commit }, userData) {
-    const { data } = await loginUser(userData);
-    let decoded = jwt_decode(data.token);
+    const res = await loginUser(userData);
+    let decoded = jwt_decode(res.data.token);
     commit("setUserId", decoded.id);
     commit("setUsername", decoded.nickname);
     commit("setUserEmail", decoded.email);
-    commit("setToken", "Bearer " + data.token);
+    commit("setToken", "Bearer " + res.data.token);
     commit("setImg", decoded.profile_img_number);
     commit("setTemperature", decoded.temperature);
 
@@ -25,10 +25,10 @@ export default {
     saveUserIdToCookie(decoded.id);
     saveUserNameToCookie(decoded.nickname);
     saveUserEmailToCookie(decoded.email);
-    saveAuthToCookie("Bearer " + data.token);
+    saveAuthToCookie("Bearer " + res.data.token);
     saveUserImgFromCookie(decoded.profile_img_number);
     saveUserTemperatureFromCookie(decoded.temperature);
-    return data;
+    return res.data;
 
     // firebase
   },

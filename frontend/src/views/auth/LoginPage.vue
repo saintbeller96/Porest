@@ -13,7 +13,7 @@
             <form @submit.prevent>
               <p class="welcome">Welcome to POREST :)</p>
               <p class="title">
-                Email
+                이메일
               </p>
               <div class="inputBox">
                 <input
