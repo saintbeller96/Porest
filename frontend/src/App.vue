@@ -65,6 +65,7 @@
       @introState="introState"
       @introPlay="introPlay"
       @controlMusic="controlMusic"
+      @skip="skip"
     />
   </div>
 </template>
@@ -85,6 +86,11 @@ export default {
     };
   },
   methods: {
+    skip() {
+      const audioPlayer1 = document.querySelector('#audio-player1');
+      audioPlayer1.pause();
+      this.$router.push({ name: 'MainIsland' });
+    },
     logout() {
       // :TODO 삭제요청
       this.loginState = false;

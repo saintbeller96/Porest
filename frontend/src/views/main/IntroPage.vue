@@ -50,7 +50,7 @@ export default {
   },
   methods: {
     skip() {
-      this.$router.push({ name: 'MainIsland' });
+      this.$emit('skip');
     },
   },
   created() {
