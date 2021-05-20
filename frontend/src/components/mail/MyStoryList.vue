@@ -64,9 +64,12 @@ export default {
   },
   methods: {
     openUsers(index, storyId) {
+      console.log(index, storyId, this.openUsersState);
       if (this.openUsersState == index) {
         this.openUsersState = -1;
+        console.log(this.openUsersState);
       } else {
+        console.log('here');
         this.getReplies(storyId);
         this.openUsersState = index;
       }
@@ -74,9 +77,11 @@ export default {
     //story 리스트를 가지고 온다.
     async getMyStories() {
       this.stories = await getMyStories();
+      console.log(this.stories, 'stories');
     },
     async getReplies(storyId) {
       this.replies = await getStoryOfAllLetters(storyId);
+      console.log(this.replies)
     },
     setDate(date) {
       //date.substring(0, 4)   -> 년
@@ -115,8 +120,7 @@ export default {
 
 <style scoped>
 @import url(//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css);
-<link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
-
+/* <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'> */
 
 .section_body_story_list {
   width: 100%;
