@@ -38,7 +38,6 @@ export default {
           second.innerHTML = this.count--;
         } else {
           this.$router.push({ name: 'Login' });
-          return;
         }
       }, 1000);
     });
