@@ -33,11 +33,7 @@
                   <div class="finish__mail" @click="finishLetter">
                     사연 끝내기
                   </div>
-                  <div
-                    class="ban_btn"
-                    :data-value="getCounselId()"
-                    @click="ban"
-                  >
+                  <div class="ban_btn" :data-value="getCounselId()" @click="ban">
                     신고
                   </div>
                 </div>
@@ -46,16 +42,10 @@
 
             <div class="letter_form_wrapper2">
               <div class="paper">
-                <div class="paper_header2">
-                  답장 제목<input type="text" v-model="letter.body.title" />
-                </div>
+                <div class="paper_header2">답장 제목<input type="text" v-model="letter.body.title" /></div>
                 <div class="paper_content2">
                   답장 내용
-                  <textarea
-                    name=""
-                    id=""
-                    v-model="letter.body.content"
-                  ></textarea>
+                  <textarea name="" id="" v-model="letter.body.content"></textarea>
                 </div>
                 <div class="paper_footer">
                   <div class="reply_btn" @click="ReplyForm">보내기</div>
@@ -85,32 +75,24 @@
         </div>
       </div>
     </div>
-    <all-letters
-      v-if="openAllLetters"
-      @exitAll="exitAll"
-      class="all_letters"
-    ></all-letters>
-    <finish-modal
-      v-if="finishState"
-      :counselId="counselId"
-      @exit="exit"
-    ></finish-modal>
+    <all-letters v-if="openAllLetters" @exitAll="exitAll" class="all_letters"></all-letters>
+    <finish-modal v-if="finishState" :counselId="counselId" @exit="exit"></finish-modal>
     <ban-modal v-if="banState" :counselId="counselId" @exit="exit"></ban-modal>
   </div>
 </template>
 
 <script>
-import { writeLetter, readLetter } from '@/api/letters';
-import { getCounsel } from '@/api/counsels';
-import MyCounselList from '@/components/mail/MyCounselList.vue';
-import MyStoryList from '@/components/mail/MyStoryList.vue';
-import AllLetters from '@/components/mail/AllLetters.vue';
-import FinishModal from '@/components/mail/FinishModal.vue';
-import BanModal from '@/components/mail/BanModal.vue';
-import Star from '@/components/common/Star.vue';
+import { writeLetter, readLetter } from "@/api/letters";
+import { getCounsel } from "@/api/counsels";
+import MyCounselList from "@/components/mail/MyCounselList.vue";
+import MyStoryList from "@/components/mail/MyStoryList.vue";
+import AllLetters from "@/components/mail/AllLetters.vue";
+import FinishModal from "@/components/mail/FinishModal.vue";
+import BanModal from "@/components/mail/BanModal.vue";
+import Star from "@/components/common/Star.vue";
 
 export default {
-  name: 'MyReceivedMailPage',
+  name: "MyReceivedMailPage",
   data() {
     return {
       banState: false,
@@ -124,32 +106,31 @@ export default {
           letterId: null,
         },
         body: {
-          content: '',
-          createAt: '',
-          title: '',
+          content: "",
+          createAt: "",
+          title: "",
         },
       },
-      //TODO : 구조가 변경될 수도 있습니다. 변경되면 확인!
       selectedCounsel: {
         counselId: null,
-        counsellorNickname: '반가운 전나무',
+        counsellorNickname: "",
         detail: [
           {
             letter: {
               detail: {
-                title: '',
-                content: '',
-                createAt: '',
+                title: "",
+                content: "",
+                createAt: "",
               },
-              letterId: '',
+              letterId: "",
             },
             reply: {
               detail: {
-                title: '',
-                content: '',
-                createAt: '',
+                title: "",
+                content: "",
+                createAt: "",
               },
-              letterId: '',
+              letterId: "",
             },
           },
         ],
@@ -167,9 +148,9 @@ export default {
   },
   created() {
     let token = this.$store.getters.getAuthToken;
-    if (token == '' || token == null) {
-      alert('로그인이 필요합니다.');
-      this.$router.push({ name: 'Login' });
+    if (token == "" || token == null) {
+      alert("로그인이 필요합니다.");
+      this.$router.push({ name: "Login" });
     }
   },
   methods: {
@@ -184,18 +165,18 @@ export default {
       this.finishState = true;
     },
     goToLetterReply() {
-      this.$router.push({ name: 'LetterReply' });
+      this.$router.push({ name: "LetterReply" });
     },
     openUserBoard(value) {
       this.viewStoryState = value;
-      const headerBtn1 = document.querySelector('.header_btn1');
-      const headerBtn2 = document.querySelector('.header_btn2');
+      const headerBtn1 = document.querySelector(".header_btn1");
+      const headerBtn2 = document.querySelector(".header_btn2");
       if (value === true) {
-        headerBtn1.classList.add('click');
-        headerBtn2.classList.remove('click');
+        headerBtn1.classList.add("click");
+        headerBtn2.classList.remove("click");
       } else {
-        headerBtn1.classList.remove('click');
-        headerBtn2.classList.add('click');
+        headerBtn1.classList.remove("click");
+        headerBtn2.classList.add("click");
       }
     },
     openAll() {
@@ -232,18 +213,15 @@ export default {
     },
   },
   watch: {
-    '$store.state.counselId': async function() {
+    "$store.state.counselId": async function() {
       if (this.$store.state.counselId !== null)
-        await this.$store.dispatch(
-          'saveAllLetters',
-          await getCounsel(this.$store.state.counselId),
-        );
+        await this.$store.dispatch("saveAllLetters", await getCounsel(this.$store.state.counselId));
     },
   },
   mounted() {
     this.openUserBoard(true);
-    const headerBtn1 = document.querySelector('.header_btn1');
-    headerBtn1.classList.add('click');
+    const headerBtn1 = document.querySelector(".header_btn1");
+    headerBtn1.classList.add("click");
   },
 };
 </script>

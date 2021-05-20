@@ -82,4 +82,9 @@ export default {
   setLogoStatus(state, logoStatus) {
     state.logoStatus = logoStatus;
   },
+
+  //snackbar
+  setSnackbarStatus(state, snackbarStatus) {
+    state.snackbarStatus = snackbarStatus;
+  },
 };
