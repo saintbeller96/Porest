@@ -75,6 +75,7 @@ export default {
   },
   methods: {
     async storyForm() {
+      this.conversion();
       await writeStory(this.story);
       setTimeout(() => {
         console.log('돌아가자');
@@ -84,6 +85,11 @@ export default {
     moveToBack() {
       this.$router.go(-1);
     },
+  },
+  conversion() {
+    let str = this.story['content'];
+    str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+    this.story['content'] = str;
   },
   mounted() {
     init();

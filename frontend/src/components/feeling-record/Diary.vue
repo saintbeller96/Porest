@@ -5,15 +5,30 @@
       <div class="date-container">
         <div v-if="$store.state.targetDate.length === 0">
           <span>{{ today }}일 {{ days[day] }}요일</span>
-          <img :src="todaysFeelingImg[$store.getters.getFeeling]" class="emotion" />
-          <span class="setting-btn" v-if="$store.state.targetDateDetail" @click="openUpdateModal"
+          <img
+            :src="todaysFeelingImg[$store.getters.getFeeling]"
+            class="emotion"
+          />
+          <span
+            class="setting-btn"
+            v-if="$store.state.targetDateDetail"
+            @click="openUpdateModal"
             ><i class="fas fa-cog"></i
           ></span>
         </div>
         <div v-else>
-          <span>{{ $store.state.targetDate[2] }}일 {{ $store.state.targetDate[3] }}요일</span>
-          <img :src="todaysFeelingImg[$store.getters.getFeeling]" class="emotion" />
-          <span class="setting-btn" v-if="$store.state.targetDateDetail" @click="openUpdateModal"
+          <span
+            >{{ $store.state.targetDate[2] }}일
+            {{ $store.state.targetDate[3] }}요일</span
+          >
+          <img
+            :src="todaysFeelingImg[$store.getters.getFeeling]"
+            class="emotion"
+          />
+          <span
+            class="setting-btn"
+            v-if="$store.state.targetDateDetail"
+            @click="openUpdateModal"
             ><i class="fas fa-cog"></i
           ></span>
         </div>
@@ -26,7 +41,7 @@
 
       <!-- 일기 내용 -->
       <div class="diary-detail" v-if="$store.state.targetDateDetail">
-        <p>{{ $store.state.targetDateDetail['content'] }}</p>
+        <p v-html="$store.state.targetDateDetail['content']"></p>
       </div>
       <div
         v-if="
@@ -38,14 +53,21 @@
       >
         <div class="writing-btn">
           <span @click="openCreateModal" class="btn">
-            오늘의 감정 기록하기 <span class="pencil"><i class="fas fa-pencil-alt"></i></span>
+            오늘의 감정 기록하기
+            <span class="pencil"><i class="fas fa-pencil-alt"></i></span>
           </span>
         </div>
       </div>
-      <div v-else-if="$store.state.targetDate.length === 0 && $store.state.targetDateDetail === ''">
+      <div
+        v-else-if="
+          $store.state.targetDate.length === 0 &&
+            $store.state.targetDateDetail === ''
+        "
+      >
         <div class="writing-btn">
           <span @click="openCreateModal" class="btn">
-            오늘의 감정 기록하기 <span class="pencil"><i class="fas fa-pencil-alt"></i></span>
+            오늘의 감정 기록하기
+            <span class="pencil"><i class="fas fa-pencil-alt"></i></span>
           </span>
         </div>
       </div>
@@ -53,7 +75,8 @@
       <div
         class="description"
         v-if="
-          ($store.state.targetDate[0] < year && $store.state.targetDateDetail === '') ||
+          ($store.state.targetDate[0] < year &&
+            $store.state.targetDateDetail === '') ||
             ($store.state.targetDate[0] === year &&
               $store.state.targetDate[1] < month &&
               $store.state.targetDateDetail === '') ||
@@ -158,10 +181,18 @@ export default {
     openUpdateModal() {
       this.$store.commit('getModalStatus', true);
       this.$store.commit('getDiaryModalStatus', 'update');
-      this.$store.commit('getEmotionIndex', this.$store.state.targetDateDetail['feeling']);
-      let a = Number(this.$store.state.targetDateDetail['imageUrl'].slice(0, 2));
+      this.$store.commit(
+        'getEmotionIndex',
+        this.$store.state.targetDateDetail['feeling'],
+      );
+      let a = Number(
+        this.$store.state.targetDateDetail['imageUrl'].slice(0, 2),
+      );
       this.$store.commit('getStickerIndex', a);
-      this.$store.commit('getSelectedSticker', this.$store.state.targetDateDetail['imageUrl']);
+      this.$store.commit(
+        'getSelectedSticker',
+        this.$store.state.targetDateDetail['imageUrl'],
+      );
     },
     openCreateModal() {
       this.$store.commit('getModalStatus', true);
@@ -176,6 +207,7 @@ export default {
     this.month = date.getMonth() + 1;
     this.today = date.getDate();
     this.day = date.getDay();
+    console.log(this.$store.state.targetDateDetail);
   },
 };
 </script>
@@ -186,7 +218,8 @@ export default {
 
 @font-face {
   font-family: 'UhBeemysen';
-  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff') format('woff');
+  src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_five@.2.0/UhBeemysen.woff')
+    format('woff');
   font-weight: normal;
   font-style: normal;
 }
