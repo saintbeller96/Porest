@@ -51,7 +51,6 @@ export default {
   },
 
   saveuUserUid({ commit }, payload) {
-    console.log('this is actions payload', payload.firebaseData.uid);
     commit('setUserUid', payload.firebaseData.uid);
     saveUserUidToCookie(payload.firebaseData.uid);
   },

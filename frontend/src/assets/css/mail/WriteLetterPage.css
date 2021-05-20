@@ -117,7 +117,7 @@
   position: relative;
   perspective: 800px;
   /* background-color: #454545; */
-  background-image: url(../../image/sky.jpg);
+  background-image: linear-gradient(-20deg, #e9defa 0%, #fbfcdb 100%);
   background-size: 1950px;
   
 }
@@ -126,13 +126,13 @@
   position: absolute;
   width: 100%;
   height: 2rem;
-  top: 1rem;
+  top: 3rem;
   left: 1rem;
   z-index:30;
 }
 
 .backarrow{
-  font-size:2rem;
+  font-size:1.5rem;
   cursor: pointer;
 }
 
@@ -306,7 +306,8 @@
   transition: all 0.1s linear;
   color: black;
   background-color:transparent;
-  font-family: 'UhBeeann';
+  font-family: 'Love_son';
+  
 }
 .envelope .back .letter label.show {
   opacity: 1;
@@ -333,7 +334,7 @@
 }
 .envelope .back .letter .titleinput{
   font-family: 'Love_son';
-  
+  font-weight: 600;
   font-size: 1.2rem;
   color: black;
 }
@@ -419,7 +420,8 @@
 .noti_title{
   font-size: 60px;
   padding-bottom: 100px;
-  font-family: 'Cafe24Danjunghae';
+  font-family: 'GyeonggiBatang';
+
 }
 
 

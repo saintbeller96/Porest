@@ -36,7 +36,7 @@ public class BanReportServiceImpl implements BanReportService{
     }
 
     private Long getCurrentUserId() {
-        return ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication()).getId();
+        return ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
     }
 
     @Override

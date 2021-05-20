@@ -1,13 +1,14 @@
 package com.hanmaum.counseling.domain.ban.dto;
 
 import com.hanmaum.counseling.domain.account.entity.User;
-import com.hanmaum.counseling.domain.post.dto.DetailCounselDto;
 import lombok.Builder;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
 
 @NoArgsConstructor
+@Getter
 public class BanReportDetailDto {
     private Long id;
     private UserInfo reporter;

@@ -70,7 +70,8 @@ export const init = () => {
 
   function rotateCard() {
     for (let i = 0; i < totalCards; i++) {
-      cards[i].style.transform = `rotate(${currentDeg + rotateDeg * i}deg) translateY(-350px)`;
+      cards[i].style.transform = `rotate(${currentDeg +
+        rotateDeg * i}deg) translateY(-350px)`;
     }
   }
 
@@ -128,7 +129,9 @@ export const init = () => {
     createRoomFront.classList.remove('room-card-front-fade');
   }
   exitroomBtn.addEventListener('click', createRoomExitHandler);
-  createRoom.addEventListener('click', createRoomHandler);
+  if (createRoom) {
+    createRoom.addEventListener('click', createRoomHandler);
+  }
   exitBtn.addEventListener('click', exitHandler);
   cardWrapper.addEventListener('click', wrapperHandler);
 

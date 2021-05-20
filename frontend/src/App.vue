@@ -18,7 +18,7 @@
         <li @click="logout">로그아웃</li>
       </ul>
       <ul v-else class="nav_ul">
-        <li><a href="#about">로그인</a></li>
+        <li>로그인</li>
       </ul>
     </nav>
     <router-view :user="user" />
@@ -188,7 +188,8 @@ export default {
   cursor: pointer;
   z-index: 100;
 }
-.r_rated {
+
+#nav a .r_rated {
   color: red;
 }
 .nav_ul {
