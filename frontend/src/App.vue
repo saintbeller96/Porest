@@ -1,8 +1,8 @@
 <template>
   <div id="app">
-    <!-- <div class="logo" @click="goToMain">
-      <img src="@/assets/image/logo2.png" />
-    </div> -->
+    <div v-if="$store.state.logoStatus" class="logo" @click="goToMain">
+      <img src="@/assets/image/logo.png" />
+    </div>
     <nav id="nav">
       <button class="nav-icon" id="nav-icon"><span></span></button>
       <ul v-if="$store.state.id" class="nav_ul">
@@ -169,7 +169,7 @@ export default {
 
 .logo {
   position: absolute;
-  top: 1rem;
+  top: 0.6vh;
   left: 1rem;
   cursor: pointer;
   z-index: 100;

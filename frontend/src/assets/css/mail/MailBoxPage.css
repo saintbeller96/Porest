@@ -79,6 +79,14 @@ font-family: 'GyeonggiBatang';
  
 }
 
+.oneStepBack {
+  position: absolute;
+  top: 9vh;
+  left: 1.1vw;
+  font-size: 1.3vw;
+  cursor: pointer;
+}
+
 
 
 @keyframes anime {

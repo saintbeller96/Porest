@@ -1,15 +1,18 @@
 <template>
   <div class="received_mail_main_wrapper">
     <!-- <Star class="star"></Star> -->
-    <div>
+    <span @click="moveToBack" class="oneStepBack">
+      <i class="fas fa-arrow-left"></i>
+    </span>
+    <!-- <div>
       <i class="backarrow fas fa-arrow-left" @click="moveToBack"></i>
-    </div>
+    </div> -->
     <div class="received_mail_inner_wrapper">
       <section class="received_mail_inner_left">
         <div class="section_header">
-          <div class="header_btn1" @click="openUserBoard(true)">위로 받기</div>
+          <div class="header_btn1" @click="openUserBoard(true)">받은 위로</div>
           <div class="header_btn2" @click="openUserBoard(false)">
-            위로 보내기
+            보낸 위로
           </div>
         </div>
         <div class="section_body">
@@ -187,7 +190,7 @@ export default {
       this.viewStoryState = value;
       const headerBtn1 = document.querySelector('.header_btn1');
       const headerBtn2 = document.querySelector('.header_btn2');
-      if (value == true) {
+      if (value === true) {
         headerBtn1.classList.add('click');
         headerBtn2.classList.remove('click');
       } else {
@@ -236,6 +239,11 @@ export default {
           await getCounsel(this.$store.state.counselId),
         );
     },
+  },
+  mounted() {
+    this.openUserBoard(true);
+    const headerBtn1 = document.querySelector('.header_btn1');
+    headerBtn1.classList.add('click');
   },
 };
 </script>
