@@ -147,6 +147,11 @@ const routes = [
     name: 'HealingMusic',
     component: () => import('@/views/joy/HealingMusicPage.vue'),
   },
+  {
+    path: '/admin/ban-report',
+    name: 'BanReport',
+    component: ()=> import('@/views/admin/BanReportPage.vue'),
+  },
 ];
 
 const router = new VueRouter({
