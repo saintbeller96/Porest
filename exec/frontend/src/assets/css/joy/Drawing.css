@@ -1,0 +1,144 @@
+
+.drawing-wrapper {
+  /* width: 100vw; */
+  /* height: 100vh; */
+  width: 100vw;
+  height: 100vh;
+  background-position: 50% 50%;
+  background-repeat: no-repeat;
+  background-size: contain;
+  overflow: hidden;
+  font-family: 'InfinitySans-BoldA1';
+
+}
+.amongus {
+  background-image: url('../../image/amongus.jpg');
+}
+.pokect {
+  background-image: url('../../image/pokect.png');
+}
+.pichu {
+  background-image: url('../../image/pichu.png');
+}
+.uchu {
+  background-image: url('../../image/uchu.png');
+}
+.fire {
+  background-image: url('../../image/fire.png');
+}
+.digdag {
+  background-image: url('../../image/digdag.png');
+}
+
+
+#drawing-canvas {
+  width: 100%;
+  height: 100%;
+  border: 3px solid antiquewhite;
+  border-style: groove;
+
+}
+#content {
+  width: 100vw;
+  height: 100vh;
+  margin: 0 auto;
+  overflow: hidden;
+}
+.back {
+  position: absolute;
+  top: 1rem;
+  left: 1rem;
+  z-index: 100;
+}
+
+.back i {
+  font-size: 1.5rem;
+  cursor: pointer;
+  color:rgb(224, 166, 90);
+}
+form {
+  position: absolute;
+  top: 6rem;
+  left: 1rem;
+  width: 15rem;
+  height: 15rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  border-radius: 1rem;
+  background-color: antiquewhite;
+  box-shadow: 1px 2px 10px rgba(0,0,0,0.7);
+  padding: 1rem;
+}
+
+.change__drawing__header {
+  width: 100%;
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  height: 1rem;
+  cursor: pointer;
+}
+.change__drawing {
+  margin: 1rem 0;
+  width: 100%;
+  height: 2rem;
+  font-size: 1rem;
+  padding: 0 1rem;
+  font-family: 'InfinitySans-BoldA1';
+
+
+}
+.change__drawing option {
+  font-size: 1rem;
+  padding: 1rem 0;
+}
+
+.bg-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.undo,.clear {
+  margin-top: 0.5rem;
+  margin-left: 0.5rem;
+  border-radius: 0.3rem;
+  padding: 0.3rem;
+  background-color: rgb(179, 163, 20);
+  color: #fff;
+  font-weight: 600;
+  border: 1px solid rgb(179, 163, 20);
+  font-size: 0.8rem;
+  cursor: pointer;
+  transition: .3s all;
+}
+.undo:hover,.clear:hover {
+  background-color:beige;
+  border: 1px solid beige;
+  color: #333;
+
+}
+
+.controls__btns {
+  width: 100%;
+  height: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.color__wrapper,.thickness__wrapper {
+  width: 100%;
+  height: 2rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.colo__header,.thickness__header {
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+.color-code {
+}

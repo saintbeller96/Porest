@@ -1,0 +1,255 @@
+.intro-wrapper {
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); 
+  /* background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%); */
+  position: relative;
+}
+
+
+#canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+.magic {
+  opacity: 0;
+  transition: 1s 1s all;
+}
+.magic.show{
+  opacity: 1;
+}
+
+.random-ball-wrapper {
+  /* opacity: 0.8; */
+  width: 4.5rem;
+  height: 4.5rem;
+  position: absolute;
+  z-index: 33;
+  top: 50%;
+  left: 50%;
+  cursor: pointer;
+  transform-style: preserve-3d;
+  transform: translate(-50%,-50%);
+}
+.text_intro {
+  opacity: 0;
+  position: absolute;
+  /* top: 40%; */
+  /* left: 50%; */
+  transform:perspective(1200px) translate3d(0,0,-200px);
+  color: #fff;
+  font-size: 600;
+  font-size: 2rem;
+  transition: 1s 1s all;
+
+}
+
+.text_intro.show {
+  opacity: 1;
+}
+.pop-ball{
+  z-index: 0;
+  animation: pop 2s forwards;
+}
+@keyframes pop {
+  0% {   transform:  translate(-50%,-50%) scale(0);}
+  20% {  transform:  translate(-50%,-50%) scale(2.5);}
+  50% {  transform:  translate(-50%,-50%) scale(0.5);}
+  90% {  transform:  translate(-50%,-50%) scale(4.5);}
+  100% { transform:  translate(-50%,-50%) scale(0);}
+}
+
+.random_ball {
+  pointer-events: none;
+  /* transform: translate(-50%,-50%); */ 
+  width: 100%;
+  height: 100%;
+  border-radius: 54% 46% 42% 58% / 60% 58% 42% 40%;
+  animation: wave 4s linear infinite alternate;
+  box-shadow: 1px 2px 10px rgba(0,0,0,0.6);
+  transform-style: preserve-3d;
+  position: relative;
+  background-image: linear-gradient(120deg, #89f7fe 0%, #66a6ff 100%);
+  background-image: linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%);
+  /* background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%); */
+  /* background-image: linear-gradient(120deg, #fdfbfb 0%, #ebedee 100%); */
+  /* background-image: linear-gradient(to top, #f3e7e9 0%, #e3eeff 99%, #e3eeff 100%); */
+  /* background-image: linear-gradient(to top, lightgrey 0%, lightgrey 1%, #e0e0e0 26%, #efefef 48%, #d9d9d9 75%, #bcbcbc 100%); */
+  /* background-image: linear-gradient(to top, #dfe9f3 0%, white 100%); */
+  /* background-image: linear-gradient(-225deg, #FFFEFF 0%, #D7FFFE 100%); */
+  /* background-image: linear-gradient(-225deg, #E3FDF5 0%, #FFE6FA 100%); */
+  /* background-image: radial-gradient(-20deg, #e9defa 0%, #fbfcdb 100%); */
+  
+  /* background-image: linear-gradient(to top, #fff1eb 0%, #ace0f9 100%); */
+  /* background-image: linear-gradient(to right, #ffecd2 0%, #fcb69f 100%); */
+  /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);  */
+
+}
+.star {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  pointer-events: none;
+}
+
+@keyframes wave {
+  20% {
+    border-radius: 45% 55% 62% 38% / 52% 51% 49% 47%;
+  }
+
+  40% {
+    border-radius:45% 55% 49% 51% / 36% 51% 49% 64%;
+  }
+  60%{ border-radius: 60% 40% 57% 43% / 47% 62% 38% 53%;}
+ 80%{border-radius: 60% 40% 32% 68% / 48% 36% 74% 62%}
+
+
+}
+
+
+.big div{
+  position: absolute;
+  top: calc((50% - 1500px));
+  left: calc((50% - 1500px));
+  width: 3000px;
+  height:3000px;
+  transform: translate(-50%,-50%);
+  border-radius: 50%;
+  transform: scale(0);
+}
+
+.big.show div:nth-child(1) {
+  background: #fffcee; animation: big .5s 2s forwards;
+  background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%);
+  /* background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%);  */
+
+
+}
+.big.show div:nth-child(2) {
+  background: #66a6ff; animation: big .5s 2.5s forwards;
+  background-image: linear-gradient(to top, #cd9cf2 0%, #f6f3ff 100%);
+  background-image: linear-gradient(45deg, #ff9a9e 0%, #fad0c4 99%, #fad0c4 100%);
+  /* background-image: linear-gradient(-225deg, #231557 0%, #44107A 29%, #FF1361 67%, #FFF800 100%); */
+
+}
+.big.show div:nth-child(3) {
+  /* background: #764ba2;   */
+  animation: big .5s 3s forwards;
+  /* background-image: url('../../image/5262525.jpg'); */
+  /* background-image: linear-gradient(to top, #96fbc4 0%, #f9f586 100%); */
+  /* background-image: linear-gradient(-20deg, #2b5876 0%, #4e4376 100%); */
+  background: radial-gradient(ellipse at bottom, #1b2735 0%,#090a0f 100%); 
+  /* background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%); */
+  background-image: url('../../image/sky.jpg');
+  background-repeat: no-repeat;
+  background-position: 50% 50%;
+  background-size: cover;
+
+  /* background-position: 50% 50%; */
+  /* background-repeat: no-repeat; */
+  /* background-size: cover; */
+
+}
+
+
+@keyframes big {
+  0% {  transform: scale(0);}
+  100% {transform: scale(1);}
+}
+
+.letter,.intro-entrance {
+  position: absolute;
+  top: 31%;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  perspective: inherit;
+  color:#444;
+  color: #fff;
+  /* background-image: linear-gradient(to right, #00dbde 0%, #fc00ff 100%); */
+
+  font-weight: 600;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+}
+.skip-btn {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-size: 1rem;
+  color: #fff;
+  cursor: pointer;
+}
+.intro-entrance {
+  z-index: 20;
+}
+.entrance {
+  cursor: pointer;
+}
+.hide{
+  opacity: 0;
+}
+
+.header,.entrance {
+  font-size: 2rem;
+  transition: all .7s;
+  transform:perspective(1200px) translate3d(0,0,-500px);
+}
+
+.type {
+
+  font-size: 2rem;
+  transform:perspective(1200px) translate3d(0,200px,-200px);
+  transition: 1s all;
+}
+
+.type.hide {
+  opacity: 0;
+}
+.entrance:hover {
+  transform:perspective(1200px) translate3d(0,100px,-300px);
+}
+
+.white-show {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  opacity: 0;
+  z-index: -1;
+  width: 0%;
+  height: 0%;
+  border-radius: 100%;
+  transform: translate3d(-50%,-50%,1000px);
+  /* transform-origin: 50% 50%; */
+  background-color: #fff;
+  
+}
+
+
+.active{
+  animation: .45s fade forwards ease-in;
+}
+
+@keyframes fade{
+  100%{
+    width: 1000%;
+    height: 2000%;
+    opacity: 1;
+    z-index: 30;
+    transform: translate3d(-50%,-50%,-1000px);
+
+  }
+}

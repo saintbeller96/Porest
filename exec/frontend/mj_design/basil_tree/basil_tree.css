@@ -1,0 +1,93 @@
+body {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-wrap: wrap;
+  margin: 0;
+}
+svg {
+  width: 500px;
+  height: 500px;
+  margin-top: -180px;
+  margin-left: auto;
+  margin-right: auto;
+}
+.title {
+  font-family: "Helvetica Neue", san-serif;
+  text-align: center;
+  width: 100%;
+  color: #FF6138;
+}
+.control {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin-top: 16px;
+  flex-wrap: wrap;
+  width: 100%;
+  padding-left: 30%;
+  padding-right: 30%;
+  box-sizing: border-box;
+}
+.action {
+  border-radius: 3px;
+  font-size: 16px;
+  color: white;
+  padding: 10px;
+  cursor: pointer;
+  border: none;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 16px;
+}
+.action__grow {
+  background-color: #04BFBF;
+}
+.action__grow:hover {
+  background: #00abab;
+  transition: 0.5s;
+}
+.action__newGrow {
+  background: #046380;
+}
+.action__newGrow--deactivated {
+  pointer-events: none;
+}
+.action__newGrow:hover {
+  background: #004154;
+  transition: 0.5s;
+}
+.branch {
+  stroke: green;
+  stroke-width: 1.5px;
+}
+.leaf {
+  fill: green;
+}
+.pot {
+  fill: #f68d53;
+  stroke: #bb6828;
+}
+.pot-line {
+  stroke: #bb6828;
+}
+#leaf--master {
+  transform-origin: 50% 50%;
+}
+.leaf__body {
+  fill: #a9cf55;
+}
+.leaf__body, .leaf__stem--main, .leaf__stem--branch {
+  stroke: #589040;
+  stroke-miterlimit: 10;
+}
+.leaf__body {
+  stroke-width: 0.5px;
+}
+.leaf__stem--main, .leaf__stem--branch {
+  stroke-width: 0.25px;
+}
+.leaf__stem--main, .leaf__stem--branch {
+  fill: none;
+}
