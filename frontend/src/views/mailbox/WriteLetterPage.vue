@@ -79,16 +79,16 @@ export default {
       await writeStory(this.story);
       setTimeout(() => {
         this.$router.push({ name: 'Mailbox' });
-      }, 5500);
+      }, 3500);
     },
     moveToBack() {
       this.$router.go(-1);
     },
-  },
-  conversion() {
-    let str = this.story['content'];
-    str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
-    this.story['content'] = str;
+    conversion() {
+      let str = this.story['content'];
+      str = str.replace(/(?:\r\n|\r|\n)/g, '<br/>');
+      this.story['content'] = str;
+    },
   },
   mounted() {
     init();
