@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0cc628"],{"4e67":function(e,n,t){"use strict";t.r(n);var c=function(){var e=this,n=e.$createElement;e._self._c;return e._m(0)},r=[function(){var e=this,n=e.$createElement,t=e._self._c||n;return t("div",[e._v(" 레터 디테일 페이지 "),t("p",[e._v(" 사연 내용 보여주고 ")]),t("button",[e._v("답장")])])}],u={},a=u,s=t("2877"),i=Object(s["a"])(a,c,r,!1,null,"01ab7498",null);n["default"]=i.exports}}]);
-//# sourceMappingURL=chunk-2d0cc628.1ab3aded.js.map

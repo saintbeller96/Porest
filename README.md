@@ -87,7 +87,7 @@
 - Socket.io  
 - DB - MySQL / redis
 
-저희 `Backend`는  SSAFY에서 배웠던` java`와 `spring`과`JPA`를 기반으로  솔리드 원칙을 지켜가며 객체지향적으로 서비스들을 설계했습니다. 또한  인메모리 케시인 redis와  동적쿼리 처리를 위해 `queryDSL`, 보안이 중요한 주제인 만큼 `security`등을 이용해 `REST API server`의 고도화 진행 하였습니다.  
+저희 `Backend`는 java`와 `spring, JPA를 기반으로  서비스들을 설계했습니다. 또한 인메모리 DB인 redis를 사용해 이메일 인증을 구현하였고,  `Querydsl`을 사용해 JPA의 N+1 문제를 해결하고자 했습니다. 그리고 사용자 인증/인가를 위해 `Spring Security`를 사용해 `REST API server`의 고도화를 위해 노력하였습니다.  
 
 <br /><br />
 

@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0cfcd5"],{"64ef":function(n,o,e){"use strict";e.r(o);var t=function(){var n=this,o=n.$createElement,e=n._self._c||o;return e("div",[n._v(" main page "),e("div",[e("button",{on:{click:n.goToMailbox}},[n._v("우체통 페이지 바로가기")])])])},i=[],c={methods:{goToMailbox:function(){this.$router.push({name:"Mailbox"})}}},a=c,u=e("2877"),l=Object(u["a"])(a,t,i,!1,null,"5858f373",null);o["default"]=l.exports}}]);
-//# sourceMappingURL=chunk-2d0cfcd5.c2599d1c.js.map

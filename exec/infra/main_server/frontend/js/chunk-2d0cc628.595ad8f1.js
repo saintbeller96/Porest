@@ -1,2 +1,0 @@
-(window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["chunk-2d0cc628"],{"4e67":function(e,t,n){"use strict";n.r(t);var c=function(){var e=this,t=e.$createElement,n=e._self._c||t;return n("section",[n("header",[e._v(" 레터 디테일 페이지 ")]),n("article",[n("button",{on:{click:e.goToLetterReply}},[e._v("답장")])])])},o=[],r={methods:{goToLetterReply:function(){this.$router.push({name:"LetterReply"})}}},u=r,l=n("2877"),s=Object(l["a"])(u,c,o,!1,null,"1698c484",null);t["default"]=s.exports}}]);
-//# sourceMappingURL=chunk-2d0cc628.595ad8f1.js.map
