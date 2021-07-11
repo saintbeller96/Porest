@@ -1,6 +1,6 @@
 # 🏠 [Porest](https://www.notion.so/API-b6ac4e75f4bf4e859684b0eb489afa08)
 
-[ SSAFY 자율프로젝트 ]	2021. 04.12 ~ 2021.05.28
+[ 자율프로젝트 ]	2021. 04.12 ~ 2021.05.28
 
 <br /><br />
 
