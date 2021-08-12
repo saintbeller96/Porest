@@ -12,11 +12,8 @@
 | :------: | ------------------------------ | ----------------------------- | ----------------------------- | ----------------------------- | ----------------------------- |
 | Profile  | ![mj](./README.assets/mj.jpg)  | ![ys](./README.assets/ys.jpg) | ![kh](./README.assets/js.jpg) | ![js](./README.assets/kh.jpg) | ![se](./README.assets/se.jpg) |
 | Position | 프론트엔드<br />일러스트레이터 | 프론트엔드<br />인터렉션      | 백엔드<br />DB설계            | 백엔드<br />인프라            | 프론트엔드<br />UI/UX         |
-| Nickname | 강모라                         | 권맥스                        | 김타로드                      | 윤두                          | 정뷸라                        |
 
-- POREST를 지키는 수호자입니다.
 
-<img src="README.assets/KakaoTalk_20210422_145559253.jpg" alt="KakaoTalk_20210422_145559253" style="zoom:50%;" />
 
 
 
@@ -87,7 +84,7 @@
 - Socket.io  
 - DB - MySQL / redis
 
-저희 `Backend`는 java`와 `spring, JPA를 기반으로  서비스들을 설계했습니다. 또한 인메모리 DB인 redis를 사용해 이메일 인증을 구현하였고,  `Querydsl`을 사용해 JPA의 N+1 문제를 해결하고자 했습니다. 그리고 사용자 인증/인가를 위해 `Spring Security`를 사용해 `REST API server`의 고도화를 위해 노력하였습니다.  
+저희 `Backend`는 java`와 `spring, JPA를 기반으로  서비스들을 설계했습니다. 또한 인메모리 DB인 redis를 사용해 이메일 인증을 구현하였고,  `Querydsl`을 사용해 JPA의 N+1 문제를 해결하고자 했습니다. 그리고 사용자 인증/인가를 위해 `Spring Security`를 적용하였고 `REST API server`의 고도화를 위해 노력하였습니다.  
 
 <br /><br />
 
