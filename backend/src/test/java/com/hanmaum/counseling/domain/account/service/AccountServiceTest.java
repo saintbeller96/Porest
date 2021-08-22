@@ -1,23 +1,13 @@
 package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.domain.account.dto.LoginDto;
-import com.hanmaum.counseling.domain.account.dto.SignupDto;
-import com.hanmaum.counseling.domain.account.entity.User;
-import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.presentation.account.dto.SignupDto;
 import com.hanmaum.counseling.security.JwtProvider;
-import com.mysema.commons.lang.Assert;
-import org.aspectj.lang.annotation.Before;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.function.Executable;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
-
-import javax.security.auth.login.LoginException;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")

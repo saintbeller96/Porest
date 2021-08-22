@@ -1,8 +1,8 @@
 package com.hanmaum.counseling.domain.emotion.repository;
 
-import com.hanmaum.counseling.domain.emotion.dto.EmotionCondition;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionSimpleDto;
-import com.hanmaum.counseling.domain.emotion.entity.Emotion;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionCondition;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
+import com.hanmaum.counseling.domain.emotion.Emotion;
 
 import java.time.LocalDateTime;
 import java.util.List;

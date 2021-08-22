@@ -1,16 +1,16 @@
 package com.hanmaum.counseling.domain.post.repository;
 
-import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
-import com.hanmaum.counseling.domain.post.entity.*;
-import com.hanmaum.counseling.domain.post.repository.story.CounselContent;
-import com.hanmaum.counseling.domain.post.repository.story.StoryRepository;
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
+import com.hanmaum.counseling.domain.post.letter.Letter;
+import com.hanmaum.counseling.domain.post.story.Story;
+import com.hanmaum.counseling.presentation.post.dto.SimpleStoryDto;
+import com.hanmaum.counseling.domain.post.story.repository.StoryRepository;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ActiveProfiles;
 
 import javax.persistence.EntityManager;

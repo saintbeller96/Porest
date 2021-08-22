@@ -1,14 +1,12 @@
 package com.hanmaum.counseling.domain.emotion.controller;
 
 
-import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanmaum.counseling.domain.account.entity.RoleType;
-import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.RoleType;
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionCondition;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionDetailDto;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionSimpleDto;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
 import com.hanmaum.counseling.domain.emotion.service.EmotionService;
 import com.hanmaum.counseling.commons.ControllerTestConfig;
 import com.hanmaum.counseling.security.CustomUserDetails;
@@ -29,7 +27,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;

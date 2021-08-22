@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;

@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.ban.repository;
 
-import com.hanmaum.counseling.domain.ban.entity.Ban;
+import com.hanmaum.counseling.domain.ban.Ban;
 
 import java.util.List;
 import java.util.Optional;

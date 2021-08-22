@@ -1,16 +1,16 @@
 package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.domain.account.dto.*;
-import com.hanmaum.counseling.domain.account.entity.RoleType;
-import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.RoleType;
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
-import com.hanmaum.counseling.domain.ban.entity.Ban;
+import com.hanmaum.counseling.domain.ban.Ban;
 import com.hanmaum.counseling.domain.ban.repository.BanRepository;
+import com.hanmaum.counseling.presentation.account.dto.*;
 import com.hanmaum.counseling.security.JwtProvider;
 import com.hanmaum.counseling.utils.EmailUtil;
 import com.hanmaum.counseling.utils.RedisUtil;
-import exception.UserNotFoundException;
-import exception.WrongPasswordException;
+import com.hanmaum.counseling.error.UserNotFoundException;
+import com.hanmaum.counseling.error.WrongPasswordException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.RandomStringUtils;
@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.NoSuchElementException;
 
 @Service
 @RequiredArgsConstructor

@@ -1,8 +1,7 @@
 package com.hanmaum.counseling.domain.ban.repository;
 
-import com.hanmaum.counseling.domain.ban.entity.Ban;
-import com.hanmaum.counseling.domain.ban.entity.BanStatus;
-import com.hanmaum.counseling.domain.ban.entity.QBan;
+import com.hanmaum.counseling.domain.ban.Ban;
+import com.hanmaum.counseling.domain.ban.BanStatus;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Repository;
@@ -11,7 +10,6 @@ import java.util.List;
 import java.util.Optional;
 
 import static com.hanmaum.counseling.domain.ban.entity.QBan.ban;
-import static com.hanmaum.counseling.domain.ban.entity.QBanReport.banReport;
 
 @Repository
 @RequiredArgsConstructor

@@ -1,13 +1,11 @@
 package com.hanmaum.counseling.global;
 
-import com.hanmaum.counseling.error.ErrorResponse;
-import exception.BannedUserException;
-import exception.UserNotFoundException;
-import exception.WrongPasswordException;
+import com.hanmaum.counseling.error.BannedUserException;
+import com.hanmaum.counseling.error.UserNotFoundException;
+import com.hanmaum.counseling.error.WrongPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;

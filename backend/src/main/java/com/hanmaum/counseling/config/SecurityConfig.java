@@ -1,7 +1,7 @@
 package com.hanmaum.counseling.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanmaum.counseling.error.ErrorResponse;
+import com.hanmaum.counseling.global.ErrorResponse;
 import com.hanmaum.counseling.security.JwtFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;

@@ -1,28 +1,23 @@
 package com.hanmaum.counseling.domain.ban.repository;
 
-import com.hanmaum.counseling.domain.account.entity.RoleType;
-import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.RoleType;
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
-import com.hanmaum.counseling.domain.ban.dto.BanReportDetailDto;
-import com.hanmaum.counseling.domain.ban.dto.BanReportDto;
-import com.hanmaum.counseling.domain.ban.entity.BanReport;
-import com.hanmaum.counseling.domain.post.dto.*;
-import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
-import com.hanmaum.counseling.domain.post.service.LetterService;
-import com.hanmaum.counseling.domain.post.service.counsel.CounselService;
-import com.hanmaum.counseling.domain.post.service.story.StoryService;
+import com.hanmaum.counseling.presentation.ban.dto.BanReportDetailDto;
+import com.hanmaum.counseling.presentation.ban.dto.BanReportDto;
+import com.hanmaum.counseling.domain.ban.BanReport;
+import com.hanmaum.counseling.presentation.post.dto.*;
+import com.hanmaum.counseling.domain.post.letter.service.LetterService;
+import com.hanmaum.counseling.domain.post.counsel.service.CounselService;
+import com.hanmaum.counseling.domain.post.story.service.StoryService;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
-import org.springframework.data.repository.support.PageableExecutionUtils;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.transaction.annotation.Transactional;
 

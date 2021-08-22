@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.account.repository;
 
-import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
