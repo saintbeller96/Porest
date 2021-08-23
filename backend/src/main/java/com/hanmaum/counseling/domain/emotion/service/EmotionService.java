@@ -1,8 +1,8 @@
 package com.hanmaum.counseling.domain.emotion.service;
 
-import com.hanmaum.counseling.domain.emotion.dto.EmotionCondition;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionDetailDto;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionSimpleDto;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionCondition;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
 
 import java.util.List;
 

@@ -1,9 +1,9 @@
 package com.hanmaum.counseling.domain.emotion.service;
 
-import com.hanmaum.counseling.domain.emotion.dto.EmotionCondition;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionDetailDto;
-import com.hanmaum.counseling.domain.emotion.dto.EmotionSimpleDto;
-import com.hanmaum.counseling.domain.emotion.entity.Emotion;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionCondition;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
+import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
+import com.hanmaum.counseling.domain.emotion.Emotion;
 import com.hanmaum.counseling.domain.emotion.repository.EmotionRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;

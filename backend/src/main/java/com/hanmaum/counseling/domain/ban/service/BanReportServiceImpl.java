@@ -1,14 +1,14 @@
 package com.hanmaum.counseling.domain.ban.service;
 
-import com.hanmaum.counseling.domain.ban.dto.BanReportDetailDto;
-import com.hanmaum.counseling.domain.ban.dto.BanReportDto;
-import com.hanmaum.counseling.domain.ban.entity.Ban;
-import com.hanmaum.counseling.domain.ban.entity.BanReport;
-import com.hanmaum.counseling.domain.ban.entity.BanStatus;
+import com.hanmaum.counseling.presentation.ban.dto.BanReportDetailDto;
+import com.hanmaum.counseling.presentation.ban.dto.BanReportDto;
+import com.hanmaum.counseling.domain.ban.Ban;
+import com.hanmaum.counseling.domain.ban.BanReport;
+import com.hanmaum.counseling.domain.ban.BanStatus;
 import com.hanmaum.counseling.domain.ban.repository.BanReportRepository;
 import com.hanmaum.counseling.domain.ban.repository.BanRepository;
-import com.hanmaum.counseling.domain.post.entity.Counsel;
-import com.hanmaum.counseling.domain.post.repository.counsel.CounselRepository;
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
+import com.hanmaum.counseling.domain.post.counsel.repository.CounselRepository;
 import com.hanmaum.counseling.security.CustomUserDetails;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

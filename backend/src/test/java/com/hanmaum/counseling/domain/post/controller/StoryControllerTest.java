@@ -2,18 +2,14 @@ package com.hanmaum.counseling.domain.post.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanmaum.counseling.commons.ControllerTestConfig;
-import com.hanmaum.counseling.domain.account.dto.SignupDto;
-import com.hanmaum.counseling.domain.account.entity.RoleType;
-import com.hanmaum.counseling.domain.account.entity.User;
+import com.hanmaum.counseling.domain.account.RoleType;
+import com.hanmaum.counseling.domain.account.User;
 
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
-import com.hanmaum.counseling.domain.account.service.AccountService;
-import com.hanmaum.counseling.domain.post.dto.FormDto;
-import com.hanmaum.counseling.domain.post.dto.SimpleStoryDto;
-import com.hanmaum.counseling.domain.post.service.story.StoryService;
+import com.hanmaum.counseling.presentation.post.dto.FormDto;
+import com.hanmaum.counseling.presentation.post.dto.SimpleStoryDto;
+import com.hanmaum.counseling.domain.post.story.service.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
-import com.hanmaum.counseling.utils.RedisUtil;
-import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

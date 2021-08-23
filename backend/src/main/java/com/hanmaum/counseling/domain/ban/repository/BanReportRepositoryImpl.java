@@ -1,13 +1,11 @@
 package com.hanmaum.counseling.domain.ban.repository;
 
 import com.hanmaum.counseling.domain.account.entity.QUser;
-import com.hanmaum.counseling.domain.account.entity.User;
-import com.hanmaum.counseling.domain.ban.dto.BanReportDetailDto;
-import com.hanmaum.counseling.domain.ban.entity.BanReport;
-import com.hanmaum.counseling.domain.ban.entity.BanReportStatus;
-import com.hanmaum.counseling.domain.ban.entity.QBanReport;
-import com.hanmaum.counseling.domain.post.entity.Counsel;
-import com.hanmaum.counseling.domain.post.entity.QCounsel;
+import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.presentation.ban.dto.BanReportDetailDto;
+import com.hanmaum.counseling.domain.ban.BanReport;
+import com.hanmaum.counseling.domain.ban.BanReportStatus;
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import com.querydsl.core.Tuple;
 import com.querydsl.jpa.impl.JPAQuery;
 import com.querydsl.jpa.impl.JPAQueryFactory;
