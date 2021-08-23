@@ -6,6 +6,7 @@ import com.hanmaum.counseling.error.WrongPasswordException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -50,6 +51,15 @@ public class GlobalExceptionController {
                 .code(e.toString())
                 .build());
     }
+
+    @ExceptionHandler(value = AuthenticationCredentialsNotFoundException.class)
+    public ResponseEntity<ErrorResponse> authenticationCredentialsNotFoundException(Exception e) {
+        return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(ErrorResponse.builder()
+                .message(e.getMessage())
+                .code(e.toString())
+                .build());
+    }
+
     @ExceptionHandler(value = {UserNotFoundException.class})
     public ResponseEntity<?> userNotFoundException(Exception e){
         return ResponseEntity.badRequest().body(ErrorResponse.builder()

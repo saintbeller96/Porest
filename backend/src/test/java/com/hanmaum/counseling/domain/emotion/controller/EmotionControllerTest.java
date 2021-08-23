@@ -27,6 +27,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.user;
@@ -126,8 +127,8 @@ class EmotionControllerTest {
         Long emotionId = emotionService.saveEmotion(dto, user.getId());
 
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
-        param.add("month", "5");
-        param.add("year", "2021");
+        param.add("month", String.valueOf(LocalDateTime.now().getMonthValue()));
+        param.add("year", String.valueOf(LocalDateTime.now().getYear()));
         //when
         ResultActions actions = mockMvc.perform(get("/emotions")
                 .queryParams(param)
@@ -140,5 +141,19 @@ class EmotionControllerTest {
         String content = result.getResponse().getContentAsString();
         List<EmotionSimpleDto> list = mapper.readValue(content, mapper.getTypeFactory().constructCollectionType(List.class, EmotionSimpleDto.class));
         Assertions.assertThat(list).extracting("emotionId").containsExactly(emotionId);
+    }
+
+    @Test
+    @DisplayName("유저 로그인 없이 감정 기록 저장, 실패시 401")
+    void saveEmotionUnauthorizedUser() throws Exception{
+        //given
+        String content = mapper.writeValueAsString(setUpEmotion());
+        //when
+        ResultActions actions = mockMvc.perform(post("/emotions")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON));
+
+        //then
+        actions.andExpect(status().isUnauthorized());
     }
 }
