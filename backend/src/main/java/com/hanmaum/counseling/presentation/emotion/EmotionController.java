@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.presentation.emotion;
 
+import com.hanmaum.counseling.presentation.argumentresolver.LoginUserId;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionCondition;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
@@ -27,16 +28,14 @@ public class EmotionController {
 
     @ApiOperation("감정 기록 등록")
     @PostMapping("")
-    public ResponseEntity<String> createEmotion(@RequestBody @Valid EmotionDetailDto dto, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<String> createEmotion(@RequestBody @Valid EmotionDetailDto dto, @LoginUserId Long userId){
         emotionService.saveEmotion(dto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @ApiOperation("Id를 통해 감정 기록 가져오기")
     @GetMapping("/{emotionId}")
-    public ResponseEntity<EmotionDetailDto> getEmotionDetail(@PathVariable("emotionId") Long emotionId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<EmotionDetailDto> getEmotionDetail(@PathVariable("emotionId") Long emotionId, @LoginUserId Long userId){
         EmotionDetailDto result = emotionService.getEmotionDetail(emotionId, userId);
         return ResponseEntity.ok(result);
     }
@@ -44,24 +43,21 @@ public class EmotionController {
     @ApiOperation("감정 기록 수정")
     @PutMapping("/{emotionId}")
     public ResponseEntity<String> updateEmotion(@RequestBody @Valid EmotionDetailDto dto,
-                                                          @PathVariable("emotionId") Long emotionId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+                                                          @PathVariable("emotionId") Long emotionId, @LoginUserId Long userId){
         emotionService.updateEmotion(dto, emotionId, userId);
         return ResponseEntity.ok("Updated");
     }
 
     @ApiOperation("감정 기록 삭제")
     @DeleteMapping("/{emotionId}")
-    public ResponseEntity<String> deleteEmotionDetail(@PathVariable("emotionId") Long emotionId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<String> deleteEmotionDetail(@PathVariable("emotionId") Long emotionId, @LoginUserId Long userId){
         emotionService.deleteEmotion(emotionId, userId);
         return ResponseEntity.ok("delete");
     }
 
     @ApiOperation("년도/월 조건에 따라 해당 달의 모든 감정 기록을 가져오기")
     @GetMapping("")
-    public ResponseEntity<List<EmotionSimpleDto>> searchEmotionByCondition(@Valid EmotionCondition condition, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<List<EmotionSimpleDto>> searchEmotionByCondition(@Valid EmotionCondition condition, @LoginUserId Long userId){
         List<EmotionSimpleDto> result = emotionService.searchEmotion(condition, userId);
         return ResponseEntity.ok(result);
     }
