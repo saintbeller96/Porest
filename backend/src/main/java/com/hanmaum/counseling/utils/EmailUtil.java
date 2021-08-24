@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.utils;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
@@ -14,7 +15,7 @@ import javax.mail.internet.MimeMessage;
 public class EmailUtil {
     private final JavaMailSender emailSender;
 
-    public void sendMail(String to, String sub, String text) throws MessagingException {
+    public void sendMail(String to, String sub, String text) {
         //html 들어갈 변수
         String template = setTemplate(to, text, sub.contains("비밀번호") ? 1 : 2);
         try {
@@ -24,7 +25,7 @@ public class EmailUtil {
             message.addRecipient(Message.RecipientType.TO, new InternetAddress(to));
             emailSender.send(message);
         } catch (Exception e) {
-            throw new MessagingException("이메일 전송에 실패하였습니다.");
+            throw new MailSendException("이메일 전송에 실패하였습니다.");
         }
     }
     private String setTemplate(String to, String text, int type){
