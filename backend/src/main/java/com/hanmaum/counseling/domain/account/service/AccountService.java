@@ -15,6 +15,7 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -41,7 +42,7 @@ public class AccountService {
     private final EmailUtil emailUtil;
     private final RedisUtil redisUtil;
 
-    public User saveUser(@Valid SignupDto request){
+    public User saveUser(SignupDto request){
         //이메일 중복 및 인증 여부 체크
         String emailCheck = redisUtil.getData(request.getEmail()+"_"+request.getCode());
         if(emailCheck == null || !emailCheck.equals("T")){
@@ -68,8 +69,8 @@ public class AccountService {
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
     }
 
-    public JwtTokenDto findByEmailAndPassword(LoginDto request) throws LoginException {
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(() -> new LoginException(LOGIN_FAIL));
+    public JwtTokenDto findByEmailAndPassword(LoginDto request){
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
         //해당 유저가 밴 상태인지 확인
         List<Ban> bannedList = banRepository.findByUserIdFetch(user.getId());
         for (Ban ban : bannedList) {
@@ -80,7 +81,7 @@ public class AccountService {
         }
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new LoginException(LOGIN_FAIL);
+            throw new BadCredentialsException(LOGIN_FAIL);
         }
         String token = jwtProvider.generateToken(user);
         return JwtTokenDto.builder().token(token).build();
@@ -130,7 +131,7 @@ public class AccountService {
         return ResponseEntity.ok().body(response);
     }
 
-    public void sendVerifyEmail(String email) throws MessagingException {
+    public void sendVerifyEmail(String email) {
         String code = RandomStringUtils.randomAlphabetic(5);
         StringBuilder key = new StringBuilder().append(email).append("_").append(code);
         redisUtil.setDataExpire(key.toString(), "F", 180L);
@@ -144,7 +145,7 @@ public class AccountService {
         userRepository.delete(user);
     }
 
-    public ResponseEntity<?> findPassword(String email, String nickname) throws MessagingException {
+    public ResponseEntity<?> findPassword(String email, String nickname) {
         boolean isExist =  userRepository.existsByEmailAndNickname(email, nickname);
         Map<String, Object> result = new HashMap<>();
         if(isExist){
