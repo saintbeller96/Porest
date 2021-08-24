@@ -56,7 +56,7 @@ public class AccountService {
                 .role(RoleType.ROLE_USER)
                 .build();
 
-        //케싱된 데이터 삭제
+        //캐싱된 데이터 삭제
         String isEmailReady = redisUtil.getData(request.getEmail());
         if(isEmailReady != null) redisUtil.deleteData(request.getEmail());
         redisUtil.deleteData(request.getEmail()+"_"+request.getCode());
@@ -64,7 +64,7 @@ public class AccountService {
         return userRepository.save(user);
     }
 
-    public User findByEmail(String email) throws UserNotFoundException {
+    public User findByEmail(String email) {
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
     }
 
@@ -86,7 +86,7 @@ public class AccountService {
         return JwtTokenDto.builder().token(token).build();
     }
 
-    public void updatePassword(HttpServletRequest request, UpdatePasswordDto updatePasswordDto) throws WrongPasswordException, UserNotFoundException {
+    public void updatePassword(HttpServletRequest request, UpdatePasswordDto updatePasswordDto) {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtProvider.getEmailFromToken(token);
         User user = findByEmail(email);
@@ -137,7 +137,7 @@ public class AccountService {
         emailUtil.sendMail(email, "POREST 인증 메일 입니다." ,code);
     }
 
-    public void deleteUser(HttpServletRequest request) throws UserNotFoundException {
+    public void deleteUser(HttpServletRequest request) {
         String token = request.getHeader("Authorization").substring(7);
         String email = jwtProvider.getEmailFromToken(token);
         User user = findByEmail(email);

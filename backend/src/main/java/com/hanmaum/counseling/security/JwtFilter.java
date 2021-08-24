@@ -4,6 +4,8 @@ import com.hanmaum.counseling.domain.account.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 import org.springframework.web.filter.GenericFilterBean;
 
@@ -21,7 +23,7 @@ import static org.springframework.util.StringUtils.hasText;
 public class JwtFilter extends GenericFilterBean {
 
     private final JwtProvider jwtProvider;
-    private final CustomUserDetailsService customUserDetailsService;
+    private final UserDetailsService userDetailsService;
 
     public static final String AUTHORIZATION = "Authorization";
     @Override
@@ -30,8 +32,8 @@ public class JwtFilter extends GenericFilterBean {
 
         if(token !=null && jwtProvider.validateToken(token)){
             String userEmail = jwtProvider.getEmailFromToken(token);
-            CustomUserDetails customUserDetails = customUserDetailsService.loadUserByUsername(userEmail);
-            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(customUserDetails, null, customUserDetails.getAuthorities());
+            UserDetails authUserDetail = userDetailsService.loadUserByUsername(userEmail);
+            UsernamePasswordAuthenticationToken auth = new UsernamePasswordAuthenticationToken(authUserDetail, null, authUserDetail.getAuthorities());
 
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
