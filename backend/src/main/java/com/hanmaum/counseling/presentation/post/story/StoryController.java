@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.presentation.post.story;
 
+import com.hanmaum.counseling.presentation.argumentresolver.LoginUserId;
 import com.hanmaum.counseling.presentation.post.dto.*;
 import com.hanmaum.counseling.domain.post.story.service.StoryService;
 import com.hanmaum.counseling.security.CustomUserDetails;
@@ -25,50 +26,43 @@ public class StoryController {
 
     @ApiOperation("유저의 사연 목록 가져오기")
     @GetMapping("")
-    public ResponseEntity<List<UserStoryStateDto>> getStories(Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<List<UserStoryStateDto>> getStories(@LoginUserId Long userId){
         List<UserStoryStateDto> result = storyService.getUserStoryState(userId);
         return ResponseEntity.ok(result);
     }
 
-    @ApiOperation("사연에 대해 진행 중인 상담 목록 가져오기")
+    @ApiOperation("해당 사연의 진행 중인 상담 목록 가져오기")
     @GetMapping("/{storyId}/counsels")
-    public ResponseEntity<List<UserCounselStateDto>> getStory(@PathVariable("storyId") Long storyId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<List<UserCounselStateDto>> getStory(@PathVariable("storyId") Long storyId, @LoginUserId Long userId){
         List<UserCounselStateDto> result = storyService.getCounselStateOfUserWithStory(storyId, userId);
         return ResponseEntity.ok(result);
     }
 
     @ApiOperation("사연 등록")
     @PostMapping("")
-    public ResponseEntity<?> putStory(@RequestBody @Valid FormDto formDto, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<?> putStory(@RequestBody @Valid FormDto formDto, @LoginUserId Long userId){
         storyService.putStory(formDto, userId);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
     @ApiOperation("선택할 후보 사연들을 보여줌")
     @GetMapping("/candidates")
-    public ResponseEntity<List<SimpleStoryDto>> getCandidates(Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<List<SimpleStoryDto>> getCandidates(@LoginUserId Long userId){
         List<SimpleStoryDto> result = storyService.getCandidates(userId);
         return ResponseEntity.ok(result);
     }
 
     @ApiOperation("후보 사연들 중 사연 선택")
     @PostMapping("/{storyId}")
-    public ResponseEntity<SimpleCounselDto> pickStory(@PathVariable("storyId") Long storyId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<SimpleCounselDto> pickStory(@PathVariable("storyId") Long storyId, @LoginUserId Long userId){
         SimpleCounselDto result = storyService.pickStory(storyId, userId);
         return ResponseEntity.ok(result);
     }
 
     @ApiOperation("사연 삭제")
     @DeleteMapping("/{storyId}")
-    public ResponseEntity<String> deleteStory(@PathVariable("storyId") Long storyId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<String> deleteStory(@PathVariable("storyId") Long storyId, @LoginUserId Long userId){
         storyService.deleteStory(storyId, userId);
         return ResponseEntity.noContent().build();
     }
-    //Todo 사연 공개/비공개 설정
 }

@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.presentation.post.counsel;
 
+import com.hanmaum.counseling.presentation.argumentresolver.LoginUserId;
 import com.hanmaum.counseling.presentation.post.dto.DetailCounselDto;
 import com.hanmaum.counseling.presentation.post.dto.EvaluateDto;
 import com.hanmaum.counseling.presentation.post.dto.UserCounselStateDto;
@@ -24,24 +25,21 @@ public class CounselController {
 
     @ApiOperation("현재 사용자의 모든(진행 끝난 것도 포함) 상담 내역을 반환")
     @GetMapping("/all")
-    public ResponseEntity<List<DetailCounselDto>> getDetailCounsels(Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<List<DetailCounselDto>> getDetailCounsels(@LoginUserId Long userId){
         List<DetailCounselDto> result = counselService.getDetailCounsels(userId);
         return ResponseEntity.ok(result);
     }
 
     @ApiOperation("상담 ID로 현재 사용자의 상담 내역을 반환")
     @GetMapping("/{counselId}")
-    public ResponseEntity<DetailCounselDto> getDetailCounsel(@PathVariable("counselId") Long counselId, Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<DetailCounselDto> getDetailCounsel(@PathVariable("counselId") Long counselId, @LoginUserId Long userId){
         DetailCounselDto detailCounsel = counselService.getDetailCounsel(counselId, userId);
         return ResponseEntity.ok(detailCounsel);
     }
 
     @ApiOperation("현재 사용자가 진행중인 상담 내역 반환")
     @GetMapping("")
-    public ResponseEntity<List<UserCounselStateDto>> getCounselList(Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+    public ResponseEntity<List<UserCounselStateDto>> getCounselList(@LoginUserId Long userId){
         List<UserCounselStateDto> result = counselService.getCounselStateOfUser(userId);
         return ResponseEntity.ok(result);
     }
@@ -50,8 +48,7 @@ public class CounselController {
     @PostMapping("/{counselId}/finish")
     public ResponseEntity<String> finishCounsel(@PathVariable("counselId") Long counselId,
                                                 @RequestBody @Valid EvaluateDto evaluateDto,
-                                                Authentication auth){
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+                                                @LoginUserId Long userId){
         counselService.finishCounsel(evaluateDto, counselId, userId);
         return ResponseEntity.ok("finish");
     }
