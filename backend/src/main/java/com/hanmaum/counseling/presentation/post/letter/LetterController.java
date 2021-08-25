@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.presentation.post.letter;
 
+import com.hanmaum.counseling.presentation.argumentresolver.LoginUserId;
 import com.hanmaum.counseling.presentation.post.dto.FormDto;
 import com.hanmaum.counseling.domain.post.letter.service.LetterService;
 import com.hanmaum.counseling.security.CustomUserDetails;
@@ -28,8 +29,7 @@ public class LetterController {
     public ResponseEntity<String> writeLetter(@RequestBody @Valid FormDto form,
                                               @PathVariable("counselId") Long counselId,
                                               @PathVariable("letterId") Long letterId,
-                                              Authentication auth) {
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+                                              @LoginUserId Long userId) {
         letterService.writeLetter(form, counselId, letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
@@ -38,8 +38,7 @@ public class LetterController {
     @PostMapping("/counsels/{counselId}/letters/{letterId}/read")
     public ResponseEntity<String> readLetter(@PathVariable("counselId") Long counselId,
                                              @PathVariable("letterId") Long letterId,
-                                             Authentication auth) {
-        Long userId = ((CustomUserDetails)auth.getPrincipal()).getId();
+                                             @LoginUserId Long userId) {
         letterService.readLetter(letterId, userId);
         return ResponseEntity.ok("Read Letter");
     }
