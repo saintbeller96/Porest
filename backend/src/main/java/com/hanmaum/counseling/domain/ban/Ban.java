@@ -33,15 +33,13 @@ public class Ban {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public static long DEFAULT_BAN_PERIOD = 7L;
-
     public Ban(User banUser, BanReport report, LocalDateTime releaseDate) {
         this.banUser = banUser;
         this.report = report;
         this.releaseDate = releaseDate;
     }
 
-    public void validateBanState(LocalDateTime now){
+    public void validateUserBanState(LocalDateTime now){
         if(releaseDate.isAfter(now)){
             throw new BannedUserException("해당 계정은 정지된 상태입니다");
         }

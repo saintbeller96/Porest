@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.ban.service;
 
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.ban.Ban;
+import com.hanmaum.counseling.domain.ban.BanReport;
 import com.hanmaum.counseling.domain.ban.repository.BanRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
@@ -14,7 +15,7 @@ import java.util.List;
 @Transactional
 @RequiredArgsConstructor
 public class BanServiceImpl implements BanService{
-
+    public final static int DEFAULT_BAN_PERIOD = 7;
     private final BanRepository banRepository;
 
     @Override
@@ -25,7 +26,8 @@ public class BanServiceImpl implements BanService{
     }
 
     @Override
-    public Ban register(Ban ban) {
+    public Ban register(BanReport banReport) {
+        Ban ban = new Ban(banReport.getCounsellorUser(), banReport, LocalDateTime.now().plusDays(DEFAULT_BAN_PERIOD));
         return banRepository.save(ban);
     }
 
@@ -33,7 +35,7 @@ public class BanServiceImpl implements BanService{
     public void validateUserBanState(User user) {
         List<Ban> banList = banRepository.findByUserId(user.getId());
         for (Ban ban : banList) {
-            ban.validateBanState(LocalDateTime.now());
+            ban.validateUserBanState(LocalDateTime.now());
             release(ban.getId());
         }
     }
