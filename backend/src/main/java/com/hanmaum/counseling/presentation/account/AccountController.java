@@ -5,6 +5,7 @@ import com.hanmaum.counseling.domain.account.service.AccountService;
 import com.hanmaum.counseling.presentation.account.dto.*;
 import com.hanmaum.counseling.error.UserNotFoundException;
 import com.hanmaum.counseling.error.WrongPasswordException;
+import com.hanmaum.counseling.presentation.argumentresolver.LoginUserId;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -34,8 +35,8 @@ public class AccountController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto request) throws LoginException {
-        JwtTokenDto result = accountService.findByEmailAndPassword(request);
+    public ResponseEntity<JwtTokenDto> login(@RequestBody @Valid LoginDto loginDto) {
+        JwtTokenDto result = accountService.login(loginDto.getEmail(), loginDto.getPassword());
         return ResponseEntity.ok(result);
     }
 
@@ -50,32 +51,32 @@ public class AccountController {
     }
 
     @PostMapping("/email-verify")
-    public ResponseEntity<?> verify(@RequestBody EmailCheckDto emailVerifyDto) throws MessagingException {
+    public ResponseEntity<?> verify(@RequestBody EmailCheckDto emailVerifyDto) {
         accountService.sendVerifyEmail(emailVerifyDto.getEmail());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("update-password")
-    public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, HttpServletRequest httpServletRequest) throws WrongPasswordException, UserNotFoundException {
-        accountService.updatePassword(httpServletRequest, updatePasswordDto);
+    public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, @LoginUserId Long userId){
+        accountService.updatePassword(userId, updatePasswordDto.getOldPassword(), updatePasswordDto.getNewPassword());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PutMapping("update-nickname")
-    public ResponseEntity<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto, HttpServletRequest httpServletRequest){
-        accountService.updateNickname(httpServletRequest, updateNicknameDto);
+    public ResponseEntity<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto, @LoginUserId Long userId){
+        accountService.updateNickname(userId, updateNicknameDto.getNickname());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
 
     @DeleteMapping("/delete")
-    public ResponseEntity<?> deleteUser(HttpServletRequest request) throws UserNotFoundException {
-        accountService.deleteUser(request);
+    public ResponseEntity<?> deleteUser(@LoginUserId Long userId) {
+        accountService.deleteUser(userId);
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
     @PostMapping("/find-password")
-    public ResponseEntity<?> findPassword(@RequestBody FindPasswordDto findPasswordDto) throws MessagingException {
+    public ResponseEntity<?> findPassword(@RequestBody FindPasswordDto findPasswordDto) {
         return accountService.findPassword(findPasswordDto.getEmail(), findPasswordDto.getNickname());
     }
 }

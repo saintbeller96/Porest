@@ -1,5 +1,7 @@
 package com.hanmaum.counseling.domain.ban;
 
+import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import com.hanmaum.counseling.presentation.ban.dto.BanReportDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -17,11 +19,13 @@ public class BanReport {
     @Column(name = "ban_report_id")
     private Long id;
 
-    @Column(name = "reporter_id")
-    private Long reporterId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "reporter_id", nullable = false)
+    private User reporter;
 
-    @Column(name = "ban_counsel_id", nullable = false)
-    private Long counselId;
+    @OneToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ban_counsel_id", nullable = false)
+    private Counsel counsel;
 
     @Column(name = "ban_reason")
     private String banReason;
@@ -34,20 +38,15 @@ public class BanReport {
     private LocalDateTime createdAt;
 
     @Builder
-    public BanReport(Long reporterId, Long counselId, String banReason, BanReportStatus banReportStatus) {
-        this.reporterId = reporterId;
-        this.counselId = counselId;
+    public BanReport(User reporter, Counsel counsel, String banReason, BanReportStatus banReportStatus) {
+        this.reporter = reporter;
+        this.counsel = counsel;
         this.banReason = banReason;
         this.banReportStatus = banReportStatus;
     }
 
-    public static BanReport of(BanReportDto dto, Long reporterId){
-        return BanReport.builder()
-                .reporterId(reporterId)
-                .counselId(dto.getCounselId())
-                .banReason(dto.getBanReason())
-                .banReportStatus(BanReportStatus.PROCEEDING)
-                .build();
+    public User getCounsellorUser() {
+        return counsel.getCounsellor();
     }
 
     public void process(){

@@ -1,5 +1,8 @@
 package com.hanmaum.counseling.domain.ban.service;
 
+import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.ban.BanReportStatus;
 import com.hanmaum.counseling.presentation.ban.dto.BanReportDetailDto;
 import com.hanmaum.counseling.presentation.ban.dto.BanReportDto;
 import com.hanmaum.counseling.domain.ban.Ban;
@@ -20,50 +23,53 @@ import org.springframework.transaction.annotation.Transactional;
 import java.time.LocalDateTime;
 
 @Service
-@Transactional
+@Transactional(readOnly = true)
 @RequiredArgsConstructor
 public class BanReportServiceImpl implements BanReportService{
+    public final static int DEFAULT_BAN_PERIOD = 7;
 
-    private final BanReportRepository banReportRepository;
-    private final BanRepository banRepository;
+    private final UserRepository userRepository;
     private final CounselRepository counselRepository;
+    private final BanReportRepository banReportRepository;
+    private final BanService banService;
 
+    @Transactional
     @Override
-    public Long reportBan(BanReportDto reportDto) {
-        Long reporterId = getCurrentUserId();
-        BanReport report = BanReport.of(reportDto, reporterId);
-        return banReportRepository.save(report).getId();
+    public BanReport report(Long counselId, String reason, Long reporterId) {
+        User reporter = getUser(reporterId);
+        Counsel counsel = getCounsel(counselId);
+        return banReportRepository.save(new BanReport(reporter, counsel, reason, BanReportStatus.WAIT));
     }
 
-    private Long getCurrentUserId() {
-        return ((CustomUserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+    private User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow();
     }
 
+    private Counsel getCounsel(Long counselId) {
+        return counselRepository.findByCounselId(counselId).orElseThrow();
+    }
+
+    @Transactional
     @Override
-    public Long processReport(Long banReportId) {
-        BanReport banReport = banReportRepository.findById(banReportId).orElseThrow();
+    public Ban process(Long banReportId) {
+        BanReport banReport = banReportRepository.findById(banReportId)
+                .orElseThrow();
         banReport.process();
-
-        Counsel counsel = counselRepository.findByCounselId(banReport.getCounselId()).orElseThrow();
-
-        Ban ban = Ban.builder()
-                .banStatus(BanStatus.BANNED)
-                .banUserId(counsel.getCounsellorId())
-                .report(banReport)
-                .releaseDate(LocalDateTime.now().plusDays(Ban.BAN_PERIOD))
-                .build();
-        return banRepository.save(ban).getId();
+        Ban ban = new Ban(banReport.getCounsellorUser(), banReport, LocalDateTime.now().plusDays(DEFAULT_BAN_PERIOD));
+        return banService.register(ban);
     }
 
+    @Transactional
     @Override
-    public Long cancelReport(Long banReportId) {
-        BanReport banReport = banReportRepository.findById(banReportId).orElseThrow();
+    public Long cancel(Long banReportId) {
+        BanReport banReport = banReportRepository.findById(banReportId)
+                .orElseThrow();
         banReport.cancel();
         return banReportId;
     }
 
     @Override
-    public Page<BanReportDetailDto> getProceedingBanReports(Pageable pageable) {
-        return banReportRepository.findProceedingReport(pageable);
+    public Page<BanReport> getWaitingBanReports(Pageable pageable) {
+        return banReportRepository.findWaitingReport(pageable);
     }
 }

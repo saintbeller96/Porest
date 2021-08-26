@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.ban;
 
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.error.BannedUserException;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,8 +20,8 @@ public class Ban {
     @Column(name = "ban_id")
     private Long id;
 
-    @Column(name = "ban_user_id")
-    private Long banUserId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    private User banUser;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "ban_report_id")
@@ -29,32 +30,20 @@ public class Ban {
     @Column(name = "ban_release_date")
     private LocalDateTime releaseDate;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "ban_status")
-    private BanStatus banStatus;
-
     @CreationTimestamp
     private LocalDateTime createdAt;
-    @UpdateTimestamp
-    private LocalDateTime updatedAt;
 
-    public static long BAN_PERIOD = 7L;
+    public static long DEFAULT_BAN_PERIOD = 7L;
 
-    @Builder
-    public Ban(Long banUserId, BanReport report, LocalDateTime releaseDate, BanStatus banStatus) {
-        this.banUserId = banUserId;
+    public Ban(User banUser, BanReport report, LocalDateTime releaseDate) {
+        this.banUser = banUser;
         this.report = report;
         this.releaseDate = releaseDate;
-        this.banStatus = banStatus;
     }
 
-    public void validate(LocalDateTime now){
+    public void validateBanState(LocalDateTime now){
         if(releaseDate.isAfter(now)){
             throw new BannedUserException("해당 계정은 정지된 상태입니다");
         }
     }
-    public void releaseBan(){
-        this.banStatus = BanStatus.RELEASED;
-    }
-
 }

@@ -29,15 +29,14 @@ public class BanReportRepositoryImpl implements BanReportRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Page<BanReportDetailDto> findProceedingReport(Pageable pageable) {
+    public Page<BanReport> findWaitingReport(Pageable pageable) {
         QUser counsellor = new QUser("counsellor");
-        List<Tuple> tuples = queryFactory
-                .select(banReport, counsel, user, counsellor)
-                .from(banReport)
+        List<BanReport> content = queryFactory
+                .selectFrom(banReport)
                 .join(user).on(banReport.reporterId.eq(user.id))
                 .join(counsel).on(banReport.counselId.eq(counsel.id))
                 .join(counsellor).on(counsel.counsellorId.eq(counsellor.id))
-                .where(banReport.banReportStatus.eq(BanReportStatus.PROCEEDING))
+                .where(banReport.banReportStatus.eq(BanReportStatus.WAIT))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
                 .fetch();
@@ -48,26 +47,9 @@ public class BanReportRepositoryImpl implements BanReportRepositoryCustom{
                 .join(user).on(banReport.reporterId.eq(user.id))
                 .join(counsel).on(banReport.counselId.eq(counsel.id))
                 .join(counsellor).on(counsel.counsellorId.eq(counsellor.id))
-                .where(banReport.banReportStatus.eq(BanReportStatus.PROCEEDING));
+                .where(banReport.banReportStatus.eq(BanReportStatus.WAIT));
 
-        List<BanReportDetailDto> content = tuples.stream()
-                .map(this::mapping)
-                .collect(Collectors.toList());
+
         return PageableExecutionUtils.getPage(content, pageable, countQuery::fetchCount);
-    }
-
-    private BanReportDetailDto mapping(Tuple tuple) {
-        BanReport banReport = tuple.get(0, BanReport.class);
-        Counsel counsel = tuple.get(1, Counsel.class);
-        User reporter = tuple.get(2, User.class);
-        User counsellor = tuple.get(3, User.class);
-        return BanReportDetailDto.builder()
-                .reporter(new BanReportDetailDto.UserInfo(reporter))
-                .reportedUser(new BanReportDetailDto.UserInfo(counsellor))
-                .id(banReport.getId())
-                .counselId(counsel.getId())
-                .banReason(banReport.getBanReason())
-                .reportedAt(banReport.getCreatedAt())
-                .build();
     }
 }

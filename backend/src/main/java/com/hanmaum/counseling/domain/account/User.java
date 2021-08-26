@@ -58,7 +58,6 @@ public class User {
         this.profileImgNumber = profileImgNumber;
         this.role = role;
     }
-
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
     }
