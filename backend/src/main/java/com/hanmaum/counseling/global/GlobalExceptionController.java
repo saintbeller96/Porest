@@ -2,7 +2,9 @@ package com.hanmaum.counseling.global;
 
 import com.hanmaum.counseling.error.BannedUserException;
 import com.hanmaum.counseling.error.UserNotFoundException;
+import com.hanmaum.counseling.error.VerifyEmailException;
 import com.hanmaum.counseling.error.WrongPasswordException;
+import com.hanmaum.counseling.presentation.account.dto.VerifyRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,13 +37,18 @@ public class GlobalExceptionController {
     }
 
     //엔티티의 제약조건이 위배되면 발생하는 예외 핸들링
-    @ExceptionHandler(value = ConstraintViolationException.class) // 유효성 검사 실패 시 발생하는 예외를 처리
+    @ExceptionHandler(value = ConstraintViolationException.class)
     public ResponseEntity<?> handleException(ConstraintViolationException e) {
         Set<ConstraintViolation<?>> constraintViolations = e.getConstraintViolations();
         Set<String> errorResponse = constraintViolations.stream()
                 .map(this::mappingErrorMessage)
                 .collect(Collectors.toUnmodifiableSet());
         return ResponseEntity.badRequest().body(errorResponse);
+    }
+    private String mappingErrorMessage(ConstraintViolation<?> cv){
+        final String path = cv.getPropertyPath().toString();
+        final String property = path.substring(path.lastIndexOf('.') + 1);
+        return String.format("%s is %s.%s", property, cv.getInvalidValue(), cv.getMessage());
     }
 
     @ExceptionHandler(value = LoginException.class)
@@ -86,12 +93,6 @@ public class GlobalExceptionController {
                                 build());
     }
 
-    private String mappingErrorMessage(ConstraintViolation<?> cv){
-        final String path = cv.getPropertyPath().toString();
-        final String property = path.substring(path.lastIndexOf('.') + 1);
-        return String.format("{} is {}.{}", property, cv.getInvalidValue(), cv.getMessage());
-    }
-
     @ExceptionHandler(IllegalStateException.class)
     public ResponseEntity<ErrorResponse> handleIllegalStateException(IllegalStateException e){
         return ResponseEntity
@@ -109,6 +110,11 @@ public class GlobalExceptionController {
                 .body(ErrorResponse.builder()
                         .message(e.getMessage())
                         .code(e.toString()).build());
+    }
+
+    @ExceptionHandler(VerifyEmailException.class)
+    public ResponseEntity<VerifyRes> handleVerifyEmailException(VerifyEmailException e) {
+        return ResponseEntity.ok((new VerifyRes("이메일 인증에 실패하였습니다", false)));
     }
 
     //나머지 예외는 서버 에러로 처리

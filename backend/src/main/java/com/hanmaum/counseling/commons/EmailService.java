@@ -1,4 +1,4 @@
-package com.hanmaum.counseling.utils;
+package com.hanmaum.counseling.commons;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailSendException;
@@ -12,7 +12,7 @@ import javax.mail.internet.MimeMessage;
 
 @Service
 @RequiredArgsConstructor
-public class EmailUtil {
+public class EmailService {
     private final JavaMailSender emailSender;
 
     public void sendMail(String to, String sub, String text) {

@@ -1,6 +1,5 @@
 package com.hanmaum.counseling.domain.post.story;
 
-import com.hanmaum.counseling.commons.NicknameGenerator;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.post.Form;
 import com.hanmaum.counseling.domain.post.counsel.Counsel;
