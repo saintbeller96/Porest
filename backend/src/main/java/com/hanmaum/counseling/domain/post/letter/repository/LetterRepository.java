@@ -8,6 +8,6 @@ import org.springframework.data.repository.query.Param;
 import java.util.Optional;
 
 public interface LetterRepository extends JpaRepository<Letter, Long> {
-    @Query("select l from Letter l join fetch l.parentLetter join fetch l.counsel where l.id = :letterId")
+    @Query("select l from Letter l join fetch l.prevLetter join fetch l.counsel where l.id = :letterId")
     Optional<Letter> findByIdFetch(@Param("letterId") Long letterId);
 }

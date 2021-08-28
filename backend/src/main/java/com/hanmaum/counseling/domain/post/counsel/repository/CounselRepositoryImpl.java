@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hanmaum.counseling.domain.post.entity.QCounsel.counsel;
+import static com.hanmaum.counseling.domain.post.counsel.QCounsel.counsel;
 
 @Repository
 @RequiredArgsConstructor
@@ -33,7 +33,7 @@ public class CounselRepositoryImpl implements CounselRepositoryCustom {
                 .selectFrom(counsel).distinct()
                 .join(counsel.story).fetchJoin()
                 .leftJoin(counsel.letters).fetchJoin()
-                .where(counsel.counsellorId.eq(counsellorId))
+                .where(counsel.counsellor.id.eq(counsellorId))
                 .fetch();
     }
 
@@ -43,7 +43,7 @@ public class CounselRepositoryImpl implements CounselRepositoryCustom {
                 .selectFrom(counsel).distinct()
                 .join(counsel.story).fetchJoin()
                 .leftJoin(counsel.letters).fetchJoin()
-                .where(counsel.story.writerId.eq(userId))
+                .where(counsel.story.writer.id.eq(userId))
                 .fetch();
     }
 }

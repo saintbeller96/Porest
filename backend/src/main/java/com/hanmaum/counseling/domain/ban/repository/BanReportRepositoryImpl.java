@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.ban.repository;
 
-import com.hanmaum.counseling.domain.account.entity.QUser;
+import com.hanmaum.counseling.domain.account.QUser;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.presentation.ban.dto.BanReportDetailDto;
 import com.hanmaum.counseling.domain.ban.BanReport;
@@ -18,9 +18,9 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static com.hanmaum.counseling.domain.account.entity.QUser.user;
-import static com.hanmaum.counseling.domain.ban.entity.QBanReport.banReport;
-import static com.hanmaum.counseling.domain.post.entity.QCounsel.counsel;
+import static com.hanmaum.counseling.domain.account.QUser.user;
+import static com.hanmaum.counseling.domain.ban.QBanReport.banReport;
+import static com.hanmaum.counseling.domain.post.counsel.QCounsel.counsel;
 
 @Repository
 @RequiredArgsConstructor
@@ -33,9 +33,9 @@ public class BanReportRepositoryImpl implements BanReportRepositoryCustom{
         QUser counsellor = new QUser("counsellor");
         List<BanReport> content = queryFactory
                 .selectFrom(banReport)
-                .join(user).on(banReport.reporterId.eq(user.id))
-                .join(counsel).on(banReport.counselId.eq(counsel.id))
-                .join(counsellor).on(counsel.counsellorId.eq(counsellor.id))
+                .join(user).on(banReport.reporter.id.eq(user.id))
+                .join(counsel).on(banReport.counsel.id.eq(counsel.id))
+                .join(counsellor).on(counsel.counsel.id.eq(counsellor.id))
                 .where(banReport.banReportStatus.eq(BanReportStatus.WAIT))
                 .offset(pageable.getOffset())
                 .limit(pageable.getPageSize())
@@ -44,9 +44,9 @@ public class BanReportRepositoryImpl implements BanReportRepositoryCustom{
         JPAQuery<Tuple> countQuery = queryFactory
                 .select(banReport, counsel, user, counsellor)
                 .from(banReport)
-                .join(user).on(banReport.reporterId.eq(user.id))
-                .join(counsel).on(banReport.counselId.eq(counsel.id))
-                .join(counsellor).on(counsel.counsellorId.eq(counsellor.id))
+                .join(user).on(banReport.reporter.id.eq(user.id))
+                .join(counsel).on(banReport.counsel.id.eq(counsel.id))
+                .join(counsellor).on(counsel.counsellor.id.eq(counsellor.id))
                 .where(banReport.banReportStatus.eq(BanReportStatus.WAIT));
 
 

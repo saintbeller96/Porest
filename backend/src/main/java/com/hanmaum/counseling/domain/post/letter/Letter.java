@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.post.letter;
 
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.post.Form;
 import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import lombok.Builder;
@@ -17,12 +18,13 @@ public class Letter {
     @Column(name = "letter_id")
     private Long id;
 
-    @Column(name = "writer_id")
-    private Long writerId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "writer_id")
+    private User writer;
 
     @OneToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "letter_id")
-    private Letter parentLetter;
+    private Letter prevLetter;
 
     @Embedded
     private Form form;
@@ -38,13 +40,16 @@ public class Letter {
     @CreationTimestamp
     private LocalDateTime createdAt;
 
-    public void setCounsel(Counsel counsel){
-        this.counsel = counsel;
-    }
-    public void setStatus(LetterStatus status){this.status = status;}
-
     public Letter(){}
+    @Builder
+    public Letter(User writer, Letter prevLetter, String title, String content, LetterStatus status) {
+        this.writer = writer;
+        this.prevLetter = prevLetter;
+        this.form = new Form(title, content);
+        this.status = status;
+    }
 
+    public void setStatus(LetterStatus status){this.status = status;}
     public String getTitle(){
         return this.form.getTitle();
     }
@@ -52,25 +57,13 @@ public class Letter {
         return this.form.getContent();
     }
 
-    @Builder
-    public Letter(Long writerId, Letter parentLetter, String title, String content, LetterStatus status) {
-        this.writerId = writerId;
-        this.parentLetter = parentLetter;
-        this.form = new Form(title, content);
-        this.status = status;
-    }
-    public static Letter write(Long writerId, Letter parentLetter, String title, String content){
-        return Letter.builder()
-                .writerId(writerId)
-                .parentLetter(parentLetter)
-                .title(title)
-                .content(content)
-                .status(LetterStatus.WAIT)
-                .build();
+    public void setCounsel(Counsel counsel) {
+        this.counsel = counsel;
     }
 
-    @Override
-    public String toString() {
-        return String.format("%s  |  %s", this.form.getTitle(), this.form.getContent());
+    public void read(Long readerId) {
+        if(readerId == this.getCounsel().getCounsellor().getId()){
+            this.setStatus(LetterStatus.READ);
+        }
     }
 }

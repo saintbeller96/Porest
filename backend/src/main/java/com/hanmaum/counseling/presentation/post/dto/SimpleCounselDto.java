@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.presentation.post.dto;
 
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import com.hanmaum.counseling.domain.post.letter.Letter;
 import lombok.Builder;
 import lombok.Getter;
@@ -22,10 +23,10 @@ public class SimpleCounselDto {
         this.detail = LetterDto.of(letter);
     }
 
-    public static SimpleCounselDto create(Long counselId, Letter letter){
+    public static SimpleCounselDto of(Counsel counsel){
         return SimpleCounselDto.builder()
-                .counselId(counselId)
-                .letter(letter)
+                .counselId(counsel.getId())
+                .letter(counsel.getLetters().get(0))
                 .build();
     }
 }

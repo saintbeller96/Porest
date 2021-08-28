@@ -1,5 +1,8 @@
 package com.hanmaum.counseling.domain.post.letter.service;
 
+import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.domain.account.service.AccountService;
+import com.hanmaum.counseling.domain.post.counsel.service.CounselService;
 import com.hanmaum.counseling.presentation.post.dto.FormDto;
 import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import com.hanmaum.counseling.domain.post.letter.Letter;
@@ -15,32 +18,31 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class LetterServiceImpl implements LetterService{
     private final LetterRepository letterRepository;
-    private final CounselRepository counselRepository;
+    private final CounselService counselService;
+    private final AccountService accountService;
 
     @Override
-    public Long writeLetter(FormDto form, Long counselId, Long parentLetterId, Long userId) {
-        Counsel counsel = counselRepository.findById(counselId)
-                .orElseThrow(IllegalStateException::new);
-        Letter parentLetter = getLetter(parentLetterId);
+    public Letter writeLetter(String title, String content, Long counselId, Long prevLetterId, Long userId) {
+        Counsel counsel = counselService.getCounsel(counselId, userId);
+        User writer = accountService.getUser(userId);
+        Letter prevLetter = getLetter(prevLetterId);
 
-        Letter letter = Letter.write(userId, parentLetter, form.getTitle(), form.getContent());
+        Letter letter = Letter.builder()
+                .writer(writer)
+                .prevLetter(prevLetter)
+                .title(title)
+                .content(content)
+                .status(LetterStatus.WAIT)
+                .build();
         counsel.addLetter(letter);
-        return letterRepository.save(letter).getId();
+        return letterRepository.save(letter);
     }
 
     @Override
-    public Long readLetter(Long letterId, Long userId) {
+    public Letter readLetter(Long letterId, Long userId) {
         Letter letter = getLetter(letterId);
-        if(letter.getParentLetter() == null){
-            if(userId == letter.getCounsel().getCounsellorId()){
-                letter.setStatus(LetterStatus.READ);
-            }
-        }else{
-            if(userId == letter.getParentLetter().getWriterId() ){
-                letter.setStatus(LetterStatus.READ);
-            }
-        }
-        return letter.getId();
+        letter.read(userId);
+        return letter;
     }
 
     private Letter getLetter(Long letterId) {

@@ -12,7 +12,6 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
@@ -42,7 +41,7 @@ public class BanReportServiceTest {
     void banReportSuccess() throws Exception {
         //given
         given(mockUserRepository.findById(1L)).willReturn(Optional.of(createUser(1L)));
-        given(mockCounselRepository.findByCounselId(1L)).willReturn(Optional.of(1L));
+        //given(mockCounselRepository.findByCounselId(1L)).willReturn(Optional.of(1L));
         //when
         BanReport reason = banReportService.report(1L, "reason", 1L);
 

@@ -37,7 +37,6 @@ import java.util.Map;
 @Transactional
 public class AccountService {
     static final String LOGIN_FAIL = "아이디 비밀번호 확인";
-    static final String NOT_FOUND = "없는 유저";
     static final String BANNED_USER = "사용 정지된 유저";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
@@ -70,11 +69,11 @@ public class AccountService {
     }
 
     public User findByEmail(String email) {
-        return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
+        return userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
     }
 
     public JwtTokenDto login(String email, String password){
-        User user = userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
+        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
         //해당 유저가 밴 상태인지 확인
         banService.validateUserBanState(user);
 
@@ -97,8 +96,8 @@ public class AccountService {
         user.setPassword(passwordEncoder.encode(newPassword));
     }
 
-    private User getUser(Long userId) {
-        return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
+    public User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(UserNotFoundException::new);
     }
 
     public RedundancyDto existEmail(String email) {

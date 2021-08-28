@@ -6,6 +6,9 @@ import com.hanmaum.counseling.domain.account.RoleType;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.domain.account.service.AccountService;
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
+import com.hanmaum.counseling.domain.post.letter.Letter;
+import com.hanmaum.counseling.domain.post.story.Story;
 import com.hanmaum.counseling.presentation.post.dto.*;
 import com.hanmaum.counseling.domain.post.letter.service.LetterService;
 import com.hanmaum.counseling.domain.post.counsel.service.CounselService;
@@ -86,30 +89,34 @@ class CounselControllerTest {
         userRepository.save(counsellor);
         userRepository.save(counsellor2);
 
-        Long storyId = storyService.putStory(new FormDto("첫번째 사연", "흑흑 너무 슬퍼요", null), user.getId());
-        Long storyId2 = storyService.putStory(new FormDto("두번째 사연", "너무 힘드네요", null), user.getId());
+        Story story1 = storyService.putStory("첫번째 사연", "흑흑 너무 슬퍼요", user.getId());
+        Story story2 = storyService.putStory("두번째 사연", "너무 힘드네요", user.getId());
 
         //첫번째 상담사가 첫번째 사연을 선택
-        SimpleCounselDto tempDto = storyService.pickStory(storyId, counsellor.getId());
+        Counsel counsel = storyService.pickStory(story1.getId(), counsellor.getId());
+
+        Letter firstLetter = counsel.getLetters().get(0);
+
         //사연을 읽음
-        letterService.readLetter(tempDto.getDetail().getLetterId(), counsellor.getId());
+        letterService.readLetter(firstLetter.getId(), counsellor.getId());
         //답장
-        Long letterId1 = letterService.writeLetter(new FormDto( "첫번째 상담사의 답변입니다", "그러시군요 ㅠㅠ", null),
-                tempDto.getCounselId(), tempDto.getDetail().getLetterId(), counsellor.getId());
+        Letter reply = letterService.writeLetter("첫번째 상담사의 답변입니다", "그러시군요 ㅠㅠ", counsel.getId(), firstLetter.getId(), counsellor.getId());
 
         //사연자가 다시 답장
-        letterService.readLetter(letterId1, user.getId());
-        Long replyId1 = letterService.writeLetter(new FormDto("사연자의 답변입니다", "네 정말 고맙습니다.", null),
-                tempDto.getCounselId(), letterId1, user.getId());
-
+        letterService.readLetter(reply.getId(), user.getId());
+        Letter reply2 = letterService.writeLetter("사연자의 답변입니다", "네 정말 고맙습니다.",
+                counsel.getId(), reply.getId(), user.getId());
 
         //두번째 상담사가 첫번째 사연을 선택
-        SimpleCounselDto tempDto2 = storyService.pickStory(storyId, counsellor2.getId());
+        SimpleCounselDto tempDto2;
+        Counsel counsel2 = storyService.pickStory(story1.getId(), counsellor2.getId());
+
+        Letter firstLetter2 = counsel2.getLetters().get(0);
         //사연을 읽음
-        letterService.readLetter(tempDto2.getDetail().getLetterId(), counsellor2.getId());
+        letterService.readLetter(firstLetter2.getId(), counsellor2.getId());
         //답장
-        Long letterId2 = letterService.writeLetter(new FormDto("두번째 상담사의 답변입니다", "그러시군요 ㅋㅋ", null),
-                tempDto2.getCounselId(), tempDto2.getDetail().getLetterId(), counsellor2.getId());
+        letterService.writeLetter("두번째 상담사의 답변입니다", "그러시군요 ㅋㅋ",
+                counsel2.getId(), firstLetter2.getId(), counsellor2.getId());
     }
     @AfterEach
     void setDown(){
@@ -141,8 +148,8 @@ class CounselControllerTest {
     void get_counsels_success() throws Exception{
         //given
         User user = accountService.findByEmail("user@test.com");
-        List<UserStoryStateDto> userStoryState = storyService.getUserStoryState(user.getId());
-        Long storyId = userStoryState.get(0).getStoryId();
+        List<Story> stories = storyService.getStoriesOfUser(user.getId());
+        Long storyId = stories.get(0).getId();
         //when
         ResultActions actions = mockMvc.perform(get("/stories/" + storyId + "/counsels")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -156,15 +163,15 @@ class CounselControllerTest {
         String content = mvcResult.getResponse().getContentAsString();
         List<UserCounselStateDto> result = mapper.readValue(content, mapper.getTypeFactory().constructCollectionType(List.class, UserCounselStateDto.class));
 
-        Assertions.assertThat(result).extracting("numOfReplies").containsExactly(0, 1);
+        Assertions.assertThat(result).extracting("numOfReplies").containsExactly(1, 0);
     }
     @Test
     @DisplayName("자신이 보낸 특정 사연의 상담 내역, 200 반환")
     void get_detail_counsel_success() throws Exception{
         //given
         User user = accountService.findByEmail("user@test.com");
-        List<DetailCounselDto> result = counselService.getDetailCounsels(user.getId());
-        Long counselId = result.get(0).getCounselId();
+        List<Counsel> result = counselService.getCounsels(user.getId());
+        Long counselId = result.get(0).getId();
         //when
         ResultActions actions = mockMvc.perform(get("/counsels/" + counselId)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -213,22 +220,20 @@ class CounselControllerTest {
     void finish_counsel() throws Exception{
         //given
         User user = accountService.findByEmail("user@test.com");
-        List<UserStoryStateDto> temp1 = storyService.getUserStoryState(user.getId());
-        Long storyId = temp1.get(0).getStoryId();
-        List<UserCounselStateDto> temp2 = storyService.getCounselStateOfUserWithStory(storyId, user.getId());
-        Long counselId = temp2.get(0).getCounselId();
+        List<Story> storiesOfUser = storyService.getStoriesOfUser(user.getId());
+        Story story = storiesOfUser.get(0);
+        //List<UserCounselStateDto> temp2 =
+        Story storyOfUser = storyService.getStoryOfUser(story.getId(), user.getId());
+        Counsel counsel = storyOfUser.getCounsels().get(0);
         EvaluateDto dto = new EvaluateDto(true, EvaluateDto.EvaluateType.GOOD);
         String content = mapper.writeValueAsString(dto);
         //when
-        ResultActions actions = mockMvc.perform(post("/counsels/" + counselId + "/finish")
+        ResultActions actions = mockMvc.perform(post("/counsels/" + counsel.getId() + "/finish")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(content)
                 .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
         //then
         actions.andExpect(status().isOk())
                 .andDo(print());
-
-        List<UserCounselStateDto> temp3 = storyService.getCounselStateOfUserWithStory(storyId, user.getId());
-        Assertions.assertThat(temp3.size()).isEqualTo(1);
     }
 }
