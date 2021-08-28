@@ -9,6 +9,6 @@ import java.util.List;
 import java.util.Optional;
 
 public interface EmotionRepositoryCustom {
-    List<EmotionSimpleDto> findByCondition(EmotionCondition condition, Long userId);
+    List<Emotion> findByCondition(EmotionCondition condition, Long userId);
     Optional<Emotion> findByDate(LocalDateTime today, Long userId);
 }

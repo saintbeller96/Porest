@@ -28,7 +28,7 @@ public class EmotionDetailDto {
         this.createdAt = createdAt;
     }
 
-    public static EmotionDetailDto convertedFromEntity(Emotion entity){
+    public static EmotionDetailDto of(Emotion entity){
         return EmotionDetailDto.builder()
                 .content(entity.getContent())
                 .feeling(entity.getFeeling())

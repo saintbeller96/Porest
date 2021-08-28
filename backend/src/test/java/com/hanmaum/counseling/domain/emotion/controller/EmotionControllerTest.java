@@ -6,6 +6,7 @@ import com.hanmaum.counseling.domain.account.Password;
 import com.hanmaum.counseling.domain.account.RoleType;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.emotion.Emotion;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
 import com.hanmaum.counseling.domain.emotion.service.EmotionService;
@@ -58,7 +59,8 @@ class EmotionControllerTest {
     User user;
     @BeforeEach
     void setUp(){
-        user = userRepository.save(User.builder().email("test@test.com")
+        user = userRepository.save(User.builder()
+                .email("test@test.com")
                 .role(RoleType.ROLE_USER)
                 .password(new Password("1234", encoder))
                 .nickname("nickname").build());
@@ -90,7 +92,7 @@ class EmotionControllerTest {
     void saveDuplicatedEmotion() throws Exception{
         //given
         EmotionDetailDto dto = setUpEmotion();
-        emotionService.saveEmotion(dto, user.getId());
+        emotionService.saveEmotion(dto.getFeeling(), dto.getContent(), dto.getImageUrl(), user.getId());
 
         String content = mapper.writeValueAsString(dto);
         //when
@@ -108,10 +110,10 @@ class EmotionControllerTest {
     void getEmotionDetail() throws Exception{
         //given
         var temp = setUpEmotion();
-        Long emotionId = emotionService.saveEmotion(temp, user.getId());
+        Emotion saveEmotion = emotionService.saveEmotion(temp.getFeeling(), temp.getContent(), temp.getImageUrl(), user.getId());
 
         //when
-        ResultActions actions = mockMvc.perform(get("/emotions/" + emotionId)
+        ResultActions actions = mockMvc.perform(get("/emotions/" + saveEmotion.getId())
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(user(CustomUserDetails.fromUserToCustomUserDetails(user))));
         //then
@@ -128,7 +130,7 @@ class EmotionControllerTest {
     void searchEmotions() throws Exception{
         //given
         EmotionDetailDto dto = setUpEmotion();
-        Long emotionId = emotionService.saveEmotion(dto, user.getId());
+        Emotion saveEmotion = emotionService.saveEmotion(dto.getFeeling(), dto.getContent(), dto.getImageUrl(), user.getId());
 
         MultiValueMap<String, String> param = new LinkedMultiValueMap<>();
         param.add("month", String.valueOf(LocalDateTime.now().getMonthValue()));
@@ -144,7 +146,7 @@ class EmotionControllerTest {
                 .andReturn();
         String content = result.getResponse().getContentAsString();
         List<EmotionSimpleDto> list = mapper.readValue(content, mapper.getTypeFactory().constructCollectionType(List.class, EmotionSimpleDto.class));
-        Assertions.assertThat(list).extracting("emotionId").containsExactly(emotionId);
+        Assertions.assertThat(list).extracting("emotionId").containsExactly(saveEmotion.getId());
     }
 
     @Test

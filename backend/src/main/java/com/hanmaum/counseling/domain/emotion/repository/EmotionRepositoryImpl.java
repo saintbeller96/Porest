@@ -1,10 +1,7 @@
 package com.hanmaum.counseling.domain.emotion.repository;
 
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionCondition;
-import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
 import com.hanmaum.counseling.domain.emotion.Emotion;
-import com.hanmaum.counseling.domain.emotion.QEmotion;
-import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
 import lombok.RequiredArgsConstructor;
@@ -23,11 +20,9 @@ public class EmotionRepositoryImpl implements EmotionRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public List<EmotionSimpleDto> findByCondition(EmotionCondition condition, Long userId) {
+    public List<Emotion> findByCondition(EmotionCondition condition, Long userId) {
         return queryFactory
-                .select(Projections.constructor(EmotionSimpleDto.class,
-                        emotion.id, emotion.feeling, emotion.createdAt.dayOfMonth()))
-                .from(emotion)
+                .selectFrom(emotion)
                 .where(userIdEq(userId),
                         yearEq(condition.getYear()),
                         monthEq(condition.getMonth()))
@@ -36,18 +31,18 @@ public class EmotionRepositoryImpl implements EmotionRepositoryCustom{
 
     @Override
     public Optional<Emotion> findByDate(LocalDateTime today, Long userId) {
-        Emotion emotion = queryFactory
-                .selectFrom(QEmotion.emotion)
+        Emotion ret = queryFactory
+                .selectFrom(emotion)
                 .where(userIdEq(userId),
                         yearEq(today.getYear()),
                         monthEq(today.getMonthValue()),
                         dayEq(today.getDayOfMonth()))
                 .fetchOne();
-        return Optional.ofNullable(emotion);
+        return Optional.ofNullable(ret);
     }
 
     private BooleanExpression userIdEq(Long userId) {
-        return emotion.userId.eq(userId);
+        return emotion.user.id.eq(userId);
     }
     private BooleanExpression yearEq(int year){
         return emotion.createdAt.year().eq(year);
