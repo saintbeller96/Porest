@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.emotion.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.hanmaum.counseling.domain.account.Password;
 import com.hanmaum.counseling.domain.account.RoleType;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
@@ -19,6 +20,7 @@ import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMock
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.context.annotation.Import;
 import org.springframework.http.MediaType;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
@@ -49,6 +51,8 @@ class EmotionControllerTest {
     @Autowired
     UserRepository userRepository;
     @Autowired
+    PasswordEncoder encoder;
+    @Autowired
     ObjectMapper mapper;
 
     User user;
@@ -56,7 +60,7 @@ class EmotionControllerTest {
     void setUp(){
         user = userRepository.save(User.builder().email("test@test.com")
                 .role(RoleType.ROLE_USER)
-                .password("1234")
+                .password(new Password("1234", encoder))
                 .nickname("nickname").build());
     }
 
