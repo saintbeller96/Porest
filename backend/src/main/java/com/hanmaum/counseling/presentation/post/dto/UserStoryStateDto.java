@@ -1,6 +1,8 @@
 package com.hanmaum.counseling.presentation.post.dto;
 
 import com.hanmaum.counseling.domain.post.counsel.Counsel;
+import com.hanmaum.counseling.domain.post.letter.Letter;
+import com.hanmaum.counseling.domain.post.letter.LetterStatus;
 import com.hanmaum.counseling.domain.post.story.Story;
 import lombok.Builder;
 import lombok.Getter;
@@ -28,22 +30,20 @@ public class UserStoryStateDto {
         this.nickname = nickname;
     }
 
-    public static UserStoryStateDto getMyStoryInfo(Story story, int numOfNewReply){
+    public static UserStoryStateDto of(Story story) {
+        int cnt = 0;
+        for(Counsel counsel : story.getCounsels()){
+            int len = counsel.getLetters().size();
+            Letter lastLetter = counsel.getLetters().get(len-1);
+            if(lastLetter.getWriter().equals(story.getWriter()) && lastLetter.getStatus() == LetterStatus.WAIT){
+                cnt++;
+            }
+        }
         return UserStoryStateDto.builder()
                 .storyId(story.getId())
                 .title(story.getForm().getTitle())
                 .createdAt(story.getCreatedAt())
-                .numOfNewReply(numOfNewReply)
-                .build();
-    }
-
-    public static UserStoryStateDto getMyCounselInfo(Story story, Counsel counsel, int numOfNewReply){
-        return UserStoryStateDto.builder()
-                .storyId(story.getId())
-                .title(story.getForm().getTitle())
-                .createdAt(story.getCreatedAt())
-                .numOfNewReply(numOfNewReply)
-                .nickname(counsel.getCounsellorNickname())
+                .numOfNewReply(cnt)
                 .build();
     }
 }

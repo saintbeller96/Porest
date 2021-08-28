@@ -4,13 +4,16 @@ import com.hanmaum.counseling.commons.NicknameGenerator;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.post.letter.Letter;
 import com.hanmaum.counseling.domain.post.story.Story;
+import com.hanmaum.counseling.error.CounselAccessDeniedException;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.security.access.AccessDeniedException;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Getter
@@ -46,11 +49,10 @@ public class Counsel {
     public Counsel(){}
 
     @Builder
-    public Counsel(Story story, User counsellor, CounselStatus status) {
+    public Counsel(Story story, User counsellor, String counsellorNickname, CounselStatus status) {
         this.story = story;
         this.counsellor = counsellor;
-//        this.counsellorNickname = NicknameGenerator.generatePositive();
-//        this.counsellorId = counsellorId;
+        this.counsellorNickname = counsellorNickname;
         this.status = status;
     }
 
@@ -59,6 +61,15 @@ public class Counsel {
         letter.setCounsel(this);
     }
 
+    public void validateUser(Long userId) {
+        if(!Objects.equals(counsellor.getId(), userId) && !Objects.equals(story.getWriter().getId(), userId)){
+            throw new AccessDeniedException("현재 사용자는 이 상담 내역에 접근할 수 없습니다.");
+        }
+    }
+
+    public void finish() {
+        this.status = CounselStatus.END;
+    }
 
     public void setStory(Story story){
         this.story = story;

@@ -6,6 +6,7 @@ import com.hanmaum.counseling.domain.account.RoleType;
 import com.hanmaum.counseling.domain.account.User;
 
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.post.story.Story;
 import com.hanmaum.counseling.presentation.post.dto.FormDto;
 import com.hanmaum.counseling.presentation.post.dto.SimpleStoryDto;
 import com.hanmaum.counseling.domain.post.story.service.StoryService;
@@ -78,8 +79,8 @@ class StoryControllerTest {
         userRepository.save(user);
         userRepository.save(counsellor);
 
-        storyService.putStory(new FormDto("첫번째 사연", "흑흑 너무 슬퍼요",null), user.getId());
-        storyService.putStory(new FormDto("두번째 사연", "너무 힘드네요",null), user.getId());
+        storyService.putStory("첫번째 사연", "흑흑 너무 슬퍼요", user.getId());
+        storyService.putStory("두번째 사연", "너무 힘드네요", user.getId());
     }
 
     @Test
@@ -140,8 +141,9 @@ class StoryControllerTest {
     void pick_story_success() throws Exception{
         //given
         User counsellor = userRepository.findByEmail("counsellor1@test.com").get();
-        List<SimpleStoryDto> candidates = storyService.getCandidates(counsellor.getId());
-        Long storyId = candidates.get(0).getStoryId();
+        //List<SimpleStoryDto> candidates =
+        List<Story> candidates = storyService.getCandidates(counsellor.getId());
+        Long storyId = candidates.get(0).getId();
 
         //when
         ResultActions actions = mockMvc.perform(post("/stories/" + storyId)

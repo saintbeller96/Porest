@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.presentation.post.dto;
 
+import com.hanmaum.counseling.domain.post.story.Story;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.ToString;
@@ -24,5 +25,14 @@ public class SimpleStoryDto {
     public SimpleStoryDto(Long storyId, String title, String content, LocalDateTime date){
         this.storyId = storyId;
         this.detail = FormDto.builder().title(title).content(content).createAt(date).build();
+    }
+
+    public static SimpleStoryDto of(Story story) {
+        return SimpleStoryDto.builder()
+                .storyId(story.getId())
+                .title(story.getTitle())
+                .content(story.getContent())
+                .date(story.getCreatedAt())
+                .build();
     }
 }

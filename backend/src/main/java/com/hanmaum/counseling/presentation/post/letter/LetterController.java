@@ -30,7 +30,7 @@ public class LetterController {
                                               @PathVariable("counselId") Long counselId,
                                               @PathVariable("letterId") Long letterId,
                                               @LoginUserId Long userId) {
-        letterService.writeLetter(form, counselId, letterId, userId);
+        letterService.writeLetter(form.getTitle(), form.getContent(), counselId, letterId, userId);
         return ResponseEntity.status(HttpStatus.CREATED).body("created");
     }
 

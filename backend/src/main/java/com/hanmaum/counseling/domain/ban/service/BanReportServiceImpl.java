@@ -2,7 +2,9 @@ package com.hanmaum.counseling.domain.ban.service;
 
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
+import com.hanmaum.counseling.domain.account.service.AccountService;
 import com.hanmaum.counseling.domain.ban.BanReportStatus;
+import com.hanmaum.counseling.domain.post.counsel.service.CounselService;
 import com.hanmaum.counseling.error.BanReportNotFoundException;
 import com.hanmaum.counseling.error.CounselNotFoundException;
 import com.hanmaum.counseling.error.UserNotFoundException;
@@ -27,34 +29,22 @@ import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 
 @Service
-@Transactional(readOnly = true)
+@Transactional
 @RequiredArgsConstructor
 public class BanReportServiceImpl implements BanReportService{
 
-    private final UserRepository userRepository;
-    private final CounselRepository counselRepository;
     private final BanReportRepository banReportRepository;
+    private final AccountService accountService;
+    private final CounselService counselService;
     private final BanService banService;
-
-    @Transactional
+    
     @Override
     public BanReport report(Long counselId, String reason, Long reporterId) {
-        User reporter = getUser(reporterId);
-        Counsel counsel = getCounsel(counselId);
+        User reporter = accountService.getUser(reporterId);
+        Counsel counsel = counselService.getCounsel(counselId, reporterId);
         return banReportRepository.save(new BanReport(reporter, counsel, reason, BanReportStatus.WAIT));
     }
 
-    private User getUser(Long userId) {
-        return userRepository.findById(userId)
-                .orElseThrow(UserNotFoundException::new);
-    }
-
-    private Counsel getCounsel(Long counselId) {
-        return counselRepository.findByCounselId(counselId)
-                .orElseThrow(CounselNotFoundException::new);
-    }
-
-    @Transactional
     @Override
     public Ban process(Long banReportId) {
         BanReport banReport = banReportRepository.findById(banReportId)
@@ -63,7 +53,6 @@ public class BanReportServiceImpl implements BanReportService{
         return banService.register(banReport);
     }
 
-    @Transactional
     @Override
     public Long cancel(Long banReportId) {
         BanReport banReport = banReportRepository.findById(banReportId)

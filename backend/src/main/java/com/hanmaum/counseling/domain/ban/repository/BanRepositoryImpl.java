@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hanmaum.counseling.domain.ban.entity.QBan.ban;
+import static com.hanmaum.counseling.domain.ban.QBan.ban;
 
 @Repository
 @RequiredArgsConstructor
@@ -21,7 +21,7 @@ public class BanRepositoryImpl implements BanRepositoryCustom{
         return queryFactory
                 .selectFrom(ban)
                 .join(ban.report).fetchJoin()
-                .where(ban.banUserId.eq(userId))
+                .where(ban.banUser.id.eq(userId))
                 .fetch();
     }
 }

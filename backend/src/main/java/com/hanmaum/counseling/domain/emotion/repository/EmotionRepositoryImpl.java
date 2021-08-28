@@ -3,7 +3,7 @@ package com.hanmaum.counseling.domain.emotion.repository;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionCondition;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
 import com.hanmaum.counseling.domain.emotion.Emotion;
-import com.hanmaum.counseling.domain.emotion.entity.QEmotion;
+import com.hanmaum.counseling.domain.emotion.QEmotion;
 import com.querydsl.core.types.Projections;
 import com.querydsl.core.types.dsl.BooleanExpression;
 import com.querydsl.jpa.impl.JPAQueryFactory;
@@ -14,7 +14,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import static com.hanmaum.counseling.domain.emotion.entity.QEmotion.emotion;
+import static com.hanmaum.counseling.domain.emotion.QEmotion.emotion;
 
 @Repository
 @RequiredArgsConstructor

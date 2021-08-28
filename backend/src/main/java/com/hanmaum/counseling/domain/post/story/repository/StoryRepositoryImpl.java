@@ -11,8 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static com.hanmaum.counseling.domain.post.entity.QCounsel.counsel;
-import static com.hanmaum.counseling.domain.post.entity.QStory.story;
+import static com.hanmaum.counseling.domain.post.counsel.QCounsel.counsel;
+import static com.hanmaum.counseling.domain.post.story.QStory.story;
 
 @Repository
 @RequiredArgsConstructor
@@ -34,14 +34,14 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
     /**
      * 랜덤으로 CANDIDATES 명의 사연을 중복없이 뽑기
      */
-    public List<SimpleStoryDto> getCandidates(Long userId){
+    public List<Story> getCandidates(Long userId){
         List<Long> ids = queryFactory
                 .select(story.id).distinct()
                 .from(story)
                 .leftJoin(story.counsels, counsel)
-                .where(story.writerId.ne(userId),
+                .where(story.writer.id.ne(userId),
                         story.picked.lt(PICK_MAX),
-                        counsel.isNull().or(counsel.counsellorId.ne(userId)))
+                        counsel.isNull().or(counsel.counsellor.id.ne(userId)))
                 .fetch();
         if(ids.size() == 0){
             return Collections.emptyList();
@@ -55,9 +55,7 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
         }
 
         return queryFactory
-                .select(Projections.constructor(SimpleStoryDto.class,
-                        story.id, story.form.title, story.form.content, story.createdAt))
-                .from(story)
+                .selectFrom(story)
                 .where(story.id.in(randomSet))
                 .fetch();
     }
@@ -67,7 +65,7 @@ public class StoryRepositoryImpl implements StoryRepositoryCustom{
         List<Story> stories = queryFactory
                 .selectFrom(story).distinct()
                 .leftJoin(story.counsels, counsel).fetchJoin()
-                .where(story.writerId.eq(userId))
+                .where(story.writer.id.eq(userId))
                 .fetch();
 
         List<Long> selectedStoryIds = stories.stream()
