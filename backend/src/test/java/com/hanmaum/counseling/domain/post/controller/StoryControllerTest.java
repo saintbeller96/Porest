@@ -2,6 +2,7 @@ package com.hanmaum.counseling.domain.post.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hanmaum.counseling.commons.ControllerTestConfig;
+import com.hanmaum.counseling.domain.account.Password;
 import com.hanmaum.counseling.domain.account.RoleType;
 import com.hanmaum.counseling.domain.account.User;
 
@@ -61,19 +62,19 @@ class StoryControllerTest {
                 .nickname("a")
                 .email("user@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(encoder.encode("1234"))
+                .password(new Password("1234", encoder))
                 .build();
         User counsellor = User.builder()
                 .nickname("b")
                 .email("counsellor1@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(encoder.encode("1234"))
+                .password(new Password("1234", encoder))
                 .build();
         User counsellor2 = User.builder()
                 .nickname("c")
                 .email("counsellor2@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(encoder.encode("1234"))
+                .password(new Password("1234", encoder))
                 .build();
 
         userRepository.save(user);
