@@ -5,6 +5,7 @@ import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.domain.ban.Ban;
 import com.hanmaum.counseling.domain.ban.repository.BanRepository;
+import com.hanmaum.counseling.domain.ban.service.BanService;
 import com.hanmaum.counseling.presentation.account.dto.*;
 import com.hanmaum.counseling.security.JwtProvider;
 import com.hanmaum.counseling.utils.EmailUtil;
@@ -13,6 +14,7 @@ import com.hanmaum.counseling.error.UserNotFoundException;
 import com.hanmaum.counseling.error.WrongPasswordException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.RandomStringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Service;
 import javax.mail.MessagingException;
 import javax.security.auth.login.LoginException;
 import javax.servlet.http.HttpServletRequest;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -30,14 +33,15 @@ import java.util.Map;
 
 @Service
 @RequiredArgsConstructor
-@Log
+@Slf4j
+@Transactional
 public class AccountService {
     static final String LOGIN_FAIL = "아이디 비밀번호 확인";
     static final String NOT_FOUND = "없는 유저";
     static final String BANNED_USER = "사용 정지된 유저";
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
-    private final BanRepository banRepository;
+    private final BanService banService;
     private final JwtProvider jwtProvider;
     private final EmailUtil emailUtil;
     private final RedisUtil redisUtil;
@@ -69,40 +73,33 @@ public class AccountService {
         return userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
     }
 
-    public JwtTokenDto findByEmailAndPassword(LoginDto request){
-        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
+    public JwtTokenDto login(String email, String password){
+        User user = userRepository.findByEmail(email).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
         //해당 유저가 밴 상태인지 확인
-        List<Ban> bannedList = banRepository.findByUserIdFetch(user.getId());
-        for (Ban ban : bannedList) {
-            //현재 밴이 진행중인지 검증
-            ban.validate(LocalDateTime.now());
-            //검증을 통과했으면 밴 해제
-            ban.releaseBan();
-        }
+        banService.validateUserBanState(user);
 
-        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+        if (!passwordEncoder.matches(password, user.getPassword())) {
             throw new BadCredentialsException(LOGIN_FAIL);
         }
         String token = jwtProvider.generateToken(user);
         return JwtTokenDto.builder().token(token).build();
     }
 
-    public void updatePassword(HttpServletRequest request, UpdatePasswordDto updatePasswordDto) {
-        String token = request.getHeader("Authorization").substring(7);
-        String email = jwtProvider.getEmailFromToken(token);
-        User user = findByEmail(email);
-        if (!passwordEncoder.matches(updatePasswordDto.getOldPassword(), user.getPassword())) {
+    public void updatePassword(Long userId, String oldPassword, String newPassword) {
+        User user = getUser(userId);
+        if (!passwordEncoder.matches(oldPassword, user.getPassword())) {
              throw new WrongPasswordException("비밀번호가 틀렸습니다.");
         }
-        else if(passwordEncoder.matches(updatePasswordDto.getNewPassword(), user.getPassword())){
+        else if(passwordEncoder.matches(newPassword, user.getPassword())){
            throw new WrongPasswordException("새로운 비밀번호가 이전 비밀번호와 같습니다.");
         }
 
-        String newPassword = passwordEncoder.encode(updatePasswordDto.getNewPassword());
-        user.setPassword(newPassword);
-        userRepository.save(user);
+        user.setPassword(passwordEncoder.encode(newPassword));
     }
 
+    private User getUser(Long userId) {
+        return userRepository.findById(userId).orElseThrow(()-> new UserNotFoundException(NOT_FOUND));
+    }
 
     public RedundancyDto existEmail(String email) {
         boolean redundancy = userRepository.existsByEmail(email);
@@ -138,11 +135,8 @@ public class AccountService {
         emailUtil.sendMail(email, "POREST 인증 메일 입니다." ,code);
     }
 
-    public void deleteUser(HttpServletRequest request) {
-        String token = request.getHeader("Authorization").substring(7);
-        String email = jwtProvider.getEmailFromToken(token);
-        User user = findByEmail(email);
-        userRepository.delete(user);
+    public void deleteUser(Long userId) {
+        userRepository.delete(getUser(userId));
     }
 
     public ResponseEntity<?> findPassword(String email, String nickname) {
@@ -163,12 +157,9 @@ public class AccountService {
         return isExist ? ResponseEntity.ok().build() : ResponseEntity.badRequest().body(result);
     }
 
-    public void updateNickname(HttpServletRequest request, UpdateNicknameDto updateNicknameDto) {
-        String token = request.getHeader("Authorization").substring(7);
-        String email = jwtProvider.getEmailFromToken(token);
-
-        User user = userRepository.findByEmail(email).orElseThrow(IllegalStateException::new);
-        user.setNickname(updateNicknameDto.getNickname());
+    public void updateNickname(Long userId, String newNickname) {
+        User user = getUser(userId);
+        user.setNickname(newNickname);
         userRepository.save(user);
     }
 }

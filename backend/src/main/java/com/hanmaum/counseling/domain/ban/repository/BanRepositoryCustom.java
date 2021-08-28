@@ -6,7 +6,5 @@ import java.util.List;
 import java.util.Optional;
 
 public interface BanRepositoryCustom {
-    Optional<Ban> findByIdFetch(Long banId);
-    List<Ban> findByUserIdFetch(Long userId);
-    Boolean existsBannedUser(Long userId);
+    List<Ban> findByUserId(Long userId);
 }

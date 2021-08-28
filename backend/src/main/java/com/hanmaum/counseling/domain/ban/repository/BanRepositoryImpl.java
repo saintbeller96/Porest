@@ -17,32 +17,11 @@ public class BanRepositoryImpl implements BanRepositoryCustom{
     private final JPAQueryFactory queryFactory;
 
     @Override
-    public Optional<Ban> findByIdFetch(Long banId) {
-        Ban result = queryFactory
-                .selectFrom(ban)
-                .join(ban.report).fetchJoin()
-                .where(ban.id.eq(banId))
-                .fetchOne();
-        return Optional.ofNullable(result);
-    }
-
-    @Override
-    public List<Ban> findByUserIdFetch(Long userId) {
+    public List<Ban> findByUserId(Long userId) {
         return queryFactory
                 .selectFrom(ban)
                 .join(ban.report).fetchJoin()
-                .where(ban.banUserId.eq(userId), ban.banStatus.eq(BanStatus.BANNED))
+                .where(ban.banUserId.eq(userId))
                 .fetch();
-    }
-
-    @Override
-    public Boolean existsBannedUser(Long userId) {
-        Integer result = queryFactory
-                .selectOne()
-                .from(ban)
-                .where(ban.banUserId.eq(userId), ban.banStatus.eq(BanStatus.BANNED))
-                .limit(1)
-                .fetchFirst();
-        return result != null;
     }
 }

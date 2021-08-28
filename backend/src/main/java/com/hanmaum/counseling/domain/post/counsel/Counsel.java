@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.domain.post.counsel;
 
 import com.hanmaum.counseling.commons.NicknameGenerator;
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.post.letter.Letter;
 import com.hanmaum.counseling.domain.post.story.Story;
 import lombok.Builder;
@@ -19,8 +20,9 @@ public class Counsel {
     @Column(name = "counsel_id")
     private Long id;
 
-    @Column(name = "counsellor_id")
-    private Long counsellorId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="counsellor_id")
+    private User counsellor;
 
     @Column(name = "counsellor_nickname")
     private String counsellorNickname;
@@ -44,10 +46,11 @@ public class Counsel {
     public Counsel(){}
 
     @Builder
-    public Counsel(Story story, Long counsellorId, CounselStatus status) {
+    public Counsel(Story story, User counsellor, CounselStatus status) {
         this.story = story;
-        this.counsellorNickname = NicknameGenerator.generatePositive();
-        this.counsellorId = counsellorId;
+        this.counsellor = counsellor;
+//        this.counsellorNickname = NicknameGenerator.generatePositive();
+//        this.counsellorId = counsellorId;
         this.status = status;
     }
 
@@ -56,18 +59,10 @@ public class Counsel {
         letter.setCounsel(this);
     }
 
+
     public void setStory(Story story){
         this.story = story;
     }
-
-    public static Counsel createConnectedCounsel(Story story, Long userId){
-        return Counsel.builder()
-                .story(story)
-                .counsellorId(userId)
-                .status(CounselStatus.CONNECT)
-                .build();
-    }
-
     public void setStatus(CounselStatus status){
         this.status = status;
     }

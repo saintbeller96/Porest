@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.presentation.ban.dto;
 
 import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.domain.ban.BanReport;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -25,6 +26,18 @@ public class BanReportDetailDto {
         this.counselId = counselId;
         this.banReason = banReason;
         this.reportedAt = reportedAt;
+    }
+
+    public static BanReportDetailDto of(BanReport banReport) {
+        return BanReportDetailDto.builder()
+                .id(banReport.getId())
+                .reporter(new UserInfo(banReport.getReporter()))
+                .reportedUser(new UserInfo(banReport.getCounsellorUser()))
+                .counselId(banReport.getCounsel().getId())
+                .banReason(banReport.getBanReason())
+                .reportedAt(banReport.getCreatedAt())
+                .build();
+
     }
 
     @Getter
