@@ -35,7 +35,7 @@ public class BanServiceImpl implements BanService{
     public void validateUserBanState(User user) {
         List<Ban> banList = banRepository.findByUserId(user.getId());
         for (Ban ban : banList) {
-            ban.validateUserBanState(LocalDateTime.now());
+            ban.validateBanExpired(LocalDateTime.now());
             release(ban.getId());
         }
     }

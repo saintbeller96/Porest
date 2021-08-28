@@ -4,6 +4,7 @@ import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.domain.ban.repository.BanReportRepository;
 import com.hanmaum.counseling.domain.ban.service.BanReportService;
+import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import com.hanmaum.counseling.domain.post.counsel.repository.CounselRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -40,8 +41,10 @@ public class BanReportServiceTest {
     @DisplayName("신고하기")
     void banReportSuccess() throws Exception {
         //given
-        given(mockUserRepository.findById(1L)).willReturn(Optional.of(new User()));
+        given(mockUserRepository.findById(1L)).willReturn(Optional.of(createUser(1L)));
+        given(mockCounselRepository.findByCounselId(1L)).willReturn(Optional.of(1L));
         //when
+        BanReport reason = banReportService.report(1L, "reason", 1L);
 
         //then
 
@@ -67,6 +70,18 @@ public class BanReportServiceTest {
 
         //then
 
+    }
+
+    private User createUser(Long userId) {
+        return User.builder()
+                .id(userId)
+                .email("user1@porest.com")
+                .build();
+    }
+
+    private Counsel createCounsel(Long counselId) {
+        return Counsel.builder()
+                .build();
     }
 
 }

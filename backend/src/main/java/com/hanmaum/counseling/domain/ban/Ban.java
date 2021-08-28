@@ -39,8 +39,8 @@ public class Ban {
         this.releaseDate = releaseDate;
     }
 
-    public void validateUserBanState(LocalDateTime now){
-        if(releaseDate.isAfter(now)){
+    public void validateBanExpired(LocalDateTime day){
+        if(releaseDate.isAfter(day)){
             throw new BannedUserException("해당 계정은 정지된 상태입니다");
         }
     }

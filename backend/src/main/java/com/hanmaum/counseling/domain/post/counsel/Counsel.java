@@ -59,6 +59,7 @@ public class Counsel {
         letter.setCounsel(this);
     }
 
+
     public void setStory(Story story){
         this.story = story;
     }
