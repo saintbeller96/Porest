@@ -1,10 +1,8 @@
 package com.hanmaum.counseling.domain.post.counsel;
 
-import com.hanmaum.counseling.commons.NicknameGenerator;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.post.letter.Letter;
 import com.hanmaum.counseling.domain.post.story.Story;
-import com.hanmaum.counseling.error.CounselAccessDeniedException;
 import lombok.Builder;
 import lombok.Getter;
 import org.hibernate.annotations.ColumnDefault;

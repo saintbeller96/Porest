@@ -1,11 +1,14 @@
 package com.hanmaum.counseling.domain.account;
 
+import com.hanmaum.counseling.error.WrongPasswordException;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.ColumnDefault;
 import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -16,13 +19,13 @@ import java.time.LocalDateTime;
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    Long id;
+    private Long id;
 
     @Column(unique = true)
     private String email;
 
-    @Column
-    private String password;
+    @Embedded
+    private Password password;
 
     //TODO : 닉네임 삭제 예정
     @Column
@@ -50,7 +53,7 @@ public class User {
     private LocalDateTime updatedAt;
 
     @Builder
-    public User(Long id, String email, String password, String nickname, int temperature,  Long profileImgNumber, RoleType role) {
+    public User(Long id, String email, Password password, String nickname, int temperature, Long profileImgNumber, RoleType role) {
         this.id = id;
         this.email = email;
         this.password = password;
@@ -59,11 +62,24 @@ public class User {
         this.profileImgNumber = profileImgNumber;
         this.role = role;
     }
+
+    public void login(String password) {
+        if (!this.password.match(password)) {
+            throw new WrongPasswordException("비밀번호가 일치하지 않습니다.");
+        }
+    }
+
+    public void updatePassword(String newPassword) {
+        if (this.password.match(newPassword)) {
+            throw new WrongPasswordException("이전 비밀번호와 동일한 비밀번호입니다.");
+        }
+        this.password.change(newPassword);
+    }
+
     public void setProfileImg(String profileImg) {
         this.profileImg = profileImg;
     }
     public void setProfileImgNumber(Long profileImgNumber){this.profileImgNumber = profileImgNumber;}
-    public void setPassword(String password){ this.password = password; }
     public void setNickname(String nickname) { this.nickname = nickname;}
     public void setTemperature(int temperature){
         this.temperature += temperature;

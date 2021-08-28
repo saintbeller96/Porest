@@ -7,6 +7,7 @@ import com.hanmaum.counseling.error.UserNotFoundException;
 import com.hanmaum.counseling.error.WrongPasswordException;
 import com.hanmaum.counseling.presentation.argumentresolver.LoginUserId;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -23,14 +24,14 @@ import javax.validation.Valid;
 
 @RestController
 @RequiredArgsConstructor
+@Slf4j
 public class AccountController {
 
     private final AccountService accountService;
 
-
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
-        User user = accountService.saveUser(request);
+        User user = accountService.saveUser(request.getEmail(), request.getPassword(), request.getNickname(), request.getCode());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -42,41 +43,41 @@ public class AccountController {
 
     @PostMapping("/email-check")
     public ResponseEntity<RedundancyDto> emailCheck(@RequestBody @Valid EmailCheckDto email){
-        RedundancyDto result = accountService.existEmail(email.getEmail());
-        return ResponseEntity.ok(result);
+        return ResponseEntity.ok(RedundancyDto.of(accountService.existEmail(email.getEmail())));
     }
     @PostMapping("/verify-check")
     public ResponseEntity<?> verifyCheck(@RequestBody VerifyDto verifyDto){
-        return accountService.verifyCheck(verifyDto.getEmail(), verifyDto.getCode());
+        String message = accountService.verifyCheck(verifyDto.getEmail(), verifyDto.getCode());
+        return ResponseEntity.ok(new VerifyRes(message, true));
     }
 
     @PostMapping("/email-verify")
     public ResponseEntity<?> verify(@RequestBody EmailCheckDto emailVerifyDto) {
         accountService.sendVerifyEmail(emailVerifyDto.getEmail());
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("update-password")
     public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, @LoginUserId Long userId){
         accountService.updatePassword(userId, updatePasswordDto.getOldPassword(), updatePasswordDto.getNewPassword());
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok().build();
     }
 
     @PutMapping("update-nickname")
     public ResponseEntity<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto, @LoginUserId Long userId){
         accountService.updateNickname(userId, updateNicknameDto.getNickname());
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.ok().build();
     }
-
 
     @DeleteMapping("/delete")
     public ResponseEntity<?> deleteUser(@LoginUserId Long userId) {
         accountService.deleteUser(userId);
-        return ResponseEntity.status(HttpStatus.OK).build();
+        return ResponseEntity.noContent().build();
     }
 
     @PostMapping("/find-password")
     public ResponseEntity<?> findPassword(@RequestBody FindPasswordDto findPasswordDto) {
-        return accountService.findPassword(findPasswordDto.getEmail(), findPasswordDto.getNickname());
+        accountService.findPassword(findPasswordDto.getEmail(), findPasswordDto.getNickname());
+        return ResponseEntity.ok().build();
     }
 }

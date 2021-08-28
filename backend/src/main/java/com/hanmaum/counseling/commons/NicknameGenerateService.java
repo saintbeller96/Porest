@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
 
-public class NicknameGenerator {
+public class NicknameGenerateService {
     private static List<String> negatives = Arrays.asList(
             "슬픈", "우울한", "화난", "그리운", "뭉클한", "서운한", "외로운",
             "무기력한", "주눅든", "서글픈", "쓸쓸한", "풀이 죽은", "부끄러운",

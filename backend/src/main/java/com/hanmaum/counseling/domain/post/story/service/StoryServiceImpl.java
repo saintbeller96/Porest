@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.domain.post.story.service;
 
-import com.hanmaum.counseling.commons.NicknameGenerator;
+import com.hanmaum.counseling.commons.NicknameGenerateService;
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.service.AccountService;
 import com.hanmaum.counseling.domain.post.counsel.Counsel;
@@ -28,7 +28,7 @@ public class StoryServiceImpl implements StoryService{
         Story story = Story.builder()
                 .title(title)
                 .content(content)
-                .writerNickName(NicknameGenerator.generateNegative())
+                .writerNickName(NicknameGenerateService.generateNegative())
                 .writer(user)
                 .build();
         return storyRepository.save(story);

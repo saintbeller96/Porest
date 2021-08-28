@@ -9,8 +9,11 @@ import lombok.NoArgsConstructor;
 public class RedundancyDto {
     private boolean Redundancy;
 
-    @Builder
     public RedundancyDto(boolean redundancy) {
         Redundancy = redundancy;
+    }
+
+    public static RedundancyDto of(boolean redundancy){
+        return new RedundancyDto(redundancy);
     }
 }

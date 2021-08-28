@@ -1,23 +1,19 @@
 package com.hanmaum.counseling.domain.post.counsel.service;
 
-import com.hanmaum.counseling.commons.NicknameGenerator;
+import com.hanmaum.counseling.commons.NicknameGenerateService;
 import com.hanmaum.counseling.domain.account.User;
-import com.hanmaum.counseling.domain.account.repository.UserRepository;
 import com.hanmaum.counseling.domain.account.service.AccountService;
 import com.hanmaum.counseling.domain.post.counsel.Counsel;
 import com.hanmaum.counseling.domain.post.counsel.CounselStatus;
 import com.hanmaum.counseling.domain.post.letter.Letter;
 import com.hanmaum.counseling.domain.post.letter.LetterStatus;
 import com.hanmaum.counseling.domain.post.story.Story;
-import com.hanmaum.counseling.error.UserNotFoundException;
-import com.hanmaum.counseling.presentation.post.dto.*;
 import com.hanmaum.counseling.domain.post.counsel.repository.CounselRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.stream.Collectors;
 
 
 @Service
@@ -34,7 +30,7 @@ public class CounselServiceImpl implements CounselService{
         Counsel counsel = Counsel.builder()
                 .counsellor(counsellor)
                 .story(story)
-                .counsellorNickname(NicknameGenerator.generatePositive())
+                .counsellorNickname(NicknameGenerateService.generatePositive())
                 .status(CounselStatus.CONNECT)
                 .build();
         Letter first = Letter.builder()
