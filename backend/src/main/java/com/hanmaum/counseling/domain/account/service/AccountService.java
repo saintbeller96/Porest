@@ -89,6 +89,10 @@ public class AccountService {
         user.setNickname(newNickname);
     }
 
+    public boolean existEmail(String email) {
+        return userRepository.existsByEmail(email);
+    }
+
     public String verifyCheck(String email, String code){
         String key = createKey(email, code);
         return redisService.verifyEmailByKey(key);

@@ -18,7 +18,7 @@ public class CustomUserDetails implements UserDetails {
         CustomUserDetails customUserDetails = new CustomUserDetails();
         customUserDetails.id = user.getId();
         customUserDetails.email = user.getEmail();
-        customUserDetails.password = user.getPassword();
+        customUserDetails.password = user.getPassword().getValue();
         List<GrantedAuthority> temp = new ArrayList<>();
         temp.add(new SimpleGrantedAuthority(user.getRole().name()));
         if(user.getRole() == RoleType.ROLE_ADMIN){

@@ -7,6 +7,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.persistence.Transient;
 
 @Embeddable
 @Getter
@@ -14,6 +15,8 @@ import javax.persistence.Embeddable;
 public class Password {
     @Column(name = "password")
     private String password;
+
+    @Transient
     private PasswordEncoder encoder;
 
     public Password(){};
@@ -28,6 +31,10 @@ public class Password {
 
     public boolean match(String inputPassword) {
         return this.encoder.matches(password, inputPassword);
+    }
+
+    public String getValue() {
+        return this.password;
     }
 
 }

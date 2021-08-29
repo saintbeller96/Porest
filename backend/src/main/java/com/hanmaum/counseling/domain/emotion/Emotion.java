@@ -1,5 +1,6 @@
 package com.hanmaum.counseling.domain.emotion;
 
+import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
 import lombok.Builder;
 import lombok.Getter;
@@ -19,8 +20,9 @@ public class Emotion {
     @Column(name = "emotion_id")
     private Long id;
 
-    @Column(name = "user_id", nullable = false)
-    private Long userId;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", nullable = false)
+    private User user;
 
     @Column(name = "feeling")
     private Integer feeling;
@@ -38,11 +40,11 @@ public class Emotion {
     private LocalDateTime updatedAt;
 
     @Builder
-    public Emotion(Integer feeling, String content, String imageUrl, Long userId) {
+    public Emotion(Integer feeling, String content, String imageUrl, User user) {
         this.feeling = feeling;
         this.content = content;
         this.imageUrl = imageUrl;
-        this.userId = userId;
+        this.user = user;
     }
 
     public int getYear(){
@@ -55,18 +57,9 @@ public class Emotion {
         return createdAt.getDayOfMonth();
     }
 
-    public void update(EmotionDetailDto dto){
-        this.feeling = dto.getFeeling();
-        this.content = dto.getContent();
-        this.imageUrl = dto.getImageUrl();
-    }
-
-    public static Emotion convertedFromDto(EmotionDetailDto dto, Long userId){
-        return Emotion.builder()
-                .userId(userId)
-                .content(dto.getContent())
-                .feeling(dto.getFeeling())
-                .imageUrl(dto.getImageUrl())
-                .build();
+    public void update(Integer feeling, String content, String imageUrl){
+        this.feeling = feeling;
+        this.content = content;
+        this.imageUrl = imageUrl;
     }
 }
