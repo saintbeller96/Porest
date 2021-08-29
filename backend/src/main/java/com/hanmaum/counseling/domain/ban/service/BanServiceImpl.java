@@ -20,7 +20,8 @@ public class BanServiceImpl implements BanService{
 
     @Override
     public Ban release(Long banId) {
-        Ban ban = banRepository.findById(banId).orElseThrow();
+        Ban ban = banRepository.findById(banId)
+                .orElseThrow();
         banRepository.delete(ban);
         return ban;
     }
@@ -36,7 +37,7 @@ public class BanServiceImpl implements BanService{
         List<Ban> banList = banRepository.findByUserId(user.getId());
         for (Ban ban : banList) {
             ban.validateBanExpired(LocalDateTime.now());
-            release(ban.getId());
+            banRepository.delete(ban);
         }
     }
 }

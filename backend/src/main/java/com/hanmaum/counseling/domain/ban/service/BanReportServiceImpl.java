@@ -42,23 +42,31 @@ public class BanReportServiceImpl implements BanReportService{
     public BanReport report(Long counselId, String reason, Long reporterId) {
         User reporter = accountService.getUser(reporterId);
         Counsel counsel = counselService.getCounsel(counselId, reporterId);
-        return banReportRepository.save(new BanReport(reporter, counsel, reason, BanReportStatus.WAIT));
+        return banReportRepository.save(BanReport.builder()
+                .reporter(reporter)
+                .counsel(counsel)
+                .banReason(reason)
+                .banReportStatus(BanReportStatus.WAIT)
+                .build());
     }
 
     @Override
     public Ban process(Long banReportId) {
-        BanReport banReport = banReportRepository.findById(banReportId)
-                .orElseThrow(BanReportNotFoundException::new);
+        BanReport banReport = getBanReport(banReportId);
         banReport.process();
         return banService.register(banReport);
     }
 
     @Override
     public Long cancel(Long banReportId) {
-        BanReport banReport = banReportRepository.findById(banReportId)
-                .orElseThrow(BanReportNotFoundException::new);
+        BanReport banReport = getBanReport(banReportId);
         banReport.cancel();
         return banReportId;
+    }
+
+    private BanReport getBanReport(Long banReportId) {
+        return banReportRepository.findById(banReportId)
+                .orElseThrow(BanReportNotFoundException::new);
     }
 
     @Override
