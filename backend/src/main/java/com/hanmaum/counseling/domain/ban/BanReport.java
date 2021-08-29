@@ -42,7 +42,8 @@ public class BanReport {
     private LocalDateTime updatedAt;
 
     @Builder
-    public BanReport(User reporter, Counsel counsel, String banReason, BanReportStatus banReportStatus) {
+    public BanReport(Long id, User reporter, Counsel counsel, String banReason, BanReportStatus banReportStatus) {
+        this.id = id;
         this.reporter = reporter;
         this.counsel = counsel;
         this.banReason = banReason;

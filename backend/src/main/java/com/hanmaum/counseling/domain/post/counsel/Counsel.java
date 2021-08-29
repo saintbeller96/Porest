@@ -47,7 +47,8 @@ public class Counsel {
     public Counsel(){}
 
     @Builder
-    public Counsel(Story story, User counsellor, String counsellorNickname, CounselStatus status) {
+    public Counsel(Long id, Story story, User counsellor, String counsellorNickname, CounselStatus status) {
+        this.id = id;
         this.story = story;
         this.counsellor = counsellor;
         this.counsellorNickname = counsellorNickname;
