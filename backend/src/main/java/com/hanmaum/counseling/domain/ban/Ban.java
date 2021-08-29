@@ -21,6 +21,7 @@ public class Ban {
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ban_user_id")
     private User banUser;
 
     @OneToOne(fetch = FetchType.LAZY)
