@@ -129,7 +129,7 @@ class CounselControllerTest {
     @DisplayName("유저가 작성한 사연의 답장 상태 제공, 200 반환")
     void get_user_reply_status_success() throws Exception{
         //given
-        User user = accountService.findByEmail("user@test.com");
+        User user = accountService.getUser("user@test.com");
         //when
         ResultActions actions = mockMvc.perform(get("/stories")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -148,7 +148,7 @@ class CounselControllerTest {
     @DisplayName("유저가 작성한 사연 하나의 답장 내역, 200 반환")
     void get_counsels_success() throws Exception{
         //given
-        User user = accountService.findByEmail("user@test.com");
+        User user = accountService.getUser("user@test.com");
         List<Story> stories = storyService.getStoriesOfUser(user.getId());
         Long storyId = stories.get(0).getId();
         //when
@@ -170,7 +170,7 @@ class CounselControllerTest {
     @DisplayName("자신이 보낸 특정 사연의 상담 내역, 200 반환")
     void get_detail_counsel_success() throws Exception{
         //given
-        User user = accountService.findByEmail("user@test.com");
+        User user = accountService.getUser("user@test.com");
         List<Counsel> result = counselService.getCounsels(user.getId());
         Long counselId = result.get(0).getId();
         //when
@@ -186,7 +186,7 @@ class CounselControllerTest {
     @DisplayName("자신과 관련없는 사연을 요청했을 때, 404 반환")
     void get_detail_counsel_fail() throws Exception{
         //given
-        User user = accountService.findByEmail("user@test.com");
+        User user = accountService.getUser("user@test.com");
         //when
         ResultActions actions = mockMvc.perform(get("/counsels/"+404L)
                 .contentType(MediaType.APPLICATION_JSON)
@@ -201,7 +201,7 @@ class CounselControllerTest {
     @DisplayName("유저가 상담중인 상담 상태, 200 반환")
     void get_user_counsel_state_success() throws Exception{
         //given
-        User user = accountService.findByEmail("counsellor1@test.com");
+        User user = accountService.getUser("counsellor1@test.com");
         //when
         ResultActions actions = mockMvc.perform(get("/counsels")
                 .contentType(MediaType.APPLICATION_JSON)
@@ -220,7 +220,7 @@ class CounselControllerTest {
     @DisplayName("상담 종료, 200 반환")
     void finish_counsel() throws Exception{
         //given
-        User user = accountService.findByEmail("user@test.com");
+        User user = accountService.getUser("user@test.com");
         List<Story> storiesOfUser = storyService.getStoriesOfUser(user.getId());
         Story story = storiesOfUser.get(0);
         //List<UserCounselStateDto> temp2 =

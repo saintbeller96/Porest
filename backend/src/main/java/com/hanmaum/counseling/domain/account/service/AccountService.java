@@ -31,16 +31,8 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final BanService banService;
     private final JwtProvider jwtProvider;
-    private final EmailService emailService;
-    private final RedisService redisService;
 
-    public User saveUser(String email, String password, String nickname, String code){
-        //이메일 중복 및 인증 여부 체크
-        String key = createKey(email, code);
-        String emailCheck = redisService.getData(key);
-        if(emailCheck == null || !emailCheck.equals("T")){
-            throw new IllegalArgumentException("이메일 중복 및 인증을 진행해주세요.");
-        }
+    public User saveUser(String email, String password, String nickname){
         User user = User.builder()
                 .email(email)
                 .nickname(nickname)
@@ -49,16 +41,7 @@ public class AccountService {
                 .profileImgNumber(1L)
                 .role(RoleType.ROLE_USER)
                 .build();
-
-        //캐싱된 데이터 삭제
-        redisService.deleteData(email);
-        redisService.deleteData(key);
         return userRepository.save(user);
-    }
-
-    public User findByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(UserNotFoundException::new);
     }
 
     public JwtTokenDto login(String email, String password){
@@ -69,8 +52,13 @@ public class AccountService {
         return new JwtTokenDto(jwtProvider.generateToken(user));
     }
 
-    public void updatePassword(Long userId, String oldPassword, String newPassword) {
+    public void updatePassword(Long userId, String newPassword) {
         User user = getUser(userId);
+        user.updatePassword(newPassword);
+    }
+
+    public void updatePassword(String email, String newPassword) {
+        User user = getUser(email);
         user.updatePassword(newPassword);
     }
 
@@ -93,35 +81,7 @@ public class AccountService {
         return userRepository.existsByEmail(email);
     }
 
-    public String verifyCheck(String email, String code){
-        String key = createKey(email, code);
-        return redisService.verifyEmailByKey(key);
-    }
-
-    public void sendVerifyEmail(String email) {
-        String code = RandomStringUtils.randomAlphabetic(5);
-        String key = createKey(email, code);
-        redisService.setDataExpire(key, "F", 180L);
-        emailService.sendMail(email, "POREST 인증 메일 입니다." ,code);
-    }
-
-    private String createKey(String email, String code) {
-        return String.format("%s_%s", email, code);
-    }
-
     public void deleteUser(Long userId) {
         userRepository.delete(getUser(userId));
-    }
-
-    public void findPassword(String email, String nickname) {
-        boolean isExist = userRepository.existsByEmailAndNickname(email, nickname);
-        if (!isExist) {
-            throw new UserNotFoundException();
-        }
-        //임시 비밀번호 메일 전송
-        User user = getUser(email);
-        String temporaryPassword = RandomStringUtils.randomAlphabetic(8);
-        user.updatePassword(temporaryPassword);
-        emailService.sendMail(email,"POREST의 임시 비밀번호 메일입니다.", temporaryPassword);
     }
 }

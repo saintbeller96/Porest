@@ -2,6 +2,7 @@ package com.hanmaum.counseling.presentation.account;
 
 import com.hanmaum.counseling.domain.account.User;
 import com.hanmaum.counseling.domain.account.service.AccountService;
+import com.hanmaum.counseling.domain.account.service.EmailVerifyService;
 import com.hanmaum.counseling.presentation.account.dto.*;
 import com.hanmaum.counseling.error.UserNotFoundException;
 import com.hanmaum.counseling.error.WrongPasswordException;
@@ -28,10 +29,12 @@ import javax.validation.Valid;
 public class AccountController {
 
     private final AccountService accountService;
+    private final EmailVerifyService emailVerifyService;
 
     @PostMapping("/signup")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
-        User user = accountService.saveUser(request.getEmail(), request.getPassword(), request.getNickname(), request.getCode());
+        emailVerifyService.verifyEmail(request.getEmail(), request.getCode());
+        accountService.saveUser(request.getEmail(), request.getPassword(), request.getNickname());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
@@ -47,29 +50,29 @@ public class AccountController {
     }
     @PostMapping("/verify-check")
     public ResponseEntity<?> verifyCheck(@RequestBody VerifyDto verifyDto){
-        String message = accountService.verifyCheck(verifyDto.getEmail(), verifyDto.getCode());
+        String message = emailVerifyService.getVerifiedEmail(verifyDto.getEmail(), verifyDto.getCode());
         return ResponseEntity.ok(new VerifyRes(message, true));
     }
 
     @PostMapping("/email-verify")
     public ResponseEntity<?> verify(@RequestBody EmailCheckDto emailVerifyDto) {
-        accountService.sendVerifyEmail(emailVerifyDto.getEmail());
+        emailVerifyService.sendVerifyEmail(emailVerifyDto.getEmail());
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("update-password")
+    @PutMapping("/update-password")
     public ResponseEntity<?> updatePassword(@RequestBody @Valid UpdatePasswordDto updatePasswordDto, @LoginUserId Long userId){
-        accountService.updatePassword(userId, updatePasswordDto.getOldPassword(), updatePasswordDto.getNewPassword());
+        accountService.updatePassword(userId, updatePasswordDto.getNewPassword());
         return ResponseEntity.ok().build();
     }
 
-    @PutMapping("update-nickname")
+    @PutMapping("/update-nickname")
     public ResponseEntity<?> updateNickname(@RequestBody UpdateNicknameDto updateNicknameDto, @LoginUserId Long userId){
         accountService.updateNickname(userId, updateNicknameDto.getNickname());
         return ResponseEntity.ok().build();
     }
 
-    @DeleteMapping("/delete")
+    @DeleteMapping("")
     public ResponseEntity<?> deleteUser(@LoginUserId Long userId) {
         accountService.deleteUser(userId);
         return ResponseEntity.noContent().build();
@@ -77,7 +80,8 @@ public class AccountController {
 
     @PostMapping("/find-password")
     public ResponseEntity<?> findPassword(@RequestBody FindPasswordDto findPasswordDto) {
-        accountService.findPassword(findPasswordDto.getEmail(), findPasswordDto.getNickname());
+        String temp = emailVerifyService.sendTemporaryPassword(findPasswordDto.getEmail());
+        accountService.updatePassword(findPasswordDto.getEmail(), temp);
         return ResponseEntity.ok().build();
     }
 }
