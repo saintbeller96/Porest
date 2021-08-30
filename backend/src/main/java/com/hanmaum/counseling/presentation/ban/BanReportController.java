@@ -27,19 +27,22 @@ public class BanReportController {
     @ApiOperation("신고하기")
     @PostMapping("")
     public ResponseEntity<?> reportBan(@RequestBody @Valid BanReportDto banReportDto, @LoginUserId Long userId) {
-        return ResponseEntity.ok(banReportService.report(banReportDto.getCounselId(), banReportDto.getBanReason(), userId));
+        BanReport report = banReportService.report(banReportDto.getCounselId(), banReportDto.getBanReason(), userId);
+        return ResponseEntity.ok(BanReportDetailDto.of(report));
     }
 
     @ApiOperation("신고 요청 처리하기")
     @PutMapping("/{banReportId}")
     public ResponseEntity<?> processBanReport(@PathVariable("banReportId") Long banReportId) {
-        return ResponseEntity.ok(banReportService.process(banReportId));
+        banReportService.process(banReportId);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation("신고 요청 취소하기")
     @PutMapping("/{banReportId}/cancel")
     public ResponseEntity<?> cancelBanReport(@PathVariable("banReportId") Long banReportId) {
-        return ResponseEntity.ok(banReportService.cancel(banReportId));
+        banReportService.cancel(banReportId);
+        return ResponseEntity.ok().build();
     }
 
     @ApiOperation("신고 요청 페이징 목록 반환")
