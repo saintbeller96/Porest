@@ -62,19 +62,19 @@ class StoryControllerTest {
                 .nickname("a")
                 .email("user@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(new Password("1234", encoder))
+                .password(new Password("1234"))
                 .build();
         User counsellor = User.builder()
                 .nickname("b")
                 .email("counsellor1@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(new Password("1234", encoder))
+                .password(new Password("1234"))
                 .build();
         User counsellor2 = User.builder()
                 .nickname("c")
                 .email("counsellor2@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(new Password("1234", encoder))
+                .password(new Password("1234"))
                 .build();
 
         userRepository.save(user);

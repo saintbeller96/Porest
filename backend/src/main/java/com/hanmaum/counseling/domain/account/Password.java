@@ -3,6 +3,7 @@ package com.hanmaum.counseling.domain.account;
 import com.hanmaum.counseling.error.WrongPasswordException;
 import lombok.Getter;
 import lombok.Setter;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
 import javax.persistence.Column;
@@ -11,17 +12,15 @@ import javax.persistence.Transient;
 
 @Embeddable
 @Getter
-@Setter
 public class Password {
     @Column(name = "password")
     private String password;
 
     @Transient
-    private PasswordEncoder encoder;
+    private PasswordEncoder encoder = new BCryptPasswordEncoder();
 
     public Password(){};
-    public Password(String password, PasswordEncoder encoder){
-        this.encoder = encoder;
+    public Password(String password){
         this.password = this.encoder.encode(password);
     }
 

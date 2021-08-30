@@ -62,7 +62,7 @@ class EmotionControllerTest {
         user = userRepository.save(User.builder()
                 .email("test@test.com")
                 .role(RoleType.ROLE_USER)
-                .password(new Password("1234", encoder))
+                .password(new Password("1234"))
                 .nickname("nickname").build());
     }
 

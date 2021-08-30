@@ -28,7 +28,6 @@ import java.util.Map;
 public class AccountService {
 
     private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
     private final BanService banService;
     private final JwtProvider jwtProvider;
 
@@ -36,7 +35,7 @@ public class AccountService {
         User user = User.builder()
                 .email(email)
                 .nickname(nickname)
-                .password(new Password(password, passwordEncoder))
+                .password(new Password(password))
                 .temperature(36)
                 .profileImgNumber(1L)
                 .role(RoleType.ROLE_USER)
