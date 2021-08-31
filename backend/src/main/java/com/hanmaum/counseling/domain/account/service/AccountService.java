@@ -43,12 +43,12 @@ public class AccountService {
         return userRepository.save(user);
     }
 
-    public JwtTokenDto login(String email, String password){
+    public String login(String email, String password){
         User user = getUser(email);
         //해당 유저가 밴 상태인지 확인
         banService.validateUserBanState(user);
         user.login(password);
-        return new JwtTokenDto(jwtProvider.generateToken(user));
+        return jwtProvider.generateToken(user);
     }
 
     public void updatePassword(Long userId, String newPassword) {

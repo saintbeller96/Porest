@@ -12,8 +12,6 @@ import java.util.Objects;
 @Service
 @RequiredArgsConstructor
 public class RedisService {
-    private final String VERIFY_SUCCESS = "이메일 인증을 성공하였습니다.";
-    private final String VERIFY_SUCCESS_ALREADY = "이미 이메일을 인증하였습니다.";
     private final StringRedisTemplate stringRedisTemplate;
 
     public String getData(String key){
@@ -26,9 +24,8 @@ public class RedisService {
         valueOperations.set(key, value);
     }
 
-    public void setDataExpire(String key,String value,long duration){
+    public void setDataExpire(String key, String value, Duration expireDuration){
         ValueOperations<String,String> valueOperations = stringRedisTemplate.opsForValue();
-        Duration expireDuration = Duration.ofSeconds(duration);
         valueOperations.set(key,value,expireDuration);
     }
 
@@ -36,14 +33,14 @@ public class RedisService {
         stringRedisTemplate.delete(key);
     }
 
-    public String verifyEmailByKey(String key) {
-        String verify = getData(key);
-        if (Objects.isNull(verify)) {
-            throw new VerifyEmailException();
-        } else if ("F".equals(verify)) {
-            setDataExpire(key, "T", 3600);
-            return VERIFY_SUCCESS;
-        }
-        return VERIFY_SUCCESS_ALREADY;
-    }
+//    public String verifyEmailByKey(String key) {
+//        String verify = getData(key);
+//        if (Objects.isNull(verify)) {
+//            throw new VerifyEmailException();
+//        } else if ("F".equals(verify)) {
+//            setDataExpire(key, "T", 3600);
+//            return VERIFY_SUCCESS;
+//        }
+//        return VERIFY_SUCCESS_ALREADY;
+//    }
 }

@@ -4,10 +4,15 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
+
 @Getter
 @NoArgsConstructor
 public class FindPasswordDto {
+    @Email
     private String email;
+    @NotEmpty
     private String nickname;
 
     @Builder
