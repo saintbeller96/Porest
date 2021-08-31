@@ -66,8 +66,10 @@ public class Counsel {
         }
     }
 
-    public void finish() {
+    public void finish(int score, boolean open) {
         this.status = CounselStatus.END;
+        this.isOpened = open;
+        this.counsellor.updateTemperature(score);
     }
 
     public void setStory(Story story){

@@ -81,7 +81,7 @@ public class User {
     }
     public void setProfileImgNumber(Long profileImgNumber){this.profileImgNumber = profileImgNumber;}
     public void setNickname(String nickname) { this.nickname = nickname;}
-    public void setTemperature(int temperature){
+    public void updateTemperature(int temperature){
         this.temperature += temperature;
     }
 }

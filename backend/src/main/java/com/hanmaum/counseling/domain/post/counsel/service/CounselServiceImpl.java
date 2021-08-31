@@ -66,9 +66,7 @@ public class CounselServiceImpl implements CounselService{
     public Counsel finishCounsel(int score, boolean open, Long counselId, Long userId) {
         Counsel counsel = getCounsel(counselId);
         counsel.validateUser(userId);
-        counsel.getCounsellor().setTemperature(score);
-        counsel.finish();
-        counsel.setOpenStatus(open);
+        counsel.finish(score, open);
         return counsel;
     }
 
