@@ -1,12 +1,15 @@
 package com.hanmaum.counseling.domain.ban;
 
-import com.hanmaum.counseling.domain.account.User;
-import com.hanmaum.counseling.domain.account.service.AccountService;
-import com.hanmaum.counseling.domain.ban.repository.BanReportRepository;
-import com.hanmaum.counseling.domain.ban.service.BanReportServiceImpl;
-import com.hanmaum.counseling.domain.ban.service.BanService;
-import com.hanmaum.counseling.domain.post.counsel.Counsel;
-import com.hanmaum.counseling.domain.post.counsel.service.CounselService;
+import com.hanmaum.counseling.domain.model.user.User;
+import com.hanmaum.counseling.domain.model.ban.Ban;
+import com.hanmaum.counseling.domain.model.ban.BanReport;
+import com.hanmaum.counseling.domain.model.ban.BanReportStatus;
+import com.hanmaum.counseling.domain.service.user.AccountService;
+import com.hanmaum.counseling.domain.model.ban.BanReportRepository;
+import com.hanmaum.counseling.domain.service.ban.BanReportServiceImpl;
+import com.hanmaum.counseling.domain.service.ban.BanService;
+import com.hanmaum.counseling.domain.model.post.counsel.Counsel;
+import com.hanmaum.counseling.domain.service.post.counsel.CounselService;
 import com.hanmaum.counseling.error.BanReportNotFoundException;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,6 +1,5 @@
 package com.hanmaum.counseling.security;
 
-import com.hanmaum.counseling.domain.account.service.CustomUserDetailsService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;

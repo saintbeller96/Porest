@@ -1,12 +1,12 @@
 package com.hanmaum.counseling.domain.ban;
 
 
-import com.hanmaum.counseling.domain.account.User;
-import com.hanmaum.counseling.domain.ban.repository.BanRepository;
-import com.hanmaum.counseling.domain.ban.service.BanServiceImpl;
+import com.hanmaum.counseling.domain.model.user.User;
+import com.hanmaum.counseling.domain.model.ban.Ban;
+import com.hanmaum.counseling.domain.model.ban.BanRepository;
+import com.hanmaum.counseling.domain.service.ban.BanServiceImpl;
 import com.hanmaum.counseling.error.BannedUserException;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

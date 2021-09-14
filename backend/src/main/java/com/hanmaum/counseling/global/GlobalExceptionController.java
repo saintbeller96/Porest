@@ -4,7 +4,7 @@ import com.hanmaum.counseling.error.BannedUserException;
 import com.hanmaum.counseling.error.UserNotFoundException;
 import com.hanmaum.counseling.error.VerifyEmailException;
 import com.hanmaum.counseling.error.WrongPasswordException;
-import com.hanmaum.counseling.presentation.account.dto.VerifyRes;
+import com.hanmaum.counseling.api.account.dto.VerifyRes;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

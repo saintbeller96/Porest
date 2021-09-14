@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.config;
 
-import com.hanmaum.counseling.presentation.argumentresolver.LoginUserIdArgumentResolver;
+import com.hanmaum.counseling.api.argumentresolver.LoginUserIdArgumentResolver;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.method.support.HandlerMethodArgumentResolver;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;

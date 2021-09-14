@@ -1,6 +1,6 @@
 package com.hanmaum.counseling.security;
 
-import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.domain.model.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;

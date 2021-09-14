@@ -1,7 +1,7 @@
 package com.hanmaum.counseling.security;
 
-import com.hanmaum.counseling.domain.account.RoleType;
-import com.hanmaum.counseling.domain.account.User;
+import com.hanmaum.counseling.domain.model.user.RoleType;
+import com.hanmaum.counseling.domain.model.user.User;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;

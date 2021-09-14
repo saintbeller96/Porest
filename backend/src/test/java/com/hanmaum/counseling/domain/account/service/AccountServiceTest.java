@@ -1,6 +1,7 @@
 package com.hanmaum.counseling.domain.account.service;
 
-import com.hanmaum.counseling.presentation.account.dto.SignupDto;
+import com.hanmaum.counseling.domain.service.user.AccountService;
+import com.hanmaum.counseling.api.account.dto.SignupDto;
 import com.hanmaum.counseling.security.JwtProvider;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

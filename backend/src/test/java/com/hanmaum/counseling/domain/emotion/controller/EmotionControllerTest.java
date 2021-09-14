@@ -2,14 +2,14 @@ package com.hanmaum.counseling.domain.emotion.controller;
 
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.hanmaum.counseling.domain.account.Password;
-import com.hanmaum.counseling.domain.account.RoleType;
-import com.hanmaum.counseling.domain.account.User;
-import com.hanmaum.counseling.domain.account.repository.UserRepository;
-import com.hanmaum.counseling.domain.emotion.Emotion;
-import com.hanmaum.counseling.presentation.emotion.dto.EmotionDetailDto;
-import com.hanmaum.counseling.presentation.emotion.dto.EmotionSimpleDto;
-import com.hanmaum.counseling.domain.emotion.service.EmotionService;
+import com.hanmaum.counseling.domain.model.user.Password;
+import com.hanmaum.counseling.domain.model.user.RoleType;
+import com.hanmaum.counseling.domain.model.user.User;
+import com.hanmaum.counseling.domain.model.user.UserRepository;
+import com.hanmaum.counseling.domain.model.emotion.Emotion;
+import com.hanmaum.counseling.api.emotion.dto.EmotionDetailDto;
+import com.hanmaum.counseling.api.emotion.dto.EmotionSimpleDto;
+import com.hanmaum.counseling.domain.service.emotion.EmotionService;
 import com.hanmaum.counseling.commons.ControllerTestConfig;
 import com.hanmaum.counseling.security.CustomUserDetails;
 import org.assertj.core.api.Assertions;
