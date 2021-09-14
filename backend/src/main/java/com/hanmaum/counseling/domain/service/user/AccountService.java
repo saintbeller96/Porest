@@ -23,7 +23,7 @@ public class AccountService {
     private final BanService banService;
     private final JwtProvider jwtProvider;
 
-    public User saveUser(String email, String password, String nickname){
+    public User registerUser(String email, String password, String nickname){
         User user = User.builder()
                 .email(email)
                 .nickname(nickname)

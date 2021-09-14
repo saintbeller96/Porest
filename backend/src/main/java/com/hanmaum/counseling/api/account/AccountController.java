@@ -32,7 +32,7 @@ public class AccountController {
     @PostMapping("")
     public ResponseEntity<?> signup(@RequestBody @Valid SignupDto request){
         verifyService.verify(request.getEmail(), request.getCode());
-        accountService.saveUser(request.getEmail(), request.getPassword(), request.getNickname());
+        accountService.registerUser(request.getEmail(), request.getPassword(), request.getNickname());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
