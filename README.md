@@ -84,7 +84,7 @@
 - Socket.io  
 - DB - MySQL / redis
 
-저희 `Backend`는 java`와 `spring, JPA를 기반으로  서비스들을 설계했습니다. 또한 인메모리 DB인 redis를 사용해 이메일 인증을 구현하였고,  `Querydsl`을 사용해 JPA의 N+1 문제를 해결하고자 했습니다. 그리고 사용자 인증/인가를 위해 `Spring Security`를 적용하였고 `REST API server`의 고도화를 위해 노력하였습니다.  
+저희 `Backend`는 `java`와 `spring`, `JPA`를 기반으로 서비스들을 설계했습니다. 또한 이메일 인증을 위한 임시 데이터를 저장하기 위해 Redis를 사용하였고, `Querydsl`을 사용해 JPA의 N+1 문제를 해결하고자 했습니다. 그리고 사용자 인증/인가를 위해 `Spring Security`를 적용하였습니다.  
 
 <br /><br />
 
